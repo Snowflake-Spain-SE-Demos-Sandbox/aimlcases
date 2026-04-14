@@ -655,13 +655,27 @@ document.getElementById('searchInput').addEventListener('input', e => {
 renderCards(USE_CASES);
 
 function descargarNotebook(ucId) {
-  if (ucId === 'UC01') {
+  const NB = {
+    UC01: ['notebook_uc01_fraude.ipynb','UC01_Puntuacion_Fraude_Siniestros.ipynb'],
+    UC02: ['notebook_uc02_accidentes_simulados.ipynb','UC02_Deteccion_Accidentes_Simulados.ipynb'],
+    UC03: ['notebook_uc03_identidad.ipynb','UC03_Fraude_Solicitudes_Identidad.ipynb'],
+    UC04: ['notebook_uc04_riesgo_auto.ipynb','UC04_Puntuacion_Dinamica_Riesgo_Auto.ipynb'],
+    UC05: ['notebook_uc05_exposicion_cat.ipynb','UC05_Analitica_Exposicion_Catastrofes.ipynb'],
+    UC06: ['notebook_uc06_fuga_renovacion.ipynb','UC06_Prediccion_Fuga_Renovacion.ipynb'],
+    UC07: ['notebook_uc07_telematica.ipynb','UC07_Segmentacion_Riesgo_Telematico.ipynb'],
+    UC08: ['notebook_uc08_extraccion_docs.ipynb','UC08_Extraccion_Documental_IA.ipynb'],
+    UC09: ['notebook_uc09_quejas.ipynb','UC09_Inteligencia_Quejas_Clientes.ipynb'],
+    UC10: ['notebook_uc10_asistente_poliza.ipynb','UC10_Asistente_Consultas_Poliza.ipynb'],
+    UC11: ['notebook_uc11_severidad.ipynb','UC11_Prediccion_Severidad_Siniestros.ipynb'],
+    UC12: ['notebook_uc12_subrogacion.ipynb','UC12_Oportunidades_Subrogacion.ipynb']
+  };
+  const nb = NB[ucId];
+  if (nb) {
     const a = document.createElement('a');
-    a.href = 'notebook_uc01_fraude.ipynb';
-    a.download = 'UC01_Puntuacion_Fraude_Siniestros.ipynb';
+    a.href = nb[0]; a.download = nb[1];
     document.body.appendChild(a); a.click(); a.remove();
   } else {
-    alert('Notebook no disponible aún para ' + ucId);
+    alert('Notebook no disponible para ' + ucId);
   }
 }
 
