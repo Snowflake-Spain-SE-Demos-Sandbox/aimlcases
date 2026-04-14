@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bayer × Snowflake — Commercial AI/ML Solutions</title>
+  <title>Snowflake — Soluciones IA/ML para Seguros</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f7f7;
+      background: #f5f5f5;
       color: #1a1a1a;
     }
 
     /* ── HEADER ──────────────────────────────────────────── */
     .hero {
-      background: #2DB5A3;
+      background: #CC0000;
       color: #fff;
       padding: 32px 48px 36px;
       display: flex;
@@ -33,29 +33,15 @@
       margin-bottom: 10px;
     }
 
-    .logo-bayer {
-      width: 44px; height: 44px;
-      background: #fff;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .logo-bayer svg { width: 32px; height: 32px; }
-
-    .logo-x {
-      color: rgba(255,255,255,0.7);
-      font-size: 20px;
-      font-weight: 300;
-    }
-
     .logo-snowflake {
-      display: flex; align-items: center; gap: 6px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
       color: #fff;
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
       letter-spacing: 0.5px;
     }
-    .logo-snowflake svg { width: 28px; height: 28px; fill: #fff; }
 
     .hero-eyebrow {
       font-size: 11px;
@@ -98,7 +84,7 @@
     .stats-box .stat-number {
       font-size: 40px;
       font-weight: 700;
-      color: #1a1a1a;
+      color: #CC0000;
       line-height: 1;
     }
 
@@ -136,12 +122,12 @@
     .intro h2 {
       font-size: 22px;
       font-weight: 700;
-      color: #2DB5A3;
+      color: #CC0000;
       margin-bottom: 14px;
     }
 
     .intro p {
-      max-width: 580px;
+      max-width: 600px;
       margin: 0 auto;
       font-size: 14px;
       color: #555;
@@ -178,11 +164,11 @@
       transition: all 0.15s;
     }
 
-    .filter-btn:hover { border-color: #2DB5A3; color: #2DB5A3; }
+    .filter-btn:hover { border-color: #CC0000; color: #CC0000; }
 
     .filter-btn.active {
-      background: #1A7A6E;
-      border-color: #1A7A6E;
+      background: #9B0000;
+      border-color: #9B0000;
       color: #fff;
     }
 
@@ -197,8 +183,6 @@
       background: #fff;
     }
 
-    .search-box svg { color: #aaa; flex-shrink: 0; }
-
     .search-box input {
       border: none;
       outline: none;
@@ -207,7 +191,6 @@
       width: 100%;
       background: transparent;
     }
-
     .search-box input::placeholder { color: #aaa; }
 
     /* ── RESULTS COUNT ────────────────────────────────────── */
@@ -215,7 +198,7 @@
       padding: 14px 48px 8px;
       font-size: 13px;
       color: #666;
-      background: #f5f7f7;
+      background: #f5f5f5;
     }
 
     /* ── CARDS GRID ──────────────────────────────────────── */
@@ -224,13 +207,13 @@
       grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 24px;
       padding: 16px 48px 48px;
-      background: #f5f7f7;
+      background: #f5f5f5;
     }
 
     .card {
       background: #fff;
       border-radius: 10px;
-      border: 1px solid #e2e8e8;
+      border: 1px solid #e2e2e2;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -257,16 +240,16 @@
     }
 
     .badge-cat {
-      background: #EAF7F5;
-      color: #2DB5A3;
+      background: #FFE8E8;
+      color: #CC0000;
       font-size: 11px;
       font-weight: 600;
       padding: 3px 10px;
       border-radius: 50px;
     }
-
-    .badge-cat.nlp { background: #EAF0FF; color: #4A6EE0; }
-    .badge-cat.journey { background: #FFF3E8; color: #D97B2A; }
+    .badge-cat.riesgo  { background: #FFF3E8; color: #D97B2A; }
+    .badge-cat.nlp     { background: #EAF0FF; color: #4A6EE0; }
+    .badge-cat.siniestros { background: #F0FFF4; color: #2E7D4F; }
 
     .card-time {
       font-size: 12px;
@@ -277,19 +260,17 @@
       white-space: nowrap;
     }
 
-    .card-time svg { flex-shrink: 0; }
-
     .card-title {
       padding: 0 18px 12px;
       font-size: 17px;
       font-weight: 700;
-      color: #2DB5A3;
+      color: #CC0000;
       line-height: 1.3;
     }
 
     .pain-point {
       margin: 0 18px 14px;
-      background: #EAF7F5;
+      background: #FFF0F0;
       border-radius: 8px;
       padding: 12px 14px;
     }
@@ -298,7 +279,7 @@
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 1.5px;
-      color: #2DB5A3;
+      color: #CC0000;
       margin-bottom: 6px;
       text-transform: uppercase;
     }
@@ -333,7 +314,7 @@
 
     .card-features li::before {
       content: '✓';
-      color: #2DB5A3;
+      color: #CC0000;
       font-weight: 700;
       flex-shrink: 0;
       margin-top: 1px;
@@ -349,7 +330,7 @@
     .btn-primary {
       flex: 1;
       padding: 10px;
-      background: #1A7A6E;
+      background: #9B0000;
       color: #fff;
       border: none;
       border-radius: 6px;
@@ -361,14 +342,14 @@
       text-decoration: none;
       display: block;
     }
-    .btn-primary:hover { background: #155f56; }
+    .btn-primary:hover { background: #7A0000; }
 
     .btn-secondary {
       flex: 1;
       padding: 10px;
       background: transparent;
-      color: #1A7A6E;
-      border: 1.5px solid #1A7A6E;
+      color: #9B0000;
+      border: 1.5px solid #9B0000;
       border-radius: 6px;
       font-size: 13px;
       font-weight: 600;
@@ -378,9 +359,48 @@
       text-decoration: none;
       display: block;
     }
-    .btn-secondary:hover { background: #EAF7F5; }
+    .btn-secondary:hover { background: #FFF0F0; }
 
-    /* ── RESPONSIVE ───────────────────────────────────────── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 92%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #CC0000; }
+    .modal-box h2 { color: #CC0000; font-size: 20px; margin-bottom: 6px; }
+    .modal-box h3 { font-size: 15px; color: #333; margin: 18px 0 8px; }
+    .modal-box p, .modal-box li { font-size: 13px; line-height: 1.7; color: #444; }
+    .modal-box ul { padding-left: 20px; margin: 6px 0; }
+    .modal-box .guide-badge { display: inline-block; background: #FFE8E8; color: #CC0000; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; margin-bottom: 10px; }
+    .modal-box .guide-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #eee; font-size: 12px; color: #888; }
+
     @media (max-width: 700px) {
       .hero { flex-direction: column; padding: 24px 20px; }
       .cards-grid { grid-template-columns: 1fr; padding: 16px 16px 48px; }
@@ -395,72 +415,53 @@
 <header class="hero">
   <div class="hero-left">
     <div class="logos">
-      <!-- Bayer cross logo -->
-      <div class="logo-bayer">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="48" fill="#10A0DC"/>
-          <rect x="38" y="10" width="24" height="80" fill="#fff"/>
-          <rect x="10" y="38" width="80" height="24" fill="#fff"/>
-          <circle cx="50" cy="50" r="15" fill="#10A0DC"/>
-          <text x="50" y="55" text-anchor="middle" font-size="12" font-weight="900" fill="#fff" font-family="sans-serif">BAYER</text>
-        </svg>
-      </div>
-      <span class="logo-x">×</span>
       <div class="logo-snowflake">
-        <!-- Snowflake logo simplified -->
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <line x1="50" y1="5" x2="50" y2="95" stroke="white" stroke-width="12" stroke-linecap="round"/>
-          <line x1="5" y1="27.5" x2="95" y2="72.5" stroke="white" stroke-width="12" stroke-linecap="round"/>
-          <line x1="95" y1="27.5" x2="5" y2="72.5" stroke="white" stroke-width="12" stroke-linecap="round"/>
-          <line x1="30" y1="5" x2="50" y2="22" stroke="white" stroke-width="8" stroke-linecap="round"/>
-          <line x1="70" y1="5" x2="50" y2="22" stroke="white" stroke-width="8" stroke-linecap="round"/>
-          <line x1="30" y1="95" x2="50" y2="78" stroke="white" stroke-width="8" stroke-linecap="round"/>
-          <line x1="70" y1="95" x2="50" y2="78" stroke="white" stroke-width="8" stroke-linecap="round"/>
-        </svg>
+        <img src="bug-white.png" alt="Snowflake" width="32" height="32" />
         Snowflake
       </div>
     </div>
-    <p class="hero-eyebrow">Bayer Pharmaceuticals × Snowflake</p>
-    <h1 class="hero-title">Commercial AI/ML Solutions</h1>
-    <p class="hero-subtitle">Ready-to-Deploy Snowflake Notebooks for Bayer Commercial Teams</p>
-    <p class="hero-tagline">Powered by Snowflake Cortex AI | Built for Immediate Impact</p>
+    <p class="hero-eyebrow">Sector Seguros × Snowflake</p>
+    <h1 class="hero-title">Soluciones IA/ML para Seguros</h1>
+    <p class="hero-subtitle">Notebooks Snowflake listos para desplegar en equipos de seguros</p>
+    <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
   </div>
 
   <div class="stats-box">
-    <div class="stat-number">27</div>
-    <div class="stat-label">Use Cases</div>
+    <div class="stat-number">12</div>
+    <div class="stat-label">Casos de Uso</div>
     <hr class="stats-divider"/>
-    <div class="stat-time">10-18 min</div>
-    <div class="stat-time-label">Setup Time</div>
+    <div class="stat-time">8-15 min</div>
+    <div class="stat-time-label">Tiempo de Configuración</div>
   </div>
 </header>
 
 <!-- ── INTRO ──────────────────────────────────────────────── -->
 <section class="intro">
-  <h2>Accelerate Your Commercial Analytics with Pre-Built AI Solutions</h2>
-  <p>Each solution includes a downloadable Snowflake Notebook with synthetic data, step-by-step tutorials,
-     and SQL-first implementations using Cortex AI/ML. All processing stays within Snowflake—no external
-     dependencies, ready to customize with your data.</p>
+  <h2>Acelera tu Analítica con Soluciones IA Preconfiguradas para Seguros</h2>
+  <p>Cada solución incluye un Notebook Snowflake descargable con datos sintéticos, tutoriales paso a paso
+     e implementaciones SQL-first con Cortex AI/ML. Todo el procesamiento permanece dentro de Snowflake,
+     sin dependencias externas, listo para personalizar con tus propios datos.</p>
 </section>
 
 <!-- ── FILTERS ───────────────────────────────────────────── -->
 <div class="filters-bar">
   <div class="filters-left" id="filterBtns">
-    <button class="filter-btn active" data-filter="all">All (27)</button>
-    <button class="filter-btn" data-filter="ml">Machine Learning (15)</button>
-    <button class="filter-btn" data-filter="nlp">AI &amp; Natural Language (9)</button>
-    <button class="filter-btn" data-filter="journey">Patient Journey (3)</button>
+    <button class="filter-btn active" data-filter="all">Todos (12)</button>
+    <button class="filter-btn" data-filter="fraude">Detección de Fraude (3)</button>
+    <button class="filter-btn" data-filter="riesgo">Riesgo y Suscripción (4)</button>
+    <button class="filter-btn" data-filter="nlp">IA y Lenguaje Natural (3)</button>
+    <button class="filter-btn" data-filter="siniestros">Gestión de Siniestros (2)</button>
   </div>
   <div class="search-box">
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
       <circle cx="9" cy="9" r="7"/><line x1="15" y1="15" x2="19" y2="19"/>
     </svg>
-    <input id="searchInput" type="text" placeholder="Search use cases…" />
+    <input id="searchInput" type="text" placeholder="Buscar casos de uso…" />
   </div>
 </div>
 
 <!-- ── RESULTS COUNT ─────────────────────────────────────── -->
-<div class="results-count" id="resultsCount">Showing 27 of 27 use cases</div>
+<div class="results-count" id="resultsCount">Mostrando 12 de 12 casos de uso</div>
 
 <!-- ── CARDS ─────────────────────────────────────────────── -->
 <main class="cards-grid" id="cardsGrid"></main>
@@ -468,100 +469,100 @@
 <script>
 const USE_CASES = [
   {
-    id:"UC01", cat:"ml", catLabel:"Machine Learning", time:"15 min",
-    title:"Patient Adherence Risk Prediction",
-    pain:"40-60% of cardiovascular patients don't adhere to anticoagulation therapy. No unified way to identify at-risk AFib patients across touchpoints.",
-    desc:"AI-powered risk scoring using Snowflake Cortex ML to predict 30/60/90-day adherence drops for Xarelto patients. Combines patient portal, pharmacy fills, app usage, and support calls into actionable insights.",
-    features:["Classification models with Cortex ML","Real-time patient risk scoring","Interactive Streamlit dashboard","Automated intervention recommendations"]
+    id:"UC01", cat:"fraude", catLabel:"Detección de Fraude", time:"12 min",
+    title:"Puntuación de Fraude en Siniestros",
+    pain:"Miles de millones se pierden anualmente por siniestros fraudulentos. La revisión manual detecta menos del 30% del fraude antes de realizar el pago.",
+    desc:"Puntuación ML de fraude en tiempo real al registrar el siniestro, usando detección de anomalías y análisis de grafos de red. Marca reclamaciones sospechosas para revisión antes del pago, reduciendo pérdidas por fraude hasta un 40%.",
+    features:["Modelos de detección de anomalías","Análisis de red de vínculos","Puntuación en tiempo real en FNOL","Integración de alertas al perito"]
   },
   {
-    id:"UC02", cat:"ml", catLabel:"Machine Learning", time:"12 min",
-    title:"Campaign Performance Optimizer",
-    pain:"Manual analysis of Xarelto campaigns across 50+ markets. No automated attribution. Budget decisions on lagging indicators.",
-    desc:"SQL-based multi-touch attribution using window functions to credit touchpoints in conversion journeys. Linear and time-decay models calculate channel ROI without ML complexity.",
-    features:["Window functions for attribution","Multi-touch attribution models","Channel ROI calculations","Conversion path analysis"]
+    id:"UC02", cat:"fraude", catLabel:"Detección de Fraude", time:"10 min",
+    title:"Detección de Accidentes Simulados",
+    pain:"Los accidentes de tráfico simulados son difíciles de identificar manualmente. Las redes de fraude organizado explotan inconsistencias entre múltiples siniestros.",
+    desc:"Detección de patrones con Cortex ML sobre atributos del siniestro, talleres de reparación, proveedores médicos y redes de tomadores para identificar tramas de fraude coordinado con alta precisión.",
+    features:["Algoritmos de detección de tramas","Análisis de red de proveedores","Cruce de patrones entre siniestros","Automatización de derivación a investigación"]
   },
   {
-    id:"UC03", cat:"nlp", catLabel:"AI & Natural Language", time:"18 min",
-    title:"HCP Sentiment & Feedback Analyzer",
-    pain:"Thousands of HCP call notes and survey responses sit unanalyzed in Veeva. Manual review misses patterns and emerging objections.",
-    desc:"Cortex AI sentiment classification and entity extraction on HCP notes. Identifies key themes, objections, and opportunities at scale to prioritize rep coaching and messaging.",
-    features:["Cortex AI sentiment analysis","Entity extraction from notes","Theme clustering","Rep coaching recommendations"]
+    id:"UC03", cat:"fraude", catLabel:"Detección de Fraude", time:"11 min",
+    title:"Fraude en Solicitudes e Identidad",
+    pain:"Las solicitudes de póliza fraudulentas utilizan identidades sintéticas. Las pérdidas se acumulan antes de detectarse en el momento del siniestro.",
+    desc:"Puntuación de verificación de identidad en el momento de contratación combinando señales de comportamiento, validación de documentos y datos de terceros para detectar identidades sintéticas en la solicitud.",
+    features:["Puntuación de identidad sintética","Validación de consistencia documental","Análisis de señales de comportamiento","Marcado de riesgo en contratación"]
   },
   {
-    id:"UC04", cat:"ml", catLabel:"Machine Learning", time:"14 min",
-    title:"Sales Territory Forecasting",
-    pain:"Territory-level forecasts rely on spreadsheets and past-year trends. No account-level granularity or leading indicators.",
-    desc:"Time-series forecasting at territory and account level using Snowflake ML Forecast. Integrates Rx data, promotional spend, and competitor activity to generate 90-day outlooks.",
-    features:["ML Forecast function","Account-level predictions","Competitor signal integration","90-day rolling forecast"]
+    id:"UC04", cat:"riesgo", catLabel:"Riesgo y Suscripción", time:"14 min",
+    title:"Puntuación Dinámica de Riesgo en Auto",
+    pain:"Las reglas estáticas de suscripción pasan por alto señales de riesgo matizadas. Los competidores que usan ML tarifican con mayor precisión y provocan selección adversa.",
+    desc:"Puntuación de riesgo en tiempo real con Cortex ML sobre señales telemáticas, del vehículo, demográficas y de comportamiento. Permite ajustes de tarificación a nivel de segmento en el momento de la cotización.",
+    features:["Modelos ML con Cortex","Integración de señales telemáticas","Recomendaciones de tarificación por segmento","Marco de pruebas A/B de precios"]
   },
   {
-    id:"UC05", cat:"journey", catLabel:"Patient Journey", time:"16 min",
-    title:"Patient Journey Mapping",
-    pain:"Patient touchpoints are fragmented across pharmacy, digital, and field channels. No single view of the treatment journey.",
-    desc:"End-to-end patient journey reconstruction using Snowflake's graph analytics and sequence analysis. Maps diagnosis-to-prescription paths and identifies drop-off points.",
-    features:["Graph-based journey mapping","Sequence analysis","Drop-off identification","Channel attribution"]
+    id:"UC05", cat:"riesgo", catLabel:"Riesgo y Suscripción", time:"15 min",
+    title:"Analítica de Exposición a Catástrofes",
+    pain:"La exposición a eventos CAT no es visible en tiempo real. El riesgo de concentración se identifica solo después de que ocurren los eventos, limitando las decisiones de reaseguro.",
+    desc:"Analítica geoespacial en Snowflake que combina ubicaciones de pólizas con datos meteorológicos, de inundación y sísmicos para calcular la exposición CAT en tiempo real por zona y tramo de reaseguro.",
+    features:["Agregación geoespacial de riesgo","Dashboards de exposición en tiempo real","Alineación con tratados de reaseguro","Modelización de escenarios multi-riesgo"]
   },
   {
-    id:"UC06", cat:"nlp", catLabel:"AI & Natural Language", time:"10 min",
-    title:"Medical Information Query Assistant",
-    pain:"Medical affairs teams spend hours answering repetitive HCP questions. Inconsistent responses create compliance risk.",
-    desc:"RAG-based Q&A system built on Cortex Search over approved medical information documents. Returns accurate, citation-backed answers in seconds, with full audit trail.",
-    features:["Cortex Search integration","RAG pipeline","Citation-backed answers","Compliance audit trail"]
+    id:"UC06", cat:"riesgo", catLabel:"Riesgo y Suscripción", time:"13 min",
+    title:"Predicción de Fuga en Renovación",
+    pain:"Entre el 20-30% de las pólizas caducan anualmente. No existen señales proactivas para identificar tomadores en riesgo antes de la fecha de renovación.",
+    desc:"Análisis de supervivencia y modelos ML de abandono sobre el comportamiento del tomador, historial de pagos y datos de interacción. Predice la no renovación con 90 días de antelación para activar campañas de retención.",
+    features:["Modelos de análisis de supervivencia","Previsión de fuga a 90 días","Activación de campañas de retención","Dashboard de alertas para agentes"]
   },
   {
-    id:"UC07", cat:"ml", catLabel:"Machine Learning", time:"13 min",
-    title:"Market Basket & Co-Prescription Analysis",
-    pain:"Limited visibility into which therapeutic areas co-prescribe with Bayer products. Missed cross-sell opportunities.",
-    desc:"Association rule mining on prescription data to identify co-prescription patterns. Surfaces high-confidence rules to inform portfolio messaging and HCP targeting.",
-    features:["Association rule mining","Co-prescription patterns","Portfolio messaging insights","HCP targeting signals"]
+    id:"UC07", cat:"riesgo", catLabel:"Riesgo y Suscripción", time:"12 min",
+    title:"Segmentación de Riesgo Telemático",
+    pain:"Los productos de pago por uso utilizan puntuaciones básicas. Los vastos datos telemáticos están infrautilizados para una diferenciación granular del riesgo y la personalización.",
+    desc:"Clustering no supervisado sobre características del comportamiento de conducción para crear segmentos de riesgo granulares para tarificación dinámica, feedback personalizado y seguros de uso.",
+    features:["Clustering de comportamiento al volante","Perfilado de segmentos de riesgo","Señales de tarificación dinámica","Alimentación de app de coaching al conductor"]
   },
   {
-    id:"UC08", cat:"journey", catLabel:"Patient Journey", time:"17 min",
-    title:"Treatment Persistence Predictor",
-    pain:"High patient drop-off after 90 days on Xarelto. No proactive signals to trigger intervention before discontinuation.",
-    desc:"Survival analysis and ML churn modeling to predict treatment discontinuation risk. Outputs daily patient scores to trigger targeted patient support programs.",
-    features:["Survival analysis models","ML churn prediction","Daily risk scoring","Intervention trigger logic"]
+    id:"UC08", cat:"nlp", catLabel:"IA y Lenguaje Natural", time:"10 min",
+    title:"Extracción Documental IA en Siniestros",
+    pain:"Los equipos de siniestros extraen manualmente datos de PDFs, informes policiales y documentación médica. El proceso puede tardar de 3 a 5 días por siniestro complejo.",
+    desc:"Pipeline de inteligencia documental con Cortex AI que extrae datos estructurados de documentos de siniestros no estructurados —atestados, facturas médicas, presupuestos de reparación— reduciendo el tiempo de tramitación un 70%.",
+    features:["Análisis documental con Cortex AI","Extracción de PDFs e imágenes","Salida estructurada al sistema de siniestros","Activación de tramitación automática"]
   },
   {
-    id:"UC09", cat:"nlp", catLabel:"AI & Natural Language", time:"11 min",
-    title:"Competitive Intelligence Monitor",
-    pain:"Competitive news and clinical data scattered across web, journals, and CRM notes. Weekly manual compilation takes 4+ hours.",
-    desc:"Automated competitive intelligence pipeline using Cortex AI to classify and summarize competitive signals from multiple sources into a daily digest.",
-    features:["Multi-source ingestion","Cortex AI classification","Automated summarization","Daily digest output"]
+    id:"UC09", cat:"nlp", catLabel:"IA y Lenguaje Natural", time:"11 min",
+    title:"Inteligencia sobre Quejas de Clientes",
+    pain:"Miles de reclamaciones de clientes se procesan manualmente cada mes. Los patrones de causa raíz se detectan tarde, cuando ya ha ocurrido una escalada regulatoria.",
+    desc:"Clasificación NLP y análisis de sentimiento sobre el texto de quejas para detectar problemas emergentes de servicio, priorizar colas de resolución e identificar señales de riesgo regulatorio de forma proactiva.",
+    features:["Clasificación automática de quejas","Monitorización de tendencias de sentimiento","Indicadores de riesgo regulatorio","Alertas proactivas de escalada"]
   },
   {
-    id:"UC10", cat:"ml", catLabel:"Machine Learning", time:"15 min",
-    title:"HCP Targeting & Segmentation",
-    pain:"Static HCP segments updated quarterly. Sales reps missing high-potential prescribers in their territory.",
-    desc:"Dynamic HCP segmentation using clustering algorithms on Rx behavior, specialty, and engagement data. Segments refresh weekly and feed directly into CRM.",
-    features:["K-means clustering","Weekly segment refresh","CRM feed integration","Territory heatmaps"]
+    id:"UC10", cat:"nlp", catLabel:"IA y Lenguaje Natural", time:"15 min",
+    title:"Asistente Inteligente de Consultas de Póliza",
+    pain:"Los agentes del contact center dedican el 40% del tiempo de llamada a buscar condiciones de póliza. Las respuestas inconsistentes generan riesgo de cumplimiento y baja satisfacción del cliente.",
+    desc:"Asistente Q&A basado en RAG construido sobre Cortex Search sobre documentos de póliza, condiciones de cobertura y preguntas frecuentes. Ofrece respuestas precisas y con cita de fuente al agente en menos de 3 segundos.",
+    features:["Cortex Search sobre documentación","Pipeline de respuesta RAG","Respuestas con referencia a fuente","Integración en la interfaz del agente"]
   },
   {
-    id:"UC11", cat:"nlp", catLabel:"AI & Natural Language", time:"12 min",
-    title:"Adverse Event Signal Detection",
-    pain:"Post-marketing surveillance requires manual review of thousands of patient and HCP reports for safety signals.",
-    desc:"NLP-based adverse event extraction and signal detection on unstructured pharmacovigilance reports. Flags potential safety signals for pharmacovigilance review.",
-    features:["NLP entity extraction","Signal detection algorithms","Priority flag scoring","PV team alert integration"]
+    id:"UC11", cat:"siniestros", catLabel:"Gestión de Siniestros", time:"13 min",
+    title:"Predicción de Severidad en Siniestros de Auto",
+    pain:"Los peritos estiman manualmente los costes de reparación con alta variabilidad. La sobredotación o infradotación de reservas genera riesgo financiero y mala experiencia de cliente.",
+    desc:"Modelos de gradient boosting que predicen la severidad del siniestro en el primer aviso de pérdida usando características del vehículo, del incidente y del tomador. Genera recomendaciones de reserva al perito de forma instantánea.",
+    features:["Predicción de severidad en FNOL","Optimización de reservas técnicas","Benchmarking con patrones históricos","Dashboard Streamlit para peritos"]
   },
   {
-    id:"UC12", cat:"journey", catLabel:"Patient Journey", time:"16 min",
-    title:"Access & Reimbursement Barrier Analysis",
-    pain:"Insurance prior authorization denials causing prescription abandonment. No systematic tracking of access barriers by payer or geography.",
-    desc:"Analytics pipeline tracking PA denial rates, appeal outcomes, and abandonment by payer and geography. Identifies access barrier patterns to prioritize market access efforts.",
-    features:["PA denial tracking","Appeal outcome analysis","Geographic barrier mapping","Market access prioritization"]
+    id:"UC12", cat:"siniestros", catLabel:"Gestión de Siniestros", time:"14 min",
+    title:"Identificador de Oportunidades de Subrogación",
+    pain:"Las oportunidades de recuperación por subrogación se pierden porque los terceros responsables no se identifican durante la tramitación. Millones en pérdidas recuperables quedan sin cobrar.",
+    desc:"Modelo de clasificación ML que identifica candidatos de alta probabilidad de subrogación al cierre del siniestro, usando indicadores de culpabilidad, informes policiales y señales del tipo de cobertura.",
+    features:["Puntuación de probabilidad de subrogación","Extracción de señales de culpabilidad","Estimación del importe recuperable","Derivación automática al equipo legal"]
   }
 ];
 
-const catMap = { ml:"ml", "AI & Natural Language":"nlp", "Patient Journey":"journey" };
+const TOTAL = 12;
 
 function renderCards(list) {
   const grid = document.getElementById('cardsGrid');
   const count = document.getElementById('resultsCount');
   grid.innerHTML = '';
-  count.textContent = `Showing ${list.length} of 27 use cases`;
+  count.textContent = `Mostrando ${list.length} de ${TOTAL} casos de uso`;
   list.forEach(uc => {
-    const catClass = uc.catLabel === 'AI & Natural Language' ? 'nlp' : uc.catLabel === 'Patient Journey' ? 'journey' : '';
+    const catClass = { 'Riesgo y Suscripción':'riesgo', 'IA y Lenguaje Natural':'nlp', 'Gestión de Siniestros':'siniestros' }[uc.catLabel] || '';
     grid.innerHTML += `
       <article class="card">
         <div class="card-header">
@@ -570,13 +571,15 @@ function renderCards(list) {
             <span class="badge-cat ${catClass}">${uc.catLabel}</span>
           </div>
           <span class="card-time">
-            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2"><circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/></svg>
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2">
+              <circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/>
+            </svg>
             ${uc.time}
           </span>
         </div>
         <h3 class="card-title">${uc.title}</h3>
         <div class="pain-point">
-          <div class="pain-point-label">Pain Point</div>
+          <div class="pain-point-label">Problema</div>
           <p>${uc.pain}</p>
         </div>
         <p class="card-desc">${uc.desc}</p>
@@ -584,8 +587,8 @@ function renderCards(list) {
           ${uc.features.map(f => `<li>${f}</li>`).join('')}
         </ul>
         <div class="card-actions">
-          <a href="#" class="btn-primary">Download Notebook</a>
-          <a href="#" class="btn-secondary">Read Guide</a>
+          <a href="#" class="btn-primary" onclick="descargarNotebook('${uc.id}');return false;">Descargar Notebook</a>
+          <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
         </div>
       </article>`;
   });
@@ -619,6 +622,79 @@ document.getElementById('searchInput').addEventListener('input', e => {
 });
 
 renderCards(USE_CASES);
+
+function descargarNotebook(ucId) {
+  if (ucId === 'UC01') {
+    const a = document.createElement('a');
+    a.href = 'notebook_uc01_fraude.ipynb';
+    a.download = 'UC01_Puntuacion_Fraude_Siniestros.ipynb';
+    document.body.appendChild(a); a.click(); a.remove();
+  } else {
+    alert('Notebook no disponible aún para ' + ucId);
+  }
+}
+
+function verGuia(ucId) {
+  if (ucId === 'UC01') {
+    document.getElementById('guiaModal').classList.add('active');
+  } else {
+    alert('Guía no disponible aún para ' + ucId);
+  }
+}
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
+});
+function cerrarModal(id) { document.getElementById(id).classList.remove('active'); }
 </script>
+
+<div class="modal-overlay" id="guiaModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarModal('guiaModal')">&times;</button>
+    <span class="guide-badge">UC01</span>
+    <h2>Puntuación de Fraude en Siniestros</h2>
+    <p><strong>Caso de Uso 01: Puntuación de Fraude en Siniestros</strong></p>
+    <h3>Contexto de Negocio — Sector Seguros</h3>
+    <p>Este notebook demuestra la detección de fraude en siniestros mediante clasificación ML en Snowflake.</p>
+    <p><strong>Foco:</strong> Siniestros de seguros (auto, hogar, vida) — detección de fraude en la declaración del siniestro.</p>
+    <p><strong>Reto de negocio:</strong> Predecir y prevenir el fraude en siniestros antes del pago, reduciendo pérdidas hasta un 40%.</p>
+    <h3>Objetivos de Aprendizaje</h3>
+    <ul>
+      <li>Crear flujos ML con SNOWFLAKE.ML.CLASSIFICATION</li>
+      <li>Generar datos sintéticos de siniestros de seguros</li>
+      <li>Construir variables predictoras a partir de datos del siniestro y del tomador</li>
+      <li>Evaluar modelos de clasificación binaria</li>
+      <li>Construir dashboards de puntuación de riesgo con Streamlit</li>
+    </ul>
+    <h3>Funcionalidades</h3>
+    <ul>
+      <li><strong>Modelo ML:</strong> Clasificación binaria para predicción de fraude</li>
+      <li><strong>Datos sintéticos:</strong> 500 tomadores, 1.000 siniestros con indicadores de fraude</li>
+      <li><strong>Variables:</strong> dias_hasta_notificacion, importe_declarado, num_testigos, hora_accidente, taller_sospechoso, ratio_siniestros_ano</li>
+      <li><strong>Dashboard Streamlit:</strong> Puntuación interactiva y filtrado por nivel de riesgo</li>
+    </ul>
+    <h3>Datos Generados</h3>
+    <ul>
+      <li><strong>Tomadores:</strong> Datos demográficos, antigüedad, historial de siniestros previos</li>
+      <li><strong>Siniestros:</strong> Fecha, importe, tiempo de notificación, testigos, taller</li>
+      <li><strong>Predicciones ML:</strong> Nivel de riesgo (Alto/Medio/Bajo) con probabilidades</li>
+    </ul>
+    <h3>Estratificación de Riesgo</h3>
+    <ul>
+      <li><strong>Alto Riesgo (&ge;70%):</strong> Derivar a equipo de investigación</li>
+      <li><strong>Riesgo Medio (30-70%):</strong> Revisión por perito senior</li>
+      <li><strong>Bajo Riesgo (&lt;30%):</strong> Tramitación normal</li>
+    </ul>
+    <h3>Cómo Usar</h3>
+    <ul>
+      <li>Ejecutar las celdas secuencialmente de arriba a abajo</li>
+      <li>La configuración del entorno crea una base de datos aislada</li>
+      <li>Los datos sintéticos generan 1.000 siniestros automáticamente</li>
+      <li>El modelo se entrena en 30-60 segundos</li>
+      <li>El dashboard se lanza interactivamente en el notebook</li>
+    </ul>
+    <p class="guide-footer">Desarrollado con Snowflake Cortex ML + Streamlit</p>
+  </div>
+</div>
 </body>
 </html>

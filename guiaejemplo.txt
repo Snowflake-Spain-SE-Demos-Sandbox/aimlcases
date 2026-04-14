@@ -1,0 +1,47 @@
+UC01
+Patient Adherence Risk Prediction
+
+Use Case 01: Patient Adherence Risk Prediction (Bayer Version)
+Customer Context - Bayer Pharmaceuticals
+This notebook demonstrates patient adherence risk prediction using Bayer Pharmaceuticals products and therapeutic areas:
+
+Medication Focus: Xarelto (rivaroxaban) for cardiovascular indications Therapeutic Area: Cardiology - Anticoagulation therapy
+Business Challenge: Predict and prevent medication non-adherence in chronic cardiovascular patients
+
+Learning Objectives
+Create ML workflows using Snowflake ML.CLASSIFICATION
+Generate synthetic adherence data for pharmaceutical products
+Engineer features from pharmacy fills and app engagement
+Evaluate binary classification models
+Build risk stratification dashboards
+Features
+ML Model: Binary classification for adherence prediction
+Synthetic Data: 500 patients, 8 refills each, 120 days app usage
+Feature Engineering: Fill gaps, engagement patterns, demographics
+Streamlit Dashboard: Interactive risk scoring and patient filtering
+Data Generated
+Patients: Demographics, insurance, enrollment dates
+Pharmacy Fills: Xarelto 20mg refill history
+App Usage: Mobile app engagement patterns
+ML Predictions: Risk tier (High/Medium/Low) with probabilities
+Synthetic Data Changes from Novo Nordisk Version
+ONLY these synthetic data elements were changed:
+
+Medication: "Semaglutide 1mg" → "Xarelto 20mg"
+Changed in Cell 5 (pharmacy_fills table generation)
+Reflects Bayer's cardiovascular anticoagulant for chronic adherence monitoring
+IDENTICAL to original:
+
+All SQL logic and patterns
+All Snowflake ML.CLASSIFICATION functions
+All feature engineering (fill gaps, app usage, demographics)
+All model evaluation and prediction methods
+All Streamlit dashboard code
+All educational content and explanations
+How to Use
+Run cells sequentially from top to bottom
+Environment setup creates isolated database
+Synthetic data generates 500 patients automatically
+Model trains in 30-60 seconds
+Dashboard launches interactively in notebook
+Built with Snowflake Cortex ML + Streamlit
