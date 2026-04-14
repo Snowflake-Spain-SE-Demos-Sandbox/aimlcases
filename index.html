@@ -361,6 +361,36 @@
     }
     .btn-secondary:hover { background: #FFF0F0; }
 
+    .btn-tertiary {
+      flex: 1;
+      padding: 10px;
+      background: #1a1a2e;
+      color: #00d4aa;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-tertiary:hover { background: #2a2a4e; }
+
+    .card-actions { flex-wrap: wrap; }
+
+    .prompt-step { margin-bottom: 18px; }
+    .prompt-step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prompt-step-num { background: #1a1a2e; color: #00d4aa; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .prompt-step-title { font-size: 13px; font-weight: 600; color: #333; }
+    .prompt-step-desc { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+    .prompt-code { position: relative; background: #1a1a2e; color: #e0e0e0; border-radius: 8px; padding: 12px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .prompt-code .copy-btn { position: absolute; top: 6px; right: 8px; background: rgba(255,255,255,0.1); border: none; color: #aaa; font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
+    .prompt-code .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .prompt-code .kw { color: #00d4aa; }
+    .modal-box .prompt-intro { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
+
     .modal-overlay {
       display: none;
       position: fixed;
@@ -589,6 +619,7 @@ function renderCards(list) {
         <div class="card-actions">
           <a href="#" class="btn-primary" onclick="descargarNotebook('${uc.id}');return false;">Descargar Notebook</a>
           <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
+          <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
         </div>
       </article>`;
   });
@@ -634,67 +665,367 @@ function descargarNotebook(ucId) {
   }
 }
 
-function verGuia(ucId) {
-  if (ucId === 'UC01') {
-    document.getElementById('guiaModal').classList.add('active');
-  } else {
-    alert('Guía no disponible aún para ' + ucId);
+const GUIAS = {
+  UC01: {
+    title: 'Puntuación de Fraude en Siniestros',
+    contexto: 'Este notebook demuestra la detección de fraude en siniestros mediante clasificación ML en Snowflake.',
+    foco: 'Siniestros de seguros (auto, hogar, vida) — detección de fraude en la declaración del siniestro.',
+    reto: 'Predecir y prevenir el fraude en siniestros antes del pago, reduciendo pérdidas hasta un 40%.',
+    objetivos: ['Crear flujos ML con SNOWFLAKE.ML.CLASSIFICATION','Generar datos sintéticos de siniestros de seguros','Construir variables predictoras a partir de datos del siniestro y del tomador','Evaluar modelos de clasificación binaria','Construir dashboards de puntuación de riesgo con Streamlit'],
+    funcionalidades: ['Modelo ML: Clasificación binaria para predicción de fraude','Datos sintéticos: 500 tomadores, 1.000 siniestros con indicadores de fraude','Variables: dias_hasta_notificacion, importe_declarado, num_testigos, hora_accidente, taller_sospechoso, ratio_siniestros_ano','Dashboard Streamlit: Puntuación interactiva y filtrado por nivel de riesgo'],
+    datos: ['Tomadores: Datos demográficos, antigüedad, historial de siniestros previos','Siniestros: Fecha, importe, tiempo de notificación, testigos, taller','Predicciones ML: Nivel de riesgo (Alto/Medio/Bajo) con probabilidades'],
+    estratificacion: ['Alto Riesgo (≥70%): Derivar a equipo de investigación','Riesgo Medio (30-70%): Revisión por perito senior','Bajo Riesgo (<30%): Tramitación normal'],
+    como_usar: ['Ejecutar las celdas secuencialmente de arriba a abajo','La configuración del entorno crea una base de datos aislada','Los datos sintéticos generan 1.000 siniestros automáticamente','El modelo se entrena en 30-60 segundos','El dashboard se lanza interactivamente en el notebook']
+  },
+  UC02: {
+    title: 'Detección de Accidentes Simulados',
+    contexto: 'Este notebook construye un detector de tramas de fraude coordinado analizando redes de siniestros, talleres y tomadores.',
+    foco: 'Accidentes de tráfico simulados y fraude organizado en redes de proveedores.',
+    reto: 'Identificar tramas de fraude coordinado entre múltiples siniestros, talleres y proveedores médicos.',
+    objetivos: ['Modelar redes de relaciones entre siniestros y proveedores','Generar datos sintéticos de tramas de fraude','Construir variables de red (frecuencia, coincidencias, patrones)','Entrenar clasificador de tramas con ML.CLASSIFICATION','Visualizar redes sospechosas en Streamlit'],
+    funcionalidades: ['Modelo ML: Clasificación de tramas de fraude coordinado','Datos sintéticos: 2.000 siniestros vinculados a 50 talleres y 30 proveedores médicos','Variables: frecuencia_taller, coincidencia_testigos, mismo_taller_repetido, importe_vs_media','Dashboard Streamlit: Investigación de redes sospechosas con filtros'],
+    datos: ['Talleres: 50 talleres con indicadores de sospecha','Proveedores médicos: 30 proveedores con patrones de facturación','Siniestros vinculados: Relaciones entre tomadores, talleres y proveedores','Predicciones ML: Trama Probable / Sospechoso / Normal'],
+    estratificacion: ['Trama Probable (≥70%): Derivar a unidad de fraude organizado','Sospechoso (30-70%): Revisión cruzada de siniestros vinculados','Normal (<30%): Sin acción adicional'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan talleres, proveedores y siniestros vinculados','El modelo aprende patrones de red en 30-60 segundos','El dashboard permite explorar redes sospechosas']
+  },
+  UC03: {
+    title: 'Fraude en Solicitudes e Identidad',
+    contexto: 'Este notebook construye un sistema de detección de identidades sintéticas en el momento de contratación de póliza.',
+    foco: 'Solicitudes de póliza fraudulentas con identidades sintéticas o robadas.',
+    reto: 'Detectar identidades sintéticas antes de emitir la póliza, evitando pérdidas futuras en siniestros.',
+    objetivos: ['Combinar señales documentales y de comportamiento online','Generar datos sintéticos de solicitudes fraudulentas','Identificar patrones de identidad sintética (emails temporales, IPs VPN, formularios rápidos)','Entrenar clasificador en punto de contratación','Construir panel de suscripción con alertas'],
+    funcionalidades: ['Modelo ML: Clasificación de identidad sintética en contratación','Datos sintéticos: 1.000 solicitudes con señales de sesión online','Variables: email_temporal, telefono_prepago, ip_vpn, tiempo_formulario, consultas_bureau','Dashboard Streamlit: Panel de verificación para suscriptores'],
+    datos: ['Solicitudes: Datos de identidad, empleo, historial crediticio','Sesiones online: Tiempos, dispositivo, IP, correcciones','Predicciones ML: Bloquear / Verificación Manual / Aprobar'],
+    estratificacion: ['Bloquear (≥80%): Rechazar solicitud automáticamente','Verificación Manual (40-80%): Solicitar documentación adicional','Aprobar (<40%): Continuar proceso de contratación'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan solicitudes y datos de sesión','El modelo detecta patrones de identidad sintética','El dashboard muestra solicitudes sospechosas en tiempo real']
+  },
+  UC04: {
+    title: 'Puntuación Dinámica de Riesgo en Auto',
+    contexto: 'Este notebook construye un motor de puntuación de riesgo en auto combinando perfil del conductor y datos telemáticos.',
+    foco: 'Tarificación dinámica de seguros de auto basada en telemática y comportamiento de conducción.',
+    reto: 'Superar las reglas estáticas de suscripción con puntuación ML en tiempo real para tarificación por segmento.',
+    objetivos: ['Integrar señales telemáticas con perfil del conductor','Generar datos sintéticos de conducción y siniestralidad','Entrenar modelo predictivo de siniestralidad','Crear segmentos de tarificación basados en riesgo','Dashboard para suscriptores con recomendaciones de prima'],
+    funcionalidades: ['Modelo ML: Predicción de siniestralidad para tarificación','Datos sintéticos: 800 pólizas con datos telemáticos','Variables: km_mes, exceso_velocidad, frenazos_bruscos, conduccion_nocturna, bonus_malus','Dashboard Streamlit: Panel de tarificación por segmento'],
+    datos: ['Pólizas: Datos del conductor, vehículo, bonus-malus','Telemática: Señales de conducción agregadas por póliza','Predicciones ML: Prima Alta / Prima Media / Prima Baja'],
+    estratificacion: ['Prima Alta (≥60%): Recargo por riesgo elevado','Prima Media (30-60%): Tarifa estándar','Prima Baja (<30%): Descuento por buen conductor'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan pólizas con datos telemáticos','El modelo predice siniestralidad por póliza','El dashboard muestra segmentación y recomendaciones de prima']
+  },
+  UC05: {
+    title: 'Analítica de Exposición a Catástrofes',
+    contexto: 'Este notebook construye un sistema de análisis de exposición CAT geoespacial con agregación por zona y tramo de reaseguro.',
+    foco: 'Exposición a eventos catastróficos (inundación, terremoto, granizo) y su impacto en la cartera.',
+    reto: 'Visualizar la concentración de riesgo en tiempo real y cuantificar el impacto de escenarios CAT en retención y reaseguro.',
+    objetivos: ['Geolocalizar la cartera de pólizas por zona de riesgo','Calcular exposición agregada y PML (Probable Maximum Loss)','Asignar exposición por tramo de reaseguro (retención, XL-1, XL-2)','Simular escenarios catastróficos y cuantificar impacto','Dashboard ejecutivo de exposición CAT'],
+    funcionalidades: ['Analítica SQL: Agregación geoespacial sin ML','Datos sintéticos: 2.000 pólizas geolocalizadas en España, 50 zonas de riesgo','Cálculos: PML, concentración, exposición por tramo de reaseguro','Dashboard Streamlit: Panel ejecutivo con escenarios y KPIs'],
+    datos: ['Pólizas geolocalizadas: Tipo, ubicación, suma asegurada, construcción','Zonas de riesgo: Tipo de peligro, nivel, frecuencia histórica','Escenarios CAT: 5 eventos hipotéticos con impacto calculado'],
+    estratificacion: ['Zona Crítica (PML > 20M€): Acción de reaseguro inmediata','Zona Alta (PML 5-20M€): Monitorización y revisión de límites','Zona Moderada (PML < 5M€): Dentro de tolerancia de retención'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se genera cartera geolocalizada y zonas de riesgo','Los cálculos de exposición son 100% SQL (sin ML)','El dashboard muestra PML, concentración y escenarios']
+  },
+  UC06: {
+    title: 'Predicción de Fuga en Renovación',
+    contexto: 'Este notebook construye un modelo de predicción de no-renovación 90 días antes del vencimiento de la póliza.',
+    foco: 'Retención de clientes — identificar tomadores en riesgo de no renovar su póliza.',
+    reto: 'Predecir la fuga con 90 días de antelación para activar campañas de retención dirigidas.',
+    objetivos: ['Combinar datos de cartera con señales de interacción del tomador','Generar datos sintéticos de renovación y comportamiento','Entrenar modelo predictivo de no-renovación','Priorizar acciones de retención por impacto económico','Dashboard para equipos comerciales y de retención'],
+    funcionalidades: ['Modelo ML: Predicción de no-renovación a 90 días','Datos sintéticos: 1.500 pólizas con historial de interacciones','Variables: prima, antigüedad, quejas, NPS, acceso a área cliente, ha_pedido_competencia','Dashboard Streamlit: Lista priorizada de retención con KPIs'],
+    datos: ['Cartera: Pólizas con fecha de vencimiento, prima, historial','Interacciones: Llamadas, quejas, NPS, emails, acceso web','Predicciones ML: Fuga Muy Probable / Riesgo Moderado / Probable Renovación'],
+    estratificacion: ['Fuga Muy Probable (≥70%): Llamada proactiva + oferta de retención','Riesgo Moderado (40-70%): Email personalizado + seguimiento','Probable Renovación (<40%): Proceso estándar de renovación'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan pólizas con historial de interacciones','El modelo predice probabilidad de no-renovación','El dashboard prioriza acciones por prima en riesgo']
+  },
+  UC07: {
+    title: 'Segmentación de Riesgo Telemático',
+    contexto: 'Este notebook construye una segmentación de conductores basada en datos telemáticos para tarificación dinámica.',
+    foco: 'Perfiles de conducción y segmentación no supervisada para seguros de uso (pay-as-you-drive).',
+    reto: 'Aprovechar datos telemáticos masivos para crear segmentos granulares de riesgo y personalizar la tarificación.',
+    objetivos: ['Generar perfiles telemáticos de conducción realistas','Normalizar variables para clustering','Segmentar conductores por comportamiento (Prudente, Agresivo, Urbano, Nocturno)','Asignar factores de prima por segmento','Dashboard de perfiles con comparativas'],
+    funcionalidades: ['Modelo: Clasificación basada en reglas + ML.CLASSIFICATION','Datos sintéticos: 1.000 conductores con 4 perfiles de conducción','Variables: velocidad, frenazos, aceleraciones, % nocturno, % urbano, eco-score','Dashboard Streamlit: Comparativa de segmentos y factores de prima'],
+    datos: ['Conductores telemáticos: 12 métricas de conducción por conductor','Segmentos: Prudente (0.8x) / Urbano (1.0x) / Nocturno (1.15x) / Agresivo (1.4x)','Factores de prima: Multiplicador de tarifa por segmento'],
+    estratificacion: ['Prudente (factor 0.8x): Descuento del 20% por conducción segura','Urbano (factor 1.0x): Tarifa base sin ajuste','Nocturno (factor 1.15x): Recargo 15% por riesgo nocturno','Agresivo (factor 1.4x): Recargo 40% por conducción de riesgo'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan 1.000 conductores con perfiles telemáticos','La clasificación asigna cada conductor a un segmento','El dashboard visualiza perfiles y factores de prima']
+  },
+  UC08: {
+    title: 'Extracción Documental IA en Siniestros',
+    contexto: 'Este notebook construye un pipeline de extracción de datos estructurados desde documentos de siniestros usando Cortex AI.',
+    foco: 'Procesamiento inteligente de documentos de siniestros: atestados, facturas médicas, presupuestos.',
+    reto: 'Reducir de 3-5 días a minutos el tiempo de extracción de datos de documentos complejos de siniestros.',
+    objetivos: ['Simular textos de documentos de siniestros (atestados, facturas, presupuestos)','Extraer entidades estructuradas con CORTEX.COMPLETE','Clasificar documentos automáticamente por tipo','Validar calidad de la extracción','Dashboard de estado documental'],
+    funcionalidades: ['IA Generativa: Extracción de entidades con CORTEX.COMPLETE','Datos sintéticos: 200 documentos simulados de 4 tipos','Extracción: Fecha, lugar, matrículas, lesiones, importes, culpabilidad','Dashboard Streamlit: Panel de tramitación documental'],
+    datos: ['Documentos: Atestados policiales, facturas médicas, presupuestos, declaraciones','Datos extraídos: Entidades estructuradas en JSON por documento','Siniestros enriquecidos: Vista agregada con completitud documental'],
+    estratificacion: ['Auto-tramitable: Todos los campos extraídos + importe < umbral','Revisión manual: Campos incompletos o importes altos','Pendiente documentación: Faltan documentos obligatorios'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan documentos con texto simulado','Cortex AI extrae entidades en formato JSON','El dashboard muestra el estado de cada siniestro']
+  },
+  UC09: {
+    title: 'Inteligencia sobre Quejas de Clientes',
+    contexto: 'Este notebook construye un sistema de clasificación NLP y análisis de sentimiento sobre quejas de clientes.',
+    foco: 'Análisis automatizado de reclamaciones para detectar problemas emergentes y riesgo regulatorio.',
+    reto: 'Procesar miles de quejas mensuales, clasificarlas automáticamente y detectar señales de riesgo regulatorio.',
+    objetivos: ['Generar textos de quejas realistas de clientes de seguros','Analizar sentimiento con CORTEX.SENTIMENT','Clasificar quejas por categoría con CORTEX.COMPLETE','Detectar menciones de riesgo regulatorio','Dashboard de inteligencia de quejas'],
+    funcionalidades: ['NLP: CORTEX.SENTIMENT para sentimiento + CORTEX.COMPLETE para clasificación','Datos sintéticos: 500 quejas de 4 canales y 4 productos','Detección: Riesgo regulatorio (menciones a DGSFP, abogados, denuncias)','Dashboard Streamlit: Panel de tendencias y alertas'],
+    datos: ['Quejas: Textos con canal, producto, estado, tiempo de resolución','Sentimiento: Puntuación -1 a 1 por queja','Categorías: Retraso_Pago, Atencion_Cliente, Cobertura, Precio, Proceso_Siniestro','Alertas: Quejas con indicadores de riesgo regulatorio'],
+    estratificacion: ['Riesgo Regulatorio: Escalada inmediata a dirección','Sentimiento Muy Negativo (<-0.5): Prioridad alta en cola de resolución','Sentimiento Negativo (-0.5 a 0): Resolución estándar prioritaria','Neutro/Positivo (>0): Resolución en plazo estándar'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan quejas con textos realistas','Cortex analiza sentimiento y clasifica automáticamente','El dashboard muestra tendencias y alertas regulatorias']
+  },
+  UC10: {
+    title: 'Asistente Inteligente de Consultas de Póliza',
+    contexto: 'Este notebook construye un asistente Q&A sobre documentación de pólizas usando Cortex Search y RAG.',
+    foco: 'Asistente conversacional para agentes del contact center sobre condiciones de póliza.',
+    reto: 'Reducir el 40% del tiempo de llamada dedicado a buscar condiciones, ofreciendo respuestas en <3 segundos.',
+    objetivos: ['Generar base de conocimiento de condiciones de póliza','Crear chunks de texto para indexación semántica','Crear Cortex Search Service sobre documentos de póliza','Implementar pipeline RAG (Retrieval-Augmented Generation)','Interfaz de chat para agentes'],
+    funcionalidades: ['RAG: Cortex Search + CORTEX.COMPLETE para respuestas contextuales','Datos sintéticos: 100 documentos de condiciones por producto','Búsqueda semántica: Chunks de ~500 caracteres indexados','Dashboard Streamlit: Interfaz de chat con cita de fuentes'],
+    datos: ['Documentos: Condiciones generales, particulares, FAQs, guías de cobertura','Chunks: Fragmentos indexados por producto y sección','Respuestas RAG: Texto generado con referencia a documento fuente'],
+    estratificacion: ['Respuesta directa: Chunk de alta relevancia + respuesta generada','Respuesta parcial: Varios chunks combinados, verificar manualmente','Sin resultado: Escalar a especialista de producto'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se genera base de documentos y se indexan chunks','Se crea Cortex Search Service','El dashboard permite hacer preguntas y obtener respuestas con fuente']
+  },
+  UC11: {
+    title: 'Predicción de Severidad en Siniestros de Auto',
+    contexto: 'Este notebook construye un predictor de coste de siniestro en el primer aviso de pérdida (FNOL).',
+    foco: 'Estimación automática de severidad para optimizar la dotación de reservas técnicas.',
+    reto: 'Reducir la variabilidad en la estimación manual de costes y mejorar la precisión de las reservas.',
+    objetivos: ['Generar siniestros históricos con coste final conocido','Combinar datos del incidente, vehículo y tomador','Entrenar clasificador multi-clase de severidad','Asignar reservas recomendadas por categoría','Dashboard para peritos con desviaciones'],
+    funcionalidades: ['Modelo ML: Clasificación multi-clase (Leve/Moderado/Grave/Muy Grave)','Datos sintéticos: 1.500 siniestros con coste final (distribución log-normal)','Variables: tipo_incidente, velocidad, lesiones, tipo_vehiculo, zona, condiciones_clima','Dashboard Streamlit: Panel de reservas con predicción vs coste real'],
+    datos: ['Siniestros históricos: Datos del incidente, vehículo, conductor','Tomadores: Edad, carnet, bonus-malus, siniestros previos','Predicciones: Severidad (Leve <1K / Moderado 1-5K / Grave 5-15K / Muy Grave >15K)'],
+    estratificacion: ['Leve (<1.000€): Reserva recomendada 800€','Moderado (1.000-5.000€): Reserva recomendada 3.000€','Grave (5.000-15.000€): Reserva recomendada 10.000€','Muy Grave (>15.000€): Reserva recomendada 25.000€'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan 1.500 siniestros con coste final','El modelo clasifica severidad en 4 categorías','El dashboard compara reserva recomendada vs coste real']
+  },
+  UC12: {
+    title: 'Identificador de Oportunidades de Subrogación',
+    contexto: 'Este notebook construye un modelo que identifica siniestros con alta probabilidad de recuperación por subrogación.',
+    foco: 'Recuperación de importes pagados en siniestros donde un tercero es responsable.',
+    reto: 'Detectar oportunidades de subrogación que se pierden por no identificar al tercero durante la tramitación.',
+    objetivos: ['Generar siniestros cerrados con resultado de subrogación conocido','Construir variables de culpabilidad, documentación y cobertura','Entrenar clasificador de potencial de subrogación','Estimar importes recuperables por oportunidad','Dashboard para equipo legal y de recuperaciones'],
+    funcionalidades: ['Modelo ML: Clasificación de potencial de subrogación','Datos sintéticos: 1.200 siniestros cerrados (20% con recuperación exitosa)','Variables: tiene_atestado, culpabilidad_tercero, testigos, tipo_cobertura, informe_perito','Dashboard Streamlit: Lista priorizada de oportunidades con importe recuperable'],
+    datos: ['Siniestros cerrados: Datos del incidente, culpabilidad, documentación','Resultado subrogación: Recuperado sí/no, importe','Predicciones ML: Alta Probabilidad / Revisable / Baja Probabilidad'],
+    estratificacion: ['Alta Probabilidad (≥65%): Derivar inmediatamente al equipo legal','Revisable (35-65%): Revisión de documentación por perito senior','Baja Probabilidad (<35%): Archivar sin acción de recuperación'],
+    como_usar: ['Ejecutar celdas secuencialmente','Se generan siniestros cerrados con datos de subrogación','El modelo identifica oportunidades de recuperación','El dashboard prioriza por importe recuperable estimado']
   }
+};
+
+function verGuia(ucId) {
+  const g = GUIAS[ucId];
+  if (!g) { alert('Guía no disponible aún para ' + ucId); return; }
+  const box = document.getElementById('guiaModalBox');
+  let h = `<button class="modal-close" onclick="cerrarModal('guiaModal')">&times;</button>`;
+  h += `<span class="guide-badge">${ucId}</span>`;
+  h += `<h2>${g.title}</h2>`;
+  h += `<p><strong>Caso de Uso: ${g.title}</strong></p>`;
+  h += `<h3>Contexto de Negocio</h3><p>${g.contexto}</p>`;
+  h += `<p><strong>Foco:</strong> ${g.foco}</p>`;
+  h += `<p><strong>Reto de negocio:</strong> ${g.reto}</p>`;
+  h += `<h3>Objetivos de Aprendizaje</h3><ul>${g.objetivos.map(o=>`<li>${o}</li>`).join('')}</ul>`;
+  h += `<h3>Funcionalidades</h3><ul>${g.funcionalidades.map(f=>`<li>${f}</li>`).join('')}</ul>`;
+  h += `<h3>Datos Generados</h3><ul>${g.datos.map(d=>`<li>${d}</li>`).join('')}</ul>`;
+  h += `<h3>Estratificación</h3><ul>${g.estratificacion.map(e=>`<li>${e}</li>`).join('')}</ul>`;
+  h += `<h3>Cómo Usar</h3><ul>${g.como_usar.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+  h += `<p class="guide-footer">Desarrollado con Snowflake Cortex ML + Streamlit</p>`;
+  box.innerHTML = h;
+  document.getElementById('guiaModal').classList.add('active');
 }
 
 document.addEventListener('click', e => {
   if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
 });
 function cerrarModal(id) { document.getElementById(id).classList.remove('active'); }
+
+const PROMPTS = {
+  UC01: {
+    title: 'Puntuación de Fraude en Siniestros',
+    intro: 'Abre Cortex Code en Snowsight y ejecuta estos prompts secuencialmente. Cada paso genera el SQL necesario para construir un modelo de detección de fraude con ML.CLASSIFICATION.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Crea la base de datos, esquema y warehouse para el proyecto.', prompt: 'Crea una base de datos llamada FRAUDE_SINIESTROS_DB con esquema PUBLIC y un warehouse COMPUTE_WH tamaño SMALL con auto-suspend de 60 segundos. Establece el contexto de sesión.' },
+      { title: 'Generar tabla de tomadores', desc: 'Genera 500 tomadores sintéticos con perfil demográfico y historial.', prompt: 'Genera una tabla "tomadores" con 500 filas usando GENERATOR(). Columnas: tomador_id (TOM00001...), edad (20-75), genero (M/F), tipo_poliza (Auto 40%, Hogar 30%, Vida 30%), anos_como_cliente (1-15), siniestros_previos (0-5), fecha_alta (últimos 1-14 años).' },
+      { title: 'Generar tabla de siniestros', desc: 'Genera ~1.000 siniestros con indicadores de fraude diferenciados.', prompt: 'Genera una tabla "siniestros" cruzando cada tomador con 2 registros. Columnas: siniestro_id, tomador_id, es_fraude (30% fraude), fecha_accidente, dias_hasta_notificacion (fraude: 8-45 días, legítimo: 1-7), importe_declarado (fraude: 3.000-25.000, legítimo: 300-8.000), num_testigos (fraude: 0-1, legítimo: 0-3), hora_accidente (fraude: 20-23h, legítimo: 7-19h), taller_id (fraude: TALLER_SOSPECHOSO_1..5, legítimo: TALLER_OFICIAL_1..20).' },
+      { title: 'Ingeniería de variables', desc: 'Construye la tabla de features lista para ML.', prompt: 'Crea una tabla "siniestros_features" haciendo JOIN entre siniestros y tomadores. Variables FLOAT: dias_hasta_notificacion, importe_declarado, num_testigos, hora_accidente, taller_sospechoso (1 si LIKE TALLER_SOSPECHOSO%), dia_semana_accidente, mes_accidente, edad_tomador, anos_como_cliente, siniestros_previos, poliza_auto, poliza_hogar, ratio_siniestros_ano (siniestros_previos/anos_como_cliente). Target: es_fraude.' },
+      { title: 'Dividir train/test', desc: 'Separa 80% entrenamiento y 20% test.', prompt: 'Crea tabla "entrenamiento" con SAMPLE(80) de siniestros_features y tabla "test" con los registros restantes. Muestra el conteo y tasa de fraude de cada conjunto.' },
+      { title: 'Entrenar modelo', desc: 'Entrena el clasificador con SNOWFLAKE.ML.CLASSIFICATION.', prompt: 'Entrena un modelo SNOWFLAKE.ML.CLASSIFICATION llamado "detector_fraude" usando la tabla entrenamiento, con TARGET_COLNAME es_fraude y evaluate TRUE.' },
+      { title: 'Evaluar rendimiento', desc: 'Revisa métricas, matriz de confusión e importancia de variables.', prompt: 'Ejecuta SHOW_EVALUATION_METRICS, SHOW_CONFUSION_MATRIX y SHOW_FEATURE_IMPORTANCE del modelo detector_fraude.' },
+      { title: 'Puntuar siniestros', desc: 'Genera predicciones con niveles de riesgo sobre el conjunto test.', prompt: 'Crea tabla "predicciones_fraude" usando detector_fraude!PREDICT con OBJECT_CONSTRUCT sobre las 13 features del test. Extrae fraude_predicho, probabilidad_fraude y clasifica en Alto Riesgo (>=70%), Riesgo Medio (30-70%), Bajo Riesgo (<30%). Muestra top 20 por probabilidad y resumen por nivel de riesgo.' },
+      { title: 'Dashboard Streamlit', desc: 'Crea un dashboard interactivo con métricas y filtros.', prompt: 'Crea un dashboard Streamlit en una celda Python del notebook que muestre: 4 KPIs (total siniestros, alto riesgo, exactitud, tasa fraude real), gráfico de barras por nivel de riesgo, tabla filtrable de siniestros con probabilidad de fraude, y botón de descarga CSV de alto riesgo.' },
+      { title: 'Limpieza (opcional)', desc: 'Elimina los objetos creados al terminar.', prompt: 'Genera los comandos DROP DATABASE IF EXISTS FRAUDE_SINIESTROS_DB y DROP WAREHOUSE IF EXISTS COMPUTE_WH comentados para limpieza opcional.' }
+    ]
+  },
+  UC02: {
+    title: 'Detección de Accidentes Simulados',
+    intro: 'Prompts para construir un detector de tramas de fraude coordinado analizando redes de siniestros, talleres y tomadores.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos aislada para el proyecto.', prompt: 'Crea base de datos ACCIDENTES_SIMULADOS_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar red de talleres', desc: 'Talleres con indicadores de sospecha.', prompt: 'Genera tabla "talleres" con 50 registros: taller_id, nombre, provincia, num_siniestros_mes (sospechosos: 15-40, normales: 1-8), ratio_siniestros_totales, es_sospechoso (20% sospechosos). Genera tabla "proveedores_medicos" con 30 registros similares.' },
+      { title: 'Generar siniestros vinculados', desc: 'Siniestros con patrones de red.', prompt: 'Genera tabla "siniestros_red" con 2000 registros vinculando tomadores, talleres y proveedores médicos. Incluye: siniestro_id, tomador_id, taller_id, proveedor_medico_id, importe, fecha, num_vehiculos_implicados, coincidencia_testigos (booleano), mismo_taller_repetido (booleano), es_trama (25%).' },
+      { title: 'Construir features de red', desc: 'Variables que capturan patrones de conexión.', prompt: 'Crea tabla de features con: frecuencia_taller_tomador, num_siniestros_mismo_taller_30d, coincidencia_proveedor_medico, importe_vs_media_taller, num_tomadores_compartiendo_taller, dias_entre_siniestros_mismo_tomador, num_vehiculos_implicados, es_trama como target.' },
+      { title: 'Entrenar clasificador de tramas', desc: 'ML.CLASSIFICATION para detectar fraude coordinado.', prompt: 'Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION "detector_tramas" con target es_trama y evaluate TRUE.' },
+      { title: 'Evaluar y puntuar', desc: 'Métricas y predicciones.', prompt: 'Muestra métricas de evaluación y feature importance. Puntúa el test con niveles: Trama Probable (>=70%), Sospechoso (30-70%), Normal (<30%).' },
+      { title: 'Dashboard de investigación', desc: 'Visualización de redes sospechosas.', prompt: 'Crea dashboard Streamlit con: KPIs (tramas detectadas, talleres sospechosos, importe total sospechoso), tabla de siniestros sospechosos con filtro por taller, gráfico de barras por taller con más siniestros sospechosos.' }
+    ]
+  },
+  UC03: {
+    title: 'Fraude en Solicitudes e Identidad',
+    intro: 'Prompts para construir un sistema de detección de identidades sintéticas en el momento de contratación de póliza.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para verificación de identidad.', prompt: 'Crea base de datos FRAUDE_IDENTIDAD_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar solicitudes de póliza', desc: 'Solicitudes con datos de identidad.', prompt: 'Genera tabla "solicitudes" con 1000 registros: solicitud_id, nombre, fecha_nacimiento, dni, email, telefono, direccion, ingresos_declarados, antiguedad_empleo_meses, num_consultas_bureau_6m, tiene_historial_crediticio, email_temporal (booleano), telefono_prepago (booleano), direccion_coincide_bureau (booleano), es_identidad_sintetica (15%).' },
+      { title: 'Generar señales de comportamiento', desc: 'Datos de la sesión de solicitud online.', prompt: 'Genera tabla "sesion_solicitud": solicitud_id, tiempo_completar_formulario_seg (sintéticas: <60s, reales: 120-600s), num_correcciones_campos, horario_solicitud (sintéticas: 2-5am, reales: 9-21h), dispositivo_conocido (booleano), ip_vpn (booleano), num_solicitudes_misma_ip_24h.' },
+      { title: 'Feature engineering', desc: 'Combinar señales documentales y de comportamiento.', prompt: 'Crea tabla de features uniendo solicitudes y sesion_solicitud. Variables FLOAT: num_consultas_bureau_6m, tiene_historial_crediticio, email_temporal, telefono_prepago, direccion_coincide_bureau, tiempo_completar_formulario_seg, num_correcciones, hora_solicitud, dispositivo_conocido, ip_vpn, num_solicitudes_misma_ip, antiguedad_empleo_meses. Target: es_identidad_sintetica.' },
+      { title: 'Entrenar modelo', desc: 'Clasificador de identidad sintética.', prompt: 'Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION "detector_identidad" con target es_identidad_sintetica y evaluate TRUE.' },
+      { title: 'Puntuar y estratificar', desc: 'Clasificar solicitudes por riesgo.', prompt: 'Puntúa test con niveles: Bloquear (>=80%), Verificación Manual (40-80%), Aprobar (<40%). Muestra métricas y top solicitudes sospechosas.' },
+      { title: 'Dashboard de suscripción', desc: 'Panel para el equipo de contratación.', prompt: 'Crea dashboard Streamlit con: KPIs (solicitudes procesadas, bloqueadas, verificación manual), distribución por nivel de riesgo, tabla de solicitudes sospechosas con señales destacadas.' }
+    ]
+  },
+  UC04: {
+    title: 'Puntuación Dinámica de Riesgo en Auto',
+    intro: 'Prompts para construir un motor de puntuación de riesgo en auto usando señales telemáticas y ML.CLASSIFICATION.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para tarificación.', prompt: 'Crea base de datos RIESGO_AUTO_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar pólizas y vehículos', desc: 'Datos de tomadores y vehículos.', prompt: 'Genera tabla "polizas_auto" con 800 registros: poliza_id, tomador_id, edad_conductor, sexo, provincia, anos_carnet, tipo_vehiculo (Turismo/SUV/Furgoneta), antiguedad_vehiculo, valor_vehiculo, bonus_malus (1-15), ha_tenido_siniestro (35%).' },
+      { title: 'Generar datos telemáticos', desc: 'Señales de conducción agregadas por póliza.', prompt: 'Genera tabla "telematica" con un registro por póliza: poliza_id, km_mes_medio, pct_conduccion_nocturna, pct_exceso_velocidad, frenazos_bruscos_mes, aceleraciones_bruscas_mes, media_km_diarios, pct_conduccion_urbana, puntuacion_eco_conduccion (0-100). Siniestrados tienen peores métricas.' },
+      { title: 'Feature engineering', desc: 'Combinar perfil del conductor con telemática.', prompt: 'Crea tabla de features uniendo polizas_auto y telematica. Todas las variables numéricas como FLOAT. Target: ha_tenido_siniestro.' },
+      { title: 'Entrenar modelo de riesgo', desc: 'ML.CLASSIFICATION para predecir siniestralidad.', prompt: 'Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION "scoring_riesgo_auto" con target ha_tenido_siniestro y evaluate TRUE.' },
+      { title: 'Puntuar y segmentar', desc: 'Crear segmentos de tarificación.', prompt: 'Puntúa test con: Prima Alta (>=60%), Prima Media (30-60%), Prima Baja (<30%). Muestra feature importance y distribución por segmento.' },
+      { title: 'Dashboard de tarificación', desc: 'Panel para suscriptores.', prompt: 'Crea dashboard Streamlit con: distribución de riesgo por segmento, top variables predictoras, tabla de pólizas con probabilidad de siniestro y recomendación de prima, filtro por tipo de vehículo y provincia.' }
+    ]
+  },
+  UC05: {
+    title: 'Analítica de Exposición a Catástrofes',
+    intro: 'Prompts para construir un sistema de análisis de exposición CAT geoespacial con agregación por zona y tramo de reaseguro.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para exposición CAT.', prompt: 'Crea base de datos EXPOSICION_CAT_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar cartera de pólizas geolocalizadas', desc: 'Pólizas con ubicación y sumas aseguradas.', prompt: 'Genera tabla "polizas_geo" con 2000 registros: poliza_id, tipo (Hogar/Comercio/Industrial), provincia, codigo_postal, latitud, longitud (coordenadas sintéticas de España), suma_asegurada (50.000-2.000.000), tipo_construccion (Hormigon/Ladrillo/Madera), antiguedad_inmueble, num_plantas.' },
+      { title: 'Generar zonas de riesgo', desc: 'Mapa de peligrosidad por zona.', prompt: 'Genera tabla "zonas_riesgo" con 50 zonas: zona_id, nombre, tipo_peligro (Inundacion/Terremoto/Granizo/Incendio), nivel_peligro (1-5), frecuencia_historica_eventos_10a, perdida_media_evento. Genera tabla "poliza_zona" asignando cada póliza a 1-3 zonas de riesgo.' },
+      { title: 'Calcular exposición agregada', desc: 'Exposición por zona, tipo y tramo de reaseguro.', prompt: 'Crea vista "exposicion_agregada" que calcule por zona_riesgo: num_polizas, suma_asegurada_total, PML_estimado (suma * factor_peligro), exposicion_retencion (primeros 5M), exposicion_xl_1 (5M-20M), exposicion_xl_2 (>20M). Ordena por PML descendente.' },
+      { title: 'Análisis de concentración', desc: 'Identificar acumulaciones peligrosas.', prompt: 'Crea consulta que identifique las 10 zonas con mayor concentración de riesgo (suma_asegurada / num_polizas), zonas con PML > umbral, y cruce tipo_peligro vs tipo_construccion mostrando vulnerabilidad.' },
+      { title: 'Modelización de escenarios', desc: 'Simular impacto de eventos CAT.', prompt: 'Crea tabla "escenarios" con 5 eventos CAT hipotéticos (inundación severa Madrid, terremoto Murcia, etc.). Para cada escenario calcula: polizas_afectadas, perdida_estimada_bruta, perdida_neta_retencion, cesion_reaseguro.' },
+      { title: 'Dashboard de exposición', desc: 'Panel ejecutivo de riesgo CAT.', prompt: 'Crea dashboard Streamlit con: KPIs (exposición total, PML máximo, num zonas críticas), tabla de zonas ordenada por PML, distribución de exposición por tipo de peligro (bar chart), resultados de escenarios con impacto en retención vs reaseguro.' }
+    ]
+  },
+  UC06: {
+    title: 'Predicción de Fuga en Renovación',
+    intro: 'Prompts para construir un modelo de predicción de no-renovación 90 días antes del vencimiento de la póliza.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para retención.', prompt: 'Crea base de datos RETENCION_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar cartera de pólizas', desc: 'Pólizas con historial de renovación.', prompt: 'Genera tabla "cartera" con 1500 registros: poliza_id, tomador_id, producto (Auto/Hogar/Vida/Salud), prima_anual, anos_renovando, fecha_proximo_vencimiento, num_siniestros_ultimo_ano, importe_siniestros_ultimo_ano, tiene_descuento, canal_contratacion (Online/Agente/Broker), no_renueva (25%).' },
+      { title: 'Generar historial de interacciones', desc: 'Contactos y señales de comportamiento previas a renovación.', prompt: 'Genera tabla "interacciones" agregada por póliza: poliza_id, num_llamadas_90d, num_quejas_90d, ha_pedido_competencia, ha_solicitado_modificacion, dias_desde_ultima_interaccion, nps_ultima_encuesta (1-10), emails_abiertos_pct (0-100), ha_accedido_area_cliente_30d.' },
+      { title: 'Feature engineering', desc: 'Combinar datos de cartera e interacciones.', prompt: 'Crea tabla features uniendo cartera e interacciones. Variables FLOAT: prima_anual, anos_renovando, num_siniestros_ultimo_ano, ratio_siniestro_prima, tiene_descuento, canal_online, num_llamadas_90d, num_quejas_90d, ha_pedido_competencia, nps, emails_abiertos_pct, ha_accedido_area_cliente. Target: no_renueva.' },
+      { title: 'Entrenar modelo de fuga', desc: 'ML.CLASSIFICATION para predecir no-renovación.', prompt: 'Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION "predictor_fuga" con target no_renueva y evaluate TRUE.' },
+      { title: 'Puntuar y priorizar', desc: 'Lista de retención priorizada.', prompt: 'Puntúa test con: Fuga Muy Probable (>=70%), Riesgo Moderado (40-70%), Probable Renovación (<40%). Muestra feature importance y lista priorizada por probabilidad y prima.' },
+      { title: 'Dashboard de retención', desc: 'Panel para equipo comercial.', prompt: 'Crea dashboard Streamlit con: KPIs (pólizas en riesgo, prima en riesgo, tasa fuga predicha), top 20 pólizas para acción de retención, distribución por producto y canal, evolución de señales de fuga.' }
+    ]
+  },
+  UC07: {
+    title: 'Segmentación de Riesgo Telemático',
+    intro: 'Prompts para construir una segmentación no supervisada de conductores basada en datos telemáticos para tarificación dinámica.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para segmentación.', prompt: 'Crea base de datos SEGMENTACION_TELEMATICA_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar datos telemáticos detallados', desc: 'Perfiles de conducción para 1.000 conductores.', prompt: 'Genera tabla "conductores_telematica" con 1000 registros y 4 perfiles ocultos (25% cada uno): Prudente (baja velocidad, pocos frenazos), Agresivo (alta velocidad, muchos frenazos), Urbano (muchos km urbanos, poco nocturno), Nocturno (alto % noche). Variables: conductor_id, km_totales_mes, vel_media, vel_max, pct_exceso_velocidad, frenazos_bruscos_100km, aceleraciones_bruscas_100km, pct_nocturno, pct_urbano, distancia_media_viaje, num_viajes_mes, puntuacion_eco.' },
+      { title: 'Normalizar variables', desc: 'Preparar datos para clustering.', prompt: 'Crea tabla "features_normalizadas" con z-score de cada variable numérica: (valor - AVG) / STDDEV para cada columna. Excluye conductor_id.' },
+      { title: 'Clasificar conductores', desc: 'Usar ML.CLASSIFICATION con etiquetas derivadas de reglas.', prompt: 'Crea columna "segmento_regla" basada en umbrales: Prudente (vel_media<70, frenazos<3), Agresivo (vel_media>100 o frenazos>8), Nocturno (pct_nocturno>40%), Urbano (pct_urbano>60%). Entrena SNOWFLAKE.ML.CLASSIFICATION "segmentador" con target segmento_regla.' },
+      { title: 'Perfilar segmentos', desc: 'Analizar características de cada segmento.', prompt: 'Crea consulta que muestre por segmento: num_conductores, medias de todas las variables telemáticas, desviación estándar, y feature importance del modelo.' },
+      { title: 'Calcular factor de prima', desc: 'Traducir segmento a ajuste de tarifa.', prompt: 'Crea tabla con factor de prima por segmento: Prudente (0.8x), Urbano (1.0x), Nocturno (1.15x), Agresivo (1.4x). Une con conductores para mostrar prima ajustada.' },
+      { title: 'Dashboard de segmentación', desc: 'Visualización de perfiles de conducción.', prompt: 'Crea dashboard Streamlit con: distribución de conductores por segmento (pie chart), comparativa de medias por segmento (bar chart multi-variable), tabla de conductores con segmento y factor de prima, filtro por segmento.' }
+    ]
+  },
+  UC08: {
+    title: 'Extracción Documental IA en Siniestros',
+    intro: 'Prompts para construir un pipeline de extracción de datos estructurados desde documentos de siniestros usando Cortex AI.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos y stage para documentos.', prompt: 'Crea base de datos EXTRACCION_DOCS_DB con esquema PUBLIC, warehouse COMPUTE_WH y un stage interno @docs_siniestros para almacenar archivos.' },
+      { title: 'Generar documentos sintéticos', desc: 'Simular texto de atestados e informes.', prompt: 'Genera tabla "documentos_siniestros" con 200 registros simulando texto de documentos: doc_id, siniestro_id, tipo_documento (Atestado_Policial/Factura_Medica/Presupuesto_Reparacion/Declaracion_Amistosa), texto_contenido (texto largo simulado con datos del siniestro: fecha, lugar, vehículos, lesiones, importes, culpabilidad).' },
+      { title: 'Extraer entidades con Cortex', desc: 'Usar CORTEX.COMPLETE para extraer datos estructurados.', prompt: 'Para cada documento, usa SNOWFLAKE.CORTEX.COMPLETE con un prompt que extraiga en JSON: fecha_accidente, lugar, matriculas_implicadas, lesiones (si/no), importe_estimado, culpabilidad_asegurado (si/no/parcial), nombre_taller, diagnostico_medico. Almacena el resultado parseado en tabla "datos_extraidos".' },
+      { title: 'Validar extracción', desc: 'Comprobar calidad de la extracción.', prompt: 'Crea consulta que compare campos extraídos vs datos originales conocidos. Calcula tasa de extracción exitosa por campo y por tipo de documento. Identifica documentos con campos faltantes.' },
+      { title: 'Clasificar documentos', desc: 'Categorizar automáticamente el tipo de documento.', prompt: 'Usa CORTEX.COMPLETE para clasificar cada texto_contenido en su tipo_documento. Compara la clasificación automática con el tipo real y calcula la exactitud.' },
+      { title: 'Pipeline de tramitación', desc: 'Automatizar el flujo de datos extraídos al sistema.', prompt: 'Crea vista "siniestros_enriquecidos" que agrupe por siniestro_id todos los datos extraídos de sus documentos: tiene_atestado, tiene_factura_medica, importe_total_estimado, culpabilidad, puede_tramitar_automaticamente (si todos los campos están completos y importe < umbral).' },
+      { title: 'Dashboard de tramitación', desc: 'Panel de estado documental.', prompt: 'Crea dashboard Streamlit con: KPIs (docs procesados, tasa extracción, siniestros auto-tramitables), tabla de siniestros con estado documental, filtro por tipo de documento y estado de completitud.' }
+    ]
+  },
+  UC09: {
+    title: 'Inteligencia sobre Quejas de Clientes',
+    intro: 'Prompts para construir un sistema de clasificación NLP y análisis de sentimiento sobre quejas de clientes con Cortex AI.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para análisis de quejas.', prompt: 'Crea base de datos QUEJAS_CLIENTES_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar quejas sintéticas', desc: 'Simular textos de reclamaciones de clientes.', prompt: 'Genera tabla "quejas" con 500 registros: queja_id, tomador_id, fecha, canal (Email/Telefono/Web/RRSS), producto (Auto/Hogar/Vida/Salud), texto_queja (textos variados simulando quejas reales: retraso en pago, mala atención, discrepancia en cobertura, subida de prima, etc.), estado (Abierta/Resuelta/Escalada), tiempo_resolucion_dias.' },
+      { title: 'Análisis de sentimiento', desc: 'Clasificar sentimiento con Cortex.', prompt: 'Usa SNOWFLAKE.CORTEX.SENTIMENT sobre texto_queja para generar puntuación de sentimiento (-1 a 1). Almacena en tabla "quejas_sentimiento" con columnas adicionales: sentimiento_score, sentimiento_label (Muy Negativo/Negativo/Neutro/Positivo).' },
+      { title: 'Clasificar categorías', desc: 'Categorizar quejas automáticamente.', prompt: 'Usa SNOWFLAKE.CORTEX.COMPLETE para clasificar cada queja en categorías: Retraso_Pago, Atencion_Cliente, Cobertura, Precio, Proceso_Siniestro, Otro. Almacena en columna categoria_auto y compara con distribución esperada.' },
+      { title: 'Detectar señales regulatorias', desc: 'Identificar quejas con riesgo regulatorio.', prompt: 'Usa CORTEX.COMPLETE con prompt específico para detectar en cada queja si menciona: regulador, DGSFP, defensor del cliente, demanda, abogado, denuncia. Marca como riesgo_regulatorio (booleano) y prioridad_alta.' },
+      { title: 'Análisis de tendencias', desc: 'Evolución temporal de quejas y sentimiento.', prompt: 'Crea consultas de tendencia: quejas por semana/mes, sentimiento medio por periodo, categorías emergentes (categorías con crecimiento >20% mes a mes), top 5 categorías por volumen y sentimiento.' },
+      { title: 'Dashboard de quejas', desc: 'Panel de inteligencia de quejas.', prompt: 'Crea dashboard Streamlit con: KPIs (quejas abiertas, sentimiento medio, % riesgo regulatorio), evolución temporal de sentimiento, distribución por categoría (bar chart), tabla de quejas con filtro por categoría/sentimiento/producto, listado de quejas con riesgo regulatorio destacadas.' }
+    ]
+  },
+  UC10: {
+    title: 'Asistente Inteligente de Consultas de Póliza',
+    intro: 'Prompts para construir un asistente Q&A sobre documentación de pólizas usando Cortex Search y RAG.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos y stage para documentos.', prompt: 'Crea base de datos ASISTENTE_POLIZAS_DB con esquema PUBLIC, warehouse COMPUTE_WH.' },
+      { title: 'Generar base de conocimiento', desc: 'Documentos de condiciones de póliza y FAQs.', prompt: 'Genera tabla "documentos_poliza" con 100 registros: doc_id, tipo (Condiciones_Generales/Condiciones_Particulares/FAQ/Guia_Cobertura), producto (Auto/Hogar/Vida/Salud), seccion, titulo, contenido (textos simulados de condiciones de seguro: coberturas, exclusiones, franquicias, plazos de notificación, procedimientos de siniestro).' },
+      { title: 'Crear chunks de texto', desc: 'Dividir documentos en fragmentos indexables.', prompt: 'Crea tabla "chunks_poliza" dividiendo cada contenido en fragmentos de ~500 caracteres con solapamiento de 50: chunk_id, doc_id, producto, seccion, chunk_texto, chunk_orden.' },
+      { title: 'Crear Cortex Search Service', desc: 'Indexar los chunks para búsqueda semántica.', prompt: 'Crea un CORTEX SEARCH SERVICE sobre chunks_poliza usando chunk_texto como columna de búsqueda y producto, seccion como atributos de filtrado.' },
+      { title: 'Implementar pipeline RAG', desc: 'Buscar contexto relevante y generar respuesta.', prompt: 'Crea una función SQL o procedimiento que: 1) Reciba una pregunta del usuario, 2) Busque los 3 chunks más relevantes con Cortex Search, 3) Construya un prompt con el contexto recuperado, 4) Use CORTEX.COMPLETE para generar respuesta citando las fuentes (doc_id, seccion).' },
+      { title: 'Probar con preguntas tipo', desc: 'Validar con preguntas habituales del contact center.', prompt: 'Prueba el asistente con 5 preguntas tipo: "¿Qué cubre el seguro de hogar en caso de inundación?", "¿Cuál es el plazo para notificar un siniestro de auto?", "¿La rotura de cristales tiene franquicia?", "¿Cómo solicito asistencia en carretera?", "¿Están cubiertos los daños por mascota?".' },
+      { title: 'Dashboard del asistente', desc: 'Interfaz de chat para agentes.', prompt: 'Crea dashboard Streamlit con: campo de texto para pregunta, botón de enviar, área de respuesta con citas de fuente, historial de preguntas de la sesión, filtro por producto de póliza para acotar contexto.' }
+    ]
+  },
+  UC11: {
+    title: 'Predicción de Severidad en Siniestros de Auto',
+    intro: 'Prompts para construir un predictor de coste de siniestro en el primer aviso de pérdida (FNOL) para optimizar reservas.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para severidad.', prompt: 'Crea base de datos SEVERIDAD_SINIESTROS_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar siniestros históricos', desc: 'Siniestros de auto con coste final conocido.', prompt: 'Genera tabla "siniestros_historicos" con 1500 registros: siniestro_id, tipo_incidente (Colision/Alcance/Salida_Via/Robo/Vandalismo), velocidad_estimada, num_vehiculos, hay_lesiones (booleano), tipo_vehiculo, antiguedad_vehiculo, valor_vehiculo, zona (Urbana/Interurbana/Autopista), hora_accidente, condiciones_climaticas (Seco/Lluvia/Niebla/Hielo), coste_final (100-50.000, distribución log-normal).' },
+      { title: 'Generar datos del tomador', desc: 'Perfil del asegurado.', prompt: 'Genera tabla "tomadores_severidad": siniestro_id, edad_conductor, anos_carnet, bonus_malus, num_siniestros_previos_3a, franquicia_poliza.' },
+      { title: 'Feature engineering', desc: 'Crear variables y discretizar target.', prompt: 'Crea tabla features uniendo ambas tablas. Añade severidad_categoria: Leve (<1.000€), Moderado (1.000-5.000), Grave (5.000-15.000), Muy_Grave (>15.000). Todas las variables FLOAT excepto target categórico.' },
+      { title: 'Entrenar modelo de severidad', desc: 'Clasificación multi-clase.', prompt: 'Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION "predictor_severidad" con target severidad_categoria y evaluate TRUE.' },
+      { title: 'Puntuar y recomendar reservas', desc: 'Asignar reserva recomendada.', prompt: 'Puntúa test. Mapea predicciones a reserva recomendada: Leve (800€), Moderado (3.000€), Grave (10.000€), Muy_Grave (25.000€). Compara reserva recomendada vs coste_final para medir desviación.' },
+      { title: 'Dashboard para peritos', desc: 'Panel de gestión de reservas.', prompt: 'Crea dashboard Streamlit con: KPIs (siniestros nuevos, reserva total recomendada, desviación media), distribución por severidad predicha, tabla de siniestros con coste predicho vs real, filtro por tipo de incidente y zona.' }
+    ]
+  },
+  UC12: {
+    title: 'Identificador de Oportunidades de Subrogación',
+    intro: 'Prompts para construir un modelo que identifique siniestros con alta probabilidad de recuperación por subrogación.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para subrogación.', prompt: 'Crea base de datos SUBROGACION_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar siniestros cerrados', desc: 'Siniestros con resultado de subrogación conocido.', prompt: 'Genera tabla "siniestros_cerrados" con 1200 registros: siniestro_id, tipo_incidente, tiene_atestado (booleano), culpabilidad_tercero (Total/Parcial/Ninguna/Desconocida), hay_testigos, num_vehiculos_implicados, tipo_cobertura (Todo_Riesgo/Terceros_Ampliado/Terceros), importe_pagado, tiene_informe_perito, dias_tramitacion, se_recupero_subrogacion (20%), importe_recuperado.' },
+      { title: 'Feature engineering', desc: 'Variables predictivas de subrogación exitosa.', prompt: 'Crea tabla features: tiene_atestado, culpabilidad_total (booleano), culpabilidad_parcial, hay_testigos, num_vehiculos, es_todo_riesgo, importe_pagado, tiene_informe_perito, dias_tramitacion. Target: se_recupero_subrogacion.' },
+      { title: 'Entrenar modelo', desc: 'Clasificador de potencial de subrogación.', prompt: 'Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION "detector_subrogacion" con target se_recupero_subrogacion y evaluate TRUE.' },
+      { title: 'Puntuar y estimar recuperación', desc: 'Clasificar oportunidades de subrogación.', prompt: 'Puntúa test con niveles: Alta Probabilidad (>=65%), Revisable (35-65%), Baja Probabilidad (<35%). Estima importe_recuperable = importe_pagado * probabilidad_subrogacion. Muestra top 20 oportunidades por importe recuperable.' },
+      { title: 'Análisis de oportunidad perdida', desc: 'Cuantificar recuperaciones no realizadas.', prompt: 'Calcula el total de importe recuperable en siniestros no subrogados con Alta Probabilidad. Agrupa por tipo_incidente y tipo_cobertura para identificar dónde se pierden más recuperaciones.' },
+      { title: 'Dashboard de subrogación', desc: 'Panel para equipo legal y de recuperaciones.', prompt: 'Crea dashboard Streamlit con: KPIs (oportunidades detectadas, importe recuperable estimado, tasa éxito histórica), tabla de oportunidades priorizadas por importe, distribución por tipo de incidente, botón de descarga CSV para derivar al equipo legal.' }
+    ]
+  }
+};
+
+function verPrompts(ucId) {
+  const data = PROMPTS[ucId];
+  if (!data) { alert('Prompts no disponibles aún para ' + ucId); return; }
+  const box = document.getElementById('promptsModalBox');
+  let html = `<button class="modal-close" onclick="cerrarModal('promptsModal')">&times;</button>`;
+  html += `<span class="guide-badge">${ucId}</span>`;
+  html += `<h2>${data.title} — Cortex Code Prompts</h2>`;
+  html += `<p class="prompt-intro">${data.intro}</p>`;
+  data.steps.forEach((s, i) => {
+    const escaped = s.prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    html += `<div class="prompt-step">`;
+    html += `<div class="prompt-step-header"><span class="prompt-step-num">${i+1}</span><span class="prompt-step-title">${s.title}</span></div>`;
+    html += `<div class="prompt-step-desc">${s.desc}</div>`;
+    html += `<div class="prompt-code" id="prompt_${ucId}_${i}"><button class="copy-btn" onclick="copiarPrompt('prompt_${ucId}_${i}')">Copiar</button>${escaped}</div>`;
+    html += `</div>`;
+  });
+  html += `<p class="guide-footer">Ejecuta cada prompt en Cortex Code (Snowsight) de forma secuencial</p>`;
+  box.innerHTML = html;
+  document.getElementById('promptsModal').classList.add('active');
+}
+
+function copiarPrompt(id) {
+  const el = document.getElementById(id);
+  const btn = el.querySelector('.copy-btn');
+  const text = el.textContent.replace('Copiar', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '¡Copiado!';
+    setTimeout(() => btn.textContent = 'Copiar', 1500);
+  });
+}
 </script>
 
 <div class="modal-overlay" id="guiaModal">
-  <div class="modal-box">
-    <button class="modal-close" onclick="cerrarModal('guiaModal')">&times;</button>
-    <span class="guide-badge">UC01</span>
-    <h2>Puntuación de Fraude en Siniestros</h2>
-    <p><strong>Caso de Uso 01: Puntuación de Fraude en Siniestros</strong></p>
-    <h3>Contexto de Negocio — Sector Seguros</h3>
-    <p>Este notebook demuestra la detección de fraude en siniestros mediante clasificación ML en Snowflake.</p>
-    <p><strong>Foco:</strong> Siniestros de seguros (auto, hogar, vida) — detección de fraude en la declaración del siniestro.</p>
-    <p><strong>Reto de negocio:</strong> Predecir y prevenir el fraude en siniestros antes del pago, reduciendo pérdidas hasta un 40%.</p>
-    <h3>Objetivos de Aprendizaje</h3>
-    <ul>
-      <li>Crear flujos ML con SNOWFLAKE.ML.CLASSIFICATION</li>
-      <li>Generar datos sintéticos de siniestros de seguros</li>
-      <li>Construir variables predictoras a partir de datos del siniestro y del tomador</li>
-      <li>Evaluar modelos de clasificación binaria</li>
-      <li>Construir dashboards de puntuación de riesgo con Streamlit</li>
-    </ul>
-    <h3>Funcionalidades</h3>
-    <ul>
-      <li><strong>Modelo ML:</strong> Clasificación binaria para predicción de fraude</li>
-      <li><strong>Datos sintéticos:</strong> 500 tomadores, 1.000 siniestros con indicadores de fraude</li>
-      <li><strong>Variables:</strong> dias_hasta_notificacion, importe_declarado, num_testigos, hora_accidente, taller_sospechoso, ratio_siniestros_ano</li>
-      <li><strong>Dashboard Streamlit:</strong> Puntuación interactiva y filtrado por nivel de riesgo</li>
-    </ul>
-    <h3>Datos Generados</h3>
-    <ul>
-      <li><strong>Tomadores:</strong> Datos demográficos, antigüedad, historial de siniestros previos</li>
-      <li><strong>Siniestros:</strong> Fecha, importe, tiempo de notificación, testigos, taller</li>
-      <li><strong>Predicciones ML:</strong> Nivel de riesgo (Alto/Medio/Bajo) con probabilidades</li>
-    </ul>
-    <h3>Estratificación de Riesgo</h3>
-    <ul>
-      <li><strong>Alto Riesgo (&ge;70%):</strong> Derivar a equipo de investigación</li>
-      <li><strong>Riesgo Medio (30-70%):</strong> Revisión por perito senior</li>
-      <li><strong>Bajo Riesgo (&lt;30%):</strong> Tramitación normal</li>
-    </ul>
-    <h3>Cómo Usar</h3>
-    <ul>
-      <li>Ejecutar las celdas secuencialmente de arriba a abajo</li>
-      <li>La configuración del entorno crea una base de datos aislada</li>
-      <li>Los datos sintéticos generan 1.000 siniestros automáticamente</li>
-      <li>El modelo se entrena en 30-60 segundos</li>
-      <li>El dashboard se lanza interactivamente en el notebook</li>
-    </ul>
-    <p class="guide-footer">Desarrollado con Snowflake Cortex ML + Streamlit</p>
-  </div>
+  <div class="modal-box" id="guiaModalBox"></div>
+</div>
+
+<div class="modal-overlay" id="promptsModal">
+  <div class="modal-box" id="promptsModalBox" style="max-width:780px;"></div>
 </div>
 </body>
 </html>
