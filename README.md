@@ -13,9 +13,13 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
 ├── seguros.html                # Página de seguros (17 casos de uso)
 ├── seguros/                    # Notebooks de seguros
 │   ├── notebook_uc01_fraude.ipynb
-│   ├── notebook_uc02_accidentes_simulados.ipynb
 │   ├── ...
 │   └── notebook_uc17_compliance.ipynb
+├── farmaceutica.html           # Página de farmacéutica (27 casos de uso)
+├── farmaceutica/               # Notebooks de farmacéutica
+│   ├── notebook_uc01_adherencia_pacientes.ipynb
+│   ├── ...
+│   └── notebook_uc27_engagement_hcp_insights.ipynb
 ├── bug-white.png               # Logo Snowflake
 └── README.md
 ```
@@ -25,8 +29,7 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
 | Industria | Estado | Casos de Uso |
 |---|---|---|
 | **Seguros** | ✅ Disponible | 17 |
-| Salud | 🔜 Próximamente | — |
-| Farmacéutica | 🔜 Próximamente | — |
+| **Farmacéutica** | ✅ Disponible | 27 |
 | Banca y Servicios Financieros | 🔜 Próximamente | — |
 | Retail y E-Commerce | 🔜 Próximamente | — |
 | Manufactura e Industria | 🔜 Próximamente | — |
@@ -75,6 +78,47 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
 | UC16 | Mejora de CX en Tiempo Real | CORTEX.SENTIMENT + Alertas |
 | UC17 | Cumplimiento Normativo (Compliance) | CORTEX.COMPLETE |
 
+## Farmacéutica — Casos de Uso
+
+### Machine Learning
+| # | Caso de Uso | Tecnología |
+|---|---|---|
+| UC01 | Predicción de Riesgo de Adherencia | ML.CLASSIFICATION |
+| UC02 | Optimizador de Rendimiento de Campañas | Window Functions / Atribución |
+| UC03 | Análisis de Sentimiento del Consumidor | CORTEX.SENTIMENT |
+| UC04 | Predicción de Pérdida de Exclusividad | ML.FORECAST |
+| UC05 | Optimizador de Engagement con HCPs | ML.CLASSIFICATION |
+| UC06 | Chatbot de Inteligencia Comercial | Cortex Analyst |
+| UC07 | Segmentación de Consumidores y LTV | SQL NTILE + ML.FORECAST |
+| UC08 | Analizador de Efectividad de Contenido | CORTEX.COMPLETE |
+| UC09 | Generador de Evidencia del Mundo Real | SQL Analítico |
+| UC10 | Monitor de Inteligencia Competitiva | CORTEX.COMPLETE + Marketplace |
+| UC11 | Mapeador de Journey Omnicanal | Cadenas de Markov |
+| UC12 | Optimizador de Precios y Descuentos | GENERATOR + Elasticidad |
+| UC13 | Selector de Centros para Ensayos | Geoespacial ST_DISTANCE |
+| UC14 | Predicción de Demanda de Lanzamiento | ML.FORECAST |
+| UC15 | Gestor de Compliance de Claims | REGEXP + FLATTEN |
+
+### IA y Lenguaje Natural
+| # | Caso de Uso | Tecnología |
+|---|---|---|
+| UC16 | Detección de Crisis en Redes Sociales | CORTEX.SENTIMENT + Z-score |
+| UC17 | Inteligencia de Mensajes de Competidores | Cortex Search + LLM |
+| UC18 | Tracker de Sentimiento en Medios Globales | CORTEX.SENTIMENT |
+| UC19 | Predictor de Recepción de Lanzamiento | ML.FORECAST + Sentiment |
+| UC20 | Red de Sentimiento de KOLs e Influencers | CORTEX.SENTIMENT + Red |
+| UC21 | Percepción Competitiva de Producto | CORTEX.SENTIMENT comparativo |
+| UC22 | Optimizador de Comunicación Ejecutiva | CORTEX.COMPLETE |
+| UC23 | Inteligencia Competitiva Automatizada | CORTEX.COMPLETE + Alertas |
+| UC24 | Sentimiento Global Multi-Idioma | CORTEX.TRANSLATE + SENTIMENT |
+
+### Journey del Paciente
+| # | Caso de Uso | Tecnología |
+|---|---|---|
+| UC25 | Journey de Tratamiento del Paciente | CORTEX.SENTIMENT + CLASSIFY_TEXT |
+| UC26 | Inteligencia de Adherencia al Tratamiento | CORTEX.COMPLETE + CLASSIFY_TEXT |
+| UC27 | Insights de Engagement con HCPs | CORTEX.SENTIMENT + AI_EXTRACT |
+
 ## Cómo Usar
 
 1. **Descargar** un notebook desde la web o clonar este repositorio
@@ -85,10 +129,12 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
 ## Requisitos
 
 - Cuenta de Snowflake con acceso a:
-  - `SNOWFLAKE.ML.CLASSIFICATION` (UC01-04, 06-07, 11-12)
-  - `SNOWFLAKE.CORTEX.COMPLETE` (UC08-10, 13-17)
-  - `SNOWFLAKE.CORTEX.SENTIMENT` (UC09, 13-14, 16)
-  - Cortex Search Service (UC10)
+  - `SNOWFLAKE.ML.CLASSIFICATION` (Seguros: UC01-04, 06-07, 11-12; Pharma: UC01, 05)
+  - `SNOWFLAKE.ML.FORECAST` (Pharma: UC04, 07, 14, 19)
+  - `SNOWFLAKE.CORTEX.COMPLETE` (Seguros: UC08-10, 13-17; Pharma: UC06, 08, 10, 17, 22-23)
+  - `SNOWFLAKE.CORTEX.SENTIMENT` (Seguros: UC09, 13-14, 16; Pharma: UC03, 16, 18-21, 24-27)
+  - `SNOWFLAKE.CORTEX.TRANSLATE` (Pharma: UC24)
+  - Cortex Search Service (Seguros: UC10; Pharma: UC17)
 - Warehouse `SMALL` o superior
 - Rol con permisos `CREATE DATABASE`
 
