@@ -2,7 +2,7 @@
 
 Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para desplegar, organizados por vertical de industria. Cada caso de uso incluye datos sintéticos, modelos ML/NLP y dashboards Streamlit interactivos — todo 100% nativo en Snowflake.
 
-🔗 **[Ver sitio web](https://dsanchezfernandez.github.io/gitpages/)**
+🔗 **[Ver sitio web](https://snowflake-spain-se-demos-sandbox.github.io/aimlcases/)**
 
 ---
 
