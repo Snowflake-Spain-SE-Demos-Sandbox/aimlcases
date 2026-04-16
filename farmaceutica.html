@@ -325,33 +325,22 @@
       gap: 10px;
     }
 
-    .btn-primary {
-      padding: 8px 18px;
-      background: linear-gradient(135deg, #003545, #11567F);
-      color: #fff;
-      border-radius: 80px;
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.15s;
-    }
-
-    .btn-primary:hover { background: #11567F; }
-
     .btn-secondary {
-      padding: 8px 18px;
-      background: transparent;
-      color: #29B5E8;
-      border: 1.5px solid #29B5E8;
+      flex: 1;
+      padding: 10px;
+      background: #29B5E8;
+      color: #fff;
+      border: none;
       border-radius: 80px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
-      text-decoration: none;
       cursor: pointer;
-      transition: all 0.15s;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
     }
-
-    .btn-secondary:hover { background: #E0F4FD; }
+    .btn-secondary:hover { background: #11567F; }
 
     .modal-overlay {
       display: none;
@@ -453,7 +442,7 @@
     <a href="index.html" class="back-link"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
     <p class="hero-eyebrow">Sector Farmacéutico × Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para Farmacéutica</h1>
-    <p class="hero-subtitle">Notebooks y Prompts de Cortex Code listos para desplegar en equipos comerciales farmacéuticos</p>
+    <p class="hero-subtitle">Guías y Prompts de Cortex Code listos para desplegar en equipos comerciales farmacéuticos</p>
     <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
   </div>
 
@@ -468,7 +457,7 @@
 
 <section class="intro">
   <h2>Acelera tu Analítica con Soluciones IA Preconfiguradas para Farmacéutica</h2>
-  <p>Cada solución incluye un Notebook Snowflake descargable con datos sintéticos, tutoriales paso a paso
+  <p>Cada solución incluye Cortex Code Prompts de Snowflake con datos sintéticos, guías paso a paso
      e implementaciones SQL-first con Cortex AI/ML. Todo el procesamiento permanece dentro de Snowflake,
      sin dependencias externas, listo para personalizar con tus propios datos.</p>
 </section>
@@ -715,7 +704,6 @@ function renderCards(list) {
           <ul class="card-features">${uc.features.map(f=>`<li>${f}</li>`).join('')}</ul>
         </div>
         <div class="card-actions">
-          <a href="#" class="btn-primary" onclick="descargarNotebook('${uc.id}');return false;">Descargar Notebook</a>
           <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
           <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
         </div>
@@ -747,60 +735,21 @@ document.getElementById('searchInput').addEventListener('input', e => {
 
 renderCards(USE_CASES);
 
-function descargarNotebook(ucId) {
-  const NB = {
-    UC01: ['farmaceutica/notebook_uc01_adherencia_pacientes.ipynb','UC01_Prediccion_Adherencia_Pacientes.ipynb'],
-    UC02: ['farmaceutica/notebook_uc02_optimizador_campanas.ipynb','UC02_Optimizador_Rendimiento_Campanas.ipynb'],
-    UC03: ['farmaceutica/notebook_uc03_analisis_sentimiento.ipynb','UC03_Analisis_Sentimiento_Consumidor.ipynb'],
-    UC04: ['farmaceutica/notebook_uc04_prediccion_loe.ipynb','UC04_Prediccion_Perdida_Exclusividad.ipynb'],
-    UC05: ['farmaceutica/notebook_uc05_engagement_hcp.ipynb','UC05_Optimizador_Engagement_HCP.ipynb'],
-    UC06: ['farmaceutica/notebook_uc06_chatbot_comercial.ipynb','UC06_Chatbot_Inteligencia_Comercial.ipynb'],
-    UC07: ['farmaceutica/notebook_uc07_segmentacion_ltv.ipynb','UC07_Segmentacion_Consumidores_LTV.ipynb'],
-    UC08: ['farmaceutica/notebook_uc08_efectividad_contenido.ipynb','UC08_Analizador_Efectividad_Contenido.ipynb'],
-    UC09: ['farmaceutica/notebook_uc09_rwe_acceso_mercado.ipynb','UC09_Generador_RWE_Acceso_Mercado.ipynb'],
-    UC10: ['farmaceutica/notebook_uc10_inteligencia_competitiva.ipynb','UC10_Monitor_Inteligencia_Competitiva.ipynb'],
-    UC11: ['farmaceutica/notebook_uc11_journey_omnicanal.ipynb','UC11_Mapeador_Journey_Omnicanal.ipynb'],
-    UC12: ['farmaceutica/notebook_uc12_optimizador_precios.ipynb','UC12_Optimizador_Precios_Descuentos.ipynb'],
-    UC13: ['farmaceutica/notebook_uc13_selector_ensayos.ipynb','UC13_Selector_Centros_Ensayos.ipynb'],
-    UC14: ['farmaceutica/notebook_uc14_prediccion_demanda.ipynb','UC14_Prediccion_Demanda_Lanzamiento.ipynb'],
-    UC15: ['farmaceutica/notebook_uc15_compliance_claims.ipynb','UC15_Gestor_Compliance_Claims.ipynb'],
-    UC16: ['farmaceutica/notebook_uc16_crisis_redes_sociales.ipynb','UC16_Deteccion_Crisis_Redes_Sociales.ipynb'],
-    UC17: ['farmaceutica/notebook_uc17_inteligencia_mensajes.ipynb','UC17_Inteligencia_Mensajes_Competidores.ipynb'],
-    UC18: ['farmaceutica/notebook_uc18_sentimiento_medios.ipynb','UC18_Tracker_Sentimiento_Medios_Globales.ipynb'],
-    UC19: ['farmaceutica/notebook_uc19_prediccion_lanzamiento.ipynb','UC19_Predictor_Recepcion_Lanzamiento.ipynb'],
-    UC20: ['farmaceutica/notebook_uc20_red_kol_influencers.ipynb','UC20_Red_Sentimiento_KOL_Influencers.ipynb'],
-    UC21: ['farmaceutica/notebook_uc21_percepcion_competitiva.ipynb','UC21_Percepcion_Competitiva_Producto.ipynb'],
-    UC22: ['farmaceutica/notebook_uc22_comunicacion_ejecutiva.ipynb','UC22_Optimizador_Comunicacion_Ejecutiva.ipynb'],
-    UC23: ['farmaceutica/notebook_uc23_inteligencia_competitiva_auto.ipynb','UC23_Inteligencia_Competitiva_Automatizada.ipynb'],
-    UC24: ['farmaceutica/notebook_uc24_sentimiento_multiidioma.ipynb','UC24_Sentimiento_Global_MultiIdioma.ipynb'],
-    UC25: ['farmaceutica/notebook_uc25_journey_tratamiento.ipynb','UC25_Journey_Tratamiento_Paciente.ipynb'],
-    UC26: ['farmaceutica/notebook_uc26_adherencia_tratamiento.ipynb','UC26_Journey_Adherencia_Tratamiento.ipynb'],
-    UC27: ['farmaceutica/notebook_uc27_engagement_hcp_insights.ipynb','UC27_Insights_Engagement_HCP.ipynb']
-  };
-  const nb = NB[ucId];
-  if (nb) {
-    const a = document.createElement('a');
-    a.href = nb[0]; a.download = nb[1];
-    document.body.appendChild(a); a.click(); a.remove();
-  } else {
-    alert('Notebook no disponible para ' + ucId);
-  }
-}
 
 const GUIAS = {
   UC01: {
     title: 'Predicción de Riesgo de Adherencia del Paciente',
-    contexto: 'Este notebook demuestra la predicción de riesgo de adherencia de pacientes cardiovasculares usando productos de Bayer Pharmaceuticals y Snowflake Cortex ML.',
+    contexto: 'Estos Cortex Code Prompts demuestra la predicción de riesgo de adherencia de pacientes cardiovasculares usando productos de Bayer Pharmaceuticals y Snowflake Cortex ML.',
     foco: 'Xarelto (rivaroxaban) para indicaciones cardiovasculares — terapia de anticoagulación.',
     reto: 'Predecir y prevenir la no-adherencia en pacientes cardiovasculares crónicos. El 40-60% de los pacientes no siguen la terapia.',
     objetivos: ['Crear flujos ML con SNOWFLAKE.ML.CLASSIFICATION','Generar datos sintéticos de adherencia para productos farmacéuticos','Construir variables a partir de dispensaciones en farmacia y engagement con app','Evaluar modelos de clasificación binaria','Construir dashboards de estratificación de riesgo con Streamlit'],
     funcionalidades: ['Modelo ML: Clasificación binaria para predicción de adherencia','Datos sintéticos: 500 pacientes, 8 refills cada uno, 120 días de uso de app','Variables: Gaps de dispensación, patrones de engagement, demográficos','Dashboard Streamlit: Scoring de riesgo interactivo y filtrado de pacientes'],
     datos: ['Pacientes: Demográficos, seguro, fechas de inscripción','Dispensaciones en farmacia: Historial de refills de Xarelto 20mg','Uso de App: Patrones de engagement con app móvil','Predicciones ML: Nivel de riesgo (Alto/Medio/Bajo) con probabilidades'],
-    como_usar: ['Ejecutar las celdas secuencialmente de arriba a abajo','La configuración del entorno crea una base de datos aislada','Los datos sintéticos generan 500 pacientes automáticamente','El modelo se entrena en 30-60 segundos','El dashboard se lanza interactivamente en el notebook']
+    como_usar: ['Ejecutar los prompts secuencialmente','La configuración del entorno crea una base de datos aislada','Los datos sintéticos generan 500 pacientes automáticamente','El modelo se entrena en 30-60 segundos','El dashboard se lanza interactivamente en el notebook']
   },
   UC02: {
     title: 'Optimizador de Rendimiento de Campañas',
-    contexto: 'Este notebook demuestra la atribución multi-touch y la optimización de ROI de campañas para operaciones de marketing de Bayer Pharmaceuticals.',
+    contexto: 'Estos Cortex Code Prompts demuestra la atribución multi-touch y la optimización de ROI de campañas para operaciones de marketing de Bayer Pharmaceuticals.',
     foco: 'Campañas de Xarelto en más de 50 mercados — optimización de presupuesto de marketing.',
     reto: 'Automatizar la atribución de campañas para superar el análisis manual y los indicadores retrasados.',
     objetivos: ['Implementar atribución multi-touch con window functions SQL','Generar datos sintéticos de campañas con journeys de conversión','Construir modelos de atribución lineal y de decaimiento temporal','Calcular ROI por canal y mercado','Crear análisis de rutas de conversión'],
@@ -810,7 +759,7 @@ const GUIAS = {
   },
   UC03: {
     title: 'Análisis de Sentimiento del Consumidor',
-    contexto: 'Este notebook demuestra el análisis de sentimiento usando Snowflake Cortex AI para productos de Bayer Pharmaceuticals en múltiples áreas terapéuticas.',
+    contexto: 'Estos Cortex Code Prompts demuestra el análisis de sentimiento usando Snowflake Cortex AI para productos de Bayer Pharmaceuticals en múltiples áreas terapéuticas.',
     foco: 'Xarelto y Eylea — monitorización de sentimiento en redes sociales, reseñas y tickets de soporte.',
     reto: 'Escalar el análisis de sentimiento a millones de posts. Detectar problemas virales antes de que escalen.',
     objetivos: ['Implementar scoring de sentimiento con CORTEX.SENTIMENT()','Detectar temas emergentes con modelado de temas LLM','Construir alertas en tiempo real para caídas de sentimiento','Analizar tendencias de sentimiento a lo largo del tiempo'],
@@ -820,7 +769,7 @@ const GUIAS = {
   },
   UC04: {
     title: 'Predicción de Pérdida de Exclusividad',
-    contexto: 'Este notebook demuestra el forecasting de ingresos para productos de Bayer que se acercan a la expiración de patente usando ML de series temporales.',
+    contexto: 'Estos Cortex Code Prompts demuestra el forecasting de ingresos para productos de Bayer que se acercan a la expiración de patente usando ML de series temporales.',
     foco: 'Xarelto — impacto de pérdida de exclusividad y escenarios de erosión por genéricos.',
     reto: 'Predecir el impacto en ingresos a 24 meses con múltiples escenarios de entrada de genéricos.',
     objetivos: ['Implementar forecasting con SNOWFLAKE.ML.FORECAST','Modelar patrones históricos de pérdida de exclusividad','Crear escenarios de erosión de mercado con genéricos','Generar proyecciones con intervalos de confianza','Analizar impacto financiero por mercado'],
@@ -830,7 +779,7 @@ const GUIAS = {
   },
   UC05: {
     title: 'Optimizador de Engagement con Profesionales Sanitarios',
-    contexto: 'Este notebook demuestra la predicción de propensión a prescribir para Bayer Pharmaceuticals usando datos de engagement y machine learning.',
+    contexto: 'Estos Cortex Code Prompts demuestra la predicción de propensión a prescribir para Bayer Pharmaceuticals usando datos de engagement y machine learning.',
     foco: 'Xarelto — optimización del engagement con cardiólogos y profesionales sanitarios (HCPs).',
     reto: 'Priorizar HCPs para maximizar el impacto de los equipos de campo. Personalizar contenido y timing.',
     objetivos: ['Construir motor de recomendación next-best-action','Analizar patrones de engagement de HCPs (emails, webinars, prescripciones)','Generar scores de probabilidad de prescripción','Personalizar recomendaciones de contenido por HCP','Crear dashboard móvil para fuerza de ventas'],
@@ -840,7 +789,7 @@ const GUIAS = {
   },
   UC06: {
     title: 'Chatbot de Inteligencia Comercial',
-    contexto: 'Este notebook construye una interfaz de consulta en lenguaje natural para inteligencia comercial de Bayer usando Cortex Analyst.',
+    contexto: 'Estos Cortex Code Prompts construye una interfaz de consulta en lenguaje natural para inteligencia comercial de Bayer usando Cortex Analyst.',
     foco: 'Xarelto, Eylea, Stivarga — consultas de mercado, cuota, ventas por región.',
     reto: 'Democratizar el acceso a insights comerciales sin necesidad de SQL ni formación en dashboards.',
     objetivos: ['Implementar Cortex Analyst con capa semántica','Configurar lenguaje natural a SQL automatizado','Generar visualizaciones automáticas','Mejorar consultas con aprendizaje continuo'],
@@ -850,7 +799,7 @@ const GUIAS = {
   },
   UC07: {
     title: 'Segmentación de Consumidores y LTV',
-    contexto: 'Este notebook implementa segmentación RFM y predicción de valor de vida del paciente para Bayer Pharmaceuticals.',
+    contexto: 'Estos Cortex Code Prompts implementa segmentación RFM y predicción de valor de vida del paciente para Bayer Pharmaceuticals.',
     foco: 'Pacientes de AFib — segmentación por valor y predicción de LTV a 12 meses.',
     reto: 'Identificar qué segmentos de pacientes priorizar y predecir su valor futuro.',
     objetivos: ['Implementar análisis RFM con SQL NTILE()','Puntuar pacientes en Recencia, Frecuencia y Valor Monetario','Predecir LTV a 12 meses con Cortex ML','Asignar segmentos con reglas de negocio','Analizar valor por cohorte'],
@@ -860,7 +809,7 @@ const GUIAS = {
   },
   UC08: {
     title: 'Analizador de Efectividad de Contenido',
-    contexto: 'Este notebook analiza la efectividad de contenido de marketing para Xarelto usando Cortex Complete para análisis de copy con IA.',
+    contexto: 'Estos Cortex Code Prompts analiza la efectividad de contenido de marketing para Xarelto usando Cortex Complete para análisis de copy con IA.',
     foco: 'Xarelto — análisis de assets de marketing, tono emocional, claridad y persuasión.',
     reto: 'Analizar miles de assets de marketing sin análisis creativo sistemático, acelerado por revisión regulatoria.',
     objetivos: ['Analizar copy publicitario con LLM (Cortex Complete)','Clasificar imágenes y elementos visuales','Agregar resultados de tests A/B','Calcular significancia estadística de variantes','Crear leaderboard de rendimiento creativo'],
@@ -870,7 +819,7 @@ const GUIAS = {
   },
   UC09: {
     title: 'Generador de Evidencia del Mundo Real (RWE)',
-    contexto: 'Este notebook genera Evidencia del Mundo Real (RWE) desde datos de EHR y claims para submissions a pagadores de Xarelto.',
+    contexto: 'Estos Cortex Code Prompts genera Evidencia del Mundo Real (RWE) desde datos de EHR y claims para submissions a pagadores de Xarelto.',
     foco: 'Xarelto vs Warfarin — efectividad comparativa, adherencia y coste-efectividad para anticoagulación.',
     reto: 'Generar RWE para submissions a pagadores de forma automatizada, comparando resultados de Xarelto vs estándar de cuidado.',
     objetivos: ['Construir análisis de efectividad comparativa con SQL','Calcular métricas de adherencia (PDC)','Analizar resultados clínicos (reducción de ictus)','Generar análisis de coste-efectividad (ICER)','Estudiar patrones de utilización sanitaria'],
@@ -880,7 +829,7 @@ const GUIAS = {
   },
   UC10: {
     title: 'Monitor de Inteligencia Competitiva',
-    contexto: 'Este notebook construye un monitor de inteligencia competitiva automatizado usando Cortex Search para indexar ensayos clínicos, notas de prensa y noticias.',
+    contexto: 'Estos Cortex Code Prompts construye un monitor de inteligencia competitiva automatizado usando Cortex Search para indexar ensayos clínicos, notas de prensa y noticias.',
     foco: 'Anticoagulantes competidores (Eliquis, Pradaxa) — seguimiento de movimientos competitivos.',
     reto: 'Automatizar el tracking competitivo disperso en múltiples fuentes sin alerta temprana.',
     objetivos: ['Integrar feeds de datos del Marketplace Snowflake','Implementar pipeline de resumen con LLM (Cortex Complete)','Extraer entidades y modelar temas automáticamente','Crear dashboard de panorama competitivo con alertas'],
@@ -890,7 +839,7 @@ const GUIAS = {
   },
   UC11: {
     title: 'Mapeador de Journey Omnicanal',
-    contexto: 'Este notebook rastrea el engagement de HCPs a través de múltiples canales para entender qué secuencias de touchpoints llevan a prescripciones.',
+    contexto: 'Estos Cortex Code Prompts rastrea el engagement de HCPs a través de múltiples canales para entender qué secuencias de touchpoints llevan a prescripciones.',
     foco: 'Xarelto — journey omnicanal de HCPs (Email, Web, Eventos, Visitas de Representante).',
     reto: 'Visualizar el movimiento del HCP entre puntos de contacto y optimizar rutas a conversión.',
     objetivos: ['Procesar secuencias de eventos multi-canal','Implementar análisis de cadenas de Markov','Identificar rutas óptimas a prescripción','Detectar puntos de abandono y fricción','Crear visualizaciones Sankey interactivas'],
@@ -900,7 +849,7 @@ const GUIAS = {
   },
   UC12: {
     title: 'Optimizador de Precios y Descuentos',
-    contexto: 'Este notebook implementa modelado de escenarios de precios y descuentos para productos de Bayer usando funciones SQL.',
+    contexto: 'Estos Cortex Code Prompts implementa modelado de escenarios de precios y descuentos para productos de Bayer usando funciones SQL.',
     foco: 'Xarelto, Eylea, Stivarga — optimización de precios y programas de asistencia al paciente.',
     reto: 'Analizar miles de escenarios de precio/descuento para maximizar ingresos y optimizar programas de asistencia.',
     objetivos: ['Generar escenarios con GENERATOR() para 100 combinaciones','Modelar elasticidad de precios con POWER()','Identificar puntos de precio que maximizan ingresos','Construir simulador de precios interactivo'],
@@ -910,7 +859,7 @@ const GUIAS = {
   },
   UC13: {
     title: 'Selector de Centros para Ensayos Clínicos',
-    contexto: 'Este notebook implementa selección y optimización de centros para ensayos clínicos usando análisis geoespacial SQL.',
+    contexto: 'Estos Cortex Code Prompts implementa selección y optimización de centros para ensayos clínicos usando análisis geoespacial SQL.',
     foco: 'Nuevos productos cardiovasculares de Bayer — selección de centros para ensayos clínicos.',
     reto: 'Superar la selección intuitiva de centros con análisis basado en datos de accesibilidad y rendimiento.',
     objetivos: ['Implementar análisis geoespacial con ST_DISTANCE() y ST_MAKEPOINT()','Puntuar centros por accesibilidad de pacientes','Evaluar historial de rendimiento de reclutamiento','Crear scoring ponderado multi-criterio'],
@@ -920,7 +869,7 @@ const GUIAS = {
   },
   UC14: {
     title: 'Predicción de Demanda de Lanzamiento',
-    contexto: 'Este notebook predice la demanda de nuevos lanzamientos de producto usando SNOWFLAKE.ML.FORECAST con patrones de adopción de productos análogos.',
+    contexto: 'Estos Cortex Code Prompts predice la demanda de nuevos lanzamientos de producto usando SNOWFLAKE.ML.FORECAST con patrones de adopción de productos análogos.',
     foco: 'Nuevos fármacos cardiovasculares — forecasting de demanda multi-mercado para supply chain.',
     reto: 'Predecir inventario por mercado para evitar roturas de stock y exceso costoso.',
     objetivos: ['Implementar forecasting multi-mercado con Cortex ML','Integrar señales externas (datos económicos, competencia, estacionalidad)','Modelar curvas de adopción S con productos análogos','Generar intervalos de confianza por mercado'],
@@ -930,7 +879,7 @@ const GUIAS = {
   },
   UC15: {
     title: 'Gestor de Compliance de Claims',
-    contexto: 'Este notebook implementa verificación automatizada de claims de marketing contra una librería aprobada por MLR para Bayer Pharmaceuticals.',
+    contexto: 'Estos Cortex Code Prompts implementa verificación automatizada de claims de marketing contra una librería aprobada por MLR para Bayer Pharmaceuticals.',
     foco: 'Xarelto, Eylea, Stivarga — compliance de claims en contenido de marketing.',
     reto: 'Verificar claims aprobados automáticamente para evitar contenido no conforme publicado.',
     objetivos: ['Implementar validación regex SQL con REGEXP_COUNT','Parsear texto de marketing con SPLIT_TO_TABLE','Matchear claims contra librería aprobada','Analizar campos multi-valor con FLATTEN','Crear dashboard de scoring de compliance'],
@@ -940,7 +889,7 @@ const GUIAS = {
   },
   UC16: {
     title: 'Detección de Crisis en Redes Sociales',
-    contexto: 'Este notebook implementa detección de crisis en redes sociales con análisis de sentimiento en tiempo real y detección de eventos adversos.',
+    contexto: 'Estos Cortex Code Prompts implementa detección de crisis en redes sociales con análisis de sentimiento en tiempo real y detección de eventos adversos.',
     foco: 'Xarelto, Eylea, Stivarga — monitorización de amenazas a la marca en redes sociales.',
     reto: 'Detectar amenazas virales y eventos adversos antes de que escalen, a escala de millones de posts.',
     objetivos: ['Implementar scoring en tiempo real con CORTEX.SENTIMENT()','Clasificar eventos adversos con LLM','Detectar anomalías estadísticas con Z-score','Crear alertas automatizadas por severidad'],
@@ -950,7 +899,7 @@ const GUIAS = {
   },
   UC17: {
     title: 'Inteligencia de Mensajes de Competidores',
-    contexto: 'Este notebook implementa extracción de inteligencia de mensajes de competidores usando Cortex Search y LLM.',
+    contexto: 'Estos Cortex Code Prompts implementa extracción de inteligencia de mensajes de competidores usando Cortex Search y LLM.',
     foco: 'Eliquis, Pradaxa — análisis de posicionamiento y claims competitivos en el espacio de anticoagulantes.',
     reto: 'Sistematizar el análisis de posicionamiento competitivo que actualmente es manual y disperso.',
     objetivos: ['Implementar Cortex Search para recuperación semántica de documentos','Extraer claims y posicionamiento con LLM','Analizar claims de eficacia y mensajes de seguridad','Detectar cambios de posicionamiento a lo largo del tiempo'],
@@ -960,7 +909,7 @@ const GUIAS = {
   },
   UC18: {
     title: 'Tracker de Sentimiento en Medios Globales',
-    contexto: 'Este notebook implementa seguimiento automatizado de sentimiento en medios globales para Bayer Pharmaceuticals.',
+    contexto: 'Estos Cortex Code Prompts implementa seguimiento automatizado de sentimiento en medios globales para Bayer Pharmaceuticals.',
     foco: 'Xarelto — monitorización de sentimiento en noticias, informes de analistas y medios ganados.',
     reto: 'Obtener una vista unificada del sentimiento global de marca a partir de millones de fuentes dispersas.',
     objetivos: ['Agregar sentimiento de múltiples fuentes de medios','Calcular métricas de share of voice','Analizar tendencias en series temporales','Comparar sentimiento regional'],
@@ -970,7 +919,7 @@ const GUIAS = {
   },
   UC19: {
     title: 'Predictor de Recepción de Lanzamiento',
-    contexto: 'Este notebook predice cómo será recibido un nuevo lanzamiento de producto usando ML y señales tempranas de sentimiento.',
+    contexto: 'Estos Cortex Code Prompts predice cómo será recibido un nuevo lanzamiento de producto usando ML y señales tempranas de sentimiento.',
     foco: 'Nuevos productos cardiovasculares — predicción de trayectoria de sentimiento post-lanzamiento.',
     reto: 'Pasar de comunicaciones reactivas a proactivas prediciendo la recepción del lanzamiento.',
     objetivos: ['Implementar forecasting de sentimiento con SNOWFLAKE.ML.FORECAST','Detectar señales tempranas de recepción','Generar predicciones con intervalos de confianza a 30/60/90 días','Crear recomendaciones de ajuste de estrategia'],
@@ -980,7 +929,7 @@ const GUIAS = {
   },
   UC20: {
     title: 'Red de Sentimiento de KOLs e Influencers',
-    contexto: 'Este notebook implementa análisis de red de sentimiento e influencia de KOLs (Key Opinion Leaders) para Bayer.',
+    contexto: 'Estos Cortex Code Prompts implementa análisis de red de sentimiento e influencia de KOLs (Key Opinion Leaders) para Bayer.',
     foco: 'Cardiólogos KOL — seguimiento de sentimiento e influencia en el espacio de anticoagulación.',
     reto: 'Rastrear sentimiento de KOLs influyentes a escala e identificar señales tempranas.',
     objetivos: ['Construir algoritmos de scoring de influencia de KOL','Rastrear sentimiento de KOLs a lo largo del tiempo','Mapear relaciones y redes de influencia','Crear rankings de principales influencers'],
@@ -990,7 +939,7 @@ const GUIAS = {
   },
   UC21: {
     title: 'Percepción Competitiva de Producto',
-    contexto: 'Este notebook implementa análisis comparativo de percepción de producto entre Bayer y sus competidores.',
+    contexto: 'Estos Cortex Code Prompts implementa análisis comparativo de percepción de producto entre Bayer y sus competidores.',
     foco: 'Xarelto vs Eliquis vs Pradaxa — percepción comparativa en el mercado de anticoagulantes.',
     reto: 'Entender las diferencias de percepción entre productos y detectar oportunidades de mensajería.',
     objetivos: ['Comparar sentimiento entre productos competitivos','Identificar gaps de percepción entre productos','Crear mapas de posicionamiento competitivo','Detectar oportunidades de mejora de mensajería'],
@@ -1000,7 +949,7 @@ const GUIAS = {
   },
   UC22: {
     title: 'Optimizador de Comunicación Ejecutiva',
-    contexto: 'Este notebook analiza la efectividad de comunicaciones ejecutivas de Bayer usando IA para evaluar tono, claridad y resonancia.',
+    contexto: 'Estos Cortex Code Prompts analiza la efectividad de comunicaciones ejecutivas de Bayer usando IA para evaluar tono, claridad y resonancia.',
     foco: 'Comunicaciones ejecutivas de Bayer — optimización con IA de mensajes corporativos.',
     reto: 'Optimizar comunicaciones importantes sin testeo sistemático de tono, claridad y resonancia con audiencias.',
     objetivos: ['Analizar mensajes ejecutivos con LLM (Cortex Complete)','Evaluar tono, claridad y persuasión','Predecir resonancia con diferentes audiencias','Generar recomendaciones de optimización'],
@@ -1010,7 +959,7 @@ const GUIAS = {
   },
   UC23: {
     title: 'Inteligencia Competitiva Automatizada',
-    contexto: 'Este notebook implementa un sistema de inteligencia competitiva continua y automatizada para el espacio de anticoagulantes.',
+    contexto: 'Estos Cortex Code Prompts implementa un sistema de inteligencia competitiva continua y automatizada para el espacio de anticoagulantes.',
     foco: 'Anticoagulantes competidores — monitorización automatizada multi-fuente con alertas.',
     reto: 'Superar el monitoreo competitivo manual y disperso sin sistema de alertas tempranas.',
     objetivos: ['Agregar datos de múltiples fuentes competitivas','Resumir eventos con LLM automaticamente','Detectar amenazas competitivas con alertas','Crear dashboard de panorama competitivo actualizado'],
@@ -1020,7 +969,7 @@ const GUIAS = {
   },
   UC24: {
     title: 'Sentimiento Global Multi-Idioma',
-    contexto: 'Este notebook implementa análisis de sentimiento en múltiples idiomas usando Cortex TRANSLATE para una vista global unificada.',
+    contexto: 'Estos Cortex Code Prompts implementa análisis de sentimiento en múltiples idiomas usando Cortex TRANSLATE para una vista global unificada.',
     foco: 'Xarelto — sentimiento global en idiomas nativos con consolidación a métricas unificadas.',
     reto: 'Superar barreras lingüísticas que impiden el análisis global unificado del sentimiento de marca.',
     objetivos: ['Integrar CORTEX.TRANSLATE para traducción multi-idioma','Implementar scoring de sentimiento en idiomas nativos','Comparar sentimiento regional con contexto cultural','Consolidar métricas globales desde múltiples idiomas'],
@@ -1030,7 +979,7 @@ const GUIAS = {
   },
   UC25: {
     title: 'Experiencia del Journey de Tratamiento del Paciente',
-    contexto: 'Este notebook rastrea la experiencia del paciente a través de seis etapas del journey de tratamiento usando múltiples funciones de Cortex AI.',
+    contexto: 'Estos Cortex Code Prompts rastrea la experiencia del paciente a través de seis etapas del journey de tratamiento usando múltiples funciones de Cortex AI.',
     foco: 'Pacientes de AFib — journey de tratamiento de 6 etapas con análisis de fricción.',
     reto: 'Obtener visibilidad end-to-end de las etapas de tratamiento para identificar abandonos y puntos de dolor.',
     objetivos: ['Modelar funnel de journey de 6 etapas con métricas de completitud','Implementar CORTEX.SENTIMENT en cada etapa del journey','Usar CORTEX.COMPLETE + CORTEX.SUMMARIZE para insights de barreras','Clasificar riesgo de abandono con CORTEX.CLASSIFY_TEXT'],
@@ -1040,7 +989,7 @@ const GUIAS = {
   },
   UC26: {
     title: 'Inteligencia del Journey de Adherencia al Tratamiento',
-    contexto: 'Este notebook combina analítica de refills con IA para clasificar barreras de adherencia y predecir ventanas de riesgo.',
+    contexto: 'Estos Cortex Code Prompts combina analítica de refills con IA para clasificar barreras de adherencia y predecir ventanas de riesgo.',
     foco: 'Xarelto — programa de adherencia a 12 meses con predicción de abandonos a 30/60/90 días.',
     reto: 'Predecir abandonos a 30/60/90 días en un programa de 12 meses, pasando de intervenciones reactivas a proactivas.',
     objetivos: ['Implementar tracking de refills y persistencia a 12 meses','Analizar tendencia de sentimiento sobre la medicación con CORTEX.SENTIMENT','Clasificar barreras y generar planes de acción con IA','Etiquetar riesgo a 30/60/90 días con CORTEX.CLASSIFY_TEXT'],
@@ -1050,7 +999,7 @@ const GUIAS = {
   },
   UC27: {
     title: 'Analizador de Insights de Engagement con HCPs',
-    contexto: 'Este notebook puntúa notas de visitas de campo con Cortex Sentiment y extrae intención con AI_EXTRACT para priorizar seguimiento de HCPs.',
+    contexto: 'Estos Cortex Code Prompts puntúa notas de visitas de campo con Cortex Sentiment y extrae intención con AI_EXTRACT para priorizar seguimiento de HCPs.',
     foco: 'Equipos de campo de Bayer — triaje rápido de notas de visitas a profesionales sanitarios.',
     reto: 'Eliminar la revisión manual de notas de visitas para priorizar el seguimiento de HCPs urgentes en 48 horas.',
     objetivos: ['Puntuar notas de visita con SNOWFLAKE.CORTEX.SENTIMENT()','Extraer intención, urgencia y próximos pasos con AI_EXTRACT','Crear vista SQL prioritaria para triaje rápido','Construir dashboard Streamlit para gestión de cola urgente'],

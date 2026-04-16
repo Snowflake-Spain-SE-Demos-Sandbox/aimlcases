@@ -327,7 +327,7 @@
       flex-wrap: wrap;
     }
 
-    .btn-primary {
+    .btn-secondary {
       flex: 1;
       padding: 10px;
       background: #29B5E8;
@@ -342,24 +342,7 @@
       text-decoration: none;
       display: block;
     }
-    .btn-primary:hover { background: #11567F; }
-
-    .btn-secondary {
-      flex: 1;
-      padding: 10px;
-      background: transparent;
-      color: #29B5E8;
-      border: 1.5px solid #29B5E8;
-      border-radius: 80px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-      text-decoration: none;
-      display: block;
-    }
-    .btn-secondary:hover { background: #F0F7FA; }
+    .btn-secondary:hover { background: #11567F; }
 
     .btn-tertiary {
       flex: 1;
@@ -450,7 +433,7 @@
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
     <p class="hero-eyebrow">Gestión del Agua × Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para Gestión del Agua</h1>
-    <p class="hero-subtitle">Talk to your Plant — Notebooks y Prompts de Cortex Code para Veolia y Aguas de Barcelona</p>
+    <p class="hero-subtitle">Talk to your Plant — Guías y Prompts de Cortex Code para Veolia y Aguas de Barcelona</p>
     <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
   </div>
 
@@ -465,7 +448,7 @@
 
 <section class="intro">
   <h2>Talk to your Plant — Inteligencia Artificial para el Ciclo del Agua</h2>
-  <p>Cada solución incluye un Notebook Snowflake descargable con datos sintéticos, tutoriales paso a paso
+  <p>Cada solución incluye Cortex Code Prompts de Snowflake con datos sintéticos, guías paso a paso
      e implementaciones SQL-first con Cortex AI/ML. Desde asistentes conversacionales para operadores de planta
      hasta optimización energética y detección de fugas — todo dentro de Snowflake.</p>
 </section>
@@ -597,7 +580,6 @@ function renderCards(list) {
           ${uc.features.map(f => `<li>${f}</li>`).join('')}
         </ul>
         <div class="card-actions">
-          <a href="#" class="btn-primary" onclick="descargarNotebook('${uc.id}');return false;">Descargar Notebook</a>
           <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Gu\u00eda</a>
           <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
         </div>
@@ -634,43 +616,21 @@ document.getElementById('searchInput').addEventListener('input', e => {
 
 renderCards(USE_CASES);
 
-function descargarNotebook(ucId) {
-  const NB = {
-    UC01: ["agua/notebook_uc01_talk_to_plant.ipynb", "UC01_Asistente_Conversacional_Planta.ipynb"],
-    UC02: ["agua/notebook_uc02_prediccion_turbidez.ipynb", "UC02_Prediccion_Turbidez_Parametros.ipynb"],
-    UC03: ["agua/notebook_uc03_dosificacion_reactivos.ipynb", "UC03_Optimizacion_Dosificacion.ipynb"],
-    UC04: ["agua/notebook_uc04_mantenimiento_predictivo.ipynb", "UC04_Mantenimiento_Predictivo_Equipos.ipynb"],
-    UC05: ["agua/notebook_uc05_deteccion_fugas.ipynb", "UC05_Deteccion_Fugas_Red.ipynb"],
-    UC06: ["agua/notebook_uc06_nlp_incidencias.ipynb", "UC06_NLP_Incidencias_Partes.ipynb"],
-    UC07: ["agua/notebook_uc07_demanda_hidrica.ipynb", "UC07_Prediccion_Demanda_Hidrica.ipynb"],
-    UC08: ["agua/notebook_uc08_anomalias_consumo.ipynb", "UC08_Anomalias_Consumo_Abonados.ipynb"],
-    UC09: ["agua/notebook_uc09_reclamaciones.ipynb", "UC09_Inteligencia_Reclamaciones.ipynb"],
-    UC10: ["agua/notebook_uc10_optimizacion_energia.ipynb", "UC10_Optimizacion_Energetica.ipynb"],
-  };
-  const nb = NB[ucId];
-  if (nb) {
-    const a = document.createElement('a');
-    a.href = nb[0]; a.download = nb[1];
-    document.body.appendChild(a); a.click(); a.remove();
-  } else {
-    alert('Notebook no disponible para ' + ucId);
-  }
-}
 
 const GUIAS = {
   UC01: {
     title: "Asistente Conversacional de Planta (Talk to your Plant)",
-    contexto: "Este notebook construye un asistente RAG que permite a los operadores de planta consultar en lenguaje natural el estado de la planta, procedimientos y alarmas.",
+    contexto: "Estos Cortex Code Prompts construye un asistente RAG que permite a los operadores de planta consultar en lenguaje natural el estado de la planta, procedimientos y alarmas.",
     foco: "Operación de ETAP/EDAR — consultas conversacionales sobre estado de planta, parámetros SCADA y manuales operativos.",
     reto: "Reducir el tiempo de acceso a información operativa de horas a segundos, mejorando la toma de decisiones en tiempo real.",
     objetivos: ["Crear base de conocimiento de manuales operativos y procedimientos", "Indexar documentación técnica con Cortex Search", "Integrar datos SCADA simulados en tiempo real", "Implementar pipeline RAG con CORTEX.COMPLETE", "Construir interfaz conversacional Streamlit para operadores"],
     funcionalidades: ["RAG: Cortex Search + CORTEX.COMPLETE para respuestas contextuales", "Datos sintéticos: 80 documentos técnicos + 500 registros SCADA", "Búsqueda semántica: Chunks de ~500 caracteres indexados", "Dashboard Streamlit: Chat interactivo con cita de fuentes"],
     datos: ["Manuales: Procedimientos operativos, fichas de equipo, protocolos de emergencia", "SCADA: Lecturas de sensores (caudal, pH, turbidez, cloro, presión, nivel)", "Alarmas: Historial de alarmas con severidad y acciones tomadas", "Chunks: Fragmentos indexados por sección y equipo"],
-    como_usar: ["Ejecutar las celdas secuencialmente de arriba a abajo", "La configuración del entorno crea una base de datos aislada", "Los datos sintéticos generan manuales y lecturas SCADA automáticamente", "Se crea el Cortex Search Service sobre la documentación", "El dashboard se lanza interactivamente en el notebook"]
+    como_usar: ["Ejecutar los prompts secuencialmente", "La configuración del entorno crea una base de datos aislada", "Los datos sintéticos generan manuales y lecturas SCADA automáticamente", "Se crea el Cortex Search Service sobre la documentación", "El dashboard se lanza interactivamente en el notebook"]
   },
   UC02: {
     title: "Predicción de Turbidez y Parámetros Fisicoquímicos",
-    contexto: "Este notebook construye un modelo de forecasting para predecir parámetros de calidad del agua (turbidez, pH, cloro, conductividad) a 4-24 horas vista.",
+    contexto: "Estos Cortex Code Prompts construye un modelo de forecasting para predecir parámetros de calidad del agua (turbidez, pH, cloro, conductividad) a 4-24 horas vista.",
     foco: "Calidad del agua en ETAP — anticipación de picos de turbidez y desviaciones de parámetros regulatorios.",
     reto: "Predecir con antelación suficiente los cambios en calidad del agua bruta para ajustar dosificación proactivamente.",
     objetivos: ["Generar series temporales sintéticas de parámetros de calidad", "Entrenar modelos de forecasting con SNOWFLAKE.ML.FORECAST", "Predecir turbidez, pH, cloro residual y conductividad a 4-24h", "Configurar alertas proactivas por umbrales regulatorios", "Construir dashboard de tendencias y predicciones"],
@@ -680,7 +640,7 @@ const GUIAS = {
   },
   UC03: {
     title: "Optimización de Dosificación de Reactivos",
-    contexto: "Este notebook construye un sistema de recomendación de dosis óptima de reactivos según condiciones del agua bruta.",
+    contexto: "Estos Cortex Code Prompts construye un sistema de recomendación de dosis óptima de reactivos según condiciones del agua bruta.",
     foco: "Coagulación/floculación en ETAP — optimización de dosis de sulfato de aluminio, polielectrolito y cloro.",
     reto: "Reducir el coste de reactivos un 15-25% manteniendo la calidad del agua tratada dentro de normativa.",
     objetivos: ["Generar datos sintéticos de jar-test y dosificación histórica", "Modelar relación agua bruta → dosis óptima con ML.CLASSIFICATION", "Crear bandas de dosificación por condiciones de entrada", "Evaluar ahorro potencial vs dosificación actual", "Dashboard de recomendaciones para operadores de turno"],
@@ -690,7 +650,7 @@ const GUIAS = {
   },
   UC04: {
     title: "Mantenimiento Predictivo de Equipos de Planta",
-    contexto: "Este notebook construye un sistema de detección de anomalías para predecir fallos en equipos críticos de planta.",
+    contexto: "Estos Cortex Code Prompts construye un sistema de detección de anomalías para predecir fallos en equipos críticos de planta.",
     foco: "Equipos rotativos de ETAP/EDAR — bombas, soplantes, agitadores, compresores.",
     reto: "Anticipar fallos de equipos con 7-14 días para planificar intervenciones y evitar paradas no programadas.",
     objetivos: ["Generar datos sintéticos de sensores IoT de equipos", "Entrenar modelo de detección de anomalías con ML.ANOMALY_DETECTION", "Detectar patrones de degradación en vibración, temperatura y consumo", "Clasificar severidad de anomalías y priorizar acciones", "Dashboard de salud de equipos con alertas predictivas"],
@@ -700,7 +660,7 @@ const GUIAS = {
   },
   UC05: {
     title: "Detección de Fugas en Red de Distribución",
-    contexto: "Este notebook construye un sistema de scoring de probabilidad de fuga por zona (DMA) para priorizar campañas de detección.",
+    contexto: "Estos Cortex Code Prompts construye un sistema de scoring de probabilidad de fuga por zona (DMA) para priorizar campañas de detección.",
     foco: "Red de distribución — análisis de agua no registrada (ANR) y localización de fugas por sectorización.",
     reto: "Reducir el agua no registrada (ANR) del 25% al 15% priorizando las zonas con mayor probabilidad de fuga.",
     objetivos: ["Generar datos sintéticos de sectorización hidráulica (DMAs)", "Modelar probabilidad de fuga con ML.CLASSIFICATION", "Analizar caudales mínimos nocturnos y balance hídrico", "Priorizar campañas de detección por impacto económico", "Dashboard de gestión de fugas con mapa de priorización"],
@@ -710,7 +670,7 @@ const GUIAS = {
   },
   UC06: {
     title: "Análisis NLP de Incidencias y Partes de Trabajo",
-    contexto: "Este notebook construye un pipeline NLP para clasificar y extraer información de partes de trabajo e incidencias en texto libre.",
+    contexto: "Estos Cortex Code Prompts construye un pipeline NLP para clasificar y extraer información de partes de trabajo e incidencias en texto libre.",
     foco: "Gestión de incidencias — clasificación automática y extracción de entidades de partes de trabajo de campo.",
     reto: "Transformar miles de partes de trabajo no estructurados en datos accionables para priorizar inversiones.",
     objetivos: ["Generar partes de trabajo sintéticos con texto realista", "Clasificar incidencias con CORTEX.COMPLETE", "Extraer entidades (equipo, ubicación, causa raíz) con IA", "Detectar patrones recurrentes y zonas problemáticas", "Dashboard de inteligencia de incidencias"],
@@ -720,7 +680,7 @@ const GUIAS = {
   },
   UC07: {
     title: "Predicción de Demanda Hídrica",
-    contexto: "Este notebook construye un modelo de forecasting de demanda de agua a 24-72 horas para optimizar la producción.",
+    contexto: "Estos Cortex Code Prompts construye un modelo de forecasting de demanda de agua a 24-72 horas para optimizar la producción.",
     foco: "Planificación de producción — predicción de demanda diaria y horaria con variables exógenas.",
     reto: "Predecir la demanda con ±5% de precisión para optimizar producción, almacenamiento y costes energéticos.",
     objetivos: ["Generar series temporales sintéticas de consumo de agua", "Incorporar variables exógenas (meteorología, calendario, turismo)", "Entrenar SNOWFLAKE.ML.FORECAST con múltiples horizontes", "Evaluar precisión con MAPE y RMSE", "Dashboard de planificación de producción"],
@@ -730,7 +690,7 @@ const GUIAS = {
   },
   UC08: {
     title: "Detección de Consumos Anómalos en Abonados",
-    contexto: "Este notebook construye un sistema de detección de anomalías de consumo por abonado para identificar fugas internas, fraude y averías de contador.",
+    contexto: "Estos Cortex Code Prompts construye un sistema de detección de anomalías de consumo por abonado para identificar fugas internas, fraude y averías de contador.",
     foco: "Gestión comercial — detección temprana de consumos anómalos antes del ciclo de facturación.",
     reto: "Identificar fugas internas y fraudes de contador en tiempo real, evitando reclamaciones y pérdidas de ingresos.",
     objetivos: ["Generar perfiles de consumo sintéticos por tipo de abonado", "Entrenar modelo de detección de anomalías con ML.ANOMALY_DETECTION", "Comparar consumo individual vs perfil y vecindario", "Clasificar tipo de anomalía (fuga, fraude, avería)", "Dashboard de alertas para equipo comercial"],
@@ -740,7 +700,7 @@ const GUIAS = {
   },
   UC09: {
     title: "Inteligencia sobre Reclamaciones de Clientes",
-    contexto: "Este notebook construye un sistema NLP de clasificación y análisis de sentimiento sobre reclamaciones de clientes del ciclo del agua.",
+    contexto: "Estos Cortex Code Prompts construye un sistema NLP de clasificación y análisis de sentimiento sobre reclamaciones de clientes del ciclo del agua.",
     foco: "Atención al cliente — análisis automatizado de reclamaciones para detectar problemas sistémicos y riesgo regulatorio.",
     reto: "Procesar miles de reclamaciones mensuales, detectar patrones de causa raíz y anticipar escaladas regulatorias.",
     objetivos: ["Generar reclamaciones sintéticas de clientes de agua", "Analizar sentimiento con CORTEX.SENTIMENT", "Clasificar reclamaciones por categoría con CORTEX.COMPLETE", "Detectar menciones de riesgo regulatorio (ACA, AEMPS, defensor)", "Dashboard de inteligencia de reclamaciones"],
@@ -750,7 +710,7 @@ const GUIAS = {
   },
   UC10: {
     title: "Optimización Energética de la Planta",
-    contexto: "Este notebook construye un sistema de recomendación de configuración de equipos para minimizar el coste energético de la planta.",
+    contexto: "Estos Cortex Code Prompts construye un sistema de recomendación de configuración de equipos para minimizar el coste energético de la planta.",
     foco: "Eficiencia energética — optimización del consumo eléctrico de bombeos, aireación y equipos auxiliares.",
     reto: "Reducir el coste energético un 10-20% sin comprometer producción ni calidad, adaptándose a tarifas eléctricas variables.",
     objetivos: ["Generar datos sintéticos de consumo energético por equipo y tarifa", "Modelar la relación entre configuración de equipos y coste energético", "Entrenar ML.CLASSIFICATION para bandas de configuración óptima", "Calcular ahorro potencial por periodo tarifario", "Dashboard de gestión energética con recomendaciones"],

@@ -332,7 +332,7 @@
       flex-wrap: wrap;
     }
 
-    .btn-primary {
+    .btn-secondary {
       flex: 1;
       padding: 10px;
       background: #29B5E8;
@@ -347,24 +347,7 @@
       text-decoration: none;
       display: block;
     }
-    .btn-primary:hover { background: #11567F; }
-
-    .btn-secondary {
-      flex: 1;
-      padding: 10px;
-      background: transparent;
-      color: #29B5E8;
-      border: 1.5px solid #29B5E8;
-      border-radius: 80px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-      text-decoration: none;
-      display: block;
-    }
-    .btn-secondary:hover { background: #F0F7FA; }
+    .btn-secondary:hover { background: #11567F; }
 
     .btn-tertiary {
       flex: 1;
@@ -456,7 +439,7 @@
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
     <p class="hero-eyebrow">Sector Banca × Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para Banca</h1>
-    <p class="hero-subtitle">Notebooks y Prompts de Cortex Code listos para desplegar en equipos de banca y servicios financieros</p>
+    <p class="hero-subtitle">Guías y Prompts de Cortex Code listos para desplegar en equipos de banca y servicios financieros</p>
     <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
   </div>
 
@@ -472,7 +455,7 @@
 <!-- ── INTRO ──────────────────────────────────────────────── -->
 <section class="intro">
   <h2>Acelera tu Analítica con Soluciones IA Preconfiguradas para Banca</h2>
-  <p>Cada solución incluye un Notebook Snowflake descargable con datos sintéticos, tutoriales paso a paso
+  <p>Cada solución incluye Cortex Code Prompts de Snowflake con datos sintéticos, guías paso a paso
      e implementaciones SQL-first con Cortex AI/ML. Todo el procesamiento permanece dentro de Snowflake,
      sin dependencias externas, listo para personalizar con tus propios datos.</p>
 </section>
@@ -681,7 +664,6 @@ function renderCards(list) {
           ${uc.features.map(f => `<li>${f}</li>`).join('')}
         </ul>
         <div class="card-actions">
-          <a href="#" class="btn-primary" onclick="descargarNotebook('${uc.id}');return false;">Descargar Notebook</a>
           <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
           <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
         </div>
@@ -718,53 +700,21 @@ document.getElementById('searchInput').addEventListener('input', e => {
 
 renderCards(USE_CASES);
 
-function descargarNotebook(ucId) {
-  const NB = {
-    UC01: ['banca/notebook_uc01_fraude_transacciones.ipynb','UC01_Fraude_Transacciones.ipynb'],
-    UC02: ['banca/notebook_uc02_scoring_credito.ipynb','UC02_Scoring_Credito.ipynb'],
-    UC03: ['banca/notebook_uc03_deteccion_aml.ipynb','UC03_Deteccion_AML.ipynb'],
-    UC04: ['banca/notebook_uc04_stress_testing.ipynb','UC04_Stress_Testing.ipynb'],
-    UC05: ['banca/notebook_uc05_compliance_regulatorio.ipynb','UC05_Compliance_Regulatorio.ipynb'],
-    UC06: ['banca/notebook_uc06_fraude_solicitudes.ipynb','UC06_Fraude_Solicitudes.ipynb'],
-    UC07: ['banca/notebook_uc07_churn_clientes.ipynb','UC07_Churn_Clientes.ipynb'],
-    UC08: ['banca/notebook_uc08_next_best_offer.ipynb','UC08_Next_Best_Offer.ipynb'],
-    UC09: ['banca/notebook_uc09_segmentacion_ltv.ipynb','UC09_Segmentacion_LTV.ipynb'],
-    UC10: ['banca/notebook_uc10_sentimiento_reclamaciones.ipynb','UC10_Sentimiento_Reclamaciones.ipynb'],
-    UC11: ['banca/notebook_uc11_chatbot_financiero.ipynb','UC11_Chatbot_Financiero.ipynb'],
-    UC12: ['banca/notebook_uc12_demanda_productos.ipynb','UC12_Demanda_Productos.ipynb'],
-    UC13: ['banca/notebook_uc13_pricing_prestamos.ipynb','UC13_Pricing_Prestamos.ipynb'],
-    UC14: ['banca/notebook_uc14_morosidad_temprana.ipynb','UC14_Morosidad_Temprana.ipynb'],
-    UC15: ['banca/notebook_uc15_anomalias_mercado.ipynb','UC15_Anomalias_Mercado.ipynb'],
-    UC16: ['banca/notebook_uc16_red_oficinas.ipynb','UC16_Red_Oficinas.ipynb'],
-    UC17: ['banca/notebook_uc17_analisis_documentos.ipynb','UC17_Analisis_Documentos.ipynb'],
-    UC18: ['banca/notebook_uc18_riesgo_reputacional.ipynb','UC18_Riesgo_Reputacional.ipynb'],
-    UC19: ['banca/notebook_uc19_competencia_bancaria.ipynb','UC19_Competencia_Bancaria.ipynb'],
-    UC20: ['banca/notebook_uc20_normativa_rag.ipynb','UC20_Normativa_RAG.ipynb']
-  };
-  const nb = NB[ucId];
-  if (nb) {
-    const a = document.createElement('a');
-    a.href = nb[0]; a.download = nb[1];
-    document.body.appendChild(a); a.click(); a.remove();
-  } else {
-    alert('Notebook no disponible para ' + ucId);
-  }
-}
 
 const GUIAS = {
   UC01: {
     title: 'Detección de Fraude en Transacciones en Tiempo Real',
-    contexto: 'Este notebook demuestra la detección de fraude en transacciones bancarias usando Snowflake Cortex ML. El fraude en transacciones genera pérdidas de miles de millones anuales.',
+    contexto: 'Estos Cortex Code Prompts demuestra la detección de fraude en transacciones bancarias usando Snowflake Cortex ML. El fraude en transacciones genera pérdidas de miles de millones anuales.',
     foco: 'Modelo de clasificación binaria sobre 50.000 transacciones con features de comportamiento: z-score de importe, dispositivo nuevo, ubicación anómala.',
     reto: 'Construir un sistema que detecte fraude con alta precisión minimizando falsos positivos que bloquean transacciones legítimas.',
     objetivos: ['Entrenar modelo ML.CLASSIFICATION sobre transacciones etiquetadas','Calcular z-score por cliente para detectar importes anómalos','Aplicar umbrales diferenciados: BLOQUEAR (≥80%), REVISAR (≥50%), APROBAR','Dashboard de monitorización en tiempo real con Streamlit'],
     funcionalidades: ['SNOWFLAKE.ML.CLASSIFICATION para modelo predictivo','GENERATOR() para 50.000 transacciones sintéticas','STDDEV() y AVG() para cálculo de z-scores','OBJECT_CONSTRUCT para predicción inline','Streamlit para dashboard interactivo'],
     datos: ['Clientes: 2.000 perfiles con demográficos y productos','Transacciones: 50.000 operaciones (5% fraude) con canal, ubicación, hora','Features: z-score importe, ratio vs media, dispositivo nuevo','Predicciones: probabilidad de fraude con acción (BLOQUEAR/REVISAR/APROBAR)'],
-    como_usar: ['Ejecutar las celdas secuencialmente de arriba a abajo','La configuración crea base de datos aislada FRAUDE_TRANSACCIONES_DB','Los datos sintéticos generan 50.000 transacciones automáticamente','El modelo se entrena en 1-2 minutos','El dashboard muestra KPIs y tabla de alertas']
+    como_usar: ['Ejecutar los prompts secuencialmente','La configuración crea base de datos aislada FRAUDE_TRANSACCIONES_DB','Los datos sintéticos generan 50.000 transacciones automáticamente','El modelo se entrena en 1-2 minutos','El dashboard muestra KPIs y tabla de alertas']
   },
   UC02: {
     title: 'Scoring de Riesgo de Crédito Dinámico',
-    contexto: 'Este notebook construye un sistema de scoring crediticio con ML y explicabilidad IA. La regulación bancaria exige decisiones transparentes y trazables.',
+    contexto: 'Estos Cortex Code Prompts construye un sistema de scoring crediticio con ML y explicabilidad IA. La regulación bancaria exige decisiones transparentes y trazables.',
     foco: 'Evaluación automática de solicitudes de crédito con clasificación multi-nivel (APROBADO/CONDICIONADO/RECHAZADO) y explicaciones generadas por IA.',
     reto: 'Automatizar decisiones crediticias cumpliendo con requisitos regulatorios (EBA, GDPR) de transparencia y explicabilidad.',
     objetivos: ['Entrenar modelo ML.CLASSIFICATION sobre historial crediticio','Calcular ratios financieros como features predictivas (DTI, historial pagos)','Generar explicaciones IA con CORTEX.COMPLETE para cada decisión','Dashboard de gestión de solicitudes con Streamlit'],
@@ -774,7 +724,7 @@ const GUIAS = {
   },
   UC03: {
     title: 'Detección de Blanqueo de Capitales (AML)',
-    contexto: 'Este notebook implementa un sistema de detección de blanqueo de capitales conforme a la regulación 6AMLD y SEPBLAC.',
+    contexto: 'Estos Cortex Code Prompts implementa un sistema de detección de blanqueo de capitales conforme a la regulación 6AMLD y SEPBLAC.',
     foco: 'Detección de structuring (fraccionamiento de operaciones bajo umbrales regulatorios de 3.000€ y 10.000€) y patrones de transferencias sospechosas.',
     reto: 'Identificar actividad sospechosa minimizando alertas falsas que colapsan al equipo de compliance.',
     objetivos: ['Detectar patrones de structuring con análisis de umbrales','Clasificar operaciones por severidad (CRÍTICA/ALTA/MEDIA/BAJA)','Analizar concentración de destinos en jurisdicciones de riesgo','Dashboard de investigación para equipo de compliance'],
@@ -784,7 +734,7 @@ const GUIAS = {
   },
   UC04: {
     title: 'Stress Testing y Simulación de Escenarios',
-    contexto: 'Este notebook simula el impacto de escenarios macroeconómicos adversos en la cartera crediticia, conforme a requisitos regulatorios EBA/BCE.',
+    contexto: 'Estos Cortex Code Prompts simula el impacto de escenarios macroeconómicos adversos en la cartera crediticia, conforme a requisitos regulatorios EBA/BCE.',
     foco: 'Tres escenarios (Base, Adverso, Severamente Adverso) con proyección de morosidad usando ML.FORECAST y generación de informes narrativos con IA.',
     reto: 'Cumplir con requisitos regulatorios de stress testing y anticipar necesidades de capital.',
     objetivos: ['Proyectar tasas de morosidad con SNOWFLAKE.ML.FORECAST','Simular 3 escenarios macroeconómicos con multiplicadores de impacto','Calcular pérdidas esperadas y provisiones por segmento','Generar informes narrativos automatizados con CORTEX.COMPLETE'],
@@ -794,7 +744,7 @@ const GUIAS = {
   },
   UC05: {
     title: 'Monitorización de Compliance Regulatorio',
-    contexto: 'Este notebook automatiza la monitorización del cumplimiento normativo bancario usando IA para analizar textos regulatorios y detectar gaps.',
+    contexto: 'Estos Cortex Code Prompts automatiza la monitorización del cumplimiento normativo bancario usando IA para analizar textos regulatorios y detectar gaps.',
     foco: 'Análisis automático de obligaciones de BCE, EBA, CNMV, SEPBLAC y BdE con detección de gaps de cumplimiento.',
     reto: 'Reducir riesgo de multas regulatorias automatizando la monitorización continua de compliance.',
     objetivos: ['Analizar textos regulatorios con CORTEX.COMPLETE()','Clasificar obligaciones por tipología y urgencia','Detectar gaps entre obligaciones y controles implementados','Dashboard de estado de cumplimiento'],
@@ -804,7 +754,7 @@ const GUIAS = {
   },
   UC06: {
     title: 'Detección de Fraude en Solicitudes de Crédito',
-    contexto: 'Este notebook detecta solicitudes de crédito fraudulentas en la fase de originación, identificando identidades sintéticas e ingresos inflados.',
+    contexto: 'Estos Cortex Code Prompts detecta solicitudes de crédito fraudulentas en la fase de originación, identificando identidades sintéticas e ingresos inflados.',
     foco: 'Modelo de clasificación sobre discrepancias entre datos declarados por el solicitante y datos verificados por fuentes externas.',
     reto: 'Prevenir pérdidas por aprobación de créditos fraudulentos (first-party fraud).',
     objetivos: ['Detectar discrepancias entre datos declarados y verificados','Entrenar modelo ML.CLASSIFICATION sobre features de fraude','Aplicar umbrales: BLOQUEAR (≥75%), INVESTIGAR (≥40%), APROBAR','Dashboard de alertas antifraude'],
@@ -814,7 +764,7 @@ const GUIAS = {
   },
   UC07: {
     title: 'Predicción de Fuga de Clientes (Churn)',
-    contexto: 'Este notebook predice qué clientes bancarios tienen alta probabilidad de abandonar el banco en los próximos 90 días.',
+    contexto: 'Estos Cortex Code Prompts predice qué clientes bancarios tienen alta probabilidad de abandonar el banco en los próximos 90 días.',
     foco: 'Modelo predictivo basado en tendencias de actividad transaccional, engagement digital y uso de productos.',
     reto: 'Retener clientes de alto valor antes de que abandonen (el coste de adquisición es 5-7x el de retención).',
     objetivos: ['Predecir abandono con ML.CLASSIFICATION','Calcular tendencias de actividad (últimos 2 meses vs anteriores)','Generar recomendaciones de retención con CORTEX.COMPLETE()','Dashboard de retención con acciones prioritarias'],
@@ -824,7 +774,7 @@ const GUIAS = {
   },
   UC08: {
     title: 'Motor de Next-Best-Offer Hiperpersonalizado',
-    contexto: 'Este notebook construye un motor de recomendación que sugiere el mejor producto para cada cliente basándose en su propensión de compra.',
+    contexto: 'Estos Cortex Code Prompts construye un motor de recomendación que sugiere el mejor producto para cada cliente basándose en su propensión de compra.',
     foco: 'Modelo de propensión para productos de inversión con argumentarios de venta generados por IA.',
     reto: 'Incrementar cross-selling y share-of-wallet con ofertas relevantes y personalizadas.',
     objetivos: ['Predecir propensión de compra con ML.CLASSIFICATION','Segmentar clientes por deciles de propensión con NTILE()','Generar argumentarios de venta con CORTEX.COMPLETE()','Dashboard de oportunidades comerciales'],
@@ -834,7 +784,7 @@ const GUIAS = {
   },
   UC09: {
     title: 'Segmentación Avanzada y Customer LTV',
-    contexto: 'Este notebook calcula el Customer Lifetime Value y segmenta clientes por valor usando análisis RFM y proyecciones ML.',
+    contexto: 'Estos Cortex Code Prompts calcula el Customer Lifetime Value y segmenta clientes por valor usando análisis RFM y proyecciones ML.',
     foco: 'Segmentación RFM (Recencia, Frecuencia, Monetario) con proyección de ingresos futuros por segmento.',
     reto: 'Asignar recursos comerciales de forma óptima según el valor actual y proyectado de cada cliente.',
     objetivos: ['Calcular LTV histórico con SQL avanzado','Segmentar clientes con análisis RFM y NTILE()','Proyectar valor futuro con SNOWFLAKE.ML.FORECAST','Generar perfiles de segmento con CORTEX.COMPLETE()'],
@@ -844,7 +794,7 @@ const GUIAS = {
   },
   UC10: {
     title: 'Análisis de Sentimiento en Reclamaciones',
-    contexto: 'Este notebook analiza el sentimiento de reclamaciones bancarias para priorizar la atención y generar respuestas automatizadas.',
+    contexto: 'Estos Cortex Code Prompts analiza el sentimiento de reclamaciones bancarias para priorizar la atención y generar respuestas automatizadas.',
     foco: 'Scoring de sentimiento, clasificación por categoría y generación de borradores de respuesta con IA.',
     reto: 'Mejorar tiempos de respuesta y satisfacción del cliente en la gestión de reclamaciones.',
     objetivos: ['Analizar sentimiento con CORTEX.SENTIMENT()','Clasificar reclamaciones por categoría con CORTEX.COMPLETE()','Priorizar por urgencia combinando sentimiento y categoría','Generar respuestas borrador automatizadas'],
@@ -854,7 +804,7 @@ const GUIAS = {
   },
   UC11: {
     title: 'Chatbot de Inteligencia Financiera',
-    contexto: 'Este notebook construye un chatbot conversacional que permite consultar datos financieros bancarios en lenguaje natural.',
+    contexto: 'Estos Cortex Code Prompts construye un chatbot conversacional que permite consultar datos financieros bancarios en lenguaje natural.',
     foco: 'Modelo semántico YAML para Cortex Analyst con interfaz de chat interactiva.',
     reto: 'Democratizar el acceso a datos financieros sin necesidad de conocimientos SQL.',
     objetivos: ['Construir modelo semántico en YAML para Cortex Analyst','Habilitar consultas en lenguaje natural sobre datos financieros','Crear interfaz conversacional con CORTEX.COMPLETE()','Desplegar analytics self-service para usuarios no técnicos'],
@@ -864,7 +814,7 @@ const GUIAS = {
   },
   UC12: {
     title: 'Predicción de Demanda de Productos',
-    contexto: 'Este notebook proyecta la demanda de productos bancarios a 12 meses usando ML.FORECAST multi-serie.',
+    contexto: 'Estos Cortex Code Prompts proyecta la demanda de productos bancarios a 12 meses usando ML.FORECAST multi-serie.',
     foco: 'Forecast de contrataciones por producto con detección automática de estacionalidad (más hipotecas en primavera, seguros en otoño).',
     reto: 'Optimizar recursos y planificación anticipando picos y valles de demanda.',
     objetivos: ['Proyectar demanda con SNOWFLAKE.ML.FORECAST multi-serie','Analizar estacionalidad en contrataciones','Generar intervalos de confianza para planificación','Dashboard de forecast vs real'],
@@ -874,7 +824,7 @@ const GUIAS = {
   },
   UC13: {
     title: 'Optimizador de Pricing de Préstamos',
-    contexto: 'Este notebook optimiza el tipo de interés de préstamos balanceando margen vs volumen de contratación.',
+    contexto: 'Estos Cortex Code Prompts optimiza el tipo de interés de préstamos balanceando margen vs volumen de contratación.',
     foco: 'Modelo de aceptación que predice la probabilidad de que el cliente acepte una oferta dado el tipo de interés.',
     reto: 'Maximizar el margen manteniendo un volumen competitivo de contrataciones.',
     objetivos: ['Predecir aceptación con ML.CLASSIFICATION','Simular escenarios de pricing (Agresivo/Competitivo/Conservador)','Calcular cuota mensual con POWER()','Dashboard de simulación de pricing'],
@@ -884,7 +834,7 @@ const GUIAS = {
   },
   UC14: {
     title: 'Predicción de Morosidad Temprana',
-    contexto: 'Este notebook predice el riesgo de primer impago en los 90 días posteriores a la concesión de un crédito.',
+    contexto: 'Estos Cortex Code Prompts predice el riesgo de primer impago en los 90 días posteriores a la concesión de un crédito.',
     foco: 'Señales tempranas de morosidad: comportamiento de pagos en primeros 3 meses, uso de tarjeta, evolución de saldos.',
     reto: 'Intervenir antes del primer impago para reducir provisiones y pérdidas crediticias.',
     objetivos: ['Predecir morosidad temprana con ML.CLASSIFICATION','Identificar señales de impago en primeros 90 días','Crear sistema de alertas por nivel de riesgo','Dashboard de monitorización de cartera'],
@@ -894,7 +844,7 @@ const GUIAS = {
   },
   UC15: {
     title: 'Detección de Anomalías en Operaciones de Mercado',
-    contexto: 'Este notebook detecta operaciones anómalas en mercados financieros para cumplir con MAR (Market Abuse Regulation).',
+    contexto: 'Estos Cortex Code Prompts detecta operaciones anómalas en mercados financieros para cumplir con MAR (Market Abuse Regulation).',
     foco: 'Análisis estadístico de precio y volumen con z-scores y percentiles para identificar outliers.',
     reto: 'Detectar posible manipulación de mercado minimizando falsas alertas que consumen recursos de investigación.',
     objetivos: ['Detectar operaciones anómalas con análisis estadístico','Calcular z-scores de precio y volumen por instrumento','Clasificar anomalías por severidad con ML.CLASSIFICATION','Dashboard de vigilancia de mercado'],
@@ -904,7 +854,7 @@ const GUIAS = {
   },
   UC16: {
     title: 'Optimización de Red de Oficinas',
-    contexto: 'Este notebook evalúa la rentabilidad y cobertura geográfica de la red de oficinas para tomar decisiones de apertura/cierre.',
+    contexto: 'Estos Cortex Code Prompts evalúa la rentabilidad y cobertura geográfica de la red de oficinas para tomar decisiones de apertura/cierre.',
     foco: 'Análisis geoespacial con ST_DISTANCE para detectar solapamiento y modelo de rentabilidad con ML.',
     reto: 'Optimizar costes de red manteniendo cobertura adecuada de clientes.',
     objetivos: ['Analizar cobertura geográfica con ST_DISTANCE y ST_MAKEPOINT','Clasificar oficinas por rentabilidad con ML.CLASSIFICATION','Detectar solapamiento entre oficinas cercanas (<2km)','Generar recomendaciones con CORTEX.COMPLETE()'],
@@ -914,7 +864,7 @@ const GUIAS = {
   },
   UC17: {
     title: 'Automatización de Análisis de Documentos',
-    contexto: 'Este notebook automatiza la extracción de información de documentos bancarios (contratos, DNIs, nóminas) usando IA.',
+    contexto: 'Estos Cortex Code Prompts automatiza la extracción de información de documentos bancarios (contratos, DNIs, nóminas) usando IA.',
     foco: 'Extracción de datos clave, clasificación por tipo y validación cruzada entre documentos de un expediente.',
     reto: 'Reducir el tiempo de procesamiento documental de horas a minutos.',
     objetivos: ['Extraer datos clave con CORTEX.COMPLETE()','Clasificar documentos por tipo automáticamente','Generar resúmenes de expedientes con CORTEX.SUMMARIZE()','Dashboard de procesamiento documental'],
@@ -924,7 +874,7 @@ const GUIAS = {
   },
   UC18: {
     title: 'Monitor de Riesgo Reputacional',
-    contexto: 'Este notebook monitoriza menciones en medios y redes sociales para detectar crisis reputacionales bancarias.',
+    contexto: 'Estos Cortex Code Prompts monitoriza menciones en medios y redes sociales para detectar crisis reputacionales bancarias.',
     foco: 'Análisis de sentimiento de menciones con detección de picos negativos y alertas de crisis.',
     reto: 'Detectar y responder a crisis reputacionales antes de que escalen.',
     objetivos: ['Monitorizar sentimiento con CORTEX.SENTIMENT()','Detectar crisis mediante alertas de sentimiento negativo','Clasificar por fuente, tema e impacto','Generar reportes ejecutivos con CORTEX.COMPLETE()'],
@@ -934,7 +884,7 @@ const GUIAS = {
   },
   UC19: {
     title: 'Análisis de Competencia Bancaria',
-    contexto: 'Este notebook analiza el posicionamiento competitivo del banco frente a 8 competidores nacionales y digitales.',
+    contexto: 'Estos Cortex Code Prompts analiza el posicionamiento competitivo del banco frente a 8 competidores nacionales y digitales.',
     foco: 'Comparativa de productos, pricing, cuota de mercado y sentimiento en medios de competidores.',
     reto: 'Anticipar movimientos de la competencia y ajustar estrategia comercial.',
     objetivos: ['Comparar productos y pricing entre entidades','Analizar sentimiento sobre competidores con CORTEX.SENTIMENT()','Generar briefings competitivos con CORTEX.COMPLETE()','Dashboard de benchmarking'],
@@ -944,7 +894,7 @@ const GUIAS = {
   },
   UC20: {
     title: 'Asistente RAG de Normativa Bancaria',
-    contexto: 'Este notebook construye un sistema RAG (Retrieval-Augmented Generation) para consultar normativa bancaria en lenguaje natural.',
+    contexto: 'Estos Cortex Code Prompts construye un sistema RAG (Retrieval-Augmented Generation) para consultar normativa bancaria en lenguaje natural.',
     foco: 'Indexación de documentos regulatorios con Cortex Search y respuestas fundamentadas con CORTEX.COMPLETE().',
     reto: 'Proporcionar acceso instantáneo a normativa relevante sin revisar manualmente cientos de documentos.',
     objetivos: ['Construir sistema RAG con Cortex Search','Indexar 100 fragmentos de normativa bancaria','Responder preguntas con contexto documental relevante','Interfaz de consulta de normativa con Streamlit'],

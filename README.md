@@ -1,8 +1,8 @@
 # Snowflake — Aceleradores IA/ML por Industria
 
-Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para desplegar, organizados por vertical de industria. Cada caso de uso incluye datos sintéticos, modelos ML/NLP y dashboards Streamlit interactivos — todo 100% nativo en Snowflake.
+Colección de **guías detalladas** y **Cortex Code Prompts** listos para desplegar, organizados por vertical de industria. Cada caso de uso incluye datos sintéticos, modelos ML/NLP y dashboards Streamlit interactivos — todo 100% nativo en Snowflake.
 
-🔗 **[Ver sitio web](https://snowflake-spain-se-demos-sandbox.github.io/aimlcases)**
+🔗 **[Ver sitio web](https://dsanchezfernandez.github.io/gitpages/)**
 
 ---
 
@@ -11,15 +11,10 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
 ```
 ├── index.html                  # Página principal — índice de industrias
 ├── seguros.html                # Página de seguros (17 casos de uso)
-├── seguros/                    # Notebooks de seguros
-│   ├── notebook_uc01_fraude.ipynb
-│   ├── ...
-│   └── notebook_uc17_compliance.ipynb
 ├── farmaceutica.html           # Página de farmacéutica (27 casos de uso)
-├── farmaceutica/               # Notebooks de farmacéutica
-│   ├── notebook_uc01_adherencia_pacientes.ipynb
-│   ├── ...
-│   └── notebook_uc27_engagement_hcp_insights.ipynb
+├── banca.html                  # Página de banca (20 casos de uso)
+├── energia.html                # Página de energía
+├── agua.html                   # Página de gestión del agua (10 casos de uso)
 ├── bug-white.png               # Logo Snowflake
 └── README.md
 ```
@@ -30,11 +25,13 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
 |---|---|---|
 | **Seguros** | ✅ Disponible | 17 |
 | **Farmacéutica** | ✅ Disponible | 27 |
-| Banca y Servicios Financieros | 🔜 Próximamente | — |
+| **Banca y Servicios Financieros** | ✅ Disponible | 20 |
+| **Gestión del Agua** | ✅ Disponible | 10 |
+| **Energía y Utilities** | ✅ Disponible | — |
+| Salud | 🔜 Próximamente | — |
 | Retail y E-Commerce | 🔜 Próximamente | — |
 | Manufactura e Industria | 🔜 Próximamente | — |
 | Telecomunicaciones | 🔜 Próximamente | — |
-| Energía y Utilities | 🔜 Próximamente | — |
 | Logística y Transporte | 🔜 Próximamente | — |
 | Educación | 🔜 Próximamente | — |
 | Sector Público | 🔜 Próximamente | — |
@@ -121,9 +118,9 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
 
 ## Cómo Usar
 
-1. **Descargar** un notebook desde la web o clonar este repositorio
-2. **Importar** el `.ipynb` en Snowsight (Notebooks)
-3. **Ejecutar** las celdas secuencialmente — cada notebook crea su propia base de datos con datos sintéticos
+1. **Abrir** la web y seleccionar una industria
+2. **Explorar** los casos de uso y abrir la **Guía** para entender el contexto y los datos
+3. **Copiar** los **Cortex Code Prompts** y ejecutarlos secuencialmente en Cortex Code (Snowflake)
 4. **Personalizar** reemplazando los datos sintéticos con tus propios datos
 
 ## Requisitos
@@ -137,15 +134,17 @@ Colección de **notebooks Snowflake** y **prompts de Cortex Code** listos para d
   - Cortex Search Service (Seguros: UC10; Pharma: UC17)
 - Warehouse `SMALL` o superior
 - Rol con permisos `CREATE DATABASE`
+- Acceso a **Cortex Code** en Snowflake
 
 ## Stack Tecnológico
 
 - **Snowflake Cortex AI** — LLM inference (mistral-large2), sentiment analysis
 - **Snowflake Cortex ML** — AutoML classification
 - **Snowflake Cortex Search** — RAG pipelines
-- **Streamlit in Snowflake** — Dashboards interactivos embebidos en notebooks
+- **Snowflake Cortex Code** — Prompts guiados paso a paso
+- **Streamlit in Snowflake** — Dashboards interactivos
 - **GitHub Pages** — Hosting estático del catálogo web
 
 ---
 
-Desarrollado con Snowflake Cortex AI + Streamlit
+Desarrollado con Snowflake Cortex AI + Cortex Code + Streamlit

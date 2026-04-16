@@ -331,7 +331,7 @@
       border-top: 1px solid #f0f0f0;
     }
 
-    .btn-primary {
+    .btn-secondary {
       flex: 1;
       padding: 10px;
       background: #29B5E8;
@@ -346,24 +346,7 @@
       text-decoration: none;
       display: block;
     }
-    .btn-primary:hover { background: #11567F; }
-
-    .btn-secondary {
-      flex: 1;
-      padding: 10px;
-      background: transparent;
-      color: #29B5E8;
-      border: 1.5px solid #29B5E8;
-      border-radius: 80px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-      text-decoration: none;
-      display: block;
-    }
-    .btn-secondary:hover { background: #F0F7FA; }
+    .btn-secondary:hover { background: #11567F; }
 
     .btn-tertiary {
       flex: 1;
@@ -457,7 +440,7 @@
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
     <p class="hero-eyebrow">Sector Seguros × Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para Seguros</h1>
-    <p class="hero-subtitle">Notebooks y Prompts de Cortex Code listos para desplegar en equipos de seguros</p>
+    <p class="hero-subtitle">Guías y Prompts de Cortex Code listos para desplegar en equipos de seguros</p>
     <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
   </div>
 
@@ -473,7 +456,7 @@
 <!-- ── INTRO ──────────────────────────────────────────────── -->
 <section class="intro">
   <h2>Acelera tu Analítica con Soluciones IA Preconfiguradas para Seguros</h2>
-  <p>Cada solución incluye un Notebook Snowflake descargable con datos sintéticos, tutoriales paso a paso
+  <p>Cada solución incluye Cortex Code Prompts de Snowflake con datos sintéticos, guías paso a paso
      e implementaciones SQL-first con Cortex AI/ML. Todo el procesamiento permanece dentro de Snowflake,
      sin dependencias externas, listo para personalizar con tus propios datos.</p>
 </section>
@@ -658,7 +641,6 @@ function renderCards(list) {
           ${uc.features.map(f => `<li>${f}</li>`).join('')}
         </ul>
         <div class="card-actions">
-          <a href="#" class="btn-primary" onclick="descargarNotebook('${uc.id}');return false;">Descargar Notebook</a>
           <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
           <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
         </div>
@@ -695,51 +677,22 @@ document.getElementById('searchInput').addEventListener('input', e => {
 
 renderCards(USE_CASES);
 
-function descargarNotebook(ucId) {
-  const NB = {
-    UC01: ['seguros/notebook_uc01_fraude.ipynb','UC01_Puntuacion_Fraude_Siniestros.ipynb'],
-    UC02: ['seguros/notebook_uc02_accidentes_simulados.ipynb','UC02_Deteccion_Accidentes_Simulados.ipynb'],
-    UC03: ['seguros/notebook_uc03_identidad.ipynb','UC03_Fraude_Solicitudes_Identidad.ipynb'],
-    UC04: ['seguros/notebook_uc04_riesgo_auto.ipynb','UC04_Puntuacion_Dinamica_Riesgo_Auto.ipynb'],
-    UC05: ['seguros/notebook_uc05_exposicion_cat.ipynb','UC05_Analitica_Exposicion_Catastrofes.ipynb'],
-    UC06: ['seguros/notebook_uc06_fuga_renovacion.ipynb','UC06_Prediccion_Fuga_Renovacion.ipynb'],
-    UC07: ['seguros/notebook_uc07_telematica.ipynb','UC07_Segmentacion_Riesgo_Telematico.ipynb'],
-    UC08: ['seguros/notebook_uc08_extraccion_docs.ipynb','UC08_Extraccion_Documental_IA.ipynb'],
-    UC09: ['seguros/notebook_uc09_quejas.ipynb','UC09_Inteligencia_Quejas_Clientes.ipynb'],
-    UC10: ['seguros/notebook_uc10_asistente_poliza.ipynb','UC10_Asistente_Consultas_Poliza.ipynb'],
-    UC11: ['seguros/notebook_uc11_severidad.ipynb','UC11_Prediccion_Severidad_Siniestros.ipynb'],
-    UC12: ['seguros/notebook_uc12_subrogacion.ipynb','UC12_Oportunidades_Subrogacion.ipynb'],
-    UC13: ['seguros/notebook_uc13_clasificacion_llamadas.ipynb','UC13_Clasificacion_Automatica_Llamadas.ipynb'],
-    UC14: ['seguros/notebook_uc14_qa_agentes.ipynb','UC14_Evaluacion_Automatica_Agentes.ipynb'],
-    UC15: ['seguros/notebook_uc15_resumenes.ipynb','UC15_Resumenes_Automaticos.ipynb'],
-    UC16: ['seguros/notebook_uc16_cx_tiempo_real.ipynb','UC16_CX_Tiempo_Real.ipynb'],
-    UC17: ['seguros/notebook_uc17_compliance.ipynb','UC17_Compliance_Normativo.ipynb']
-  };
-  const nb = NB[ucId];
-  if (nb) {
-    const a = document.createElement('a');
-    a.href = nb[0]; a.download = nb[1];
-    document.body.appendChild(a); a.click(); a.remove();
-  } else {
-    alert('Notebook no disponible para ' + ucId);
-  }
-}
 
 const GUIAS = {
   UC01: {
     title: 'Puntuación de Fraude en Siniestros',
-    contexto: 'Este notebook demuestra la detección de fraude en siniestros mediante clasificación ML en Snowflake.',
+    contexto: 'Estos Cortex Code Prompts demuestra la detección de fraude en siniestros mediante clasificación ML en Snowflake.',
     foco: 'Siniestros de seguros (auto, hogar, vida) — detección de fraude en la declaración del siniestro.',
     reto: 'Predecir y prevenir el fraude en siniestros antes del pago, reduciendo pérdidas hasta un 40%.',
     objetivos: ['Crear flujos ML con SNOWFLAKE.ML.CLASSIFICATION','Generar datos sintéticos de siniestros de seguros','Construir variables predictoras a partir de datos del siniestro y del tomador','Evaluar modelos de clasificación binaria','Construir dashboards de puntuación de riesgo con Streamlit'],
     funcionalidades: ['Modelo ML: Clasificación binaria para predicción de fraude','Datos sintéticos: 500 tomadores, 1.000 siniestros con indicadores de fraude','Variables: dias_hasta_notificacion, importe_declarado, num_testigos, hora_accidente, taller_sospechoso, ratio_siniestros_ano','Dashboard Streamlit: Puntuación interactiva y filtrado por nivel de riesgo'],
     datos: ['Tomadores: Datos demográficos, antigüedad, historial de siniestros previos','Siniestros: Fecha, importe, tiempo de notificación, testigos, taller','Predicciones ML: Nivel de riesgo (Alto/Medio/Bajo) con probabilidades'],
     estratificacion: ['Alto Riesgo (≥70%): Derivar a equipo de investigación','Riesgo Medio (30-70%): Revisión por perito senior','Bajo Riesgo (<30%): Tramitación normal'],
-    como_usar: ['Ejecutar las celdas secuencialmente de arriba a abajo','La configuración del entorno crea una base de datos aislada','Los datos sintéticos generan 1.000 siniestros automáticamente','El modelo se entrena en 30-60 segundos','El dashboard se lanza interactivamente en el notebook']
+    como_usar: ['Ejecutar los prompts secuencialmente','La configuración del entorno crea una base de datos aislada','Los datos sintéticos generan 1.000 siniestros automáticamente','El modelo se entrena en 30-60 segundos','El dashboard se lanza interactivamente en el notebook']
   },
   UC02: {
     title: 'Detección de Accidentes Simulados',
-    contexto: 'Este notebook construye un detector de tramas de fraude coordinado analizando redes de siniestros, talleres y tomadores.',
+    contexto: 'Estos Cortex Code Prompts construye un detector de tramas de fraude coordinado analizando redes de siniestros, talleres y tomadores.',
     foco: 'Accidentes de tráfico simulados y fraude organizado en redes de proveedores.',
     reto: 'Identificar tramas de fraude coordinado entre múltiples siniestros, talleres y proveedores médicos.',
     objetivos: ['Modelar redes de relaciones entre siniestros y proveedores','Generar datos sintéticos de tramas de fraude','Construir variables de red (frecuencia, coincidencias, patrones)','Entrenar clasificador de tramas con ML.CLASSIFICATION','Visualizar redes sospechosas en Streamlit'],
@@ -750,7 +703,7 @@ const GUIAS = {
   },
   UC03: {
     title: 'Fraude en Solicitudes e Identidad',
-    contexto: 'Este notebook construye un sistema de detección de identidades sintéticas en el momento de contratación de póliza.',
+    contexto: 'Estos Cortex Code Prompts construye un sistema de detección de identidades sintéticas en el momento de contratación de póliza.',
     foco: 'Solicitudes de póliza fraudulentas con identidades sintéticas o robadas.',
     reto: 'Detectar identidades sintéticas antes de emitir la póliza, evitando pérdidas futuras en siniestros.',
     objetivos: ['Combinar señales documentales y de comportamiento online','Generar datos sintéticos de solicitudes fraudulentas','Identificar patrones de identidad sintética (emails temporales, IPs VPN, formularios rápidos)','Entrenar clasificador en punto de contratación','Construir panel de suscripción con alertas'],
@@ -761,7 +714,7 @@ const GUIAS = {
   },
   UC04: {
     title: 'Puntuación Dinámica de Riesgo en Auto',
-    contexto: 'Este notebook construye un motor de puntuación de riesgo en auto combinando perfil del conductor y datos telemáticos.',
+    contexto: 'Estos Cortex Code Prompts construye un motor de puntuación de riesgo en auto combinando perfil del conductor y datos telemáticos.',
     foco: 'Tarificación dinámica de seguros de auto basada en telemática y comportamiento de conducción.',
     reto: 'Superar las reglas estáticas de suscripción con puntuación ML en tiempo real para tarificación por segmento.',
     objetivos: ['Integrar señales telemáticas con perfil del conductor','Generar datos sintéticos de conducción y siniestralidad','Entrenar modelo predictivo de siniestralidad','Crear segmentos de tarificación basados en riesgo','Dashboard para suscriptores con recomendaciones de prima'],
@@ -772,7 +725,7 @@ const GUIAS = {
   },
   UC05: {
     title: 'Analítica de Exposición a Catástrofes',
-    contexto: 'Este notebook construye un sistema de análisis de exposición CAT geoespacial con agregación por zona y tramo de reaseguro.',
+    contexto: 'Estos Cortex Code Prompts construye un sistema de análisis de exposición CAT geoespacial con agregación por zona y tramo de reaseguro.',
     foco: 'Exposición a eventos catastróficos (inundación, terremoto, granizo) y su impacto en la cartera.',
     reto: 'Visualizar la concentración de riesgo en tiempo real y cuantificar el impacto de escenarios CAT en retención y reaseguro.',
     objetivos: ['Geolocalizar la cartera de pólizas por zona de riesgo','Calcular exposición agregada y PML (Probable Maximum Loss)','Asignar exposición por tramo de reaseguro (retención, XL-1, XL-2)','Simular escenarios catastróficos y cuantificar impacto','Dashboard ejecutivo de exposición CAT'],
@@ -783,7 +736,7 @@ const GUIAS = {
   },
   UC06: {
     title: 'Predicción de Fuga en Renovación',
-    contexto: 'Este notebook construye un modelo de predicción de no-renovación 90 días antes del vencimiento de la póliza.',
+    contexto: 'Estos Cortex Code Prompts construye un modelo de predicción de no-renovación 90 días antes del vencimiento de la póliza.',
     foco: 'Retención de clientes — identificar tomadores en riesgo de no renovar su póliza.',
     reto: 'Predecir la fuga con 90 días de antelación para activar campañas de retención dirigidas.',
     objetivos: ['Combinar datos de cartera con señales de interacción del tomador','Generar datos sintéticos de renovación y comportamiento','Entrenar modelo predictivo de no-renovación','Priorizar acciones de retención por impacto económico','Dashboard para equipos comerciales y de retención'],
@@ -794,7 +747,7 @@ const GUIAS = {
   },
   UC07: {
     title: 'Segmentación de Riesgo Telemático',
-    contexto: 'Este notebook construye una segmentación de conductores basada en datos telemáticos para tarificación dinámica.',
+    contexto: 'Estos Cortex Code Prompts construye una segmentación de conductores basada en datos telemáticos para tarificación dinámica.',
     foco: 'Perfiles de conducción y segmentación no supervisada para seguros de uso (pay-as-you-drive).',
     reto: 'Aprovechar datos telemáticos masivos para crear segmentos granulares de riesgo y personalizar la tarificación.',
     objetivos: ['Generar perfiles telemáticos de conducción realistas','Normalizar variables para clustering','Segmentar conductores por comportamiento (Prudente, Agresivo, Urbano, Nocturno)','Asignar factores de prima por segmento','Dashboard de perfiles con comparativas'],
@@ -805,7 +758,7 @@ const GUIAS = {
   },
   UC08: {
     title: 'Extracción Documental IA en Siniestros',
-    contexto: 'Este notebook construye un pipeline de extracción de datos estructurados desde documentos de siniestros usando Cortex AI.',
+    contexto: 'Estos Cortex Code Prompts construye un pipeline de extracción de datos estructurados desde documentos de siniestros usando Cortex AI.',
     foco: 'Procesamiento inteligente de documentos de siniestros: atestados, facturas médicas, presupuestos.',
     reto: 'Reducir de 3-5 días a minutos el tiempo de extracción de datos de documentos complejos de siniestros.',
     objetivos: ['Simular textos de documentos de siniestros (atestados, facturas, presupuestos)','Extraer entidades estructuradas con CORTEX.COMPLETE','Clasificar documentos automáticamente por tipo','Validar calidad de la extracción','Dashboard de estado documental'],
@@ -816,7 +769,7 @@ const GUIAS = {
   },
   UC09: {
     title: 'Inteligencia sobre Quejas de Clientes',
-    contexto: 'Este notebook construye un sistema de clasificación NLP y análisis de sentimiento sobre quejas de clientes.',
+    contexto: 'Estos Cortex Code Prompts construye un sistema de clasificación NLP y análisis de sentimiento sobre quejas de clientes.',
     foco: 'Análisis automatizado de reclamaciones para detectar problemas emergentes y riesgo regulatorio.',
     reto: 'Procesar miles de quejas mensuales, clasificarlas automáticamente y detectar señales de riesgo regulatorio.',
     objetivos: ['Generar textos de quejas realistas de clientes de seguros','Analizar sentimiento con CORTEX.SENTIMENT','Clasificar quejas por categoría con CORTEX.COMPLETE','Detectar menciones de riesgo regulatorio','Dashboard de inteligencia de quejas'],
@@ -827,7 +780,7 @@ const GUIAS = {
   },
   UC10: {
     title: 'Asistente Inteligente de Consultas de Póliza',
-    contexto: 'Este notebook construye un asistente Q&A sobre documentación de pólizas usando Cortex Search y RAG.',
+    contexto: 'Estos Cortex Code Prompts construye un asistente Q&A sobre documentación de pólizas usando Cortex Search y RAG.',
     foco: 'Asistente conversacional para agentes del contact center sobre condiciones de póliza.',
     reto: 'Reducir el 40% del tiempo de llamada dedicado a buscar condiciones, ofreciendo respuestas en <3 segundos.',
     objetivos: ['Generar base de conocimiento de condiciones de póliza','Crear chunks de texto para indexación semántica','Crear Cortex Search Service sobre documentos de póliza','Implementar pipeline RAG (Retrieval-Augmented Generation)','Interfaz de chat para agentes'],
@@ -838,7 +791,7 @@ const GUIAS = {
   },
   UC11: {
     title: 'Predicción de Severidad en Siniestros de Auto',
-    contexto: 'Este notebook construye un predictor de coste de siniestro en el primer aviso de pérdida (FNOL).',
+    contexto: 'Estos Cortex Code Prompts construye un predictor de coste de siniestro en el primer aviso de pérdida (FNOL).',
     foco: 'Estimación automática de severidad para optimizar la dotación de reservas técnicas.',
     reto: 'Reducir la variabilidad en la estimación manual de costes y mejorar la precisión de las reservas.',
     objetivos: ['Generar siniestros históricos con coste final conocido','Combinar datos del incidente, vehículo y tomador','Entrenar clasificador multi-clase de severidad','Asignar reservas recomendadas por categoría','Dashboard para peritos con desviaciones'],
@@ -849,7 +802,7 @@ const GUIAS = {
   },
   UC12: {
     title: 'Identificador de Oportunidades de Subrogación',
-    contexto: 'Este notebook construye un modelo que identifica siniestros con alta probabilidad de recuperación por subrogación.',
+    contexto: 'Estos Cortex Code Prompts construye un modelo que identifica siniestros con alta probabilidad de recuperación por subrogación.',
     foco: 'Recuperación de importes pagados en siniestros donde un tercero es responsable.',
     reto: 'Detectar oportunidades de subrogación que se pierden por no identificar al tercero durante la tramitación.',
     objetivos: ['Generar siniestros cerrados con resultado de subrogación conocido','Construir variables de culpabilidad, documentación y cobertura','Entrenar clasificador de potencial de subrogación','Estimar importes recuperables por oportunidad','Dashboard para equipo legal y de recuperaciones'],
@@ -860,7 +813,7 @@ const GUIAS = {
   },
   UC13: {
     title: 'Clasificación Automática de Llamadas',
-    contexto: 'Este notebook clasifica automáticamente las llamadas del call center de seguros en categorías usando IA generativa.',
+    contexto: 'Estos Cortex Code Prompts clasifica automáticamente las llamadas del call center de seguros en categorías usando IA generativa.',
     foco: 'Transcripciones de llamadas de seguros — clasificación de motivos de contacto para routing inteligente.',
     reto: 'Eliminar el etiquetado manual de llamadas y mejorar la precisión del routing a departamentos especializados.',
     objetivos: ['Generar 1.000 transcripciones sintéticas de llamadas de seguros','Clasificar motivos con SNOWFLAKE.CORTEX.COMPLETE','Extraer urgencia y sentimiento con análisis NLP','Evaluar precisión de clasificación','Dashboard interactivo de routing'],
@@ -871,7 +824,7 @@ const GUIAS = {
   },
   UC14: {
     title: 'Evaluación Automática de Agentes (QA)',
-    contexto: 'Este notebook automatiza la auditoría de calidad de llamadas evaluando múltiples criterios de servicio con IA.',
+    contexto: 'Estos Cortex Code Prompts automatiza la auditoría de calidad de llamadas evaluando múltiples criterios de servicio con IA.',
     foco: 'Quality Assurance automatizado — evaluación de empatía, protocolo y resolución en cada llamada.',
     reto: 'Escalar la auditoría de calidad al 100% de las llamadas sin aumentar el equipo de QA.',
     objetivos: ['Generar 500 transcripciones con calidad variable','Evaluar 5 criterios por llamada con CORTEX.COMPLETE','Parsear scores JSON con TRY_PARSE_JSON','Generar ranking de agentes con áreas de mejora','Dashboard de QA con drill-down por agente'],
@@ -882,7 +835,7 @@ const GUIAS = {
   },
   UC15: {
     title: 'Generación Automática de Resúmenes',
-    contexto: 'Este notebook automatiza la documentación post-llamada: resúmenes, notas CRM y emails personalizados.',
+    contexto: 'Estos Cortex Code Prompts automatiza la documentación post-llamada: resúmenes, notas CRM y emails personalizados.',
     foco: 'Generación de texto — documentación automática de cada interacción para CRM y comunicación al cliente.',
     reto: 'Reducir el tiempo de post-llamada de 5-8 minutos a cero, mejorando la disponibilidad de agentes.',
     objetivos: ['Generar 300 transcripciones completas de llamadas','Producir resúmenes estructurados en JSON','Generar notas CRM concisas','Crear emails post-llamada personalizados','Dashboard de documentación generada'],
@@ -893,7 +846,7 @@ const GUIAS = {
   },
   UC16: {
     title: 'Mejora de CX en Tiempo Real',
-    contexto: 'Este notebook detecta señales de frustración y riesgo de abandono en tiempo real para activar intervenciones proactivas.',
+    contexto: 'Estos Cortex Code Prompts detecta señales de frustración y riesgo de abandono en tiempo real para activar intervenciones proactivas.',
     foco: 'Customer Experience — detección de emociones negativas, urgencia y riesgo de churn durante la llamada.',
     reto: 'Identificar clientes en riesgo de abandono antes de que cuelguen y activar retención proactiva.',
     objetivos: ['Generar 800 llamadas con diferentes niveles emocionales','Analizar sentimiento con CORTEX.SENTIMENT','Detectar emociones y urgencia con CORTEX.COMPLETE','Generar alertas priorizadas por riesgo','Dashboard de CX en tiempo real'],
@@ -904,7 +857,7 @@ const GUIAS = {
   },
   UC17: {
     title: 'Cumplimiento Normativo en Conversaciones',
-    contexto: 'Este notebook audita automáticamente el cumplimiento regulatorio de las llamadas evaluando criterios normativos españoles.',
+    contexto: 'Estos Cortex Code Prompts audita automáticamente el cumplimiento regulatorio de las llamadas evaluando criterios normativos españoles.',
     foco: 'Compliance — detección de infracciones regulatorias (RGPD, LOSSEAR, IDD) en conversaciones de seguros.',
     reto: 'Auditar el 100% de las llamadas frente a normativa regulatoria para evitar sanciones y multas.',
     objetivos: ['Generar 600 llamadas con cumplimiento variable','Auditar 6 criterios normativos con CORTEX.COMPLETE','Parsear resultados y calcular scoring de compliance','Identificar agentes y patrones de riesgo','Dashboard de compliance con ranking'],

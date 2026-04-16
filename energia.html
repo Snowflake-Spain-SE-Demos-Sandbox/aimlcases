@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>Snowflake — Soluciones IA/ML para Energía y Utilities</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+    }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #003545, #11567F);
+      color: #fff;
+      padding: 32px 48px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .hero-left { flex: 1; }
+
+    .logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-snowflake {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .stats-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 28px;
+      text-align: center;
+      color: #1a1a1a;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .stats-box .stat-number {
+      font-size: 40px;
+      font-weight: 700;
+      color: #D45B90;
+      line-height: 1;
+    }
+
+    .stats-box .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .stats-box .stat-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+
+    .stats-box .stat-time-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .stats-divider {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 10px 0;
+    }
+
+    /* ── SECTION INTRO ───────────────────────────────────── */
+    .intro {
+      background: #fff;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .intro h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #11567F;
+      margin-bottom: 14px;
+    }
+
+    .intro p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── FILTERS ─────────────────────────────────────────── */
+    .filters-bar {
+      background: #fff;
+      padding: 20px 48px 0;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filters-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 80px;
+      border: 1.5px solid #ccc;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: #29B5E8; color: #29B5E8; }
+
+    .filter-btn.active {
+      background: #29B5E8;
+      border-color: #29B5E8;
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #ccc;
+      border-radius: 80px;
+      padding: 7px 14px;
+      gap: 8px;
+      min-width: 200px;
+      background: #fff;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #444;
+      width: 100%;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #aaa; }
+
+    /* ── RESULTS COUNT ────────────────────────────────────── */
+    .results-count {
+      padding: 14px 48px 8px;
+      font-size: 13px;
+      color: #666;
+      background: #f5f5f5;
+    }
+
+    /* ── CARDS GRID ──────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      padding: 16px 48px 48px;
+      background: #f5f5f5;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e2e2e2;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-badges { display: flex; gap: 6px; align-items: center; }
+
+    .badge-id {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-cat {
+      background: #E0F4FD;
+      color: #11567F;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .badge-cat.riesgo  { background: #FFF3E8; color: #D97B2A; }
+    .badge-cat.nlp     { background: #EAF0FF; color: #4A6EE0; }
+    .badge-cat.siniestros { background: #F0FFF4; color: #2E7D4F; }
+    .badge-cat.callcenter { background: #FFF0F5; color: #B03A6B; }
+
+    .card-time {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      padding: 0 18px 12px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #11567F;
+      line-height: 1.3;
+    }
+
+    .pain-point {
+      margin: 0 18px 14px;
+      background: #F0F7FA;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pain-point-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #D45B90;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .pain-point p {
+      font-size: 13px;
+      color: #2a2a2a;
+      line-height: 1.55;
+    }
+
+    .card-desc {
+      padding: 0 18px 14px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-features {
+      padding: 0 18px 16px;
+      list-style: none;
+    }
+
+    .card-features li {
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-features li::before {
+      content: '✓';
+      color: #29B5E8;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .card-actions {
+      padding: 14px 18px 18px;
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      background: #29B5E8;
+      color: #fff;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover { background: #11567F; }
+
+    .btn-tertiary {
+      flex: 1;
+      padding: 10px;
+      background: #003545;
+      color: #29B5E8;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-tertiary:hover { background: #11567F; }
+
+    .card-actions { flex-wrap: wrap; }
+
+    .prompt-step { margin-bottom: 18px; }
+    .prompt-step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prompt-step-num { background: #003545; color: #29B5E8; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .prompt-step-title { font-size: 13px; font-weight: 600; color: #333; }
+    .prompt-step-desc { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+    .prompt-code { position: relative; background: #003545; color: #e0e0e0; border-radius: 8px; padding: 12px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .prompt-code .copy-btn { position: absolute; top: 6px; right: 8px; background: rgba(255,255,255,0.1); border: none; color: #aaa; font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
+    .prompt-code .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .prompt-code .kw { color: #29B5E8; }
+    .modal-box .prompt-intro { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 92%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #D45B90; }
+    .modal-box h2 { color: #11567F; font-size: 20px; margin-bottom: 6px; }
+    .modal-box h3 { font-size: 15px; color: #333; margin: 18px 0 8px; }
+    .modal-box p, .modal-box li { font-size: 13px; line-height: 1.7; color: #444; }
+    .modal-box ul { padding-left: 20px; margin: 6px 0; }
+    .modal-box .guide-badge { display: inline-block; background: #E0F4FD; color: #11567F; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; margin-bottom: 10px; }
+    .modal-box .guide-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #eee; font-size: 12px; color: #888; }
+
+    @media (max-width: 700px) {
+      .hero { flex-direction: column; padding: 24px 20px; }
+      .cards-grid { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .filters-bar { padding: 16px 16px 0; }
+      .results-count { padding: 12px 16px 6px; }
+    }
+  </style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-left">
+    <div class="logos">
+      <div class="logo-snowflake">
+        <img src="bug-white.png" alt="Snowflake" width="32" height="32" />
+        Snowflake
+      </div>
+    </div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
+    <p class="hero-eyebrow">Sector Energía y Utilities × Snowflake</p>
+    <h1 class="hero-title">Soluciones IA/ML para Energía y Utilities</h1>
+    <p class="hero-subtitle">Guías y Prompts de Cortex Code listos para desplegar en comercializadoras, distribuidoras, generadoras y operadores de red</p>
+    <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Snowflake ML | Feature Store | Model Registry</p>
+  </div>
+
+  <div class="stats-box">
+    <div class="stat-number">15</div>
+    <div class="stat-label">Casos de Uso</div>
+    <hr class="stats-divider"/>
+    <div class="stat-time">10-18 min</div>
+    <div class="stat-time-label">Tiempo de Configuración</div>
+  </div>
+</header>
+<section class="intro">
+  <h2>Acelera operaciones energéticas con IA aplicada y casos de uso listos para negocio</h2>
+  <p>Cada solución incluye Cortex Code Prompts de Snowflake con datos sintéticos, guías paso a paso e implementaciones SQL-first con Cortex AI/ML. Incluye casos de uso para forecasting de red, fraude energético, optimización renovable, mantenimiento predictivo y asistentes operativos sobre documentación técnica.</p>
+</section>
+<div class="filters-bar">
+  <div class="filters-left" id="filterBtns">
+    <button class="filter-btn active" data-filter="all">Todos (15)</button>
+    <button class="filter-btn" data-filter="consumo">Consumo y Demanda (3)</button>
+    <button class="filter-btn" data-filter="red">Red y Activos (4)</button>
+    <button class="filter-btn" data-filter="renovable">Renovables (3)</button>
+    <button class="filter-btn" data-filter="fraude">Fraude y Pérdidas (2)</button>
+    <button class="filter-btn" data-filter="cliente">Cliente y Mercado (3)</button>
+  </div>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
+      <circle cx="9" cy="9" r="7"/><line x1="15" y1="15" x2="19" y2="19"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Buscar casos de uso…" />
+  </div>
+</div>
+<div class="results-count" id="resultsCount">Mostrando 15 de 15 casos de uso</div>
+<main class="cards-grid" id="cardsGrid"></main>
+<script>
+const USE_CASES = [
+  {id:"UC01",cat:"consumo",catLabel:"Consumo y Demanda",time:"14 min",title:"Forecast de Demanda por Centro de Transformación",pain:"Las utilities aún pronostican demanda con granularidad insuficiente, provocando sobrecostes de compra, congestión local y decisiones reactivas ante picos de carga.",desc:"Modelo de forecasting multi-horizonte para predecir demanda horaria por centro de transformación combinando históricos de consumo, meteorología, calendario, eventos locales y señales operativas. Reduce desvíos y mejora la planificación de compra y capacidad.",features:["Forecast horario a 24-168h","Variables meteorológicas y de calendario","Alertas de sobrecarga local","Dashboard por zona, feeder y CT"]},
+  {id:"UC02",cat:"consumo",catLabel:"Consumo y Demanda",time:"16 min",title:"Feature Store para Flexibilidad y Respuesta a la Demanda",pain:"Los programas de flexibilidad fallan porque no existe una visión unificada de propensión, elasticidad y capacidad real de modulación por cliente o activo.",desc:"Caso de uso basado en Snowflake Feature Store para construir features reutilizables de elasticidad, respuesta histórica, sensibilidad al precio y patrón intradiario. Un modelo registrado en Model Registry prioriza clientes y activos con mayor probabilidad de participar en eventos DR.",features:["Snowflake Feature Store","Model Registry para versionado","Scoring de propensión a respuesta","Activación de eventos DR por segmento"]},
+  {id:"UC03",cat:"consumo",catLabel:"Consumo y Demanda",time:"13 min",title:"Predicción de Picos de Demanda Industrial",pain:"Los picos imprevistos en clientes industriales disparan penalizaciones, saturan activos de red y elevan costes de balancing en mercados intradiarios.",desc:"Predice picos de demanda de clientes C&I usando series temporales, señales de producción, turnos, clima y alarmas SCADA. Permite lanzar recomendaciones preventivas y ofertas de flexibilidad antes de que ocurra el pico.",features:["Detección temprana de picos","Integración con señales OT/IT","Priorización por impacto económico","Recomendaciones preventivas automáticas"]},
+  {id:"UC04",cat:"red",catLabel:"Red y Activos",time:"15 min",title:"Mantenimiento Predictivo de Transformadores",pain:"Los transformadores fallan de forma costosa y con poco aviso. Las revisiones periódicas no capturan degradación real ni priorizan bien CAPEX y mantenimiento.",desc:"Modelo predictivo sobre aceite dieléctrico, temperatura, carga, armónicos, incidencias y edad del activo para anticipar fallos y priorizar inspecciones. Reduce interrupciones no planificadas y optimiza inversiones en renovación.",features:["Predicción de fallo a 30-90 días","Priorización de inspecciones","Explicabilidad por feature","Heatmap de riesgo por subestación"]},
+  {id:"UC05",cat:"red",catLabel:"Red y Activos",time:"12 min",title:"Copiloto LLM para Operación de Red",pain:"Los operadores tardan minutos críticos en localizar procedimientos, manuales y precedentes durante incidencias de red complejas o maniobras poco frecuentes.",desc:"Asistente RAG con Cortex Search sobre SOPs, manuales, históricos de incidencias y planes de contingencia. Responde preguntas operativas con trazabilidad documental y acelera la resolución de eventos en centro de control.",features:["RAG sobre documentación técnica","Respuestas con cita de fuente","Búsqueda semántica por equipo/procedimiento","Interfaz de chat para operadores"]},
+  {id:"UC06",cat:"red",catLabel:"Red y Activos",time:"17 min",title:"Digital Twin de Riesgo para Líneas de Distribución",pain:"La priorización de mantenimiento de líneas sigue reglas estáticas y no incorpora en tiempo real vegetación, clima extremo, carga, inspecciones y criticidad territorial.",desc:"Motor de scoring que construye un gemelo digital de riesgo por tramo de línea combinando sensores, inspecciones, vegetación, viento, incendios y criticidad de clientes conectados. Permite optimizar mantenimiento preventivo y respuesta ante tormentas.",features:["Scoring geoespacial por tramo","Integración clima + vegetación + carga","Ranking de criticidad operativa","Simulación de escenarios climáticos"]},
+  {id:"UC07",cat:"red",catLabel:"Red y Activos",time:"14 min",title:"Predicción de Interrupciones y ENS",pain:"Los cortes y microcortes generan penalizaciones regulatorias y mala experiencia de cliente, pero la predicción preventiva sobre feeders críticos aún es limitada.",desc:"Modelo que estima probabilidad de interrupción y energía no suministrada esperada usando topología, histórico de incidencias, trabajos programados, calidad de tensión y clima severo. Ayuda a prevenir eventos y a gestionar recursos de campo.",features:["Predicción de ENS y SAIDI/SAIFI proxy","Alertas preventivas por feeder","Asignación proactiva de cuadrillas","Vista territorial de vulnerabilidad"]},
+  {id:"UC08",cat:"renovable",catLabel:"Energía Renovable",time:"15 min",title:"Forecast Solar y Eólico con Registro de Modelos",pain:"Los equipos operan múltiples modelos locales sin trazabilidad, drift controlado ni comparación consistente entre versiones para generación renovable.",desc:"Pipeline de forecasting renovable con Snowflake Model Registry para registrar, comparar y promover modelos de predicción solar/eólica por planta. Mejora la gobernanza MLOps y reduce errores de nominación y desvíos de mercado.",features:["Model Registry y versionado","Comparativa de modelos por planta","Promoción controlada a producción","Monitorización de drift y accuracy"]},
+  {id:"UC09",cat:"renovable",catLabel:"Energía Renovable",time:"13 min",title:"Optimización de Curtailed Energy",pain:"Las plantas renovables pierden ingresos por curtailment y restricciones de red sin una priorización dinámica basada en precio, congestión y almacenamiento disponible.",desc:"Motor analítico que predice riesgo de vertido y recomienda estrategias de despacho, carga de baterías o reprogramación según precio, congestión y meteorología. Maximiza captura de valor en entornos con restricciones.",features:["Predicción de curtailment","Simulación de estrategias de despacho","Integración con almacenamiento","KPIs de energía recuperable"]},
+  {id:"UC10",cat:"renovable",catLabel:"Energía Renovable",time:"12 min",title:"Detección de Underperformance en Parques",pain:"Las pérdidas por bajo rendimiento en strings, inversores o turbinas se detectan tarde y diluyen EBITDA durante semanas.",desc:"Detección de anomalías para identificar degradación y underperformance frente a gemelos de referencia y condiciones esperadas. Prioriza intervenciones en activos con mayor pérdida económica acumulada.",features:["Anomalías vs producción esperada","Priorización por pérdida de ingresos","Comparativas peer-to-peer","Dashboard por planta y activo"]},
+  {id:"UC11",cat:"fraude",catLabel:"Fraude y Pérdidas",time:"14 min",title:"Detección de Fraude Energético y Pérdidas No Técnicas",pain:"Las inspecciones de fraude se planifican con baja precisión y alto coste operativo, mientras las pérdidas no técnicas siguen creciendo en segmentos vulnerables.",desc:"Scoring de fraude sobre curvas de carga, incidencias de contador, cambios contractuales, anomalías de lectura y patrones geográficos. Prioriza inspecciones con mayor ROI y reduce pérdidas no técnicas.",features:["Scoring de fraude por CUPS","Priorización de inspecciones","Señales de contador y contrato","Mapa de pérdidas no técnicas"]},
+  {id:"UC12",cat:"fraude",catLabel:"Fraude y Pérdidas",time:"11 min",title:"LLM para Análisis de Actas e Inspecciones",pain:"Las actas de inspección y notas de campo contienen señales clave de fraude y seguridad, pero se explotan manualmente y sin estandarización.",desc:"Pipeline LLM que resume actas, clasifica tipologías de fraude, extrae evidencias y genera campos estructurados para analítica posterior. Acelera cierres de expediente y mejora la calidad de la información de campo.",features:["Extracción estructurada con LLM","Resumen automático de actas","Clasificación de tipologías","Priorización de expedientes"]},
+  {id:"UC13",cat:"cliente",catLabel:"Cliente y Mercado",time:"16 min",title:"Next Best Offer para Electrificación del Hogar",pain:"Las comercializadoras no saben cuándo activar ofertas de autoconsumo, batería, bomba de calor o cargador EV, perdiendo ventas de alto margen y baja churn.",desc:"Modelo de propensión comercial para recomendar la siguiente mejor oferta energética por hogar: solar, batería, EV, tarifa dinámica o servicio de eficiencia. Combina perfil de consumo, vivienda, CRM y señales digitales.",features:["NBO multi-producto","Propensión por hogar","Segmentación comercial explainable","Activación en canales digitales y call center"]},
+  {id:"UC14",cat:"cliente",catLabel:"Cliente y Mercado",time:"13 min",title:"Predicción de Churn en Comercialización",pain:"La guerra de precios y la volatilidad hacen que el churn se acelere, pero las campañas siguen siendo masivas y poco rentables.",desc:"Modelo de churn que integra consumo, facturación, reclamaciones, interacción digital, cambios tarifarios y competencia. Prioriza acciones de retención según valor de cliente y riesgo de fuga.",features:["Predicción de churn a 30-90 días","Priorización por valor y riesgo","Detección de drivers de fuga","Panel de campañas de retención"]},
+  {id:"UC15",cat:"cliente",catLabel:"Cliente y Mercado",time:"12 min",title:"Asistente Tarifario y Regulatorio para Front Office",pain:"Los agentes comerciales y de atención tardan demasiado en interpretar tarifas, cláusulas regulatorias y condiciones de contratación, generando errores y baja conversión.",desc:"Asistente LLM para explicar tarifas, peajes, cláusulas y condiciones contractuales usando RAG sobre catálogos tarifarios, FAQs regulatorias y documentación comercial. Mejora conversión, consistencia y tiempo de atención.",features:["Asistente RAG comercial","Explicación de tarifas en lenguaje natural","Citas a fuente regulatoria/comercial","Soporte a front office y canales digitales"]}
+];
+const TOTAL = 15;
+function renderCards(list) {
+  const grid = document.getElementById('cardsGrid');
+  const count = document.getElementById('resultsCount');
+  grid.innerHTML = '';
+  count.textContent = `Mostrando ${list.length} de ${TOTAL} casos de uso`;
+  list.forEach(uc => {
+    const catClass = { 'Consumo y Demanda':'consumo', 'Red y Activos':'red', 'Energía Renovable':'renovable', 'Fraude y Pérdidas':'fraude', 'Cliente y Mercado':'cliente' }[uc.catLabel] || '';
+    grid.innerHTML += `
+      <article class="card">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge-id">${uc.id}</span>
+            <span class="badge-cat ${catClass}">${uc.catLabel}</span>
+          </div>
+          <span class="card-time">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2">
+              <circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/>
+            </svg>
+            ${uc.time}
+          </span>
+        </div>
+        <h3 class="card-title">${uc.title}</h3>
+        <div class="pain-point">
+          <div class="pain-point-label">Problema</div>
+          <p>${uc.pain}</p>
+        </div>
+        <p class="card-desc">${uc.desc}</p>
+        <ul class="card-features">${uc.features.map(f => `<li>${f}</li>`).join('')}</ul>
+        <div class="card-actions">
+          <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
+          <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
+        </div>
+      </article>`;
+  });
+}
+let activeFilter = 'all';
+let searchTerm = '';
+function applyFilters() {
+  let result = USE_CASES;
+  if (activeFilter !== 'all') result = result.filter(u => u.cat === activeFilter);
+  if (searchTerm) result = result.filter(u => u.title.toLowerCase().includes(searchTerm) || u.desc.toLowerCase().includes(searchTerm) || u.pain.toLowerCase().includes(searchTerm));
+  renderCards(result);
+}
+document.getElementById('filterBtns').addEventListener('click', e => {
+  if (!e.target.matches('.filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeFilter = e.target.dataset.filter;
+  applyFilters();
+});
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+renderCards(USE_CASES);
+const GUIAS = Object.fromEntries(USE_CASES.map((uc, i) => [uc.id, {
+  title: uc.title,
+  contexto: `Estos Cortex Code Prompts demuestra cómo aplicar Snowflake Cortex AI/ML al caso de uso "${uc.title}" en el sector de energía y utilities con datos sintéticos y visualización operativa.`,
+  foco: uc.catLabel + ' en utilities, comercialización, distribución y generación.',
+  reto: uc.pain,
+  objetivos: [
+    'Generar datos sintéticos realistas del dominio energético',
+    'Construir un pipeline analítico SQL-first dentro de Snowflake',
+    'Aplicar Cortex ML y/o LLM al problema de negocio',
+    'Exponer resultados en un dashboard Streamlit orientado a operación',
+    'Definir criterios de priorización y valor económico'
+  ].concat(i===1?[ 'Construir features reutilizables en Snowflake Feature Store', 'Versionar y promover modelos con Model Registry' ]:[]).concat(i===7?[ 'Registrar versiones de modelos renovables en Model Registry', 'Comparar modelos y promover el mejor a producción' ]:[]),
+  funcionalidades: [
+    'Tablas sintéticas con granularidad operacional',
+    'Feature engineering y vistas analíticas',
+    'Predicción, clasificación o extracción con IA',
+    'KPIs priorizados para negocio',
+    'Dashboard Streamlit con filtros y drill-down'
+  ].concat(i===1?[ 'Feature Store para elasticidad y propensión', 'Scoring batch para campañas de flexibilidad' ]:[]).concat(i===7?[ 'Model Registry para gestión del ciclo de vida del modelo' ]:[]),
+  datos: [
+    'Series temporales de consumo, carga o generación',
+    'Eventos operativos, clima, calendario y atributos de activo/cliente',
+    'Predicciones o scores generados por el modelo',
+    'Tablas agregadas para visualización ejecutiva'
+  ],
+  como_usar: [
+    'Ejecutar los prompts secuencialmente',
+    'La configuración inicial crea un entorno aislado para el caso',
+    'Los datos sintéticos se generan automáticamente',
+    'El pipeline entrena o ejecuta el caso en pocos minutos',
+    'El dashboard final permite explorar resultados por segmento o activo'
+  ]
+}]));
+function verGuia(ucId) {
+  const g = GUIAS[ucId];
+  if (!g) { alert('Guía no disponible aún para ' + ucId); return; }
+  const box = document.getElementById('guiaModalBox');
+  let h = `<button class="modal-close" onclick="cerrarModal('guiaModal')">&times;</button>`;
+  h += `<span class="guide-badge">${ucId}</span>`;
+  h += `<h2>${g.title}</h2>`;
+  h += `<p><strong>Caso de Uso: ${g.title}</strong></p>`;
+  h += `<h3>Contexto de Negocio</h3><p>${g.contexto}</p>`;
+  h += `<p><strong>Foco:</strong> ${g.foco}</p>`;
+  h += `<p><strong>Reto de negocio:</strong> ${g.reto}</p>`;
+  h += `<h3>Objetivos de Aprendizaje</h3><ul>${g.objetivos.map(o=>`<li>${o}</li>`).join('')}</ul>`;
+  h += `<h3>Funcionalidades</h3><ul>${g.funcionalidades.map(f=>`<li>${f}</li>`).join('')}</ul>`;
+  h += `<h3>Datos Generados</h3><ul>${g.datos.map(d=>`<li>${d}</li>`).join('')}</ul>`;
+  h += `<h3>Cómo Usar</h3><ul>${g.como_usar.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+  h += `<p class="guide-footer">Desarrollado con Snowflake Cortex ML + Cortex AI + Streamlit</p>`;
+  box.innerHTML = h;
+  document.getElementById('guiaModal').classList.add('active');
+}
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
+});
+function cerrarModal(id) { document.getElementById(id).classList.remove('active'); }
+function makeSteps(title, featureStore=False, registry=False, rag=False):
+  steps = [
+    ('Configurar entorno','Base de datos, esquema y warehouse del proyecto.',f'Crea una base de datos específica para el caso "{title}", un esquema PUBLIC y un warehouse COMPUTE_WH tamaño SMALL con auto-suspend de 60 segundos. Establece el contexto de sesión.'),
+    ('Generar datos sintéticos','Crear tablas base del caso.',f'Genera tablas sintéticas realistas para el caso "{title}" con GENERATOR(), incluyendo identificadores, fechas, series temporales, atributos operativos y etiquetas históricas cuando aplique.'),
+    ('Crear señales analíticas','Construir variables operativas y de negocio.',f'Crea una vista o tabla de features para "{title}" combinando series temporales, clima, calendario, eventos operativos y atributos maestros. Incluye variables derivadas, ratios y lags relevantes.'),
+    ('Validar calidad','Perfilado y validación de datos.',f'Muestra conteos, nulos, distribuciones, outliers y ejemplos para las tablas del caso "{title}". Identifica columnas clave y valida consistencia temporal.'),
+  ]
+  if featureStore:
+    steps += [
+      ('Crear Feature Store','Publicar features reutilizables.',f'Crea un Feature Store para el caso "{title}" y registra un feature view con las variables de propensión, elasticidad, comportamiento histórico y contexto operativo necesarias para el modelo.'),
+      ('Recuperar features','Materializar dataset ML desde Feature Store.',f'Construye el dataset de entrenamiento del caso "{title}" recuperando features desde Snowflake Feature Store y verifica cardinalidad, freshness y cobertura.'),
+    ]
+  steps += [
+    ('Dividir train/test','Separar entrenamiento y validación.',f'Crea conjuntos train y test para "{title}" con partición temporal o aleatoria según corresponda, y muestra tamaño y distribución del target.'),
+    ('Entrenar modelo','Construir el modelo ML.',f'Entrena un modelo apropiado en Snowflake para el caso "{title}" usando las features creadas. Configura evaluación y guarda métricas y predicciones.'),
+    ('Evaluar resultados','Métricas y explicabilidad.',f'Muestra las métricas principales del caso "{title}", feature importance, errores relevantes y segmentos donde el modelo aporta más valor.'),
+  ]
+  if registry:
+    steps += [
+      ('Registrar modelo','Guardar versión en Model Registry.',f'Registra el modelo entrenado para "{title}" en Snowflake Model Registry con nombre, versión, métricas, sample_input_data y una descripción de negocio.'),
+      ('Comparar versiones','Evaluar versiones del registro.',f'Compara la versión recién registrada para "{title}" con una baseline y determina si debe promocionarse a producción según accuracy, drift o coste de error.'),
+    ]
+  if rag:
+    steps += [
+      ('Preparar corpus','Crear chunks e indexación semántica.',f'Genera una tabla documental para "{title}" con textos técnicos o regulatorios, divídelos en chunks y prepara atributos para búsqueda semántica.'),
+      ('Crear Cortex Search','Habilitar búsqueda semántica.',f'Crea un Cortex Search Service para el caso "{title}" usando el texto de chunks como columna de búsqueda y atributos de filtrado del dominio.'),
+      ('Implementar respuesta RAG','Responder con contexto y fuentes.',f'Construye un flujo RAG para "{title}" que recupere chunks relevantes y use CORTEX.COMPLETE para generar una respuesta con citas documentales.'),
+    ]
+  steps += [
+    ('Puntuar o inferir','Generar scoring operativo.',f'Crea una tabla final con scores, predicciones o salidas de IA para el caso "{title}" y clasifica resultados por prioridad operativa o económica.'),
+    ('Dashboard Streamlit','Visualización para negocio.',f'Crea un dashboard Streamlit para "{title}" con KPIs, gráficos, filtros y tabla detallada de los elementos priorizados.'),
+    ('Siguientes pasos','Industrialización del caso.',f'Redacta los siguientes pasos para llevar "{title}" a producción: integración de datos reales, refresh, alertas, gobierno y adopción por negocio.')
+  ]
+  return steps[:12]
+PROMPTS = {
+  'UC01': {title:'Forecast de Demanda por Centro de Transformación', intro:'Prompts para construir un forecast horario por CT con Snowflake Cortex ML.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Forecast de Demanda por Centro de Transformación')]},
+  'UC02': {title:'Feature Store para Flexibilidad y Respuesta a la Demanda', intro:'Prompts para construir un caso con Snowflake Feature Store y Model Registry para respuesta a la demanda.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Feature Store para Flexibilidad y Respuesta a la Demanda', featureStore=True, registry=True)]},
+  'UC03': {title:'Predicción de Picos de Demanda Industrial', intro:'Prompts para detectar picos industriales y priorizar acciones preventivas.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Predicción de Picos de Demanda Industrial')]},
+  'UC04': {title:'Mantenimiento Predictivo de Transformadores', intro:'Prompts para anticipar fallos y priorizar mantenimiento de transformadores.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Mantenimiento Predictivo de Transformadores')]},
+  'UC05': {title:'Copiloto LLM para Operación de Red', intro:'Prompts para crear un copiloto RAG para operadores de red.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Copiloto LLM para Operación de Red', rag=True)]},
+  'UC06': {title:'Digital Twin de Riesgo para Líneas de Distribución', intro:'Prompts para construir un gemelo digital de riesgo por tramo de línea.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Digital Twin de Riesgo para Líneas de Distribución')]},
+  'UC07': {title:'Predicción de Interrupciones y ENS', intro:'Prompts para estimar interrupciones y energía no suministrada.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Predicción de Interrupciones y ENS')]},
+  'UC08': {title:'Forecast Solar y Eólico con Registro de Modelos', intro:'Prompts para construir forecasting renovable gobernado con Model Registry.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Forecast Solar y Eólico con Registro de Modelos', registry=True)]},
+  'UC09': {title:'Optimización de Curtailed Energy', intro:'Prompts para optimizar el valor capturado ante curtailment.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Optimización de Curtailed Energy')]},
+  'UC10': {title:'Detección de Underperformance en Parques', intro:'Prompts para detectar pérdidas de rendimiento en activos renovables.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Detección de Underperformance en Parques')]},
+  'UC11': {title:'Detección de Fraude Energético y Pérdidas No Técnicas', intro:'Prompts para priorizar fraude energético y pérdidas no técnicas.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Detección de Fraude Energético y Pérdidas No Técnicas')]},
+  'UC12': {title:'LLM para Análisis de Actas e Inspecciones', intro:'Prompts para estructurar actas de inspección con LLM.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('LLM para Análisis de Actas e Inspecciones', rag=True)]},
+  'UC13': {title:'Next Best Offer para Electrificación del Hogar', intro:'Prompts para construir un motor de next best offer en comercialización energética.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Next Best Offer para Electrificación del Hogar')]},
+  'UC14': {title:'Predicción de Churn en Comercialización', intro:'Prompts para anticipar churn y priorizar retención.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Predicción de Churn en Comercialización')]},
+  'UC15': {title:'Asistente Tarifario y Regulatorio para Front Office', intro:'Prompts para construir un asistente RAG sobre tarifas y regulación.', steps:[{'title':t,'desc':d,'prompt':p} for t,d,p in makeSteps('Asistente Tarifario y Regulatorio para Front Office', rag=True)]}
+};
+function verPrompts(ucId) {
+  const data = PROMPTS[ucId];
+  if (!data) { alert('Prompts no disponibles aún para ' + ucId); return; }
+  const box = document.getElementById('promptsModalBox');
+  let html = `<button class="modal-close" onclick="cerrarModal('promptsModal')">&times;</button>`;
+  html += `<span class="guide-badge">${ucId}</span>`;
+  html += `<h2>${data.title} — Cortex Code Prompts</h2>`;
+  html += `<p class="prompt-intro">${data.intro}</p>`;
+  data.steps.forEach((s, i) => {
+    const escaped = s.prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    html += `<div class="prompt-step">`;
+    html += `<div class="prompt-step-header"><span class="prompt-step-num">${i+1}</span><span class="prompt-step-title">${s.title}</span></div>`;
+    html += `<div class="prompt-step-desc">${s.desc}</div>`;
+    html += `<div class="prompt-code" id="prompt_${ucId}_${i}"><button class="copy-btn" onclick="copiarPrompt('prompt_${ucId}_${i}')">Copiar</button>${escaped}</div>`;
+    html += `</div>`;
+  });
+  html += `<p class="guide-footer">Ejecuta cada prompt en Cortex Code (Snowsight) de forma secuencial</p>`;
+  box.innerHTML = html;
+  document.getElementById('promptsModal').classList.add('active');
+}
+function copiarPrompt(id) {
+  const el = document.getElementById(id);
+  const btn = el.querySelector('.copy-btn');
+  const text = el.textContent.replace('Copiar', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '¡Copiado!';
+    setTimeout(() => btn.textContent = 'Copiar', 1500);
+  });
+}
+</script>
+<div class="modal-overlay" id="guiaModal"><div class="modal-box" id="guiaModalBox"></div></div>
+<div class="modal-overlay" id="promptsModal"><div class="modal-box" id="promptsModalBox" style="max-width:780px;"></div></div>
+</body>
+</html>
