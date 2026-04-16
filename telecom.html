@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>Snowflake — Soluciones IA/ML para Telecomunicaciones</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #003545, #11567F);
+      color: #fff;
+      padding: 32px 48px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .hero-left { flex: 1; }
+
+    .logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-snowflake {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .stats-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 28px;
+      text-align: center;
+      color: #1a1a1a;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .stats-box .stat-number {
+      font-size: 40px;
+      font-weight: 700;
+      color: #0097A7;
+      line-height: 1;
+    }
+
+    .stats-box .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .stats-box .stat-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+
+    .stats-box .stat-time-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .stats-divider {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 10px 0;
+    }
+
+    .intro {
+      background: #fff;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .intro h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #11567F;
+      margin-bottom: 14px;
+    }
+
+    .intro p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .filters-bar {
+      background: #fff;
+      padding: 20px 48px 0;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filters-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 80px;
+      border: 1.5px solid #ccc;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: #29B5E8; color: #29B5E8; }
+
+    .filter-btn.active {
+      background: #29B5E8;
+      border-color: #29B5E8;
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #ccc;
+      border-radius: 80px;
+      padding: 7px 14px;
+      gap: 8px;
+      min-width: 200px;
+      background: #fff;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #444;
+      width: 100%;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #aaa; }
+
+    .results-count {
+      padding: 14px 48px 8px;
+      font-size: 13px;
+      color: #666;
+      background: #f5f5f5;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      padding: 16px 48px 48px;
+      background: #f5f5f5;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e2e2e2;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-badges { display: flex; gap: 6px; align-items: center; }
+
+    .badge-id {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-cat {
+      background: #E0F4FD;
+      color: #11567F;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .badge-cat.red           { background: #E0F7FA; color: #00838F; }
+    .badge-cat.cliente       { background: #E8F5E9; color: #2E7D32; }
+    .badge-cat.operaciones   { background: #EDE7F6; color: #5E35B1; }
+    .badge-cat.monetizacion  { background: #FFF3E0; color: #E65100; }
+    .badge-cat.seguridad     { background: #FCE4EC; color: #C62828; }
+
+    .card-time {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      padding: 0 18px 12px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #11567F;
+      line-height: 1.3;
+    }
+
+    .pain-point {
+      margin: 0 18px 14px;
+      background: #E0F7FA;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pain-point-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #0097A7;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .pain-point p {
+      font-size: 13px;
+      color: #2a2a2a;
+      line-height: 1.55;
+    }
+
+    .card-desc {
+      padding: 0 18px 14px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-features {
+      padding: 0 18px 16px;
+      list-style: none;
+    }
+
+    .card-features li {
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-features li::before {
+      content: '\2713';
+      color: #29B5E8;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .card-actions {
+      padding: 14px 18px 18px;
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      background: #29B5E8;
+      color: #fff;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover { background: #11567F; }
+
+    .btn-tertiary {
+      flex: 1;
+      padding: 10px;
+      background: #003545;
+      color: #29B5E8;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-tertiary:hover { background: #11567F; }
+
+    .prompt-step { margin-bottom: 18px; }
+    .prompt-step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prompt-step-num { background: #003545; color: #29B5E8; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .prompt-step-title { font-size: 13px; font-weight: 600; color: #333; }
+    .prompt-step-desc { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+    .prompt-code { position: relative; background: #003545; color: #e0e0e0; border-radius: 8px; padding: 12px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .prompt-code .copy-btn { position: absolute; top: 6px; right: 8px; background: rgba(255,255,255,0.1); border: none; color: #aaa; font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
+    .prompt-code .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .modal-box .prompt-intro { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 92%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #0097A7; }
+    .modal-box h2 { color: #11567F; font-size: 20px; margin-bottom: 6px; }
+    .modal-box h3 { font-size: 15px; color: #333; margin: 18px 0 8px; }
+    .modal-box p, .modal-box li { font-size: 13px; line-height: 1.7; color: #444; }
+    .modal-box ul { padding-left: 20px; margin: 6px 0; }
+    .modal-box .guide-badge { display: inline-block; background: #E0F4FD; color: #11567F; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; margin-bottom: 10px; }
+    .modal-box .guide-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #eee; font-size: 12px; color: #888; }
+
+    @media (max-width: 700px) {
+      .hero { flex-direction: column; padding: 24px 20px; }
+      .cards-grid { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .filters-bar { padding: 16px 16px 0; }
+      .results-count { padding: 12px 16px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-left">
+    <div class="logos">
+      <div class="logo-snowflake">
+        <img src="bug-white.png" alt="Snowflake" width="32" height="32" />
+        Snowflake
+      </div>
+    </div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al &Iacute;ndice de Industrias</a>
+    <p class="hero-eyebrow">Sector Telecomunicaciones &times; Snowflake</p>
+    <h1 class="hero-title">Soluciones IA/ML para Telecomunicaciones</h1>
+    <p class="hero-subtitle">Gu&iacute;as y Prompts de Cortex Code listos para desplegar en redes, clientes y operaciones telco</p>
+    <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
+  </div>
+
+  <div class="stats-box">
+    <div class="stat-number">20</div>
+    <div class="stat-label">Casos de Uso</div>
+    <hr class="stats-divider"/>
+    <div class="stat-time">8-15 min</div>
+    <div class="stat-time-label">Tiempo de Configuraci&oacute;n</div>
+  </div>
+</header>
+
+<section class="intro">
+  <h2>Acelera tu Anal&iacute;tica con Soluciones IA Preconfiguradas para Telecomunicaciones</h2>
+  <p>Cada soluci&oacute;n incluye Cortex Code Prompts de Snowflake con datos sint&eacute;ticos, gu&iacute;as paso a paso
+     e implementaciones SQL-first con Cortex AI/ML. Incluye Feature Store y Model Registry para despliegue
+     en producci&oacute;n. Optimiza redes 5G, reduce churn, detecta fraude y mejora la experiencia del cliente — 
+     todo dentro de Snowflake, sin dependencias externas, listo para personalizar con tus datos.</p>
+</section>
+
+<div class="filters-bar">
+  <div class="filters-left" id="filterBtns">
+    <button class="filter-btn active" data-filter="all">Todos (20)</button>
+    <button class="filter-btn" data-filter="red">Red y Conectividad (4)</button>
+    <button class="filter-btn" data-filter="cliente">Experiencia de Cliente (4)</button>
+    <button class="filter-btn" data-filter="operaciones">Operaciones y Eficiencia (4)</button>
+    <button class="filter-btn" data-filter="monetizacion">Monetizaci&oacute;n y Ofertas (4)</button>
+    <button class="filter-btn" data-filter="seguridad">Seguridad y Cumplimiento (4)</button>
+  </div>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
+      <circle cx="9" cy="9" r="7"/><line x1="15" y1="15" x2="19" y2="19"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Buscar casos de uso&hellip;" />
+  </div>
+</div>
+
+<div class="results-count" id="resultsCount">Mostrando 20 de 20 casos de uso</div>
+
+<main class="cards-grid" id="cardsGrid"></main>
+<script>
+const USE_CASES = [
+  {
+    "id": "UC01",
+    "cat": "cliente",
+    "catLabel": "Experiencia de Cliente",
+    "time": "15 min",
+    "title": "Predicción de Churn con Model Registry",
+    "pain": "El churn mensual en operadores españoles alcanza el 2-3% en móvil y 1.5-2% en fibra. La detección reactiva (cuando el cliente porta) pierde la ventana de retención. Cada cliente perdido cuesta 5-8× adquirir uno nuevo, especialmente en convergentes de alto ARPU.",
+    "desc": "Modelo ML de predicción de probabilidad de churn por cliente analizando consumo decreciente, llamadas a atención al cliente, reclamaciones, fin de permanencia, ofertas de competencia y NPS. El modelo se registra en Snowflake Model Registry para despliegue en producción.",
+    "features": [
+      "Predicción con ML.CLASSIFICATION + Model Registry",
+      "Versionado de modelos con log_model() y deploy()",
+      "Variables: consumo, reclamaciones, permanencia, competencia, NPS",
+      "Dashboard Streamlit de retención y alertas"
+    ]
+  },
+  {
+    "id": "UC02",
+    "cat": "red",
+    "catLabel": "Red y Conectividad",
+    "time": "14 min",
+    "title": "Optimización de Red 5G y Gestión de Capacidad",
+    "pain": "Las redes 5G presentan variabilidad de rendimiento del 40-60% según ubicación, hora y carga. La planificación de capacidad basada en promedios históricos genera tanto congestión en horas punta como sobrecapacidad costosa en horas valle.",
+    "desc": "Motor de optimización de red que predice carga por celda 5G/4G con ML.FORECAST, identifica cuellos de botella y recomienda reconfiguración dinámica de recursos de red para maximizar throughput y minimizar latencia.",
+    "features": [
+      "Forecast de carga por celda con ML.FORECAST",
+      "Variables: hora, ubicación, eventos, meteorología, dispositivos",
+      "Detección de cuellos de botella con anomaly detection",
+      "Dashboard Streamlit de Network Operations Center"
+    ]
+  },
+  {
+    "id": "UC03",
+    "cat": "red",
+    "catLabel": "Red y Conectividad",
+    "time": "14 min",
+    "title": "Predicción de Tráfico de Red con Model Registry",
+    "pain": "Los picos de tráfico no previstos (eventos deportivos, catástrofes, lanzamientos virales) saturan segmentos de red y degradan la experiencia de millones de usuarios simultáneamente. El aprovisionamiento estático genera un 30% de capacidad ociosa.",
+    "desc": "Modelo de forecast de tráfico de red por segmento, hora y tipo de servicio con ML.FORECAST integrando eventos programados, tendencias de consumo y estacionalidad. El modelo se versiona en Model Registry para operación continua.",
+    "features": [
+      "Forecast de tráfico con ML.FORECAST + Model Registry",
+      "Variables exógenas: eventos, festivos, meteo, tendencias",
+      "Intervalos de confianza al 95% por segmento de red",
+      "Tracking de accuracy con MAPE por zona y servicio"
+    ]
+  },
+  {
+    "id": "UC04",
+    "cat": "red",
+    "catLabel": "Red y Conectividad",
+    "time": "13 min",
+    "title": "Mantenimiento Predictivo de Infraestructura de Red",
+    "pain": "Las averías no planificadas en infraestructura de red (antenas, routers, fibra) causan caídas de servicio que afectan a miles de clientes. El mantenimiento preventivo basado en calendario desperdicia un 35% de intervenciones innecesarias.",
+    "desc": "Modelo predictivo de fallos de equipamiento de red que analiza telemetría (temperatura, errores, latencia, throughput degradado), antigüedad, historial de incidencias y condiciones ambientales para priorizar mantenimiento.",
+    "features": [
+      "Predicción de fallos con ML.CLASSIFICATION",
+      "Variables: telemetría, antigüedad, errores, condiciones ambientales",
+      "Priorización de mantenimiento por impacto en clientes",
+      "Dashboard Streamlit de salud de infraestructura"
+    ]
+  },
+  {
+    "id": "UC05",
+    "cat": "cliente",
+    "catLabel": "Experiencia de Cliente",
+    "time": "14 min",
+    "title": "Segmentación Avanzada de Clientes y CLV",
+    "pain": "Los operadores usan segmentaciones básicas (prepago/postpago, consumer/business) que no capturan patrones de uso reales. El 45% de ofertas comerciales no son relevantes para el cliente receptor, generando fatiga de comunicación y churn.",
+    "desc": "Motor de micro-segmentación que combina datos de consumo (voz, datos, TV), comportamiento digital (app, web, tienda), perfil socioeconómico y CLV para crear segmentos accionables para retención, upsell y cross-sell.",
+    "features": [
+      "Segmentación con ML.CLASSIFICATION multivariable",
+      "Cálculo de CLV predictivo con ML.FORECAST",
+      "Variables: consumo convergente, digital engagement, ARPU, tenure",
+      "Dashboard Streamlit de segmentos y CLV"
+    ]
+  },
+  {
+    "id": "UC06",
+    "cat": "monetizacion",
+    "catLabel": "Monetización y Ofertas",
+    "time": "12 min",
+    "title": "Optimización de Pricing y Bundles Convergentes",
+    "pain": "Los bundles convergentes (móvil+fibra+TV) representan el 70% del revenue pero su pricing se basa en benchmarks de competencia, no en willingness-to-pay por segmento. El 20% de clientes pagaría más por servicios premium mientras el 25% se siente sobre-pagando.",
+    "desc": "Motor de optimización de pricing que modela elasticidad por segmento y simula escenarios de bundles convergentes (con/sin TV, con/sin fútbol, con/sin móvil adicional) para maximizar ARPU sin incrementar churn.",
+    "features": [
+      "Modelado de elasticidad con ML.CLASSIFICATION",
+      "Simulación de bundles convergentes por segmento",
+      "Variables: consumo, CLV, competencia, willingness-to-pay",
+      "Dashboard Streamlit de pricing simulator"
+    ]
+  },
+  {
+    "id": "UC07",
+    "cat": "operaciones",
+    "catLabel": "Operaciones y Eficiencia",
+    "time": "14 min",
+    "title": "Optimización de Field Service y Técnicos",
+    "pain": "Los operadores gestionan 50.000-200.000 intervenciones técnicas mensuales (instalaciones, averías, migraciones). El 25% de visitas requieren revisita por diagnóstico incorrecto y el 15% de citas se incumplen por mala planificación de rutas.",
+    "desc": "Motor de optimización de field service que predice duración de intervención, asigna técnicos por competencia y proximidad, optimiza rutas diarias y detecta patrones de revisitas para reducción de costes operativos.",
+    "features": [
+      "Predicción de duración con ML.CLASSIFICATION",
+      "Optimización de asignación técnico-intervención",
+      "Variables: tipo avería, equipo, zona, técnico, historial",
+      "Dashboard Streamlit de field service"
+    ]
+  },
+  {
+    "id": "UC08",
+    "cat": "cliente",
+    "catLabel": "Experiencia de Cliente",
+    "time": "15 min",
+    "title": "Feature Store de Customer 360 Telco",
+    "pain": "Los datos del cliente telco están dispersos en BSS (facturación), CRM, red, app, tienda física, call center y redes sociales. No hay visión unificada para decisiones de retención, upsell y experiencia en tiempo real.",
+    "desc": "Feature Store centralizado en Snowflake que consolida features de cada cliente desde todos los sistemas. Sirve features en tiempo real para personalización, ofertas y retención en todos los canales.",
+    "features": [
+      "Snowflake Feature Store con Entity y FeatureView",
+      "Features: consumo, facturación, red, digital, social, lifecycle",
+      "Versionado automático del perfil del cliente",
+      "Pipeline de ingesta desde BSS, CRM, red, app, tienda"
+    ]
+  },
+  {
+    "id": "UC09",
+    "cat": "monetizacion",
+    "catLabel": "Monetización y Ofertas",
+    "time": "12 min",
+    "title": "Motor de Ofertas Personalizadas Next-Best-Action",
+    "pain": "Las campañas masivas de retención y upsell tienen tasas de conversión del 3-5%. Los agentes de call center ofrecen descuentos genéricos sin conocer la propensión del cliente ni la oferta óptima, erosionando márgenes un 10-15%.",
+    "desc": "Motor de Next-Best-Action que calcula la oferta óptima para cada cliente en cada momento, considerando propensión de aceptación, impacto en CLV, margen de la oferta y canal preferido de comunicación.",
+    "features": [
+      "Next-Best-Action con ML.CLASSIFICATION multi-objetivo",
+      "Variables: perfil, historial ofertas, propensión, canal, momento",
+      "Optimización de margen: mejor oferta vs mínima oferta suficiente",
+      "Dashboard Streamlit de campaign management"
+    ]
+  },
+  {
+    "id": "UC10",
+    "cat": "red",
+    "catLabel": "Red y Conectividad",
+    "time": "12 min",
+    "title": "Detección de Anomalías en Calidad de Red",
+    "pain": "La degradación gradual de calidad de red (incremento de latencia, packet loss, jitter) afecta a miles de clientes antes de que los sistemas de alarma tradicionales lo detecten. El MTTR (Mean Time to Repair) supera las 4 horas en el 40% de los casos.",
+    "desc": "Sistema de detección de anomalías en tiempo real que monitoriza KPIs de red (throughput, latencia, packet loss, handover success) por celda y segmento, detectando degradaciones antes de que impacten en la experiencia del cliente.",
+    "features": [
+      "Detección de anomalías con ML sobre series temporales",
+      "Variables: throughput, latencia, packet loss, handover, load",
+      "Correlación con impacto en experiencia de cliente",
+      "Dashboard Streamlit de NOC inteligente"
+    ]
+  },
+  {
+    "id": "UC11",
+    "cat": "operaciones",
+    "catLabel": "Operaciones y Eficiencia",
+    "time": "13 min",
+    "title": "NLP sobre Incidencias y Tickets de Soporte",
+    "pain": "Los call centers telco procesan 500.000-2.000.000 de interacciones mensuales. La clasificación manual de tickets es lenta (5-10 min) y el 30% se redirigen incorrectamente, incrementando el tiempo de resolución y la insatisfacción del cliente.",
+    "desc": "Pipeline NLP que clasifica automáticamente tickets de soporte, extrae la causa raíz, asigna prioridad y sugiere resolución basada en casos similares resueltos. Reduce el tiempo de clasificación de 5 min a 3 segundos.",
+    "features": [
+      "Clasificación con CORTEX.COMPLETE + ML.CLASSIFICATION",
+      "Extracción de causa raíz con CORTEX.COMPLETE",
+      "Variables: texto ticket, historial cliente, red, equipo",
+      "Dashboard Streamlit de gestión de incidencias"
+    ]
+  },
+  {
+    "id": "UC12",
+    "cat": "operaciones",
+    "catLabel": "Operaciones y Eficiencia",
+    "time": "12 min",
+    "title": "Chatbot RAG de Atención al Cliente Telco",
+    "pain": "El soporte de primer nivel gestiona un 65% de consultas repetitivas (facturación, cobertura, configuración, cambio de plan) con un coste de 4-6€ por interacción. Los chatbots basados en flujos fijos solo resuelven el 20% de consultas.",
+    "desc": "Asistente conversacional RAG con Cortex Search indexando FAQ, guías técnicas, tarifas, cobertura y procesos de atención al cliente. Resuelve el 70% de consultas sin intervención humana con respuestas contextualizadas.",
+    "features": [
+      "RAG con Cortex Search + CORTEX.COMPLETE",
+      "Base de conocimiento: FAQ, tarifas, cobertura, guías técnicas",
+      "Personalización por perfil del cliente (del Feature Store)",
+      "Dashboard Streamlit de chat con escalado a agente"
+    ]
+  },
+  {
+    "id": "UC13",
+    "cat": "monetizacion",
+    "catLabel": "Monetización y Ofertas",
+    "time": "13 min",
+    "title": "Predicción de Demanda de Servicios y Revenue Forecast",
+    "pain": "La planificación de revenue se basa en proyecciones lineales del trimestre anterior con error del 15-20%. Los lanzamientos de nuevos servicios (5G premium, cloud gaming, IoT) no tienen baseline histórico para prever adopción.",
+    "desc": "Modelo de forecast de revenue por servicio, segmento y zona geográfica con ML.FORECAST integrando tendencias de mercado, acciones comerciales planificadas, movimientos de competencia y estacionalidad.",
+    "features": [
+      "Forecast de revenue con ML.FORECAST multi-series",
+      "Variables: base clientes, ARPU, acciones comerciales, competencia",
+      "Escenarios: optimista, base, pesimista por servicio",
+      "Dashboard Streamlit de revenue planning"
+    ]
+  },
+  {
+    "id": "UC14",
+    "cat": "operaciones",
+    "catLabel": "Operaciones y Eficiencia",
+    "time": "15 min",
+    "title": "Feature Store de Performance de Red",
+    "pain": "Los KPIs de rendimiento de red (throughput, latencia, disponibilidad) se calculan en batch con 4-24h de retraso. Las decisiones de inversión en red, expansión de cobertura y resolución de incidencias se toman con datos obsoletos.",
+    "desc": "Feature Store en Snowflake que consolida métricas de rendimiento de cada celda/nodo de red: throughput, latencia, disponibilidad, carga, incidencias y benchmark. Sirve features para decisiones operativas y de inversión.",
+    "features": [
+      "Snowflake Feature Store con Entity por celda/nodo",
+      "FeatureViews: throughput, latencia, disponibilidad, carga, benchmark",
+      "Features servidas para decisiones operativas en tiempo real",
+      "Pipeline automático de actualización multi-fuente"
+    ]
+  },
+  {
+    "id": "UC15",
+    "cat": "seguridad",
+    "catLabel": "Seguridad y Cumplimiento",
+    "time": "12 min",
+    "title": "Detección de Fraude en SIM y Portabilidades",
+    "pain": "El fraude por SIM swap, suplantación de identidad en portabilidades y activación de líneas con documentación falsa genera pérdidas de 5-15M€/año por operador. La detección manual solo identifica el 40% de los casos.",
+    "desc": "Sistema ML de detección de fraude que analiza patrones de solicitud de SIM, portabilidad y activación: velocidad, geolocalización, historial del titular, dispositivo y comportamiento post-activación para identificar operaciones sospechosas.",
+    "features": [
+      "Detección con ML.CLASSIFICATION + scoring en tiempo real",
+      "Variables: velocidad solicitud, geo, dispositivo, historial, patrón",
+      "Alertas automáticas para bloqueo preventivo",
+      "Dashboard Streamlit de fraude y prevención"
+    ]
+  },
+  {
+    "id": "UC16",
+    "cat": "seguridad",
+    "catLabel": "Seguridad y Cumplimiento",
+    "time": "13 min",
+    "title": "Ciberseguridad y Detección de Amenazas en Red",
+    "pain": "Los operadores gestionan millones de eventos de seguridad diarios. Los ataques DDoS, botnets IoT, phishing y exfiltración de datos representan un riesgo creciente. El 60% de amenazas se detectan después de haber causado impacto.",
+    "desc": "Pipeline ML de detección de amenazas que analiza flujos de red, comportamiento de dispositivos, patrones DNS y eventos de autenticación para identificar ataques en tiempo real y automatizar la respuesta.",
+    "features": [
+      "Detección de amenazas con ML.CLASSIFICATION sobre flujos",
+      "Variables: tráfico, DNS, autenticación, dispositivo, comportamiento",
+      "Scoring de riesgo por dispositivo y segmento de red",
+      "Dashboard Streamlit de Security Operations Center"
+    ]
+  },
+  {
+    "id": "UC17",
+    "cat": "monetizacion",
+    "catLabel": "Monetización y Ofertas",
+    "time": "12 min",
+    "title": "Análisis de Sentimiento y Reputación de Marca",
+    "pain": "Los operadores telco tienen los NPS más bajos del mercado (-10 a +15). Los problemas de cobertura, facturación y atención al cliente generan oleadas de negatividad en redes sociales que no se detectan hasta que son trending topic.",
+    "desc": "Pipeline NLP de monitorización de sentimiento sobre la marca en redes sociales, foros (Bandaancha, Forocoches) y prensa. Clasifica por urgencia, tema y potencial de viralidad para respuesta rápida de comunicación.",
+    "features": [
+      "NLP con CORTEX.SENTIMENT + CORTEX.COMPLETE",
+      "Monitorización multi-fuente en tiempo real",
+      "Variables: sentimiento, volumen, velocidad, influencers, tema",
+      "Dashboard Streamlit de reputation management"
+    ]
+  },
+  {
+    "id": "UC18",
+    "cat": "seguridad",
+    "catLabel": "Seguridad y Cumplimiento",
+    "time": "11 min",
+    "title": "Cumplimiento GDPR y Gestión de Consentimientos",
+    "pain": "Los operadores manejan datos sensibles de millones de clientes (ubicación, tráfico, comunicaciones). El cumplimiento de GDPR, ePrivacy y la ley de telecomunicaciones requiere trazabilidad total de consentimientos y accesos a datos personales.",
+    "desc": "Sistema de gestión de consentimientos y trazabilidad de acceso a datos personales que monitoriza quién accede a qué datos, verifica consentimiento vigente y genera informes de cumplimiento para el DPO y el regulador.",
+    "features": [
+      "Monitorización de acceso a datos con reglas + ML",
+      "Variables: usuario, dato accedido, consentimiento, propósito, fecha",
+      "Alertas de acceso sin consentimiento vigente",
+      "Dashboard Streamlit de compliance GDPR"
+    ]
+  },
+  {
+    "id": "UC19",
+    "cat": "cliente",
+    "catLabel": "Experiencia de Cliente",
+    "time": "11 min",
+    "title": "Análisis de Experiencia de Cliente (CX) Omnicanal",
+    "pain": "El customer journey telco involucra 8-12 touchpoints (web, app, tienda, call center, técnico, factura, red). La satisfacción medida por canal no captura la experiencia end-to-end, y el 40% de clientes insatisfechos no reclaman antes de portar.",
+    "desc": "Motor de análisis de experiencia que integra interacciones de todos los canales, detecta journeys problemáticos, predice insatisfacción latente y genera alertas para intervención proactiva antes de la decisión de churn.",
+    "features": [
+      "Análisis de journey con ML.CLASSIFICATION sobre secuencias",
+      "Variables: interacciones por canal, resolución, tiempo, sentimiento",
+      "Predicción de insatisfacción latente sin reclamación",
+      "Dashboard Streamlit de CX omnicanal"
+    ]
+  },
+  {
+    "id": "UC20",
+    "cat": "seguridad",
+    "catLabel": "Seguridad y Cumplimiento",
+    "time": "10 min",
+    "title": "Detección de Fraude en Revenue Assurance",
+    "pain": "Las discrepancias entre eventos de red (CDRs) y facturación causan pérdidas del 1-3% del revenue total. El bypass de tráfico internacional, la manipulación de CDRs y las suscripciones premium no autorizadas son difíciles de detectar a escala.",
+    "desc": "Sistema ML de revenue assurance que reconcilia eventos de red con facturación, detecta discrepancias anómalas, identifica patrones de fraude en tráfico internacional y suscripciones premium no autorizadas.",
+    "features": [
+      "Detección de discrepancias con ML.CLASSIFICATION",
+      "Variables: CDRs, facturación, rutas, destinos, suscripciones",
+      "Reconciliación automatizada red-facturación",
+      "Dashboard Streamlit de revenue assurance"
+    ]
+  }
+];
+const TOTAL = 20;
+
+function renderCards(list) {
+  const grid = document.getElementById('cardsGrid');
+  const count = document.getElementById('resultsCount');
+  grid.innerHTML = '';
+  count.textContent = `Mostrando ${list.length} de ${TOTAL} casos de uso`;
+  list.forEach(uc => {
+    const catClass = uc.cat;
+    grid.innerHTML += `
+      <article class="card">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge-id">${uc.id}</span>
+            <span class="badge-cat ${catClass}">${uc.catLabel}</span>
+          </div>
+          <span class="card-time">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2"><circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/></svg>
+            ${uc.time}
+          </span>
+        </div>
+        <h3 class="card-title">${uc.title}</h3>
+        <div class="pain-point">
+          <div class="pain-point-label">Problema</div>
+          <p>${uc.pain}</p>
+        </div>
+        <p class="card-desc">${uc.desc}</p>
+        <ul class="card-features">
+          ${uc.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+        <div class="card-actions">
+          <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
+          <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
+        </div>
+      </article>`;
+  });
+}
+let activeFilter = 'all';
+let searchTerm = '';
+function applyFilters() {
+  let result = USE_CASES;
+  if (activeFilter !== 'all') result = result.filter(u => u.cat === activeFilter);
+  if (searchTerm) result = result.filter(u => u.title.toLowerCase().includes(searchTerm) || u.desc.toLowerCase().includes(searchTerm) || u.pain.toLowerCase().includes(searchTerm));
+  renderCards(result);
+}
+document.getElementById('filterBtns').addEventListener('click', e => {
+  if (!e.target.matches('.filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeFilter = e.target.dataset.filter;
+  applyFilters();
+});
+document.getElementById('searchInput').addEventListener('input', e => { searchTerm = e.target.value.toLowerCase().trim(); applyFilters(); });
+renderCards(USE_CASES);
+
+const GUIAS = {
+  "UC01": {
+    "title": "Predicción de Churn con Model Registry",
+    "contexto": "Estos Cortex Code Prompts construyen un modelo de predicción de churn para clientes de telecomunicaciones que se registra en Snowflake Model Registry para despliegue en producción con scoring continuo.",
+    "foco": "Retención de clientes — predicción de portabilidad para intervención proactiva antes de la decisión de cambio de operador.",
+    "reto": "Reducir el churn mensual del 2.5% al 1.2% y el coste de retención un 40% mediante ofertas personalizadas.",
+    "objetivos": [
+      "Construir modelo de predicción de churn con ML.CLASSIFICATION",
+      "Registrar y versionar con Snowflake Model Registry (log_model)",
+      "Generar datos sintéticos de clientes telco convergentes",
+      "Desplegar modelo para scoring continuo en producción",
+      "Construir dashboard de retención y alertas"
+    ],
+    "funcionalidades": [
+      "Modelo ML: Clasificación de probabilidad de churn",
+      "Model Registry: Versionado con log_model() y métricas",
+      "Datos sintéticos: 100.000 clientes con 12 meses de historial",
+      "Dashboard Streamlit: Panel de retención y alertas"
+    ],
+    "datos": [
+      "Clientes: Plan convergente, ARPU, antigüedad, permanencia, método pago",
+      "Consumo: Voz, datos, TV, tendencia mensual, picos, caídas",
+      "Interacciones: Llamadas call center, reclamaciones, NPS, tienda",
+      "Red: Calidad experiencia, incidencias, cobertura zona"
+    ],
+    "estratificacion": [
+      "Churn inminente (>70%): Oferta premium personalizada inmediata",
+      "Riesgo alto (40-70%): Contacto proactivo con propuesta de valor",
+      "Riesgo moderado (20-40%): Comunicación de beneficios exclusivos",
+      "Sin riesgo (<20%): Engagement estándar y cross-sell"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente en Cortex Code",
+      "El modelo se entrena y registra en Model Registry",
+      "Se genera scoring continuo para toda la base de clientes",
+      "El dashboard permite monitorizar retención en tiempo real"
+    ]
+  },
+  "UC02": {
+    "title": "Optimización de Red 5G y Gestión de Capacidad",
+    "contexto": "Estos Cortex Code Prompts construyen un motor de optimización de red que predice carga y recomienda reconfiguración dinámica de recursos para redes 5G y 4G.",
+    "foco": "Network optimization — gestión inteligente de capacidad para maximizar throughput y minimizar latencia en redes 5G/4G.",
+    "reto": "Reducir congestión de red un 40% e incrementar throughput medio un 25% mediante gestión dinámica de capacidad.",
+    "objetivos": [
+      "Predecir carga por celda con ML.FORECAST",
+      "Detectar cuellos de botella en tiempo real",
+      "Recomendar reconfiguración de recursos de red",
+      "Evaluar impacto de cambios en calidad de servicio",
+      "Dashboard de Network Operations Center"
+    ],
+    "funcionalidades": [
+      "Forecast: ML.FORECAST de carga por celda y hora",
+      "Detección: Anomaly detection en KPIs de red",
+      "Datos sintéticos: 5.000 celdas × 90 días × métricas",
+      "Dashboard Streamlit: NOC con alertas y recomendaciones"
+    ],
+    "datos": [
+      "Celdas: ID, tipo (5G/4G/3G), ubicación, capacidad, sector",
+      "Tráfico: Throughput, usuarios conectados, carga %, por hora",
+      "Calidad: Latencia, packet loss, handover success, jitter",
+      "Contexto: Eventos, festivos, meteorología, obras urbanas"
+    ],
+    "estratificacion": [
+      "Congestión crítica (>90% carga): Redistribución inmediata",
+      "Alta carga (70-90%): Monitorización intensiva + previsión",
+      "Carga normal (30-70%): Operación estándar",
+      "Baja carga (<30%): Candidata a consolidación de recursos"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan datos de 5.000 celdas con 90 días de telemetría",
+      "El motor predice carga y detecta anomalías",
+      "El dashboard muestra NOC con alertas y recomendaciones"
+    ]
+  },
+  "UC03": {
+    "title": "Predicción de Tráfico de Red con Model Registry",
+    "contexto": "Estos Cortex Code Prompts construyen modelos de forecast de tráfico de red por segmento y servicio con ML.FORECAST y registro en Model Registry.",
+    "foco": "Planificación de capacidad — predicción de tráfico para aprovisionamiento óptimo y reducción de costes de infraestructura.",
+    "reto": "Reducir error de forecast de tráfico del 25% al 8% y costes de sobreaprovisionamiento un 30%.",
+    "objetivos": [
+      "Entrenar modelos de forecast por segmento con ML.FORECAST",
+      "Registrar modelo en Model Registry con log_model()",
+      "Integrar variables externas: eventos, tendencias, competencia",
+      "Evaluar accuracy por zona y tipo de servicio",
+      "Dashboard de planificación de capacidad"
+    ],
+    "funcionalidades": [
+      "Modelo ML: ML.FORECAST con series temporales + Model Registry",
+      "Datos sintéticos: 200 segmentos × 52 semanas de tráfico",
+      "Forecast: 1, 4 y 12 semanas con intervalos de confianza",
+      "Dashboard Streamlit: Forecast por segmento con alertas"
+    ],
+    "datos": [
+      "Tráfico: Gbps por segmento, hora, tipo servicio (voz/datos/video/IoT)",
+      "Infraestructura: Capacidad instalada, utilización, headroom",
+      "Variables externas: Eventos masivos, festivos, lanzamientos",
+      "Tendencias: Crecimiento por servicio, adopción 5G, IoT"
+    ],
+    "estratificacion": [
+      "MAPE <8%: Aprovisionamiento firme basado en forecast",
+      "MAPE 8-15%: Aprovisionamiento con margen del 20%",
+      "MAPE >15%: Revisar modelo, posible evento atípico"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 52 semanas de tráfico para 200 segmentos",
+      "El modelo se entrena y registra en Model Registry",
+      "El dashboard muestra forecast vs real con alertas"
+    ]
+  },
+  "UC04": {
+    "title": "Mantenimiento Predictivo de Infraestructura de Red",
+    "contexto": "Estos Cortex Code Prompts construyen un modelo predictivo de fallos para equipamiento de red de telecomunicaciones.",
+    "foco": "Mantenimiento predictivo — anticipar fallos de equipos para reducir caídas de servicio y costes de mantenimiento.",
+    "reto": "Reducir averías no planificadas un 50% y costes de mantenimiento preventivo un 35%.",
+    "objetivos": [
+      "Generar telemetría de equipos de red",
+      "Entrenar modelo predictivo de fallos",
+      "Priorizar mantenimiento por impacto en clientes",
+      "Evaluar ROI de mantenimiento predictivo vs preventivo",
+      "Dashboard de salud de infraestructura"
+    ],
+    "funcionalidades": [
+      "Predicción: ML.CLASSIFICATION de probabilidad de fallo",
+      "Datos sintéticos: 10.000 equipos × 6 meses de telemetría",
+      "Variables: temperatura, errores, throughput, antigüedad, condiciones",
+      "Dashboard Streamlit: Panel de salud de red"
+    ],
+    "datos": [
+      "Equipos: Tipo (antena/router/switch/ONT), modelo, antigüedad, ubicación",
+      "Telemetría: Temperatura, errores/hora, throughput degradado, reinicios",
+      "Incidencias: Historial de fallos, tipo, duración, impacto clientes",
+      "Ambiente: Temperatura exterior, humedad, zona (urbana/rural/costera)"
+    ],
+    "estratificacion": [
+      "Fallo inminente (>80%): Intervención en <24h",
+      "Riesgo alto (50-80%): Programar mantenimiento en <7 días",
+      "Riesgo moderado (20-50%): Incluir en próximo ciclo de mantenimiento",
+      "Sin riesgo (<20%): Monitorización estándar"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 10.000 equipos con 6 meses de telemetría",
+      "El modelo predice probabilidad de fallo",
+      "El dashboard muestra salud de infraestructura"
+    ]
+  },
+  "UC05": {
+    "title": "Segmentación Avanzada de Clientes y CLV",
+    "contexto": "Estos Cortex Code Prompts construyen un motor de micro-segmentación con CLV para operadores de telecomunicaciones convergentes.",
+    "foco": "Micro-segmentación — segmentos accionables para retención, upsell y cross-sell en servicios convergentes.",
+    "reto": "Mejorar conversión de ofertas del 4% al 15% mediante micro-segmentación y CLV predictivo.",
+    "objetivos": [
+      "Generar perfiles multidimensionales de clientes telco",
+      "Crear micro-segmentos con ML.CLASSIFICATION",
+      "Calcular CLV predictivo con ML.FORECAST",
+      "Diseñar estrategias por segmento × servicio",
+      "Dashboard de segmentos y CLV"
+    ],
+    "funcionalidades": [
+      "Segmentación: ML.CLASSIFICATION multivariable",
+      "CLV predictivo: ML.FORECAST por cliente",
+      "Datos sintéticos: 50.000 clientes convergentes con 12 meses",
+      "Dashboard Streamlit: Panel de segmentos con acciones"
+    ],
+    "datos": [
+      "Perfil: Edad, ubicación, plan convergente, antigüedad, permanencia",
+      "Consumo: Voz min/mes, datos GB/mes, TV horas, contenido premium",
+      "Digital: App usage, web, tienda online, autoservicio vs call center",
+      "Monetización: ARPU, upgrades, downgrades, respuesta a ofertas"
+    ],
+    "estratificacion": [
+      "VIP (CLV alto + engagement alto): Retención premium + beneficios exclusivos",
+      "Growth (CLV alto + engagement medio): Upsell convergente agresivo",
+      "At Risk (CLV medio + engagement bajo): Retención con oferta personalizada",
+      "Low Value (CLV bajo + engagement bajo): Optimizar coste de servir"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 50.000 perfiles con 12 meses de historial",
+      "El modelo crea segmentos y calcula CLV",
+      "El dashboard muestra segmentos con acciones"
+    ]
+  },
+  "UC06": {
+    "title": "Optimización de Pricing y Bundles Convergentes",
+    "contexto": "Estos Cortex Code Prompts construyen un motor de optimización de pricing para bundles convergentes (móvil+fibra+TV) de telecomunicaciones.",
+    "foco": "Revenue optimization — pricing dinámico y bundles para maximizar ARPU sin incrementar churn.",
+    "reto": "Aumentar ARPU un 12% y reducir el churn por precio del 2% al 0.8%.",
+    "objetivos": [
+      "Generar datos de clientes con willingness-to-pay",
+      "Modelar elasticidad de precio por segmento",
+      "Simular bundles convergentes y add-ons",
+      "Calcular precio óptimo por segmento",
+      "Dashboard de pricing simulator"
+    ],
+    "funcionalidades": [
+      "Elasticidad: ML.CLASSIFICATION por segmento",
+      "Simulación: escenarios de bundles convergentes",
+      "Datos sintéticos: 80.000 clientes con historial de pricing",
+      "Dashboard Streamlit: Pricing simulator con P&L"
+    ],
+    "datos": [
+      "Clientes: Plan actual, ARPU, historial cambios, permanencia, CLV",
+      "Consumo: Uso por servicio (voz, datos, TV, fútbol, series)",
+      "Competencia: Precios Movistar, Vodafone, MásOrange, Digi, Avatel",
+      "Mercado: Elasticidad por zona, sensibilidad a promociones"
+    ],
+    "estratificacion": [
+      "Insensible al precio (CLV alto): Upsell a premium con extras",
+      "Sensible moderado: Mantener con bundle atractivo (fibra+móvil+TV)",
+      "Muy sensible: Plan económico convergente para retener",
+      "Price-driven churn: Oferta temporal match de competencia"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 80.000 perfiles con elasticidad simulada",
+      "El modelo calcula precio óptimo por segmento",
+      "El dashboard simula P&L por escenario"
+    ]
+  },
+  "UC07": {
+    "title": "Optimización de Field Service y Técnicos",
+    "contexto": "Estos Cortex Code Prompts construyen un motor de optimización de field service para gestión de intervenciones técnicas de telecomunicaciones.",
+    "foco": "Eficiencia operativa — optimización de asignación de técnicos y rutas para reducir costes y mejorar First Call Resolution.",
+    "reto": "Aumentar First Call Resolution del 75% al 92% y reducir costes de field service un 25%.",
+    "objetivos": [
+      "Generar datos de intervenciones técnicas",
+      "Predecir duración y complejidad de intervención",
+      "Optimizar asignación técnico por competencia y zona",
+      "Reducir revisitas por diagnóstico incorrecto",
+      "Dashboard de field service"
+    ],
+    "funcionalidades": [
+      "Predicción: ML.CLASSIFICATION de complejidad de intervención",
+      "Datos sintéticos: 100.000 intervenciones con 500 técnicos",
+      "Variables: tipo avería, equipo, zona, técnico, historial",
+      "Dashboard Streamlit: Panel de field service"
+    ],
+    "datos": [
+      "Intervenciones: Tipo (instalación/avería/migración), equipo, zona",
+      "Técnicos: ID, competencias, certificaciones, zona base, vehículo",
+      "Historial: Duración real, resultado, revisitas, satisfacción cliente",
+      "Logística: Distancia, tiempo desplazamiento, material necesario"
+    ],
+    "estratificacion": [
+      "Simple (>90% éxito previsto): Técnico junior, sin material especial",
+      "Estándar (70-90%): Técnico con certificación del equipo",
+      "Complejo (50-70%): Técnico senior + material específico",
+      "Crítico (<50%): Escalado a equipo especializado"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 100.000 intervenciones con resultados",
+      "El motor optimiza asignación y rutas",
+      "El dashboard muestra KPIs de field service"
+    ]
+  },
+  "UC08": {
+    "title": "Feature Store de Customer 360 Telco",
+    "contexto": "Estos Cortex Code Prompts construyen un Feature Store en Snowflake que consolida el perfil 360° de cada cliente telco desde todos los sistemas operacionales.",
+    "foco": "Visión unificada del cliente — Feature Store centralizado para personalización, retención y monetización en tiempo real.",
+    "reto": "Unificar datos del 95% de clientes en perfil 360° para decisiones en tiempo real en todos los canales.",
+    "objetivos": [
+      "Crear entidades y FeatureViews con Snowflake Feature Store",
+      "Generar datos de múltiples sistemas operacionales",
+      "Implementar pipeline de ingesta y merge",
+      "Servir features en tiempo real para todos los canales",
+      "Validar consistencia y frescura"
+    ],
+    "funcionalidades": [
+      "Feature Store: Entity (customer_id) + FeatureViews (consumption, billing, network_experience, digital, lifecycle)",
+      "Pipeline: Ingesta de BSS, CRM, red, app, tienda, call center",
+      "Datos sintéticos: 50.000 clientes con datos multi-sistema",
+      "Dashboard Streamlit: Panel de customer 360"
+    ],
+    "datos": [
+      "Consumo: Voz, datos, TV, IoT, tendencias, picos",
+      "Facturación: ARPU, pagos, reclamaciones, descuentos, permanencia",
+      "Experiencia red: Cobertura, throughput, incidencias, calidad",
+      "Digital: App usage, web, autoservicio, chat, tienda online"
+    ],
+    "estratificacion": [
+      "Perfil completo (>90% features): Personalización avanzada en todos los canales",
+      "Perfil parcial (60-90%): Personalización básica + enriquecimiento progresivo",
+      "Perfil mínimo (<60%): Onboarding de datos para completar",
+      "Perfil VIP (CLV alto): Monitorización prioritaria 24/7"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se crean entidades y FeatureViews en Feature Store",
+      "Se generan datos de 50.000 clientes multi-sistema",
+      "El dashboard muestra perfil 360 del cliente"
+    ]
+  },
+  "UC09": {
+    "title": "Motor de Ofertas Personalizadas Next-Best-Action",
+    "contexto": "Estos Cortex Code Prompts construyen un motor de Next-Best-Action que calcula la oferta óptima para cada cliente telco en cada momento.",
+    "foco": "Comercialización inteligente — la oferta correcta, al cliente correcto, en el momento y canal correctos.",
+    "reto": "Aumentar conversión de ofertas del 4% al 18% y reducir erosión de márgenes por descuentos genéricos un 40%.",
+    "objetivos": [
+      "Generar historial de ofertas con respuesta",
+      "Entrenar modelo de propensión multi-oferta",
+      "Optimizar oferta: máximo impacto × mínimo coste",
+      "Personalizar canal y momento de comunicación",
+      "Dashboard de campaign management"
+    ],
+    "funcionalidades": [
+      "Next-Best-Action: ML.CLASSIFICATION multi-objetivo",
+      "Datos sintéticos: 50.000 clientes × 12 meses × ofertas",
+      "Variables: perfil, historial, propensión, canal, momento, competencia",
+      "Dashboard Streamlit: Panel de gestión de campañas"
+    ],
+    "datos": [
+      "Clientes: Perfil del Feature Store, segmento, CLV",
+      "Ofertas: Catálogo (upgrade, add-on, descuento, bundle, win-back)",
+      "Historial: Ofertas presentadas, canal, respuesta, conversión",
+      "Competencia: Ofertas activas de otros operadores"
+    ],
+    "estratificacion": [
+      "Propensión alta (>60%) + CLV alto: Oferta premium en canal preferido",
+      "Propensión alta + CLV medio: Oferta estándar con urgencia",
+      "Propensión media (30-60%): Test A/B de oferta y canal",
+      "Propensión baja (<30%): No contactar, esperar trigger event"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 12 meses de historial de ofertas",
+      "El motor calcula Next-Best-Action por cliente",
+      "El dashboard muestra campaigns con ROI"
+    ]
+  },
+  "UC10": {
+    "title": "Detección de Anomalías en Calidad de Red",
+    "contexto": "Estos Cortex Code Prompts construyen un sistema de detección de anomalías en KPIs de calidad de red para anticipar degradaciones.",
+    "foco": "Calidad de servicio — detección temprana de degradaciones para reducir MTTR y mejorar experiencia de cliente.",
+    "reto": "Reducir MTTR de 4h a 45min y detectar el 90% de degradaciones antes de que generen reclamaciones de clientes.",
+    "objetivos": [
+      "Generar series temporales de KPIs de red",
+      "Detectar anomalías con modelos ML",
+      "Correlacionar anomalías con impacto en cliente",
+      "Automatizar escalado y diagnóstico",
+      "Dashboard de NOC inteligente"
+    ],
+    "funcionalidades": [
+      "Detección: ML sobre series temporales de KPIs",
+      "Datos sintéticos: 2.000 celdas × 90 días × KPIs por hora",
+      "Correlación: Anomalía de red ↔ experiencia de cliente",
+      "Dashboard Streamlit: NOC con alertas y diagnóstico"
+    ],
+    "datos": [
+      "KPIs de red: Throughput, latencia, packet loss, jitter, handover success",
+      "Carga: Usuarios conectados, tráfico por tipo, utilización %",
+      "Incidencias: Alarmas, tickets generados, impacto clientes",
+      "Experiencia: Velocidad percibida, buffering, llamadas caídas"
+    ],
+    "estratificacion": [
+      "Anomalía crítica (multi-KPI degradado): Escalado P1 inmediato",
+      "Anomalía significativa (1 KPI fuera de rango): Investigación <30min",
+      "Anomalía leve (tendencia de degradación): Monitorización intensiva",
+      "Normal: Operación estándar"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 90 días de KPIs para 2.000 celdas",
+      "El modelo detecta anomalías y correlaciona con experiencia",
+      "El dashboard muestra NOC con alertas en tiempo real"
+    ]
+  },
+  "UC11": {
+    "title": "NLP sobre Incidencias y Tickets de Soporte",
+    "contexto": "Estos Cortex Code Prompts construyen un pipeline NLP para clasificar tickets de soporte, extraer causa raíz y sugerir resolución automática.",
+    "foco": "Eficiencia de soporte — clasificación automática de tickets para reducir tiempo de resolución y mejorar CSAT.",
+    "reto": "Reducir tiempo de clasificación de 5min a 3seg y mejorar First Contact Resolution del 55% al 75%.",
+    "objetivos": [
+      "Generar tickets de soporte realistas",
+      "Clasificar automáticamente por categoría y prioridad",
+      "Extraer causa raíz con NLP",
+      "Sugerir resolución basada en casos similares",
+      "Dashboard de gestión de incidencias"
+    ],
+    "funcionalidades": [
+      "Clasificación: CORTEX.COMPLETE + ML.CLASSIFICATION",
+      "Datos sintéticos: 50.000 tickets con resolución",
+      "Variables: texto, categoría, red, equipo, historial cliente",
+      "Dashboard Streamlit: Panel de incidencias"
+    ],
+    "datos": [
+      "Tickets: Texto de la incidencia, canal de entrada, fecha, cliente",
+      "Categoría: Facturación, Cobertura, Velocidad, TV, Equipo, Portabilidad",
+      "Resolución: Acción tomada, tiempo resolución, satisfacción, revisita",
+      "Contexto: Estado de red en zona, incidencias abiertas, mantenimiento"
+    ],
+    "estratificacion": [
+      "P1 (servicio caído + múltiples clientes): Resolución <1h",
+      "P2 (servicio degradado): Resolución <4h",
+      "P3 (consulta/configuración): Resolución <24h",
+      "P4 (información/sugerencia): Resolución <72h"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 50.000 tickets con resoluciones",
+      "El pipeline clasifica y sugiere resolución",
+      "El dashboard muestra cola de tickets priorizada"
+    ]
+  },
+  "UC12": {
+    "title": "Chatbot RAG de Atención al Cliente Telco",
+    "contexto": "Estos Cortex Code Prompts construyen un asistente conversacional RAG para atención al cliente de telecomunicaciones con base de conocimiento integral.",
+    "foco": "Atención al cliente — chatbot que resuelve consultas sobre tarifas, facturación, cobertura y configuración sin intervención humana.",
+    "reto": "Resolver el 70% de consultas automáticamente, reduciendo coste de atención de 5€ a 0.50€ por interacción.",
+    "objetivos": [
+      "Generar base de conocimiento de soporte telco",
+      "Crear chunks para indexación semántica",
+      "Crear Cortex Search Service",
+      "Implementar pipeline RAG personalizado",
+      "Dashboard de chat con métricas"
+    ],
+    "funcionalidades": [
+      "RAG: Cortex Search + CORTEX.COMPLETE",
+      "Datos sintéticos: 300 documentos (tarifas, FAQ, guías, cobertura)",
+      "Personalización con perfil del Feature Store",
+      "Dashboard Streamlit: Chat con historial y escalado"
+    ],
+    "datos": [
+      "Tarifas: 50 planes con precios, condiciones, promociones vigentes",
+      "FAQ: 100 preguntas frecuentes con respuestas detalladas",
+      "Guías técnicas: 60 guías de configuración (router, TV, móvil, IoT)",
+      "Cobertura: 50 documentos de cobertura por zona y tecnología"
+    ],
+    "estratificacion": [
+      "Confianza alta (>0.85): Respuesta directa automática",
+      "Confianza media (0.6-0.85): Responder + ofrecer agente humano",
+      "Confianza baja (<0.6): Escalar a agente inmediatamente"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se genera base de conocimiento con 300 documentos",
+      "Se crea Cortex Search Service para soporte telco",
+      "El dashboard permite chatear y ver resolución"
+    ]
+  },
+  "UC13": {
+    "title": "Predicción de Demanda de Servicios y Revenue Forecast",
+    "contexto": "Estos Cortex Code Prompts construyen modelos de forecast de revenue por servicio para planificación financiera de operadores telco.",
+    "foco": "Planificación financiera — predicción de revenue para presupuestos, inversión en red y estrategia comercial.",
+    "reto": "Reducir error de forecast de revenue del 18% al 5% y mejorar planificación de inversión en red.",
+    "objetivos": [
+      "Generar datos de revenue por servicio y segmento",
+      "Entrenar modelos de forecast multi-servicio",
+      "Integrar acciones comerciales como variables exógenas",
+      "Generar escenarios optimista/base/pesimista",
+      "Dashboard de revenue planning"
+    ],
+    "funcionalidades": [
+      "Forecast: ML.FORECAST multi-series por servicio",
+      "Datos sintéticos: 10 servicios × 52 semanas × 20 zonas",
+      "Variables: base clientes, ARPU, churn, acciones comerciales",
+      "Dashboard Streamlit: Panel de revenue planning"
+    ],
+    "datos": [
+      "Revenue: Por servicio (móvil, fibra, TV, convergente, empresa, IoT)",
+      "Clientes: Base por servicio, altas, bajas, migraciones",
+      "Comercial: Campañas planificadas, ofertas, eventos de mercado",
+      "Mercado: Tendencias, adopción 5G, regulación, competencia"
+    ],
+    "estratificacion": [
+      "MAPE <5%: Budget firme por servicio",
+      "MAPE 5-10%: Budget con contingencia del 10%",
+      "MAPE >10%: Revisar modelo, factores no capturados"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 52 semanas de revenue multi-servicio",
+      "El modelo genera forecast con bandas de confianza",
+      "El dashboard muestra planning con escenarios"
+    ]
+  },
+  "UC14": {
+    "title": "Feature Store de Performance de Red",
+    "contexto": "Estos Cortex Code Prompts construyen un Feature Store en Snowflake con métricas de rendimiento de cada celda y nodo de red para operación y planificación.",
+    "foco": "Network intelligence — Feature Store con KPIs de rendimiento de cada nodo en tiempo real para decisiones operativas y de inversión.",
+    "reto": "Reducir latencia de métricas de red de 24h a 15min para decisiones operativas intraday.",
+    "objetivos": [
+      "Crear entidades y FeatureViews con Snowflake Feature Store",
+      "Generar datos de rendimiento multi-fuente de red",
+      "Implementar pipeline de actualización",
+      "Servir features para decisiones operativas",
+      "Dashboard de network intelligence"
+    ],
+    "funcionalidades": [
+      "Feature Store: Entity (cell_id) + FeatureViews (throughput, latency, availability, load, benchmark)",
+      "Pipeline: Actualización cada 15 min desde OSS, NMS, probes",
+      "Datos sintéticos: 5.000 celdas × 90 días × métricas multi-fuente",
+      "Dashboard Streamlit: Panel de network intelligence"
+    ],
+    "datos": [
+      "Throughput: DL/UL por celda, hora, tecnología (5G/4G/3G)",
+      "Latencia: RTT, jitter, por servicio (voz/datos/video)",
+      "Disponibilidad: Uptime %, ventanas de mantenimiento, caídas",
+      "Carga: Usuarios, tráfico, utilización, headroom"
+    ],
+    "estratificacion": [
+      "Celda crítica (disponibilidad <99.5% o carga >85%): Intervención inmediata",
+      "Celda degradada (KPI fuera de SLA): Planificar intervención en <48h",
+      "Celda normal: Operación estándar",
+      "Celda infrautilizada (<20% carga): Candidata a consolidación"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se crean entidades y FeatureViews en Feature Store",
+      "Se generan 90 días de datos para 5.000 celdas",
+      "El dashboard muestra KPIs de red en tiempo real"
+    ]
+  },
+  "UC15": {
+    "title": "Detección de Fraude en SIM y Portabilidades",
+    "contexto": "Estos Cortex Code Prompts construyen un sistema ML de detección de fraude en operaciones de SIM swap, portabilidad y activación de líneas.",
+    "foco": "Prevención de fraude — detección de SIM swap fraudulento y portabilidades con identidad suplantada.",
+    "reto": "Detectar el 90% del fraude de SIM/portabilidad con <3% de falsos positivos, protegiendo 10M€/año.",
+    "objetivos": [
+      "Generar datos de operaciones con patrones de fraude",
+      "Extraer features de comportamiento sospechoso",
+      "Entrenar modelo de detección de fraude",
+      "Implementar scoring en tiempo real",
+      "Dashboard de prevención de fraude"
+    ],
+    "funcionalidades": [
+      "Modelo ML: Detección de fraude con ML.CLASSIFICATION",
+      "Datos sintéticos: 200.000 operaciones con 3% fraudulentas",
+      "Variables: velocidad, geolocalización, dispositivo, historial, patrón",
+      "Dashboard Streamlit: Panel de fraude con alertas"
+    ],
+    "datos": [
+      "Operaciones: SIM swap, portabilidad, alta nueva, cambio titular",
+      "Solicitante: Canal, ubicación, documento, historial con operador",
+      "Dispositivo: IMEI, modelo, antigüedad, historial de cambios",
+      "Post-activación: Patrón de uso inmediato, destinos, consumo"
+    ],
+    "estratificacion": [
+      "Fraude confirmado (>90%): Bloqueo automático + investigación",
+      "Sospechoso (60-90%): Verificación adicional obligatoria",
+      "Dudoso (30-60%): Monitorización intensiva post-activación",
+      "Legítimo (<30%): Procesamiento normal"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 200.000 operaciones con patrones de fraude",
+      "El modelo puntúa cada operación en tiempo real",
+      "El dashboard muestra alertas de fraude"
+    ]
+  },
+  "UC16": {
+    "title": "Ciberseguridad y Detección de Amenazas en Red",
+    "contexto": "Estos Cortex Code Prompts construyen un pipeline ML de detección de amenazas de ciberseguridad en redes de telecomunicaciones.",
+    "foco": "Ciberseguridad — detección de ataques DDoS, botnets, phishing y exfiltración de datos en la red del operador.",
+    "reto": "Detectar el 85% de amenazas en <5 minutos y reducir incidentes de seguridad con impacto en cliente un 60%.",
+    "objetivos": [
+      "Generar datos de flujos de red con amenazas",
+      "Entrenar modelo de detección de amenazas",
+      "Clasificar tipo y severidad de ataque",
+      "Automatizar respuesta inicial",
+      "Dashboard de Security Operations Center"
+    ],
+    "funcionalidades": [
+      "Detección: ML.CLASSIFICATION sobre flujos de red",
+      "Datos sintéticos: 1.000.000 flujos con 5% amenazas",
+      "Variables: tráfico, DNS, autenticación, dispositivo, comportamiento",
+      "Dashboard Streamlit: SOC con alertas y respuesta"
+    ],
+    "datos": [
+      "Flujos: IP origen/destino, puerto, protocolo, bytes, paquetes, duración",
+      "DNS: Consultas, dominios, patrones DGA (Domain Generation Algorithm)",
+      "Autenticación: Intentos, fallos, ubicación, dispositivo, horario",
+      "Dispositivos: Tipo, firmware, comportamiento baseline, anomalías"
+    ],
+    "estratificacion": [
+      "Amenaza crítica (DDoS activo, exfiltración): Respuesta automática inmediata",
+      "Amenaza alta (botnet detectada, lateral movement): Aislamiento + investigación",
+      "Amenaza media (phishing, scanning): Alertar equipo + bloquear",
+      "Amenaza baja (comportamiento anómalo menor): Registro + monitorización"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 1.000.000 flujos con amenazas simuladas",
+      "El modelo detecta y clasifica amenazas",
+      "El dashboard muestra SOC con respuesta automatizada"
+    ]
+  },
+  "UC17": {
+    "title": "Análisis de Sentimiento y Reputación de Marca",
+    "contexto": "Estos Cortex Code Prompts construyen un pipeline NLP de monitorización de sentimiento sobre la marca del operador en redes sociales y foros.",
+    "foco": "Reputation management — monitorización en tiempo real de percepción pública para respuesta ágil ante crisis.",
+    "reto": "Detectar crisis de reputación en <1h y reducir impacto negativo un 50% con respuesta rápida y coordinada.",
+    "objetivos": [
+      "Generar datos de social media sobre el operador",
+      "Clasificar sentimiento y urgencia con Cortex AI",
+      "Detectar potencial de viralidad negativa",
+      "Generar alertas y recomendaciones de respuesta",
+      "Dashboard de reputation management"
+    ],
+    "funcionalidades": [
+      "NLP: CORTEX.SENTIMENT + CORTEX.COMPLETE",
+      "Datos sintéticos: 80.000 posts sobre el operador en 6 meses",
+      "Detección de crisis: velocidad + sentimiento + influencers",
+      "Dashboard Streamlit: Panel de reputación con alertas"
+    ],
+    "datos": [
+      "Posts: Texto, plataforma (Twitter, foros Bandaancha, Google Reviews)",
+      "Sentimiento: Score, temas (cobertura, precio, atención, facturación)",
+      "Influencers: Alcance, credibilidad, historial de impacto",
+      "Prensa: Artículos, cabecera, tono, alcance estimado"
+    ],
+    "estratificacion": [
+      "Crisis activa (sentimiento <-0.7 + viral): War room inmediato",
+      "Riesgo alto (sentimiento <-0.3 + creciendo): Alerta comunicación",
+      "Neutro/mixto: Monitorización estándar",
+      "Positivo (>0.3): Amplificar con marketing"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 80.000 posts simulados de 6 meses",
+      "Cortex AI clasifica y detecta crisis",
+      "El dashboard muestra alertas y recomendaciones"
+    ]
+  },
+  "UC18": {
+    "title": "Cumplimiento GDPR y Gestión de Consentimientos",
+    "contexto": "Estos Cortex Code Prompts construyen un sistema de gestión de consentimientos y trazabilidad de acceso a datos personales para cumplimiento GDPR.",
+    "foco": "Compliance — trazabilidad total de acceso a datos personales y gestión de consentimientos para cumplir GDPR y ePrivacy.",
+    "reto": "Alcanzar el 100% de trazabilidad de accesos a datos personales y reducir riesgo de sanción GDPR un 90%.",
+    "objetivos": [
+      "Generar datos de consentimientos y accesos",
+      "Implementar motor de reglas de consentimiento",
+      "Detectar accesos sin consentimiento vigente",
+      "Generar informes para DPO y regulador",
+      "Dashboard de compliance GDPR"
+    ],
+    "funcionalidades": [
+      "Monitorización: Reglas + ML para detección de anomalías de acceso",
+      "Datos sintéticos: 50.000 clientes × consentimientos × 100.000 accesos",
+      "Variables: usuario, dato, consentimiento, propósito, fecha, base legal",
+      "Dashboard Streamlit: Panel de compliance GDPR"
+    ],
+    "datos": [
+      "Consentimientos: Cliente, tipo dato, propósito, fecha, vigencia, canal",
+      "Accesos: Usuario sistema, dato accedido, timestamp, sistema origen",
+      "Clientes: Datos personales almacenados, categoría, sensibilidad",
+      "Regulación: Bases legales, periodos retención, derechos ejercidos"
+    ],
+    "estratificacion": [
+      "Acceso sin consentimiento: Alerta inmediata + bloqueo",
+      "Consentimiento próximo a vencer (<30 días): Solicitar renovación",
+      "Acceso anómalo (fuera de patrón): Investigar + registrar",
+      "Conforme: Registro estándar de auditoría"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan consentimientos y accesos simulados",
+      "El motor verifica cumplimiento en tiempo real",
+      "El dashboard muestra estado de compliance"
+    ]
+  },
+  "UC19": {
+    "title": "Análisis de Experiencia de Cliente (CX) Omnicanal",
+    "contexto": "Estos Cortex Code Prompts construyen un motor de análisis de experiencia de cliente que integra interacciones de todos los canales telco.",
+    "foco": "Customer Experience — visión end-to-end del journey del cliente para detectar fricción y predecir insatisfacción latente.",
+    "reto": "Detectar el 70% de insatisfacción latente antes de portabilidad y mejorar NPS de -5 a +20.",
+    "objetivos": [
+      "Generar datos de interacciones multi-canal",
+      "Reconstruir customer journeys completos",
+      "Detectar journeys problemáticos con ML",
+      "Predecir insatisfacción sin reclamación explícita",
+      "Dashboard de CX omnicanal"
+    ],
+    "funcionalidades": [
+      "Análisis de journey: ML.CLASSIFICATION sobre secuencias",
+      "Datos sintéticos: 30.000 clientes × 6 meses × multi-canal",
+      "Variables: interacciones, resolución, tiempo, sentimiento, canal",
+      "Dashboard Streamlit: Panel de experiencia de cliente"
+    ],
+    "datos": [
+      "Web/App: Sesiones, páginas, búsquedas, autoservicio, abandonos",
+      "Call center: Llamadas, motivo, duración, resolución, transferencias",
+      "Tienda: Visitas, motivo, tiempo espera, resultado, satisfacción",
+      "Red: Incidencias, calidad experiencia, cobertura en domicilio"
+    ],
+    "estratificacion": [
+      "Journey tóxico (>3 interacciones sin resolver): Intervención de retención",
+      "Journey friccional (resolución lenta o multi-canal): Seguimiento proactivo",
+      "Journey neutro: Monitorización estándar",
+      "Journey positivo: Identificar como promotor y programa referral"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 6 meses de interacciones multi-canal",
+      "El modelo detecta journeys problemáticos",
+      "El dashboard muestra CX con alertas de insatisfacción"
+    ]
+  },
+  "UC20": {
+    "title": "Detección de Fraude en Revenue Assurance",
+    "contexto": "Estos Cortex Code Prompts construyen un sistema ML de revenue assurance que reconcilia eventos de red con facturación y detecta discrepancias.",
+    "foco": "Revenue assurance — protección de ingresos mediante reconciliación automática y detección de fraude en tráfico.",
+    "reto": "Recuperar el 2% del revenue total perdido por discrepancias y reducir fraude en tráfico internacional un 80%.",
+    "objetivos": [
+      "Generar CDRs y datos de facturación",
+      "Reconciliar eventos de red con facturación",
+      "Detectar discrepancias anómalas con ML",
+      "Identificar fraude en tráfico internacional",
+      "Dashboard de revenue assurance"
+    ],
+    "funcionalidades": [
+      "Detección: ML.CLASSIFICATION de anomalías en reconciliación",
+      "Datos sintéticos: 5.000.000 CDRs con 1% discrepancias",
+      "Variables: CDR, facturación, ruta, destino, duración, coste",
+      "Dashboard Streamlit: Panel de revenue assurance"
+    ],
+    "datos": [
+      "CDRs: Origen, destino, duración, timestamp, celda, tipo (voz/datos/SMS)",
+      "Facturación: Eventos facturados, importe, descuentos, promociones",
+      "Rutas: Tráfico internacional, interconexión, roaming, terminación",
+      "Suscripciones: Premium activas, autorizaciones, reclamaciones"
+    ],
+    "estratificacion": [
+      "Fraude confirmado (bypass/manipulación): Bloqueo inmediato + investigación",
+      "Discrepancia significativa (>5% por ruta): Auditoría en <24h",
+      "Discrepancia menor (1-5%): Investigación estándar",
+      "Sin discrepancia: Registro de auditoría"
+    ],
+    "como_usar": [
+      "Ejecutar prompts secuencialmente",
+      "Se generan 5.000.000 CDRs con discrepancias simuladas",
+      "El modelo detecta anomalías y fraude",
+      "El dashboard muestra revenue assurance con alertas"
+    ]
+  }
+};
+
+const PROMPTS = {
+  UC01: {"title": "Predicción de Churn con Model Registry", "intro": "Abre Cortex Code en Snowsight y ejecuta estos prompts secuencialmente. Construirás un modelo de predicción de churn para clientes telco y lo registrarás en Snowflake Model Registry.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos y warehouse.", "prompt": "Crea una base de datos llamada CHURN_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL con auto-suspend 60 segundos."}, {"title": "Generar base de clientes", "desc": "100.000 clientes convergentes.", "prompt": "Genera tabla 'clientes_telco' con 100.000 filas: cliente_id (CLI000001..CLI100000), nombre, edad (18-80), provincia, plan_convergente (Básico_Fibra_Movil 30%, Estándar_Fibra_Movil_TV 35%, Premium_Todo 20%, Solo_Movil 15%), arpu_mensual (15-120€), fecha_alta, meses_permanencia, metodo_pago, num_lineas_movil (1-5), velocidad_fibra_mbps (100/300/600/1000)."}, {"title": "Generar historial de consumo", "desc": "12 meses de actividad.", "prompt": "Genera tabla 'consumo_mensual' con 100.000 × 12: cliente_id, mes, minutos_voz, gb_datos_movil, gb_fibra, horas_tv, llamadas_call_center (0-5, media 0.3), reclamaciones (0-2), nps_ultimo (1-10, NULL 70%). Clientes con churn_real=TRUE (3%): tendencia decreciente en consumo y NPS bajando en últimos 3 meses."}, {"title": "Generar datos de competencia", "desc": "Ofertas visibles.", "prompt": "Genera tabla 'ofertas_competencia' con 50 filas: competidor (Movistar, Vodafone, MásOrange, Digi, Avatel, Pepephone, Lowi), plan, precio, velocidad_fibra, datos_movil, tv_incluida, promocion. Para cada cliente, calcula gap_precio = arpu_actual - mejor_oferta_equivalente."}, {"title": "Feature engineering", "desc": "Variables de churn.", "prompt": "Crea tabla 'features_churn' con: tendencia_consumo_3m (ratio mes_actual/mes_3_anterior), dias_desde_ultima_reclamacion, nps_tendencia, gap_precio_competencia, meses_hasta_fin_permanencia, llamadas_call_center_3m, cambio_plan_reciente. Target: churn_30d (TRUE si portó en siguientes 30 días)."}, {"title": "Entrenar modelo", "desc": "ML.CLASSIFICATION de churn.", "prompt": "Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION 'modelo_churn_telco_v1' con target churn_30d y evaluate TRUE."}, {"title": "Evaluar rendimiento", "desc": "Métricas y feature importance.", "prompt": "Ejecuta SHOW_EVALUATION_METRICS, SHOW_CONFUSION_MATRIX y SHOW_FEATURE_IMPORTANCE. Interpreta qué variables más influyen en el churn. Calcula recall (queremos detectar máximo de churners)."}, {"title": "Registrar en Model Registry", "desc": "Versionar con log_model().", "prompt": "Usando Python: importa snowflake.ml.registry, crea Registry, usa registry.log_model() para registrar con model_name='churn_prediction_telco', version_name='v1', metrics={'recall': <valor>, 'f1_weighted': <valor>, 'auc': <valor>}, comment='Predicción de churn telco convergente v1'. Muestra modelos registrados."}, {"title": "Scoring de base", "desc": "Clasificar toda la base.", "prompt": "Recupera modelo con registry.get_model('churn_prediction_telco').version('v1'). Genera scoring para los 100.000 clientes. Clasifica: Inminente (>70%), Alto (40-70%), Moderado (20-40%), Sin riesgo (<20%). Calcula revenue en riesgo por segmento."}, {"title": "Dashboard retención", "desc": "Panel de churn.", "prompt": "Crea dashboard Streamlit: KPIs (churn rate, clientes en riesgo, revenue en riesgo, retención exitosa), distribución de riesgo, top clientes por revenue en riesgo, acciones por segmento, filtros por plan y provincia."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS CHURN_TELCO_DB comentado."}]},
+  UC02: {"title": "Optimización de Red 5G y Gestión de Capacidad", "intro": "Prompts para construir un motor de optimización de red que predice carga y recomienda reconfiguración dinámica para redes 5G/4G.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para red.", "prompt": "Crea base de datos RED_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar topología de red", "desc": "5.000 celdas con metadata.", "prompt": "Genera tabla 'celdas_red' con 5.000 filas: celda_id, tipo (5G_SA 20%, 5G_NSA 25%, 4G 40%, 3G 15%), ubicación_lat, ubicación_lon, zona (urbana 60%, suburbana 25%, rural 15%), capacidad_max_gbps, sector (1-3), proveedor_equipo (Ericsson 40%, Nokia 30%, Huawei 20%, ZTE 10%), fecha_instalacion."}, {"title": "Generar telemetría de red", "desc": "90 días × 24 horas.", "prompt": "Genera tabla 'telemetria_celdas' con 5.000 × 90 × 24: celda_id, timestamp_hora, usuarios_conectados, throughput_dl_mbps, throughput_ul_mbps, latencia_ms, packet_loss_pct, carga_pct. Patrón: picos 8-10h y 19-22h, valle 2-6h. 5G con mejor throughput pero más variabilidad."}, {"title": "Generar variables contextuales", "desc": "Eventos y meteo.", "prompt": "Genera tabla 'contexto_red' con 90 días: fecha, hay_evento_deportivo, hay_concierto_zona, temperatura_max, lluvia_mm, es_festivo, obras_urbanas_zona."}, {"title": "Forecast de carga", "desc": "ML.FORECAST por celda.", "prompt": "Entrena SNOWFLAKE.ML.FORECAST 'predictor_carga_red' con SERIES_COLNAME='celda_id', TIMESTAMP_COLNAME='timestamp_hora', TARGET_COLNAME='carga_pct'. Genera predicciones 168h (7 días). Calcula MAPE por tipo de celda."}, {"title": "Detección de cuellos de botella", "desc": "Celdas congestionadas.", "prompt": "Identifica celdas con carga prevista >85% en próximas 168h. Para cada una: horas de congestión previstas, usuarios afectados, throughput degradado estimado. Recomienda: redistribución a celdas vecinas o activación de carriers adicionales."}, {"title": "Optimización de recursos", "desc": "Reconfiguración dinámica.", "prompt": "Simula reconfiguración: para celdas congestionadas, redistribuir carga a vecinas con headroom. Calcula: throughput ganado, latencia reducida, inversión evitada vs nuevo equipamiento. Genera plan de acción priorizado."}, {"title": "Dashboard NOC", "desc": "Network Operations Center.", "prompt": "Crea dashboard Streamlit: KPIs (celdas >85% carga, throughput medio, latencia P95, disponibilidad %), mapa de calor de carga por zona, forecast de carga, alertas de congestión, plan de reconfiguración, filtros por tipo celda y zona."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS RED_TELCO_DB comentado."}]},
+  UC03: {"title": "Predicción de Tráfico de Red con Model Registry", "intro": "Prompts para construir modelos de forecast de tráfico por segmento y servicio con ML.FORECAST y registro en Model Registry.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para forecast.", "prompt": "Crea base de datos TRAFICO_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar historial de tráfico", "desc": "200 segmentos × 52 semanas.", "prompt": "Genera tabla 'trafico_historico' con 200 segmentos × 52 semanas: segmento_id (zona_tecnologia), zona, tecnologia (5G/4G/3G/Fibra), semana (timestamp), trafico_gbps_medio, trafico_gbps_pico, tipo_servicio_dominante (Video 45%, Web 25%, Gaming 10%, IoT 5%, Voz 5%, Otros 10%)."}, {"title": "Generar variables exógenas", "desc": "Eventos y tendencias.", "prompt": "Genera tabla 'exogenas_trafico' con 52 semanas: semana, eventos_deportivos, festivos, lanzamientos_streaming (Netflix/Disney), temperatura_media, vacaciones_escolares."}, {"title": "Preparar series temporales", "desc": "Input para ML.FORECAST.", "prompt": "Crea tabla 'forecast_input_trafico' con: serie_id (segmento_servicio), timestamp, trafico_gbps. Verifica continuidad y sin nulls. Vincula con exógenas."}, {"title": "Entrenar modelo forecast", "desc": "ML.FORECAST de tráfico.", "prompt": "Entrena SNOWFLAKE.ML.FORECAST 'predictor_trafico_telco' con SERIES_COLNAME='serie_id', TIMESTAMP_COLNAME='timestamp', TARGET_COLNAME='trafico_gbps', PREDICTION_INTERVAL=0.95."}, {"title": "Registrar en Model Registry", "desc": "Versionar con log_model().", "prompt": "Usando Python: registry.log_model() con model_name='network_traffic_forecast_telco', version_name='v1', metrics={'mape_global': <valor>}, comment='Forecast de tráfico de red telco v1'."}, {"title": "Generar predicciones", "desc": "12 semanas ahead.", "prompt": "Genera predicciones con predictor_trafico_telco!FORECAST(FORECASTING_PERIODS=>12). Calcula MAPE por segmento y tecnología. Identifica segmentos que superarán capacidad instalada."}, {"title": "Planificación de capacidad", "desc": "Inversión necesaria.", "prompt": "Crea vista 'plan_capacidad' con: segmentos donde forecast > 80% capacidad en 12 semanas, inversión estimada para upgrade, prioridad por impacto en clientes. Compara: coste upgrade vs pérdida de calidad."}, {"title": "Dashboard capacidad", "desc": "Panel de planning.", "prompt": "Crea dashboard Streamlit: KPIs (MAPE, tráfico previsto total, segmentos críticos, inversión necesaria), gráfico forecast por segmento con bandas, plan de inversión priorizado, filtros por zona y tecnología."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS TRAFICO_TELCO_DB comentado."}]},
+  UC04: {"title": "Mantenimiento Predictivo de Infraestructura de Red", "intro": "Prompts para construir un modelo predictivo de fallos para equipamiento de red de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para mantenimiento.", "prompt": "Crea base de datos MANTENIMIENTO_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar inventario de equipos", "desc": "10.000 equipos de red.", "prompt": "Genera tabla 'equipos_red' con 10.000 filas: equipo_id, tipo (Antena_5G 15%, Antena_4G 25%, Router_Core 10%, Switch_Agregación 15%, ONT_Fibra 20%, Estación_Base 15%), modelo, fabricante, fecha_instalacion, zona, ubicacion (interior/exterior), criticidad (Alta 20%, Media 50%, Baja 30%)."}, {"title": "Generar telemetría", "desc": "6 meses de señales.", "prompt": "Genera tabla 'telemetria_equipos' con 10.000 × 180 días: equipo_id, fecha, temperatura_c (20-85), errores_hora (0-50), throughput_degradado_pct (0-30), reinicios_dia (0-3), consumo_energia_watts, alarmas_activas (0-5). Equipos con fallo futuro: degradación progresiva 2-4 semanas antes."}, {"title": "Generar historial de fallos", "desc": "Incidencias pasadas.", "prompt": "Genera tabla 'historial_fallos' con 3.000 registros: equipo_id, fecha_fallo, tipo_fallo (Hardware 40%, Software 30%, Alimentación 15%, Conectividad 15%), duracion_caida_horas, clientes_afectados, coste_reparacion_eur."}, {"title": "Feature engineering", "desc": "Señales de fallo.", "prompt": "Crea tabla 'features_mantenimiento' con: temperatura_media_7d, tendencia_errores_14d, reinicios_acumulados_30d, antigüedad_meses, horas_desde_ultimo_mantenimiento, ratio_throughput_vs_baseline, alarmas_frecuencia. Target: fallo_en_30d."}, {"title": "Entrenar modelo", "desc": "ML.CLASSIFICATION de fallo.", "prompt": "Divide 80/20, entrena ML.CLASSIFICATION 'predictor_fallos_red' con target fallo_en_30d y evaluate TRUE. Optimizar recall para detectar máximo de fallos."}, {"title": "Priorización de mantenimiento", "desc": "Plan de intervención.", "prompt": "Para equipos con prob_fallo >50%: calcular impacto = prob × clientes_afectados × horas_estimadas_caida. Generar plan priorizado: top-50 equipos para mantenimiento en próximas 2 semanas. Calcular ROI: coste mantenimiento preventivo vs coste avería."}, {"title": "Dashboard mantenimiento", "desc": "Panel de salud.", "prompt": "Crea dashboard Streamlit: KPIs (equipos en riesgo, mantenimientos pendientes, MTBF medio, coste evitado), mapa de equipos por riesgo, plan de mantenimiento, timeline de degradación, filtros por tipo equipo y zona."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS MANTENIMIENTO_TELCO_DB comentado."}]},
+  UC05: {"title": "Segmentación Avanzada de Clientes y CLV", "intro": "Prompts para construir un motor de micro-segmentación con CLV para clientes de telecomunicaciones convergentes.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para segmentación.", "prompt": "Crea base de datos SEGMENTACION_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar perfiles de clientes", "desc": "50.000 clientes convergentes.", "prompt": "Genera tabla 'clientes_segmentacion' con 50.000 filas: cliente_id, edad, provincia, plan_convergente, arpu, fecha_alta, num_lineas, velocidad_fibra, tv_contratada, metodo_pago, dispositivo_principal, uso_app_pct."}, {"title": "Generar datos de consumo", "desc": "12 meses de actividad.", "prompt": "Genera tabla 'consumo_12m' con 50.000 × 12: cliente_id, mes, voz_min, datos_movil_gb, fibra_gb, tv_horas, contenido_premium, sesiones_app, autoservicio_pct, llamadas_soporte."}, {"title": "Calcular features", "desc": "Variables multidimensionales.", "prompt": "Crea tabla 'features_segmentacion' con: arpu_medio, tendencia_arpu, consumo_datos_tendencia, diversidad_servicios (cuántos servicios usa activamente), digital_adoption (app + autoservicio), engagement_premium, respuesta_ofertas_historica, reclamaciones_12m."}, {"title": "Crear segmentos", "desc": "ML.CLASSIFICATION para clusters.", "prompt": "Entrena ML.CLASSIFICATION con 6 segmentos: Heavy_Converger (>80€ ARPU, todos los servicios), Digital_Native (alto datos+app, bajo voz), Traditional (alto voz, bajo datos), Family_Plan (múltiples líneas, TV), Value_Seeker (sensible a precio, mínimo plan), Business_Prosumer (ARPU alto, IoT). Muestra distribución."}, {"title": "Calcular CLV", "desc": "Valor futuro por cliente.", "prompt": "Entrena ML.FORECAST para predecir ARPU a 24 meses por cliente. CLV = suma de ARPU predicho × probabilidad de permanencia. Clasifica: VIP (top 10%), High (P60-P90), Medium (P30-P60), Low (<P30)."}, {"title": "Estrategias por segmento", "desc": "Acciones personalizadas.", "prompt": "Usa CORTEX.COMPLETE para generar estrategia por segmento × CLV: qué servicios priorizar en upsell, qué canal usar, qué tono de comunicación, cuánto invertir en retención. Genera tabla 'estrategias_segmento'."}, {"title": "Dashboard segmentos", "desc": "Panel de clientes.", "prompt": "Crea dashboard Streamlit: KPIs (clientes por segmento, CLV medio, ARPU medio, churn rate por segmento), distribución, perfil detallado por segmento, estrategias recomendadas, filtros por segmento y CLV."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS SEGMENTACION_TELCO_DB comentado."}]},
+  UC06: {"title": "Optimización de Pricing y Bundles Convergentes", "intro": "Prompts para construir un motor de optimización de pricing para bundles convergentes de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para pricing.", "prompt": "Crea base de datos PRICING_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar datos de clientes", "desc": "80.000 clientes con historial de pricing.", "prompt": "Genera tabla 'clientes_pricing' con 80.000 filas: cliente_id, plan_actual, arpu_actual, fecha_alta, cambios_plan_historico (array con fecha, plan_anterior, plan_nuevo, motivo), permanencia_meses, sensibilidad_precio (Alta 25%, Media 45%, Baja 30%)."}, {"title": "Generar catálogo de planes", "desc": "Planes del operador y competencia.", "prompt": "Genera tabla 'catalogo_planes' con 40 filas: plan_id, operador (Propio 15 planes, Movistar 5, Vodafone 5, MásOrange 5, Digi 5, Otros 5), nombre, precio_eur, fibra_mbps, datos_movil_gb, lineas_movil, tv_incluida, futbol, netflix, precio_promo_3m."}, {"title": "Modelar elasticidad", "desc": "Sensibilidad al precio.", "prompt": "Crea tabla 'elasticidad_telco' simulando: para cada segmento y servicio, qué % cancelaría si +2€/mes, +5€/mes; qué % haría upgrade si se añade 5G premium, TV gratis, más datos. Genera curvas de elasticidad."}, {"title": "Simular bundles", "desc": "Combinaciones convergentes.", "prompt": "Genera tabla 'bundles_simulados' con 12 opciones: Fibra1G+5G, +TV_Básica, +TV_Premium, +Fútbol, +Netflix, +Disney+, +2a_Línea_Gratis, +IoT_Hogar, +Cloud_Gaming, +Seguridad_Digital, +Línea_Fija, +Convergente_Empresa. Para cada: coste, valor percibido, adopción estimada."}, {"title": "Calcular precio óptimo", "desc": "Maximizar revenue.", "prompt": "Para cada segmento: precio que maximiza revenue = (base_clientes - churn_incremental) × (precio_nuevo + upsell_incremental). Incluir elasticidad cruzada (si subo fibra, ¿pierdo móvil?). Genera tabla 'pricing_optimo'."}, {"title": "Simular P&L", "desc": "Impacto financiero.", "prompt": "Simula P&L a 12 meses: pricing actual vs optimizado. Métricas: ARPU, base clientes, churn, revenue total, margen. Incluir escenario de respuesta de competencia (guerra de precios)."}, {"title": "Dashboard pricing", "desc": "Panel de simulación.", "prompt": "Crea dashboard Streamlit: KPIs (ARPU actual vs óptimo, revenue uplift, churn impacto, mejores bundles), simulador de pricing por segmento, comparativa competencia, P&L 12 meses, filtros por segmento y bundle."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS PRICING_TELCO_DB comentado."}]},
+  UC07: {"title": "Optimización de Field Service y Técnicos", "intro": "Prompts para optimizar la gestión de intervenciones técnicas de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para field service.", "prompt": "Crea base de datos FIELDSERVICE_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar intervenciones", "desc": "100.000 intervenciones históricas.", "prompt": "Genera tabla 'intervenciones' con 100.000 filas: intervencion_id, tipo (Instalación_Fibra 35%, Avería_Router 20%, Avería_TV 10%, Migración 15%, Cambio_ONT 10%, Revisión 10%), cliente_id, zona_cp, fecha_cita, franja_horaria, equipo_afectado, prioridad."}, {"title": "Generar plantilla de técnicos", "desc": "500 técnicos con competencias.", "prompt": "Genera tabla 'tecnicos' con 500 filas: tecnico_id, nombre, zona_base_cp, competencias (array: Fibra, Router, TV, 5G, Empresa), certificaciones, vehiculo, disponibilidad, ratio_exito_historico (70-98%), tiempo_medio_intervencion_min."}, {"title": "Generar resultados históricos", "desc": "Resultado de cada intervención.", "prompt": "Genera tabla 'resultados_intervencion' con 100.000 filas: intervencion_id, tecnico_id, duracion_real_min (30-240), resultado (Resuelto_1a 75%, Revisita_Necesaria 15%, No_Resuelto 5%, Cliente_Ausente 5%), satisfaccion_cliente (1-5), material_usado, km_desplazamiento."}, {"title": "Predecir complejidad", "desc": "ML para duración y resultado.", "prompt": "Entrena ML.CLASSIFICATION para predecir: resultado_primera_visita (Resuelto/NoResuelto) y ML.FORECAST auxiliar para duracion_estimada_min. Features: tipo, equipo, zona, antigüedad instalación, historial incidencias."}, {"title": "Optimizar asignación", "desc": "Matching técnico-intervención.", "prompt": "Implementa asignación: para cada día, asignar técnicos a intervenciones maximizando: prob_éxito × minimizar_km × respetar_competencias × franja_horaria. Calcular: First Call Resolution, km totales, horas productivas."}, {"title": "Reducir revisitas", "desc": "Diagnóstico mejorado.", "prompt": "Usa CORTEX.COMPLETE para generar pre-diagnóstico antes de la visita: basado en tipo de avería, equipo, historial zona, síntomas reportados. Generar checklist para el técnico. Simular reducción de revisitas."}, {"title": "Dashboard field service", "desc": "Panel operativo.", "prompt": "Crea dashboard Streamlit: KPIs (First Call Resolution, tiempo medio, km/día, satisfacción), mapa de intervenciones del día, asignación de técnicos, revisitas pendientes, filtros por tipo y zona."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS FIELDSERVICE_TELCO_DB comentado."}]},
+  UC08: {"title": "Feature Store de Customer 360 Telco", "intro": "Prompts para construir un Feature Store en Snowflake que consolida el perfil 360° de cada cliente de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para Feature Store.", "prompt": "Crea base de datos CUSTOMER360_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar datos BSS", "desc": "50.000 clientes con facturación.", "prompt": "Genera tabla 'bss_data' con 50.000 clientes: customer_id, plan, arpu, fecha_alta, permanencia, metodo_pago, facturas_impagadas, descuentos_activos, upgrade_historico, downgrade_historico."}, {"title": "Generar datos CRM", "desc": "Interacciones con cliente.", "prompt": "Genera tabla 'crm_data' con 50.000 registros: customer_id, llamadas_12m, reclamaciones_12m, nps_ultimo, campañas_recibidas, campañas_respondidas, canal_preferido (App 30%, Call_Center 25%, Tienda 20%, Web 15%, Chat 10%), ultima_interaccion_dias."}, {"title": "Generar datos de red", "desc": "Experiencia de conectividad.", "prompt": "Genera tabla 'network_data' con 50.000 registros: customer_id, velocidad_media_dl_mbps, latencia_media_ms, incidencias_12m, cobertura_zona_pct, tecnologia_acceso (Fibra_FTTH 65%, HFC 15%, 4G_FWA 10%, ADSL 10%), calidad_experiencia_score (1-100)."}, {"title": "Generar datos digitales", "desc": "Comportamiento en app/web.", "prompt": "Genera tabla 'digital_data' con 40.000 registros (80% con app): customer_id, sesiones_app_mes, funciones_usadas (factura, consumo, soporte, tienda, wifi), autoservicio_pct, deeplinks_clickados, notificaciones_abiertas_pct."}, {"title": "Crear Entity y FeatureViews", "desc": "Feature Store del cliente.", "prompt": "Usando Python con snowflake.ml.feature_store: (1) Entity 'telco_customer' con join_keys=['customer_id']. (2) FeatureView 'consumption_profile': voz, datos, tv, tendencia, diversidad. (3) FeatureView 'billing_status': arpu, permanencia, impagos, descuentos. (4) FeatureView 'network_experience': velocidad, latencia, incidencias, calidad. (5) FeatureView 'digital_engagement': app_usage, autoservicio, canal_preferido. (6) FeatureView 'lifecycle': antigüedad, CLV, churn_risk, segmento. Registra FeatureViews."}, {"title": "Pipeline de ingesta", "desc": "Merge de fuentes.", "prompt": "Crea pipeline que une BSS + CRM + red + digital por customer_id. Calcula features derivadas: health_score, engagement_index, propensión_upgrade, riesgo_churn. Actualización diaria."}, {"title": "Servir features", "desc": "Consulta de perfil 360.", "prompt": "Usa feature_store.get_features() para 20 clientes. Muestra perfil 360 completo. Demuestra uso para: retención (churn risk + mejor oferta), upsell (propensión + CLV), soporte (historial + red)."}, {"title": "Dashboard Customer 360", "desc": "Panel de cliente.", "prompt": "Crea dashboard Streamlit: buscador de cliente, perfil 360 (consumo, facturación, red, digital, lifecycle), timeline de interacciones, ofertas recomendadas, alertas, filtros por segmento y plan."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS CUSTOMER360_TELCO_DB comentado."}]},
+  UC09: {"title": "Motor de Ofertas Personalizadas Next-Best-Action", "intro": "Prompts para construir un motor de Next-Best-Action para ofertas personalizadas en telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para NBA.", "prompt": "Crea base de datos NBA_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar catálogo de ofertas", "desc": "50 ofertas disponibles.", "prompt": "Genera tabla 'catalogo_ofertas' con 50 filas: oferta_id, tipo (Upgrade_Plan 20%, Add_On 25%, Descuento_Retención 20%, Bundle_Premium 15%, Win_Back 10%, Cross_Sell 10%), descripcion, coste_operador_eur, valor_cliente_eur, canal_optimo, vigencia_dias."}, {"title": "Generar historial de ofertas", "desc": "12 meses de campañas.", "prompt": "Genera tabla 'historial_ofertas' con 50.000 clientes × 4 ofertas/año: cliente_id, oferta_id, fecha, canal (App 30%, SMS 25%, Email 20%, Call_Center 15%, Tienda 10%), aceptada (TRUE 8%), motivo_rechazo, revenue_incremental."}, {"title": "Feature engineering para NBA", "desc": "Variables de propensión.", "prompt": "Crea tabla 'features_nba' con: perfil del Feature Store, ultima_oferta_aceptada_dias, ofertas_rechazadas_consecutivas, trigger_event (fin_permanencia, reclamación, competencia, cambio_consumo), momento_ciclo_facturación, canal_engagement."}, {"title": "Entrenar modelo de propensión", "desc": "ML.CLASSIFICATION multi-oferta.", "prompt": "Entrena ML.CLASSIFICATION 'modelo_propension_nba' para predecir prob_aceptación por par cliente-oferta. Features: perfil, historial, trigger, canal, momento. Evaluar AUC por tipo de oferta."}, {"title": "Optimizar oferta", "desc": "Mejor relación impacto/coste.", "prompt": "Para cada cliente, calcular: NBA_score = prob_aceptación × valor_cliente - coste_operador. Seleccionar top-1 oferta. Aplicar restricciones: no repetir oferta rechazada en 90 días, respetar frequency cap, priorizar retención si churn risk >40%."}, {"title": "Simular campaña", "desc": "Impacto proyectado.", "prompt": "Simula campaña NBA para 10.000 clientes: conversión esperada, revenue incremental, coste total, ROI. Compara: NBA personalizado vs oferta genérica masiva. Calcula uplift."}, {"title": "Dashboard NBA", "desc": "Panel de campañas.", "prompt": "Crea dashboard Streamlit: KPIs (clientes targetados, conversión esperada, ROI, revenue incremental), ranking de ofertas por eficacia, distribución por canal, simulador de campaña, filtros por segmento y tipo oferta."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS NBA_TELCO_DB comentado."}]},
+  UC10: {"title": "Detección de Anomalías en Calidad de Red", "intro": "Prompts para construir un sistema de detección de anomalías en KPIs de calidad de red de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para anomalías.", "prompt": "Crea base de datos ANOMALIAS_RED_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar KPIs de red", "desc": "2.000 celdas × 90 días.", "prompt": "Genera tabla 'kpis_red' con 2.000 × 90 × 24: celda_id, timestamp_hora, throughput_dl_mbps, throughput_ul_mbps, latencia_ms, packet_loss_pct, jitter_ms, handover_success_pct, usuarios_activos. Inyectar 200 anomalías (degradaciones de 2-6 horas) en 5% de las celdas."}, {"title": "Generar datos de experiencia de cliente", "desc": "Impacto percibido.", "prompt": "Genera tabla 'experiencia_cliente_red' con: celda_id, hora, velocidad_percibida_mbps, buffering_eventos, llamadas_caidas_pct, app_crashes. Correlación con KPIs de red: cuando throughput baja >30%, experiencia se degrada proporcionalmente."}, {"title": "Calcular baselines", "desc": "Perfil normal por celda y hora.", "prompt": "Crea tabla 'baselines_kpi' con: celda_id, dia_semana, hora, para cada KPI: media, std, percentil_5, percentil_95. Baseline por tipo de celda × zona × hora."}, {"title": "Detectar anomalías", "desc": "ML sobre desviaciones.", "prompt": "Entrena ML.CLASSIFICATION para detectar anomalías: features = desviación de cada KPI vs baseline (z-score), correlación entre KPIs, velocidad de cambio. Target: anomalia_confirmada. Calcular precision y recall."}, {"title": "Correlacionar con impacto", "desc": "Efecto en experiencia.", "prompt": "Para cada anomalía detectada: clientes en celda afectada, degradación de experiencia estimada, tickets generados (real vs esperado). Score de impacto = clientes × degradación × duración."}, {"title": "Automatizar escalado", "desc": "Reglas de respuesta.", "prompt": "Implementa reglas: anomalía con impacto >1.000 clientes → P1 automático; impacto 100-1.000 → P2; <100 → P3. Genera pre-diagnóstico con CORTEX.COMPLETE: probable causa basada en patrón de KPIs afectados."}, {"title": "Dashboard NOC", "desc": "Panel de anomalías.", "prompt": "Crea dashboard Streamlit: KPIs (anomalías activas, MTTR, clientes afectados, disponibilidad %), mapa de celdas con anomalías, timeline de KPIs, pre-diagnóstico automático, filtros por severidad y zona."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS ANOMALIAS_RED_DB comentado."}]},
+  UC11: {"title": "NLP sobre Incidencias y Tickets de Soporte", "intro": "Prompts para construir un pipeline NLP de clasificación automática de tickets de soporte de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para NLP tickets.", "prompt": "Crea base de datos TICKETS_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar tickets de soporte", "desc": "50.000 tickets realistas.", "prompt": "Genera tabla 'tickets_soporte' con 50.000 filas: ticket_id, cliente_id, fecha, canal (Call_Center 40%, Chat 25%, App 20%, Email 10%, Tienda 5%), texto_incidencia (1-4 frases describiendo problema en español coloquial), prioridad_manual, tiempo_resolucion_horas, satisfaccion_post."}, {"title": "Generar categorías y resoluciones", "desc": "Taxonomía de incidencias.", "prompt": "Genera tabla 'categorias_resolucion' con: ticket_id, categoria_real (Facturación 20%, Cobertura_Velocidad 25%, TV_Contenido 10%, Equipo_Router 15%, Portabilidad 5%, Plan_Cambio 10%, Técnico_General 15%), subcategoria, resolucion_aplicada, agente_id, escalado (TRUE 15%)."}, {"title": "Clasificar con NLP", "desc": "Cortex AI sobre texto.", "prompt": "Crea tabla 'tickets_clasificados' aplicando CORTEX.COMPLETE sobre texto_incidencia para extraer: categoria_predicha, subcategoria_predicha, urgencia (1-5), sentimiento (CORTEX.SENTIMENT), entidades_extraidas (producto, servicio, fecha mencionada). Calcular accuracy vs categoría manual."}, {"title": "Sugerir resolución", "desc": "Basada en casos similares.", "prompt": "Para cada ticket nuevo, buscar 5 tickets similares resueltos (por categoría + subcategoría + tipo cliente). Generar sugerencia de resolución con CORTEX.COMPLETE. Calcular: % de sugerencias correctas (comparar con resolución real)."}, {"title": "Análisis de causa raíz", "desc": "Patrones recurrentes.", "prompt": "Agregar tickets por: zona × categoría × semana. Detectar picos anómalos (>2σ sobre media) que indican problema sistémico (avería de red, error de facturación masivo). Generar alerta con contexto."}, {"title": "Routing inteligente", "desc": "Asignación automática.", "prompt": "Implementa routing: basado en categoría + urgencia + competencia del agente + carga actual. Simular: tiempo de resolución con routing inteligente vs aleatorio. Calcular mejora en MTTR y First Contact Resolution."}, {"title": "Dashboard tickets", "desc": "Panel de gestión.", "prompt": "Crea dashboard Streamlit: KPIs (tickets abiertos, MTTR, First Contact Resolution, satisfacción), cola de tickets priorizada, distribución por categoría, alertas de causa raíz, filtros por categoría y prioridad."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS TICKETS_TELCO_DB comentado."}]},
+  UC12: {"title": "Chatbot RAG de Atención al Cliente Telco", "intro": "Prompts para construir un asistente conversacional RAG para atención al cliente de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para chatbot.", "prompt": "Crea base de datos CHATBOT_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar base de conocimiento", "desc": "300 documentos de soporte.", "prompt": "Genera tabla 'documentos_soporte_telco' con 300 filas: doc_id, tipo (Tarifas 15%, FAQ 30%, Guía_Técnica 20%, Cobertura 15%, Política 10%, Promo 10%), titulo, area (Facturación, Técnica, Cobertura, Móvil, Fibra, TV, IoT). Genera contenido de 200-500 palabras con CORTEX.COMPLETE."}, {"title": "Crear chunks", "desc": "Fragmentar para búsqueda.", "prompt": "Crea tabla 'chunks_soporte_telco' fragmentando documentos: chunk_id, doc_id, tipo, area, texto_chunk (~500 chars), chunk_index. ~3-4 chunks por documento = ~1.000 chunks."}, {"title": "Crear Cortex Search Service", "desc": "Indexación semántica.", "prompt": "Crea Cortex Search Service 'buscador_soporte_telco' sobre chunks_soporte_telco con SEARCH_COLUMN='texto_chunk', ATTRIBUTES='tipo,area'. TARGET_LAG='1 hour'."}, {"title": "Generar datos de cliente", "desc": "Para personalización.", "prompt": "Genera tabla 'contexto_cliente' con 1.000 registros: cliente_id, plan_actual, arpu, servicios_activos, ultima_factura, incidencias_abiertas, zona_cobertura, router_modelo. Para contextualizar respuestas."}, {"title": "Pipeline RAG personalizado", "desc": "Respuestas con contexto.", "prompt": "Crea pipeline: (1) Identificar cliente, (2) Clasificar consulta, (3) Buscar chunks relevantes + contexto cliente, (4) Generar respuesta personalizada con CORTEX.COMPLETE ('Veo que tienes el plan X con fibra Y...'). Prueba 10 consultas."}, {"title": "Evaluar calidad", "desc": "Validar respuestas.", "prompt": "Ejecuta 15 preguntas: '¿Cuánto pago al mes?', '¿Tengo cobertura 5G en mi zona?', '¿Cómo configuro el router?', '¿Puedo añadir una línea?', etc. Evalúa relevancia (1-5) y personalización."}, {"title": "Dashboard chatbot", "desc": "Interfaz de chat.", "prompt": "Crea dashboard Streamlit: campo de pregunta con ID cliente, respuesta personalizada con fuente, FAQ rápido, historial de conversación, botón de escalado a agente, métricas de resolución."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS CHATBOT_TELCO_DB y DROP CORTEX SEARCH SERVICE buscador_soporte_telco comentados."}]},
+  UC13: {"title": "Predicción de Demanda de Servicios y Revenue Forecast", "intro": "Prompts para construir modelos de forecast de revenue multi-servicio para planificación financiera telco.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para revenue.", "prompt": "Crea base de datos REVENUE_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar historial de revenue", "desc": "10 servicios × 52 semanas × 20 zonas.", "prompt": "Genera tabla 'revenue_historico' con 10 servicios (Móvil_Postpago, Móvil_Prepago, Fibra, TV_Básica, TV_Premium, Fútbol, Convergente_Familia, Empresa_Pyme, IoT, Roaming) × 52 semanas × 20 zonas: servicio, zona, semana, clientes_activos, arpu_medio, revenue_semanal_eur, altas, bajas."}, {"title": "Generar acciones comerciales", "desc": "Campañas planificadas.", "prompt": "Genera tabla 'acciones_comerciales' con 100 campañas en 52 semanas: campana_id, servicio_target, tipo (Adquisición 40%, Retención 30%, Upsell 20%, Cross-sell 10%), semana_inicio, semana_fin, presupuesto, impacto_estimado_clientes."}, {"title": "Preparar series", "desc": "Input multi-serie.", "prompt": "Crea tabla 'forecast_input_revenue' con: serie_id (servicio_zona), timestamp (semana), revenue. Vincular con acciones comerciales como variables exógenas."}, {"title": "Entrenar modelo", "desc": "ML.FORECAST de revenue.", "prompt": "Entrena SNOWFLAKE.ML.FORECAST 'predictor_revenue_telco' con SERIES_COLNAME='serie_id', TIMESTAMP_COLNAME='timestamp', TARGET_COLNAME='revenue'. PREDICTION_INTERVAL=0.90."}, {"title": "Generar escenarios", "desc": "Optimista, base, pesimista.", "prompt": "Genera 3 escenarios: Base (forecast central), Optimista (upper bound + 10% más acciones), Pesimista (lower bound + churn incremental por competencia). Calcular revenue anual por servicio para cada escenario."}, {"title": "Plan de inversión", "desc": "Priorización de servicios.", "prompt": "Genera tabla 'plan_inversion' con: servicio, crecimiento previsto, inversión requerida (red, comercial, contenido), ROI estimado. Priorizar: servicios con mayor ROI incremental. Comparar: invertir en 5G premium vs TV premium vs IoT."}, {"title": "Dashboard revenue", "desc": "Panel de planning.", "prompt": "Crea dashboard Streamlit: KPIs (revenue total previsto, crecimiento %, ARPU, base clientes), forecast por servicio con bandas, escenarios, plan de inversión, waterfall de crecimiento, filtros por servicio y zona."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS REVENUE_TELCO_DB comentado."}]},
+  UC14: {"title": "Feature Store de Performance de Red", "intro": "Prompts para construir un Feature Store en Snowflake con métricas de rendimiento de cada celda y nodo de red.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para Feature Store de red.", "prompt": "Crea base de datos NETWORK_FS_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar datos de throughput", "desc": "5.000 celdas × 90 días.", "prompt": "Genera tabla 'throughput_data' con 5.000 celdas × 90 días: celda_id, fecha, throughput_dl_mbps_media, throughput_dl_mbps_pico, throughput_ul_mbps_media, usuarios_hora_punta, PRB_utilization_pct."}, {"title": "Generar datos de latencia", "desc": "Métricas de calidad.", "prompt": "Genera tabla 'latency_data' con 5.000 celdas × 90 días: celda_id, fecha, latencia_media_ms, latencia_p95_ms, jitter_ms, packet_loss_pct, handover_success_pct."}, {"title": "Generar datos de disponibilidad", "desc": "Uptime y caídas.", "prompt": "Genera tabla 'availability_data' con 5.000 celdas × 90 días: celda_id, fecha, uptime_pct, caidas_num, duracion_caidas_min, mantenimiento_planificado, alarmas_criticas."}, {"title": "Generar benchmark", "desc": "Comparativa de red.", "prompt": "Genera tabla 'benchmark_red' con 5.000 celdas: celda_id, percentil_throughput (vs tipo celda), percentil_latencia, percentil_disponibilidad, ranking_zona, tendencia_7d, cumple_SLA (TRUE/FALSE)."}, {"title": "Crear Entity y FeatureViews", "desc": "Feature Store de red.", "prompt": "Usando Python con snowflake.ml.feature_store: (1) Entity 'network_cell' con join_keys=['celda_id']. (2) FeatureView 'throughput_metrics': dl, ul, pico, usuarios, PRB. (3) FeatureView 'latency_metrics': media, p95, jitter, packet_loss, handover. (4) FeatureView 'availability_metrics': uptime, caidas, alarmas, mantenimiento. (5) FeatureView 'benchmark_position': percentil, ranking, tendencia, SLA. Registra FeatureViews."}, {"title": "Pipeline de actualización", "desc": "Refresh cada 15 min.", "prompt": "Crea pipeline que actualiza FeatureViews. Simula 48h de datos con incidentes. Verifica latencia <15 min."}, {"title": "Servir features para decisiones", "desc": "Network intelligence.", "prompt": "Usa feature_store.get_features() para top-50 celdas críticas. Demuestra uso para: diagnóstico de incidencias (qué KPI degradó primero), planificación de inversión (celdas que necesitan upgrade), SLA reporting."}, {"title": "Dashboard network intelligence", "desc": "Panel de red.", "prompt": "Crea dashboard Streamlit: KPIs por celda (throughput, latencia, disponibilidad, benchmark), mapa de calor de red, alertas de celdas degradadas, comparativa SLA, timeline de métricas, filtros por tipo celda y zona."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS NETWORK_FS_DB comentado."}]},
+  UC15: {"title": "Detección de Fraude en SIM y Portabilidades", "intro": "Prompts para construir un sistema ML de detección de fraude en operaciones de SIM swap y portabilidad.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para fraude SIM.", "prompt": "Crea base de datos FRAUDE_SIM_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar operaciones de SIM", "desc": "200.000 operaciones.", "prompt": "Genera tabla 'operaciones_sim' con 200.000 filas: operacion_id, tipo (SIM_Swap 30%, Portabilidad_In 25%, Portabilidad_Out 20%, Alta_Nueva 15%, Cambio_Titular 10%), cliente_id, fecha, hora, canal (Tienda 40%, Online 30%, Call_Center 20%, Distribuidor 10%), documento_tipo, dispositivo_imei."}, {"title": "Generar datos de contexto", "desc": "Información de la operación.", "prompt": "Genera tabla 'contexto_operacion' con: operacion_id, ubicacion_solicitud, distancia_domicilio_km, tiempo_desde_ultima_operacion_dias, operaciones_mismo_documento_30d, lineas_activas_documento, dispositivo_nuevo (TRUE/FALSE)."}, {"title": "Etiquetar fraude", "desc": "3% de operaciones fraudulentas.", "prompt": "Etiqueta 3% como fraude: SIM_Swap_Suplantación (1.2%): operación en canal diferente al habitual + dispositivo nuevo + actividad posterior anómala; Portabilidad_Falsa (0.8%): documento inconsistente + múltiples solicitudes; Alta_Documental (0.5%): mismo documento en múltiples altas; Cambio_Titular_Forzado (0.5%): titular no reconocido."}, {"title": "Feature engineering", "desc": "Señales de fraude.", "prompt": "Crea tabla 'features_fraude_sim' con: tipo_operacion, canal_habitual_match, distancia_domicilio, horas_desde_ultima_operacion, operaciones_documento_30d, cambio_dispositivo, hora_solicitud (madrugada = riesgo), antigüedad_linea, velocidad_solicitud. Target: es_fraude."}, {"title": "Entrenar modelo", "desc": "ML.CLASSIFICATION de fraude.", "prompt": "Divide 80/20, entrena ML.CLASSIFICATION 'detector_fraude_sim' con target es_fraude y evaluate TRUE. Optimizar: recall >90%, precision >85%."}, {"title": "Scoring en tiempo real", "desc": "Clasificar operaciones.", "prompt": "Aplica modelo a 20.000 operaciones nuevas. Clasifica: Bloquear (>90%), Verificación_Adicional (60-90%), Monitorizar (30-60%), OK (<30%). Calcular: fraude detectado, falsos positivos, revenue protegido."}, {"title": "Dashboard fraude", "desc": "Panel de prevención.", "prompt": "Crea dashboard Streamlit: KPIs (operaciones analizadas, fraude detectado %, bloqueados, falsos positivos %), timeline de fraude, distribución por tipo, alertas por canal, filtros por tipo operación y canal."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS FRAUDE_SIM_DB comentado."}]},
+  UC16: {"title": "Ciberseguridad y Detección de Amenazas en Red", "intro": "Prompts para construir un pipeline ML de detección de amenazas de ciberseguridad en redes de telecomunicaciones.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para ciberseguridad.", "prompt": "Crea base de datos CIBERSEG_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar flujos de red", "desc": "1.000.000 de flujos.", "prompt": "Genera tabla 'flujos_red' con 1.000.000 filas: flujo_id, timestamp, ip_origen, ip_destino, puerto_destino, protocolo (TCP 60%, UDP 30%, ICMP 5%, Otro 5%), bytes, paquetes, duracion_seg, tipo_servicio (Web 40%, Video 25%, DNS 10%, Email 5%, P2P 5%, IoT 10%, Otro 5%)."}, {"title": "Generar eventos DNS", "desc": "Consultas DNS.", "prompt": "Genera tabla 'dns_events' con 500.000 filas: evento_id, timestamp, ip_cliente, dominio_consultado, tipo_consulta (A/AAAA/MX/TXT), respuesta, ttl. Inyectar 2% de consultas sospechosas: dominios DGA (Domain Generation Algorithm), dominios de C&C conocidos, fast-flux DNS."}, {"title": "Generar eventos de autenticación", "desc": "Accesos a sistemas.", "prompt": "Genera tabla 'auth_events' con 200.000 filas: evento_id, timestamp, usuario, ip_origen, sistema_destino, resultado (Éxito 85%, Fallo 12%, Bloqueo 3%), metodo_auth, dispositivo. Inyectar 3% de patrones sospechosos: fuerza bruta, credential stuffing, lateral movement."}, {"title": "Etiquetar amenazas", "desc": "5% de flujos maliciosos.", "prompt": "Etiqueta 5% de flujos como amenazas: DDoS (1.5%): alto volumen desde múltiples IPs; Botnet_IoT (1%): dispositivos IoT con tráfico C&C; Exfiltración (0.5%): grandes volúmenes a IPs externas inusuales; Phishing (1%): DNS a dominios sospechosos; Scanning (1%): port scanning secuencial."}, {"title": "Feature engineering", "desc": "Señales de amenaza.", "prompt": "Crea tabla 'features_ciberseg' con: bytes_por_flujo, paquetes_por_seg, ratio_in_out, destinos_unicos_por_ip, puertos_unicos, dns_queries_por_ip, dominios_nuevos_pct, auth_fallos_consecutivos, hora_actividad. Target: es_amenaza + tipo_amenaza."}, {"title": "Entrenar modelo", "desc": "ML.CLASSIFICATION de amenazas.", "prompt": "Entrena ML.CLASSIFICATION 'detector_amenazas_telco' con target es_amenaza y evaluate TRUE. Segundo modelo para tipo_amenaza (multi-clase). Evaluar: detection rate por tipo, falsos positivos."}, {"title": "Automatizar respuesta", "desc": "Playbooks de reacción.", "prompt": "Implementa reglas de respuesta automática: DDoS → rate limiting + blackhole; Botnet → aislar dispositivo + notificar cliente; Exfiltración → bloquear destino + alerta SOC; Phishing → bloquear dominio + alerta. Genera 10 ejemplos de respuesta."}, {"title": "Dashboard SOC", "desc": "Security Operations Center.", "prompt": "Crea dashboard Streamlit: KPIs (amenazas detectadas 24h, tipo distribución, dispositivos comprometidos, respuestas automáticas), timeline de amenazas, mapa de IPs, alertas por severidad, playbooks ejecutados, filtros por tipo y severidad."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS CIBERSEG_TELCO_DB comentado."}]},
+  UC17: {"title": "Análisis de Sentimiento y Reputación de Marca", "intro": "Prompts para monitorizar sentimiento sobre la marca del operador en redes sociales, foros y prensa.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para reputación.", "prompt": "Crea base de datos REPUTACION_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar posts de redes", "desc": "80.000 posts en 6 meses.", "prompt": "Genera tabla 'social_telco' con 80.000 filas: post_id, plataforma (Twitter 35%, Foros_Bandaancha 15%, Google_Reviews 15%, Instagram 15%, TikTok 10%, Forocoches 10%), fecha, autor, seguidores, texto (1-3 frases en español coloquial sobre el operador: cobertura, velocidad, precio, atención, facturación), likes, replies."}, {"title": "Analizar sentimiento", "desc": "NLP con Cortex.", "prompt": "Crea tabla 'posts_analizados_telco' aplicando CORTEX.SENTIMENT y CORTEX.COMPLETE para: sentimiento (-1 a 1), tema (Cobertura, Precio, Atención, Velocidad, Facturación, TV, Competencia), emocion, urgencia, potencial_viral."}, {"title": "Detectar crisis", "desc": "Alertas tempranas.", "prompt": "Crea vista 'alertas_crisis_telco' con: tema con sentimiento <-0.5 en últimas 2h Y crecimiento menciones >200% Y al menos 1 influencer (>10K seguidores). Clasificar: Crisis, Riesgo, Monitorizar."}, {"title": "Análisis de competencia", "desc": "Sentimiento comparativo.", "prompt": "Genera posts simulados sobre competidores (Movistar, Vodafone, MásOrange, Digi). Compara sentimiento medio por tema: ¿en qué es mejor/peor nuestro operador vs competencia? Identificar ventajas y gaps."}, {"title": "Generar respuestas", "desc": "Templates con IA.", "prompt": "Usa CORTEX.COMPLETE para generar templates de respuesta por tema y sentimiento: cobertura (disculpa + plan mejora), precio (valor diferencial), atención (compromiso + acción). Tono empático y profesional. 10 ejemplos."}, {"title": "Tracking de tendencias", "desc": "Evolución temporal.", "prompt": "Crea vista de tendencia semanal: sentimiento medio, volumen, temas top, NPS social estimado. Correlacionar: ¿eventos de red → pico negativo? ¿campaña comercial → pico positivo? Identificar causas."}, {"title": "Dashboard reputación", "desc": "Panel de monitoring.", "prompt": "Crea dashboard Streamlit: KPIs (sentimiento medio, NPS social, menciones 24h, crisis activas), timeline de sentimiento, nube de temas, comparativa competencia, alertas, filtros por tema y plataforma."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS REPUTACION_TELCO_DB comentado."}]},
+  UC18: {"title": "Cumplimiento GDPR y Gestión de Consentimientos", "intro": "Prompts para construir un sistema de gestión de consentimientos y trazabilidad GDPR para operadores telco.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para GDPR.", "prompt": "Crea base de datos GDPR_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar consentimientos", "desc": "50.000 clientes con consentimientos.", "prompt": "Genera tabla 'consentimientos_telco' con 50.000 clientes × 8 tipos: cliente_id, tipo_consentimiento (Comunicaciones_Comerciales, Análisis_Consumo, Perfilado, Geolocalización, Compartir_Terceros, Cookies_Analíticas, Encuestas, Investigación), otorgado (TRUE/FALSE), fecha_otorgamiento, canal, vigencia_hasta, base_legal."}, {"title": "Generar accesos a datos", "desc": "100.000 accesos.", "prompt": "Genera tabla 'accesos_datos' con 100.000 filas: acceso_id, timestamp, usuario_sistema, sistema_origen (CRM 30%, BSS 25%, Red 20%, Analytics 15%, Marketing 10%), dato_accedido (Consumo, Ubicación, Facturación, Comunicaciones, Perfil), cliente_id, proposito, justificacion."}, {"title": "Verificar cumplimiento", "desc": "Validar consentimientos.", "prompt": "Crea vista 'verificacion_gdpr' que cruza accesos con consentimientos: para cada acceso, verificar que existe consentimiento vigente para ese tipo de dato y propósito. Etiquetar: Conforme, No_Conforme, Consentimiento_Vencido, Sin_Consentimiento. Calcular tasa de cumplimiento."}, {"title": "Detectar anomalías de acceso", "desc": "Patrones sospechosos.", "prompt": "Entrena ML.CLASSIFICATION para detectar accesos anómalos: usuario accediendo fuera de horario, volumen masivo de consultas, acceso a datos de ubicación sin justificación, patrón de browsing de datos. Target: anomalia_acceso."}, {"title": "Gestión de derechos", "desc": "ARCO + derecho al olvido.", "prompt": "Genera tabla 'solicitudes_derechos' con 500 solicitudes: tipo (Acceso 40%, Rectificación 20%, Cancelación 15%, Oposición 10%, Portabilidad 10%, Olvido 5%), cliente_id, fecha, estado, tiempo_respuesta_dias. Verificar cumplimiento de plazo (30 días)."}, {"title": "Informe DPO", "desc": "Reporte regulatorio.", "prompt": "Usa CORTEX.COMPLETE para generar informe trimestral para DPO: tasa de cumplimiento, accesos anómalos detectados, solicitudes de derechos gestionadas, consentimientos próximos a vencer, recomendaciones. Formato ejecutivo."}, {"title": "Dashboard GDPR", "desc": "Panel de compliance.", "prompt": "Crea dashboard Streamlit: KPIs (tasa cumplimiento %, accesos anómalos, solicitudes pendientes, consentimientos por vencer), timeline de accesos, distribución por tipo dato, alertas de no cumplimiento, filtros por sistema y tipo dato."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS GDPR_TELCO_DB comentado."}]},
+  UC19: {"title": "Análisis de Experiencia de Cliente (CX) Omnicanal", "intro": "Prompts para analizar la experiencia end-to-end del cliente telco integrando todos los canales de interacción.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para CX.", "prompt": "Crea base de datos CX_TELCO_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar interacciones multi-canal", "desc": "30.000 clientes × 6 meses.", "prompt": "Genera tabla 'interacciones_cx' con 300.000 registros: interaccion_id, cliente_id, fecha, canal (App 25%, Call_Center 20%, Web 20%, Tienda 15%, Chat 10%, Email 5%, Técnico 5%), tipo (Consulta 30%, Reclamación 20%, Compra 15%, Soporte_Técnico 20%, Facturación 15%), duracion_min, resuelto (TRUE 70%), satisfaccion (1-5, NULL 60%), transferencias (0-3)."}, {"title": "Reconstruir journeys", "desc": "Secuencias de interacciones.", "prompt": "Crea tabla 'customer_journeys' con: cliente_id, journey_id (secuencia de interacciones sobre mismo tema en 30 días), touchpoints (array ordenado), canales_usados, duracion_total_dias, resuelto_final, esfuerzo_score (transferencias + repeticiones + canales distintos)."}, {"title": "Clasificar journeys", "desc": "Identificar problemáticos.", "prompt": "Entrena ML.CLASSIFICATION para clasificar journeys: Fluido (1 touchpoint, resuelto), Aceptable (2-3 touchpoints, resuelto), Friccionado (>3 touchpoints o multi-canal), Tóxico (no resuelto o >5 interacciones). Calcular distribución."}, {"title": "Predecir insatisfacción latente", "desc": "Clientes silenciosamente insatisfechos.", "prompt": "Modelo para detectar clientes con: journeys friccionados + sin reclamación explícita + indicadores de distanciamiento (menor uso app, menor engagement). Estos son los que portan sin avisar. Score de insatisfacción latente."}, {"title": "Análisis de pain points", "desc": "Dónde se rompe la experiencia.", "prompt": "Identifica los 10 principales pain points: transición canal más problemática (ej: Call→Tienda), tipo de consulta con peor resolución, franja horaria con mayor fricción. Genera recomendaciones de mejora."}, {"title": "Intervención proactiva", "desc": "Acciones antes del churn.", "prompt": "Para clientes con insatisfacción latente >60%: generar acción proactiva con CORTEX.COMPLETE: qué ofrecer, qué canal usar, qué mensaje enviar. Simular impacto en churn evitado y NPS."}, {"title": "Dashboard CX", "desc": "Panel de experiencia.", "prompt": "Crea dashboard Streamlit: KPIs (NPS, esfuerzo medio, journeys tóxicos %, insatisfacción latente), mapa de journeys, pain points, clientes en riesgo, intervenciones recomendadas, filtros por canal y tipo."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS CX_TELCO_DB comentado."}]},
+  UC20: {"title": "Detección de Fraude en Revenue Assurance", "intro": "Prompts para construir un sistema ML de revenue assurance que reconcilia eventos de red con facturación.", "steps": [{"title": "Configurar entorno", "desc": "Base de datos para revenue assurance.", "prompt": "Crea base de datos REVENUE_ASSURANCE_DB con esquema PUBLIC y warehouse COMPUTE_WH."}, {"title": "Generar CDRs", "desc": "5.000.000 de registros de llamada.", "prompt": "Genera tabla 'cdrs_red' con 5.000.000 filas: cdr_id, timestamp, origen_msisdn, destino_msisdn, tipo (Voz_Nacional 40%, Voz_Internacional 10%, SMS 15%, Datos 25%, Roaming 5%, Premium 5%), duracion_seg (voz) o mb (datos), celda_origen, operador_destino, ruta_interconexion."}, {"title": "Generar facturación", "desc": "Eventos facturados.", "prompt": "Genera tabla 'facturacion_eventos' con 4.950.000 registros (99% de CDRs): evento_id, cdr_id, cliente_id, tipo_servicio, importe_eur, descuento_aplicado, promo_activa, factura_id. El 1% de CDRs no tiene evento de facturación (pérdida). Inyectar 0.5% de eventos de facturación sin CDR correspondiente (sobrecobro)."}, {"title": "Reconciliar red-facturación", "desc": "Detectar discrepancias.", "prompt": "Crea vista 'reconciliacion' con: LEFT JOIN cdrs_red con facturacion_eventos. Clasificar: Match_OK (98.5%), CDR_Sin_Factura (1%: revenue perdido), Factura_Sin_CDR (0.5%: posible sobrecobro). Calcular importe de discrepancias."}, {"title": "Detectar fraude de tráfico", "desc": "Patrones anómalos.", "prompt": "Analizar rutas de tráfico internacional: detectar bypass (tráfico internacional que aparece como nacional), SIM box (múltiples llamadas internacionales desde misma celda), arbitraje de tarifas. Entrenar ML.CLASSIFICATION para detectar patrones."}, {"title": "Detectar suscripciones no autorizadas", "desc": "Premium fraudulentas.", "prompt": "Identificar activaciones de servicios premium sin solicitud explícita del cliente: patrón de activación masiva, mismo proveedor premium, reclamaciones posteriores. Calcular: clientes afectados, importe, proveedor origen."}, {"title": "Calcular impacto económico", "desc": "Revenue recuperable.", "prompt": "Genera tabla 'impacto_revenue_assurance' con: tipo_discrepancia, volumen, importe_total_eur, recuperable_eur, acción_recomendada. Calcular ROI del sistema: coste operación vs revenue recuperado."}, {"title": "Dashboard revenue assurance", "desc": "Panel de reconciliación.", "prompt": "Crea dashboard Streamlit: KPIs (revenue reconciliado %, discrepancias detectadas, fraude identificado, importe recuperable), distribución de discrepancias, rutas sospechosas, timeline de detecciones, filtros por tipo y servicio."}, {"title": "Limpieza (opcional)", "desc": "Elimina objetos.", "prompt": "Genera DROP DATABASE IF EXISTS REVENUE_ASSURANCE_DB comentado."}]},
+};
+
+function verGuia(ucId) {
+  const g = GUIAS[ucId];
+  if (!g) return;
+  const html = `
+    <span class="guide-badge">${ucId}</span>
+    <h2>${g.title}</h2>
+    <p>${g.contexto}</p>
+    <h3>Foco</h3><p>${g.foco}</p>
+    <h3>Reto</h3><p>${g.reto}</p>
+    <h3>Objetivos</h3><ul>${g.objetivos.map(o=>`<li>${o}</li>`).join('')}</ul>
+    <h3>Funcionalidades</h3><ul>${g.funcionalidades.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <h3>Datos</h3><ul>${g.datos.map(d=>`<li>${d}</li>`).join('')}</ul>
+    <h3>Estratificación</h3><ul>${g.estratificacion.map(e=>`<li>${e}</li>`).join('')}</ul>
+    <h3>Cómo Usar</h3><ul>${g.como_usar.map(c=>`<li>${c}</li>`).join('')}</ul>
+    <div class="guide-footer">Guía generada para Snowflake Cortex Code</div>`;
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function verPrompts(ucId) {
+  const data = PROMPTS[ucId];
+  if (!data) return;
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  let html = `<span class="guide-badge">${ucId}</span><h2>${data.title}</h2>`;
+  html += `<p class="prompt-intro">${data.intro}</p>`;
+  data.steps.forEach((s,i) => {
+    html += `<div class="prompt-step">
+      <div class="prompt-step-header">
+        <span class="prompt-step-num">${i+1}</span>
+        <span class="prompt-step-title">${s.title}</span>
+      </div>
+      <p class="prompt-step-desc">${s.desc}</p>
+      <div class="prompt-code"><button class="copy-btn" onclick="copiarPrompt(this)">Copiar</button>${esc(s.prompt)}</div>
+    </div>`;
+  });
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+function copiarPrompt(btn) {
+  const code = btn.parentElement.textContent.replace('Copiar','').trim();
+  navigator.clipboard.writeText(code).then(()=>{btn.textContent='✓ Copiado';setTimeout(()=>btn.textContent='Copiar',1500);});
+}
+function cerrarModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+</script>
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)cerrarModal();">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarModal()">&times;</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+</body>
+</html>
