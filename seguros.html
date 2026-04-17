@@ -254,6 +254,10 @@
     .badge-cat.nlp     { background: #EAF0FF; color: #4A6EE0; }
     .badge-cat.siniestros { background: #F0FFF4; color: #2E7D4F; }
     .badge-cat.callcenter { background: #FFF0F5; color: #B03A6B; }
+    .badge-cat.asistentes { background: #E8F5FE; color: #0F7CB5; }
+    .badge-cat.comercial  { background: #FEF9E7; color: #B7950B; }
+    .badge-cat.operaciones { background: #F5EEF8; color: #7D3C98; }
+    .badge-cat.pricing    { background: #EAFAF1; color: #1E8449; }
 
     .card-time {
       font-size: 12px;
@@ -445,7 +449,7 @@
   </div>
 
   <div class="stats-box">
-    <div class="stat-number">17</div>
+    <div class="stat-number">36</div>
     <div class="stat-label">Casos de Uso</div>
     <hr class="stats-divider"/>
     <div class="stat-time">8-15 min</div>
@@ -464,12 +468,16 @@
 <!-- ── FILTERS ───────────────────────────────────────────── -->
 <div class="filters-bar">
   <div class="filters-left" id="filterBtns">
-    <button class="filter-btn active" data-filter="all">Todos (17)</button>
+    <button class="filter-btn active" data-filter="all">Todos (36)</button>
     <button class="filter-btn" data-filter="fraude">Detección de Fraude (3)</button>
     <button class="filter-btn" data-filter="riesgo">Riesgo y Suscripción (4)</button>
     <button class="filter-btn" data-filter="nlp">IA y Lenguaje Natural (3)</button>
     <button class="filter-btn" data-filter="siniestros">Gestión de Siniestros (2)</button>
     <button class="filter-btn" data-filter="callcenter">Call Center IA (5)</button>
+    <button class="filter-btn" data-filter="asistentes">Asistentes IA (7)</button>
+    <button class="filter-btn" data-filter="comercial">Comercial y Red (2)</button>
+    <button class="filter-btn" data-filter="operaciones">Operaciones (5)</button>
+    <button class="filter-btn" data-filter="pricing">Pricing y Suscripción (5)</button>
   </div>
   <div class="search-box">
     <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
@@ -480,7 +488,7 @@
 </div>
 
 <!-- ── RESULTS COUNT ─────────────────────────────────────── -->
-<div class="results-count" id="resultsCount">Mostrando 17 de 17 casos de uso</div>
+<div class="results-count" id="resultsCount">Mostrando 36 de 36 casos de uso</div>
 
 <!-- ── CARDS ─────────────────────────────────────────────── -->
 <main class="cards-grid" id="cardsGrid"></main>
@@ -605,10 +613,143 @@ const USE_CASES = [
     pain:"Las auditorías de compliance son manuales, costosas y cubren menos del 3% de las llamadas, dejando exposición regulatoria significativa.",
     desc:"Auditor automático con CORTEX.COMPLETE que evalúa 6 criterios normativos (RGPD, LOSSEAR, IDD) en cada llamada y genera scoring de riesgo regulatorio.",
     features:["Auditoría de 6 criterios normativos","Detección de promesas falsas","Control de acceso a datos de terceros","Ranking de compliance por agente"]
+  },
+  {
+    id:"UC18", cat:"asistentes", catLabel:"Asistentes IA", time:"14 min",
+    title:"Gestión de Leads con Asistente de Voz IA",
+    pain:"El 60% de los leads telefónicos se pierden por tiempos de espera o agentes no disponibles. La cualificación manual es lenta e inconsistente, reduciendo la tasa de conversión a póliza.",
+    desc:"Asistente conversacional con Cortex LLM que atiende leads entrantes por voz, cualifica la oportunidad en tiempo real (producto, urgencia, presupuesto), agenda citas con agentes especializados y genera un resumen estructurado del lead para el CRM.",
+    features:["Cualificación de leads con CORTEX.COMPLETE","Extracción de intención y producto solicitado","Scoring de propensión a conversión con ML","Integración con CRM y agenda de agentes"]
+  },
+  {
+    id:"UC19", cat:"asistentes", catLabel:"Asistentes IA", time:"13 min",
+    title:"Asistente Front para Tarificación Inteligente",
+    pain:"Los mediadores pierden 15-20 minutos por cotización buscando tarifas, consultando manuales técnicos y rellenando formularios. La experiencia de tarificación es lenta y genera abandono del mediador.",
+    desc:"Asistente conversacional RAG con Cortex Search sobre manuales de tarificación, tablas de primas y normativa interna. El mediador describe el riesgo en lenguaje natural y el asistente genera la cotización con desglose de coberturas, recargos y descuentos aplicables.",
+    features:["RAG sobre manuales de tarificación con Cortex Search","Generación de cotización en lenguaje natural","Desglose automático de coberturas y exclusiones","Integración con motor de cálculo de primas"]
+  },
+  {
+    id:"UC20", cat:"asistentes", catLabel:"Asistentes IA", time:"12 min",
+    title:"Asistente IA para Seguros de Patinetes y VMPs",
+    pain:"Los seguros de Vehículos de Movilidad Personal (patinetes, e-bikes) son productos nuevos sin histórico actuarial. Los agentes desconocen coberturas específicas y la tarificación se basa en reglas genéricas inadecuadas.",
+    desc:"Chatbot especializado con Cortex LLM y RAG sobre normativa de VMPs (DGT), condiciones de cobertura específicas y tarifas. Responde consultas de clientes y agentes sobre coberturas, exclusiones, requisitos legales y genera cotizaciones adaptadas al perfil de uso.",
+    features:["Base de conocimiento de normativa VMP actualizada","RAG sobre condiciones de cobertura de patinetes","Generación de cotizaciones por perfil de uso","Análisis de sentimiento en interacciones"]
+  },
+  {
+    id:"UC21", cat:"comercial", catLabel:"Comercial y Red", time:"15 min",
+    title:"Optimización Comercial de Oficinas con Feature Store",
+    pain:"Las oficinas y agentes operan con objetivos genéricos sin visibilidad de las capacidades reales de su zona. El 40% del esfuerzo comercial se dedica a segmentos con baja propensión, desperdiciando recursos de la red.",
+    desc:"Feature Store 360 de la red comercial que centraliza métricas de rendimiento, potencial de zona, mix de cartera y capacidades por oficina. Modelos ML predicen el potencial de venta por producto y zona, priorizando esfuerzos comerciales donde mayor es la propensión a contratar.",
+    features:["Feature Store: Entity OFICINA con 6 FeatureViews","Predicción de potencial comercial por zona con ML","Scoring de propensión por producto y segmento","Dashboard de capacidades y objetivos de red"]
+  },
+  {
+    id:"UC22", cat:"comercial", catLabel:"Comercial y Red", time:"12 min",
+    title:"Optimización Inteligente de Gestiones Comerciales",
+    pain:"Los gestores comerciales realizan 20-30 gestiones diarias sin priorización basada en datos. Las visitas improductivas representan el 45% de la actividad, reduciendo el ratio de cierre.",
+    desc:"Motor de recomendación con Cortex ML que prioriza las gestiones diarias de cada agente según propensión del cliente, valor esperado, proximidad geográfica y momento óptimo de contacto. Genera la agenda optimizada del día con argumentarios personalizados.",
+    features:["Scoring de propensión por cliente con ML.CLASSIFICATION","Optimización de ruta y agenda diaria","Argumentarios personalizados con CORTEX.COMPLETE","Dashboard de productividad comercial"]
+  },
+  {
+    id:"UC23", cat:"operaciones", catLabel:"Operaciones", time:"14 min",
+    title:"Catastro Inteligente con IA Geoespacial",
+    pain:"La valoración catastral de inmuebles para suscripción de hogar depende de datos desactualizados y valoraciones manuales. Los errores en la suma asegurada generan infraseguro (35% de las pólizas) o sobreseguro.",
+    desc:"Pipeline de enriquecimiento catastral que cruza datos de catastro, registros de propiedad y valoraciones de mercado con Cortex AI para generar una estimación precisa del valor de reconstrucción, detectar discrepancias y recomendar la suma asegurada óptima.",
+    features:["Cruce de datos catastrales y de mercado","Estimación de valor de reconstrucción con ML","Detección de infraseguro y sobreseguro","Alertas de discrepancias para suscriptores"]
+  },
+  {
+    id:"UC24", cat:"asistentes", catLabel:"Asistentes IA", time:"11 min",
+    title:"Asistente IA para Gestión de Averías",
+    pain:"Los clientes que llaman por avería en carretera experimentan tiempos de espera de 8-12 minutos y deben repetir datos múltiples veces. El proceso manual de asignación de grúa tarda 15-20 minutos adicionales.",
+    desc:"Asistente conversacional con Cortex LLM que recoge los datos de la avería (ubicación, tipo de vehículo, síntomas), diagnostica posibles causas, asigna el recurso de asistencia más cercano y genera el parte de asistencia automáticamente.",
+    features:["Diagnóstico de avería con CORTEX.COMPLETE","Geolocalización y asignación de recurso óptimo","Generación automática de parte de asistencia","Estimación de tiempo de llegada con ML"]
+  },
+  {
+    id:"UC25", cat:"asistentes", catLabel:"Asistentes IA", time:"10 min",
+    title:"Asistente IA Especializado en Batería",
+    pain:"Las incidencias por batería representan el 35% de las asistencias en carretera. El diagnóstico telefónico es impreciso y el 20% de los envíos de grúa son innecesarios (se resuelve con arranque auxiliar).",
+    desc:"Asistente especializado con Cortex LLM que guía al cliente paso a paso para diagnosticar el problema de batería, determina si puede resolverse sin grúa (arranque auxiliar, pinzas) y solo escala a asistencia presencial cuando es necesario, reduciendo envíos innecesarios un 30%.",
+    features:["Diagnóstico guiado paso a paso con LLM","Clasificación: arranque auxiliar vs. sustitución vs. grúa","Reducción de envíos innecesarios con ML","Seguimiento post-asistencia automatizado"]
+  },
+  {
+    id:"UC26", cat:"asistentes", catLabel:"Asistentes IA", time:"10 min",
+    title:"Asistente IA para Pinchazo de Rueda",
+    pain:"El 25% de las asistencias por pinchazo podrían resolverse con kit antipinchazos o rueda de repuesto, pero los clientes desconocen cómo utilizarlos. La espera media de grúa es de 45 minutos.",
+    desc:"Asistente guiado con Cortex LLM que identifica el modelo de vehículo, verifica si dispone de rueda de repuesto o kit, y guía al cliente paso a paso con instrucciones adaptadas a su vehículo. Si no es posible la auto-resolución, escala a asistencia presencial.",
+    features:["Identificación de vehículo y equipamiento","Guía paso a paso adaptada al modelo con LLM","Clasificación auto-resoluble vs. grúa necesaria","Métricas de resolución sin asistencia presencial"]
+  },
+  {
+    id:"UC27", cat:"asistentes", catLabel:"Asistentes IA", time:"11 min",
+    title:"Asistente IA para Partes de Agua (Hogar)",
+    pain:"Los siniestros de agua en hogar requieren coordinación entre múltiples partes (asegurado, comunidad, fontanero, perito). La apertura del parte es compleja y el 30% tiene datos incompletos que retrasan la tramitación.",
+    desc:"Asistente conversacional con Cortex LLM especializado en siniestros de agua que recoge datos estructurados del siniestro (origen, afectación, terceros implicados), clasifica la urgencia, coordina la intervención de profesionales y genera el parte completo listo para tramitar.",
+    features:["Recogida guiada de datos del siniestro de agua","Clasificación de urgencia y gravedad con LLM","Coordinación automática de profesionales","Generación de parte completo en formato estándar"]
+  },
+  {
+    id:"UC28", cat:"operaciones", catLabel:"Operaciones", time:"15 min",
+    title:"Smart Triage de Siniestros con Model Registry",
+    pain:"El triaje manual de siniestros asigna el mismo nivel de prioridad al 70% de los casos, generando cuellos de botella en tramitadores senior mientras casos simples esperan innecesariamente.",
+    desc:"Motor de triaje inteligente con modelos ML versionados en Model Registry que clasifica cada siniestro en el momento del FNOL según complejidad, importe estimado, probabilidad de fraude y necesidad de peritaje. Los modelos se reentrenan mensualmente y se versionan automáticamente.",
+    features:["Model Registry: smart_triage_model con versionado","Clasificación multi-dimensional (complejidad + fraude + peritaje)","Asignación automática a tramitador según expertise","Reentrenamiento y promoción automática de versiones"]
+  },
+  {
+    id:"UC29", cat:"operaciones", catLabel:"Operaciones", time:"13 min",
+    title:"Resumen Inteligente de Atestados Policiales",
+    pain:"Los peritos dedican 25-40 minutos por atestado policial extrayendo manualmente datos relevantes (culpabilidad, lesiones, daños, testigos). La inconsistencia en la extracción genera errores en la valoración.",
+    desc:"Pipeline de procesamiento documental con Cortex LLM que analiza el texto completo del atestado, extrae entidades clave en formato estructurado (vehículos, conductores, lesiones, culpabilidad, croquis) y genera un resumen ejecutivo estandarizado para el tramitador.",
+    features:["Extracción de entidades de atestados con CORTEX.COMPLETE","Determinación automática de culpabilidad","Resumen ejecutivo estructurado en JSON","Detección de inconsistencias en declaraciones"]
+  },
+  {
+    id:"UC30", cat:"pricing", catLabel:"Pricing y Suscripción", time:"15 min",
+    title:"Sofisticación Pricing Nuevo Negocio Hogar con Feature Store",
+    pain:"La tarificación de hogar nuevo negocio usa modelos GLM con 15-20 variables estáticas. Los competidores con ML usan 80+ variables dinámicas, generando selección adversa en los mejores riesgos.",
+    desc:"Feature Store de riesgo hogar que centraliza 60+ variables de tarificación (catastrales, siniestralidad zona, clima, sociodemográficas, IoT). Modelos de pricing ML entrenados sobre el Feature Store predicen la frecuencia y severidad con mayor precisión que los GLM tradicionales.",
+    features:["Feature Store: Entity RIESGO_HOGAR con 5 FeatureViews","60+ variables de tarificación centralizadas","Modelo ML de frecuencia y severidad","Comparativa ML vs GLM tradicional en dashboard"]
+  },
+  {
+    id:"UC31", cat:"pricing", catLabel:"Pricing y Suscripción", time:"14 min",
+    title:"Sofisticación Suscripción Nuevo Negocio Hogar",
+    pain:"La suscripción de hogar aprueba o rechaza con reglas binarias que no capturan la granularidad del riesgo. El 15% de las pólizas rechazadas son rentables y el 10% de las aceptadas generan pérdidas.",
+    desc:"Modelo de suscripción inteligente con Cortex ML que va más allá del accept/reject: clasifica cada solicitud en 5 niveles de riesgo con condiciones específicas (franquicia, exclusiones, recargos) y genera la recomendación de suscripción con justificación para el suscriptor.",
+    features:["Clasificación en 5 niveles de riesgo con ML","Recomendación de condiciones personalizadas","Justificación de la decisión con CORTEX.COMPLETE","Dashboard de suscripción con análisis de rentabilidad"]
+  },
+  {
+    id:"UC32", cat:"pricing", catLabel:"Pricing y Suscripción", time:"13 min",
+    title:"Automatización Tarificación Colectivos de Salud",
+    pain:"La tarificación de colectivos de salud es manual, requiere 3-5 días por propuesta y depende de actuarios senior. Las aseguradoras solo pueden cotizar 10-15 colectivos al mes, perdiendo oportunidades.",
+    desc:"Pipeline automatizado con Cortex ML que analiza la composición del colectivo (pirámide de edad, sector, histórico de siniestralidad), aplica factores de ajuste y genera una propuesta tarifaria competitiva en minutos, incluyendo escenarios de cobertura y análisis de sensibilidad.",
+    features:["Análisis automático de composición del colectivo","Modelo ML de siniestralidad esperada por perfil","Generación de propuesta tarifaria con escenarios","Análisis de sensibilidad y break-even"]
+  },
+  {
+    id:"UC33", cat:"pricing", catLabel:"Pricing y Suscripción", time:"15 min",
+    title:"Score Pricing Low Cost con Model Registry",
+    pain:"Los productos low cost requieren tarificación ultra-precisa porque operan con márgenes del 2-5%. Un error del 3% en la prima convierte el producto en no rentable o no competitivo.",
+    desc:"Modelo de pricing de alta precisión para productos low cost, versionado en Model Registry con A/B testing automático. Combina variables tradicionales con señales digitales (comportamiento web, dispositivo, hora de cotización) para micro-segmentar el riesgo al máximo nivel.",
+    features:["Model Registry: low_cost_pricing_model con A/B testing","Micro-segmentación con 50+ variables digitales","Monitorización de loss ratio por versión de modelo","Promoción automática del mejor modelo a producción"]
+  },
+  {
+    id:"UC34", cat:"operaciones", catLabel:"Operaciones", time:"12 min",
+    title:"Valoración Inteligente de Daños en Lunas",
+    pain:"Los siniestros de lunas representan el 20% del volumen pero solo el 5% del coste. Sin embargo, la gestión es desproporcionadamente manual: cada parte requiere verificación de cobertura, aprobación del taller y valoración.",
+    desc:"Pipeline automatizado con Cortex AI que clasifica el tipo de daño en luna (reparación vs. sustitución), verifica cobertura automáticamente, selecciona el taller óptimo por zona y genera la autorización de reparación sin intervención humana para el 80% de los casos.",
+    features:["Clasificación reparación vs. sustitución con LLM","Verificación automática de cobertura de lunas","Selección óptima de taller por zona y precio","Auto-autorización para casos estándar"]
+  },
+  {
+    id:"UC35", cat:"pricing", catLabel:"Pricing y Suscripción", time:"14 min",
+    title:"Desacoplamiento de Pricing: Riesgo vs. Comercial",
+    pain:"El precio final mezcla la prima técnica (riesgo) con ajustes comerciales sin trazabilidad. Cuando hay pérdidas, no se puede determinar si el problema es el modelo de riesgo o los descuentos comerciales.",
+    desc:"Framework de desacoplamiento que separa la prima de riesgo (modelo técnico ML) de los ajustes comerciales (descuentos, campañas, retención). Monitoriza independientemente el resultado técnico y comercial, permitiendo optimizar cada componente por separado.",
+    features:["Separación prima técnica vs. ajuste comercial","Modelo ML de prima pura de riesgo","Monitorización independiente de loss ratio técnico","Dashboard de trazabilidad pricing con drill-down"]
+  },
+  {
+    id:"UC36", cat:"operaciones", catLabel:"Operaciones", time:"13 min",
+    title:"API Táctica de Rechazos Inteligentes en Hogar",
+    pain:"El 12% de las cotizaciones de hogar se rechazan por reglas rígidas. Muchos rechazos son evitables con condiciones especiales (franquicia mayor, exclusión específica) que mantendrían al cliente en cartera.",
+    desc:"Motor de decisión inteligente con Cortex ML que, antes de rechazar una cotización, evalúa alternativas viables: franquicia incrementada, exclusión de coberturas específicas, prima con recargo. Genera una contra-oferta automática que convierte el 35% de los rechazos en pólizas rentables.",
+    features:["Evaluación de alternativas antes del rechazo con ML","Generación de contra-ofertas automáticas","Simulación de rentabilidad por escenario","Dashboard de recuperación de rechazos"]
   }
 ];
 
-const TOTAL = 17;
+const TOTAL = 36;
 
 function renderCards(list) {
   const grid = document.getElementById('cardsGrid');
@@ -616,7 +757,7 @@ function renderCards(list) {
   grid.innerHTML = '';
   count.textContent = `Mostrando ${list.length} de ${TOTAL} casos de uso`;
   list.forEach(uc => {
-    const catClass = { 'Riesgo y Suscripción':'riesgo', 'IA y Lenguaje Natural':'nlp', 'Gestión de Siniestros':'siniestros', 'Call Center IA':'callcenter' }[uc.catLabel] || '';
+    const catClass = { 'Riesgo y Suscripción':'riesgo', 'IA y Lenguaje Natural':'nlp', 'Gestión de Siniestros':'siniestros', 'Call Center IA':'callcenter', 'Asistentes IA':'asistentes', 'Comercial y Red':'comercial', 'Operaciones':'operaciones', 'Pricing y Suscripción':'pricing' }[uc.catLabel] || '';
     grid.innerHTML += `
       <article class="card">
         <div class="card-header">
@@ -865,6 +1006,215 @@ const GUIAS = {
     datos: ['Llamadas: 600 transcripciones con cumplimiento variable','Criterios: Aviso grabación, verificación ID, info precontractual, RGPD, promesas falsas, acceso no titular','Scoring: 0-6 criterios cumplidos, nivel de riesgo (bajo/medio/alto/crítico)'],
     estratificacion: ['Riesgo Crítico: Múltiples infracciones graves — acción inmediata','Riesgo Alto: Promesas falsas o acceso no autorizado detectado','Riesgo Medio: Faltan protocolos obligatorios','Riesgo Bajo: Cumplimiento adecuado'],
     como_usar: ['Ejecutar celdas secuencialmente','Se generan 600 llamadas con diferentes niveles de cumplimiento','Cortex AI audita cada llamada en 6 criterios normativos','El dashboard muestra ranking de compliance y llamadas de riesgo']
+  },
+  UC18: {
+    title: 'Gestión de Leads con Asistente de Voz IA',
+    contexto: 'Estos Cortex Code Prompts construyen un asistente conversacional IA para la cualificación y gestión de leads telefónicos entrantes en seguros.',
+    foco: 'Captación comercial — cualificación automatizada de leads telefónicos con IA conversacional.',
+    reto: 'Reducir el 60% de leads perdidos por tiempos de espera, cualificando oportunidades en tiempo real y derivando al agente adecuado.',
+    objetivos: ['Simular transcripciones de leads entrantes por voz','Cualificar leads con CORTEX.COMPLETE (producto, urgencia, presupuesto)','Puntuar propensión a conversión con ML.CLASSIFICATION','Generar resúmenes estructurados para CRM','Dashboard de gestión de leads con pipeline'],
+    funcionalidades: ['LLM: Cualificación con CORTEX.COMPLETE y extracción de intención','ML: Scoring de propensión con ML.CLASSIFICATION','Datos sintéticos: 800 transcripciones de leads de 5 productos','Dashboard Streamlit: Pipeline de leads con scoring y asignación'],
+    datos: ['Leads: Transcripciones con datos de contacto, producto solicitado, urgencia','Cualificación: Producto, presupuesto, urgencia, canal de origen','Scoring ML: Propensión a conversión (Alta/Media/Baja)','Asignaciones: Lead → agente especialista según producto y zona'],
+    estratificacion: ['Lead Caliente (≥70%): Asignación inmediata a agente senior','Lead Templado (40-70%): Seguimiento programado en 24h','Lead Frío (<40%): Nurturing automático por email'],
+    como_usar: ['Ejecutar prompts secuencialmente en Cortex Code','Se generan 800 transcripciones de leads sintéticos','El modelo cualifica y puntúa cada lead automáticamente','El dashboard muestra pipeline, scoring y asignación a agentes']
+  },
+  UC19: {
+    title: 'Asistente Front para Tarificación Inteligente',
+    contexto: 'Estos Cortex Code Prompts construyen un asistente RAG sobre manuales de tarificación para mediadores de seguros.',
+    foco: 'Productividad de mediadores — asistencia en lenguaje natural para cotización rápida de pólizas.',
+    reto: 'Reducir de 15-20 minutos a 2-3 minutos el tiempo de cotización, ofreciendo respuestas instantáneas sobre tarifas, coberturas y exclusiones.',
+    objetivos: ['Crear base de conocimiento de manuales de tarificación','Indexar documentos con Cortex Search para búsqueda semántica','Implementar pipeline RAG para consultas de tarificación','Generar cotizaciones con desglose de coberturas','Interfaz conversacional para mediadores'],
+    funcionalidades: ['RAG: Cortex Search + CORTEX.COMPLETE sobre manuales de tarificación','Datos sintéticos: 150 documentos de tarificación por producto (Auto, Hogar, Vida, Salud, RC)','Búsqueda semántica: Chunks de manuales y tablas de primas indexados','Dashboard Streamlit: Chat de tarificación con desglose de prima'],
+    datos: ['Manuales: Condiciones de tarificación por producto, zona, perfil','Tablas de primas: Factores por edad, zona, coberturas, franquicia','FAQs: Preguntas frecuentes de mediadores sobre coberturas','Cotizaciones: Desglose de prima base + recargos + descuentos'],
+    estratificacion: ['Cotización directa: Riesgo estándar dentro de norma → cotización automática','Revisión técnica: Riesgo con exclusiones o recargos → consulta a suscriptor','Fuera de norma: Riesgo no tarificable → derivación a reaseguro'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se genera base de documentos de tarificación y se indexan','Se crea Cortex Search Service sobre manuales','El dashboard permite consultar tarifas en lenguaje natural']
+  },
+  UC20: {
+    title: 'Asistente IA para Seguros de Patinetes y VMPs',
+    contexto: 'Estos Cortex Code Prompts construyen un chatbot especializado en seguros de Vehículos de Movilidad Personal usando RAG sobre normativa específica.',
+    foco: 'Productos nuevos — asistencia experta en seguros de patinetes eléctricos y VMPs sin histórico actuarial.',
+    reto: 'Proporcionar conocimiento experto sobre un producto nuevo donde agentes y clientes carecen de información precisa sobre coberturas y normativa.',
+    objetivos: ['Crear base de conocimiento de normativa VMP (DGT, ordenanzas)','Indexar condiciones de cobertura específicas de VMPs','Implementar RAG especializado en patinetes y movilidad','Generar cotizaciones adaptadas al perfil de uso','Analizar sentimiento de las interacciones'],
+    funcionalidades: ['RAG: Cortex Search sobre normativa VMP y condiciones de cobertura','Sentimiento: CORTEX.SENTIMENT para medir satisfacción','Datos sintéticos: 100 documentos normativos + 500 consultas simuladas','Dashboard Streamlit: Chat especializado en VMPs con cotizador'],
+    datos: ['Normativa: Textos DGT, ordenanzas municipales, requisitos de seguro obligatorio','Coberturas: RC obligatoria, daños propios, robo, asistencia, accidentes','Consultas: 500 preguntas frecuentes sobre VMPs y seguros','Cotizaciones: Prima por perfil de uso (urbano, commuter, deportivo)'],
+    estratificacion: ['Consulta normativa: Respuesta directa con cita de fuente legal','Cotización estándar: Perfil urbano o commuter → tarifa automática','Cotización especial: Perfil deportivo o flotas → derivación a comercial'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se genera base de normativa VMP y se indexa','Se crea Cortex Search Service sobre documentos de VMPs','El chatbot responde consultas y genera cotizaciones']
+  },
+  UC21: {
+    title: 'Optimización Comercial de Oficinas con Feature Store',
+    contexto: 'Estos Cortex Code Prompts construyen un Feature Store 360 de la red comercial con modelos de potencial de venta por zona y oficina.',
+    foco: 'Red comercial — optimización de esfuerzos de venta por oficina usando Feature Store de Snowflake.',
+    reto: 'Maximizar la productividad comercial de la red priorizando esfuerzos donde mayor es la propensión a contratar, usando datos centralizados en Feature Store.',
+    objetivos: ['Crear Entity OFICINA en Snowflake Feature Store','Construir 6 FeatureViews (rendimiento, zona, cartera, demografía, competencia, digital)','Entrenar modelos de potencial por producto con ML.CLASSIFICATION','Generar recomendaciones de esfuerzo comercial por oficina','Dashboard de capacidades y objetivos de red'],
+    funcionalidades: ['Feature Store: Entity OFICINA, 6 FeatureViews con 40+ features','ML: Predicción de potencial de venta por producto y zona','Datos sintéticos: 200 oficinas, 50 zonas, 5 productos, 3 años de histórico','Dashboard Streamlit: Mapa de potencial comercial con recomendaciones'],
+    datos: ['Oficinas: 200 puntos de venta con métricas de rendimiento (producción, cartera, renovación)','Zonas: 50 áreas con datos sociodemográficos, competencia, penetración','Feature Store: rendimiento_oficina, potencial_zona, mix_cartera, perfil_zona, presencia_competencia, canal_digital','Predicciones: Potencial por producto (Auto, Hogar, Vida, Salud, Empresas)'],
+    estratificacion: ['Alto Potencial (≥70%): Refuerzo de equipo + campañas dirigidas','Potencial Medio (40-70%): Optimización de mix de producto','Potencial Bajo (<40%): Reducción de estructura o reasignación de zona'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se crean las entidades y FeatureViews del Feature Store','Los modelos ML se entrenan sobre el Feature Store','El dashboard muestra el potencial y recomendaciones por oficina']
+  },
+  UC22: {
+    title: 'Optimización Inteligente de Gestiones Comerciales',
+    contexto: 'Estos Cortex Code Prompts construyen un motor de recomendación para priorizar gestiones comerciales diarias de agentes de seguros.',
+    foco: 'Productividad de agentes — priorización de gestiones comerciales basada en datos para maximizar conversión.',
+    reto: 'Eliminar el 45% de visitas improductivas priorizando gestiones por propensión, valor esperado y momento óptimo de contacto.',
+    objetivos: ['Generar cartera de clientes con señales de propensión','Entrenar scoring de propensión con ML.CLASSIFICATION','Optimizar agenda diaria por rentabilidad esperada','Generar argumentarios personalizados con CORTEX.COMPLETE','Dashboard de productividad comercial'],
+    funcionalidades: ['ML: Scoring de propensión por producto con ML.CLASSIFICATION','LLM: Argumentarios personalizados con CORTEX.COMPLETE','Datos sintéticos: 2.000 clientes, 10 agentes, 6 meses de historial','Dashboard Streamlit: Agenda optimizada con argumentarios'],
+    datos: ['Clientes: Perfil, cartera actual, interacciones, propensión a compra','Gestiones históricas: Fecha, tipo, resultado, producto, tiempo empleado','Scoring: Propensión por producto, valor esperado, probabilidad de éxito','Agenda optimizada: Top 15 gestiones/día por agente con argumentario'],
+    estratificacion: ['Gestión Prioritaria (valor esperado alto): Visita presencial con argumentario','Gestión Estándar (valor medio): Llamada telefónica programada','Gestión Digital (valor bajo): Email personalizado automatizado'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan clientes, agentes e historial de gestiones','El modelo prioriza gestiones por rentabilidad esperada','El dashboard genera la agenda diaria optimizada por agente']
+  },
+  UC23: {
+    title: 'Catastro Inteligente con IA Geoespacial',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de enriquecimiento catastral para suscripción de seguros de hogar.',
+    foco: 'Suscripción de hogar — valoración precisa de inmuebles combinando datos catastrales, mercado e IA.',
+    reto: 'Reducir el infraseguro del 35% de las pólizas de hogar mediante estimaciones precisas del valor de reconstrucción.',
+    objetivos: ['Generar datos catastrales sintéticos de inmuebles','Cruzar datos de catastro con valoraciones de mercado','Estimar valor de reconstrucción con ML.CLASSIFICATION','Detectar discrepancias entre suma asegurada y valor real','Dashboard para suscriptores con alertas'],
+    funcionalidades: ['ML: Estimación de valor de reconstrucción con ML.CLASSIFICATION','Datos sintéticos: 1.500 inmuebles con datos catastrales y de mercado','Detección: Infraseguro (suma < 80% valor), sobreseguro (suma > 120% valor)','Dashboard Streamlit: Panel de valoración con alertas y recomendaciones'],
+    datos: ['Catastro: Referencia catastral, superficie, uso, antigüedad, materiales, zona','Mercado: Precio m2 por zona, evolución interanual, transacciones recientes','Pólizas: Suma asegurada declarada, coberturas, prima actual','Valoración ML: Valor de reconstrucción estimado, intervalo de confianza'],
+    estratificacion: ['Infraseguro grave (<70%): Alerta roja, contacto obligatorio con asegurado','Infraseguro moderado (70-90%): Alerta amarilla, recomendación de revisión','Correcto (90-110%): Sin acción necesaria','Sobreseguro (>110%): Revisión para ajustar prima a la baja'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan inmuebles con datos catastrales y de mercado','El modelo estima el valor de reconstrucción','El dashboard muestra discrepancias y recomendaciones']
+  },
+  UC24: {
+    title: 'Asistente IA para Gestión de Averías',
+    contexto: 'Estos Cortex Code Prompts construyen un asistente conversacional para la gestión de averías en carretera con diagnóstico IA.',
+    foco: 'Asistencia en carretera — diagnóstico automatizado de averías y asignación de recursos con IA.',
+    reto: 'Reducir el tiempo de gestión de avería de 20-30 minutos a 5 minutos con diagnóstico IA y asignación automática de recurso.',
+    objetivos: ['Generar transcripciones de llamadas de asistencia por avería','Diagnosticar causa con CORTEX.COMPLETE','Clasificar tipo de asistencia necesaria con ML','Asignar recurso óptimo por proximidad','Dashboard de gestión de asistencia'],
+    funcionalidades: ['LLM: Diagnóstico de avería con CORTEX.COMPLETE','ML: Clasificación tipo de asistencia con ML.CLASSIFICATION','Datos sintéticos: 1.000 incidencias de avería de 8 tipos','Dashboard Streamlit: Panel de gestión con asignación de recursos'],
+    datos: ['Incidencias: Transcripción, tipo vehículo, ubicación, síntomas descritos','Diagnóstico IA: Causa probable, tipo asistencia (grúa/mecánico/arranque)','Recursos: 50 proveedores de asistencia con ubicación y disponibilidad','Asignación: Proveedor óptimo, ETA estimado, coste previsto'],
+    estratificacion: ['Emergencia: Accidente con lesiones → ambulancia + grúa inmediata','Urgente: Avería en vía rápida → grúa prioritaria < 30 min','Normal: Avería en zona segura → asistencia < 60 min','Auto-resoluble: Batería/pinchazo → guía de auto-resolución'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 1.000 incidencias de avería con transcripciones','Cortex AI diagnostica y clasifica cada incidencia','El dashboard muestra asignación de recursos y métricas']
+  },
+  UC25: {
+    title: 'Asistente IA Especializado en Batería',
+    contexto: 'Estos Cortex Code Prompts construyen un asistente conversacional especializado en diagnóstico y resolución de incidencias de batería.',
+    foco: 'Asistencia en carretera — resolución inteligente de incidencias de batería reduciendo envíos innecesarios de grúa.',
+    reto: 'Reducir el 20% de envíos innecesarios de grúa por problemas de batería mediante diagnóstico guiado con IA.',
+    objetivos: ['Generar incidencias de batería con diferentes causas raíz','Crear flujo de diagnóstico guiado con CORTEX.COMPLETE','Clasificar resolución (arranque auxiliar / sustitución / grúa)','Medir tasa de auto-resolución vs. asistencia presencial','Dashboard de métricas de resolución'],
+    funcionalidades: ['LLM: Diagnóstico paso a paso con CORTEX.COMPLETE','ML: Clasificación de resolución con ML.CLASSIFICATION','Datos sintéticos: 600 incidencias de batería con 4 causas raíz','Dashboard Streamlit: Flujo de diagnóstico y métricas de resolución'],
+    datos: ['Incidencias: Síntomas, antigüedad batería, tipo vehículo, temperatura ambiente','Diagnóstico: Preguntas guiadas, respuestas del cliente, conclusión','Resolución: Arranque auxiliar (40%), sustitución in situ (25%), grúa (35%)','Métricas: Tasa de auto-resolución, ahorro por grúa evitada, NPS'],
+    estratificacion: ['Arranque auxiliar: Batería descargada por uso prolongado de accesorios → guía telefónica','Sustitución in situ: Batería agotada por antigüedad → técnico con batería','Grúa necesaria: Problema eléctrico complejo → grúa al taller','Auto-resolución: Cliente puede arrancar con pinzas → guía paso a paso'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 600 incidencias de batería con diferentes causas','El asistente IA guía el diagnóstico paso a paso','El dashboard muestra tasas de resolución y ahorro']
+  },
+  UC26: {
+    title: 'Asistente IA para Pinchazo de Rueda',
+    contexto: 'Estos Cortex Code Prompts construyen un asistente que guía al cliente para resolver un pinchazo de rueda sin necesidad de grúa.',
+    foco: 'Asistencia en carretera — guía de auto-resolución para pinchazos adaptada al modelo de vehículo.',
+    reto: 'Conseguir que el 25% de los pinchazos se resuelvan sin asistencia presencial mediante guía inteligente adaptada al vehículo.',
+    objetivos: ['Crear base de conocimiento de equipamiento por modelo de vehículo','Implementar flujo de diagnóstico con CORTEX.COMPLETE','Generar instrucciones paso a paso adaptadas al modelo','Medir tasa de auto-resolución y satisfacción','Dashboard de métricas de resolución'],
+    funcionalidades: ['RAG: Cortex Search sobre fichas técnicas de vehículos','LLM: Guía paso a paso con CORTEX.COMPLETE','Datos sintéticos: 500 incidencias de pinchazo, 30 modelos de vehículo','Dashboard Streamlit: Flujo guiado y métricas de auto-resolución'],
+    datos: ['Vehículos: 30 modelos con equipamiento (repuesto/kit/nada)','Incidencias: Tipo de pinchazo, ubicación, condiciones, modelo vehículo','Guía generada: Instrucciones paso a paso adaptadas al modelo','Resolución: Auto-resuelta (25%), asistencia necesaria (75%)'],
+    estratificacion: ['Auto-resolución con repuesto: Vehículo tiene rueda de repuesto → guía de cambio','Auto-resolución con kit: Vehículo tiene kit antipinchazos → guía de uso','Asistencia necesaria: Sin equipamiento o pinchazo lateral → envío de grúa','Emergencia: Vía rápida o condiciones peligrosas → asistencia prioritaria'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se crea base de datos de equipamiento por modelo','El asistente identifica el vehículo y genera instrucciones','El dashboard muestra tasas de resolución por modelo']
+  },
+  UC27: {
+    title: 'Asistente IA para Partes de Agua (Hogar)',
+    contexto: 'Estos Cortex Code Prompts construyen un asistente conversacional especializado en apertura y gestión de siniestros de agua en hogar.',
+    foco: 'Siniestros de hogar — automatización de la apertura de partes de agua con recogida guiada de datos y coordinación.',
+    reto: 'Reducir el 30% de partes incompletos y acelerar la tramitación coordinando las partes implicadas en siniestros de agua.',
+    objetivos: ['Generar siniestros de agua con diferentes orígenes y afectaciones','Implementar recogida guiada de datos con CORTEX.COMPLETE','Clasificar urgencia y gravedad automáticamente','Generar parte completo en formato estándar','Dashboard de gestión de siniestros de agua'],
+    funcionalidades: ['LLM: Recogida guiada de datos con CORTEX.COMPLETE','Sentimiento: CORTEX.SENTIMENT para detectar urgencia emocional','Datos sintéticos: 500 siniestros de agua de 6 orígenes','Dashboard Streamlit: Gestión de partes con clasificación de urgencia'],
+    datos: ['Siniestros: Origen (rotura tubería, infiltración, desbordamiento, etc.), afectación, terceros','Partes: Datos estructurados del siniestro generados por IA','Urgencia: Clasificación (Emergencia/Urgente/Normal) basada en daños y riesgo','Profesionales: Fontaneros, peritos, restauradores por zona'],
+    estratificacion: ['Emergencia: Inundación activa con daños graves → fontanero urgente + perito','Urgente: Fuga activa contenida → fontanero en 24h','Normal: Daños por humedad antigua → perito programado','Convenio: Daños a terceros → activar protocolo de convenio entre aseguradoras'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 500 siniestros de agua con diferentes orígenes','El asistente recoge datos y genera el parte completo','El dashboard muestra gestión de partes y asignación de profesionales']
+  },
+  UC28: {
+    title: 'Smart Triage de Siniestros con Model Registry',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de triaje inteligente de siniestros con modelos versionados en Snowflake Model Registry.',
+    foco: 'Operaciones de siniestros — clasificación multi-dimensional con modelos ML versionados y reentrenamiento automático.',
+    reto: 'Eliminar el triaje manual que asigna la misma prioridad al 70% de los casos, usando modelos ML con versionado y promoción automática.',
+    objetivos: ['Generar siniestros con diferentes niveles de complejidad','Entrenar modelo de triaje multi-clase con ML.CLASSIFICATION','Registrar modelo en Snowflake Model Registry con versionado','Implementar reentrenamiento y promoción de versiones','Dashboard de triaje con métricas por versión de modelo'],
+    funcionalidades: ['Model Registry: smart_triage_model registrado con version v1 y v2','ML: Clasificación multi-dimensional (complejidad + fraude + peritaje)','Datos sintéticos: 2.000 siniestros con triaje manual histórico conocido','Dashboard Streamlit: Panel de triaje con comparativa de versiones'],
+    datos: ['Siniestros: Tipo, importe, documentación, historial del tomador','Triaje histórico: Clasificación manual (Express/Estándar/Complejo/Especial)','Modelo v1: Entrenado con 6 meses de datos','Modelo v2: Reentrenado con 12 meses + nuevas features','Métricas por versión: Accuracy, precision, recall, tiempo medio de tramitación'],
+    estratificacion: ['Express: Siniestro simple, importe bajo, sin fraude → tramitación automática','Estándar: Complejidad media → tramitador junior','Complejo: Alta complejidad o sospecha → tramitador senior + perito','Especial: Posible fraude o litigio → unidad especial'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se entrenan dos versiones del modelo de triaje','Ambas se registran en Model Registry con métricas','El dashboard compara versiones y permite promover la mejor']
+  },
+  UC29: {
+    title: 'Resumen Inteligente de Atestados Policiales',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de extracción y resumen de atestados policiales con Cortex LLM.',
+    foco: 'Gestión documental — extracción automatizada de datos de atestados policiales para acelerar la tramitación de siniestros.',
+    reto: 'Reducir de 25-40 minutos a 2 minutos la extracción de datos relevantes de un atestado policial.',
+    objetivos: ['Generar textos simulados de atestados policiales completos','Extraer entidades estructuradas con CORTEX.COMPLETE','Determinar culpabilidad de forma automática','Detectar inconsistencias en declaraciones','Dashboard de procesamiento documental'],
+    funcionalidades: ['LLM: Extracción de entidades con CORTEX.COMPLETE','Datos sintéticos: 300 atestados simulados con diferentes escenarios','Extracción: Vehículos, conductores, lesiones, culpabilidad, croquis, testigos','Dashboard Streamlit: Panel de atestados procesados con resumen ejecutivo'],
+    datos: ['Atestados: Textos completos simulados de 8 tipos de accidente','Entidades extraídas: Matrículas, conductores, lesiones, puntos de impacto','Culpabilidad: Determinación automática (asegurado/tercero/parcial/desconocida)','Inconsistencias: Discrepancias entre declaraciones detectadas por IA'],
+    estratificacion: ['Culpabilidad clara del tercero: Activar subrogación inmediatamente','Culpabilidad parcial: Revisión por perito para determinar porcentajes','Culpabilidad del asegurado: Tramitación estándar','Inconsistencias detectadas: Derivar a investigación de fraude'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 300 atestados con textos realistas','Cortex AI extrae entidades y determina culpabilidad','El dashboard muestra resúmenes y detección de inconsistencias']
+  },
+  UC30: {
+    title: 'Sofisticación Pricing Nuevo Negocio Hogar con Feature Store',
+    contexto: 'Estos Cortex Code Prompts construyen un Feature Store de riesgo hogar con 60+ variables para modelos de pricing sofisticados.',
+    foco: 'Pricing de hogar — Feature Store centralizado de variables de tarificación con modelos ML de frecuencia y severidad.',
+    reto: 'Superar los modelos GLM tradicionales (15-20 variables) con ML sobre 60+ variables centralizadas en Feature Store.',
+    objetivos: ['Crear Entity RIESGO_HOGAR en Snowflake Feature Store','Construir 5 FeatureViews (catastral, siniestralidad, clima, sociodemográfico, IoT)','Entrenar modelos de frecuencia y severidad con ML.CLASSIFICATION','Comparar rendimiento ML vs GLM tradicional','Dashboard de pricing con análisis de impacto'],
+    funcionalidades: ['Feature Store: Entity RIESGO_HOGAR, 5 FeatureViews con 60+ features','ML: Modelos de frecuencia y severidad entrenados sobre Feature Store','Datos sintéticos: 3.000 pólizas de hogar con 3 años de siniestralidad','Dashboard Streamlit: Comparativa ML vs GLM con drill-down por segmento'],
+    datos: ['Catastral: Superficie, antigüedad, materiales, zona catastral, valor','Siniestralidad: Frecuencia zona, severidad zona, tipo de siniestro predominante','Clima: Precipitación media, días de helada, riesgo inundación, granizo','Sociodemográfico: Renta zona, densidad, tipo de ocupación, rotación vecinos','IoT: Alarma conectada, detectores humo/agua, smart home score'],
+    estratificacion: ['Riesgo Bajo (prima ML < GLM -10%): Descuento agresivo para captar','Riesgo Estándar (prima ML ≈ GLM ±10%): Mantener tarifa competitiva','Riesgo Alto (prima ML > GLM +10%): Recargo o condiciones especiales','Riesgo Muy Alto (prima ML > GLM +25%): Declinar o franquicia elevada'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se crean entidades y FeatureViews del Feature Store','Los modelos ML se entrenan sobre 60+ features','El dashboard compara rendimiento ML vs GLM por segmento']
+  },
+  UC31: {
+    title: 'Sofisticación Suscripción Nuevo Negocio Hogar',
+    contexto: 'Estos Cortex Code Prompts construyen un modelo de suscripción inteligente para hogar que clasifica en 5 niveles de riesgo con condiciones personalizadas.',
+    foco: 'Suscripción de hogar — clasificación granular del riesgo con recomendación de condiciones específicas por nivel.',
+    reto: 'Superar las reglas binarias (accept/reject) capturando el 15% de pólizas rentables que se rechazan injustamente.',
+    objetivos: ['Generar solicitudes de hogar con perfiles de riesgo variados','Entrenar clasificador de 5 niveles de riesgo con ML','Generar recomendaciones de condiciones con CORTEX.COMPLETE','Justificar decisiones para el suscriptor','Dashboard de suscripción con análisis de rentabilidad'],
+    funcionalidades: ['ML: Clasificación de 5 niveles de riesgo con ML.CLASSIFICATION','LLM: Justificación de decisión con CORTEX.COMPLETE','Datos sintéticos: 2.000 solicitudes de hogar con resultado de siniestralidad conocido','Dashboard Streamlit: Panel de suscripción con recomendaciones y rentabilidad'],
+    datos: ['Solicitudes: Datos del inmueble, asegurado, coberturas solicitadas, suma','Resultado: Siniestralidad 3 años conocida (para entrenar)','Niveles: Preferente / Estándar / Sub-estándar / Restrictivo / Declinar','Condiciones: Franquicia, exclusiones, recargos recomendados por nivel'],
+    estratificacion: ['Preferente: Mejor riesgo → descuento + coberturas ampliadas','Estándar: Riesgo normal → condiciones base','Sub-estándar: Riesgo elevado → franquicia incrementada','Restrictivo: Riesgo alto → exclusiones específicas + recargo','Declinar: Riesgo inaceptable → rechazar con justificación'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 2.000 solicitudes con siniestralidad conocida','El modelo clasifica en 5 niveles y genera condiciones','El dashboard muestra rentabilidad por nivel y decisiones']
+  },
+  UC32: {
+    title: 'Automatización Tarificación Colectivos de Salud',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de tarificación automática para colectivos de seguros de salud.',
+    foco: 'Salud colectivos — automatización de la cotización de pólizas colectivas de salud para empresas.',
+    reto: 'Reducir de 3-5 días a 30 minutos la cotización de colectivos, multiplicando x10 la capacidad de cotización.',
+    objetivos: ['Generar colectivos sintéticos con pirámides de edad variadas','Estimar siniestralidad esperada con ML por perfil','Generar propuesta tarifaria con escenarios de cobertura','Realizar análisis de sensibilidad y break-even','Dashboard de cotización de colectivos'],
+    funcionalidades: ['ML: Estimación de siniestralidad esperada con ML.CLASSIFICATION','LLM: Generación de propuesta con CORTEX.COMPLETE','Datos sintéticos: 100 colectivos de 50-5.000 empleados, 8 sectores','Dashboard Streamlit: Cotizador de colectivos con escenarios'],
+    datos: ['Colectivos: Empresa, sector, empleados, pirámide de edad, provincia','Siniestralidad: Frecuencia y coste medio por perfil de edad y sector','Propuesta: Prima por asegurado, copago, cuadro médico, carencias','Escenarios: Básico / Estándar / Premium con desglose de coberturas'],
+    estratificacion: ['Auto-cotizable: Colectivo < 100 empleados sector estándar → propuesta automática','Revisión técnica: Colectivo 100-500 o sector especial → validación actuarial','Manual: Colectivo > 500 o siniestralidad atípica → actuario senior','Reaseguro: Colectivo > 2.000 o coberturas excepcionales → consulta reaseguro'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 100 colectivos con perfiles variados','El modelo estima siniestralidad y genera propuestas','El dashboard permite cotizar con escenarios y sensibilidad']
+  },
+  UC33: {
+    title: 'Score Pricing Low Cost con Model Registry',
+    contexto: 'Estos Cortex Code Prompts construyen un modelo de pricing de alta precisión para productos low cost con versionado en Model Registry y A/B testing.',
+    foco: 'Pricing low cost — micro-segmentación de riesgo con 50+ variables y control de versiones para productos de margen ultra-bajo.',
+    reto: 'Lograr precisión de ±2% en la prima técnica para productos con margen del 2-5%, usando Model Registry para A/B testing.',
+    objetivos: ['Generar datos de cotización con señales digitales (dispositivo, hora, comportamiento web)','Entrenar modelo de pricing con 50+ variables','Registrar en Model Registry con 2 versiones (v1 conservador, v2 agresivo)','Implementar A/B testing con monitorización de loss ratio','Dashboard de control de versiones y rentabilidad'],
+    funcionalidades: ['Model Registry: low_cost_pricing_model con v1 y v2 + métricas de rendimiento','ML: Pricing con 50+ variables tradicionales + digitales','Datos sintéticos: 5.000 cotizaciones con 3 años de siniestralidad','Dashboard Streamlit: Panel de A/B testing con loss ratio por versión'],
+    datos: ['Cotizaciones: Variables tradicionales (edad, vehículo, zona, bonus-malus)','Señales digitales: Dispositivo, hora cotización, tiempo en web, comparador origen','Siniestralidad: Frecuencia y coste conocidos (para evaluación)','Versiones: v1 conservador (loss ratio 85%), v2 agresivo (loss ratio 92%)','A/B test: 50% tráfico por versión, métricas de conversión y siniestralidad'],
+    estratificacion: ['Cherry Pick (prima < percentil 20): Riesgo muy bajo → atraer con precio agresivo','Estándar (percentil 20-80): Riesgo normal → competir en precio','Riesgo Alto (percentil 80-95): Margen mínimo → aceptar con prima técnica','No Rentable (> percentil 95): Pérdida esperada → declinar o recargo prohibitivo'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se entrenan dos versiones del modelo de pricing','Ambas se registran en Model Registry con métricas','El dashboard monitoriza el A/B test y permite promover la mejor versión']
+  },
+  UC34: {
+    title: 'Valoración Inteligente de Daños en Lunas',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de automatización para la gestión de siniestros de lunas de vehículos.',
+    foco: 'Siniestros de lunas — automatización end-to-end desde la apertura del parte hasta la autorización de reparación.',
+    reto: 'Automatizar el 80% de los siniestros de lunas (20% del volumen) que actualmente requieren gestión manual desproporcionada.',
+    objetivos: ['Generar siniestros de lunas con diferentes tipos de daño','Clasificar reparación vs. sustitución con CORTEX.COMPLETE','Verificar cobertura automáticamente','Seleccionar taller óptimo por zona y precio','Dashboard de gestión de siniestros de lunas'],
+    funcionalidades: ['LLM: Clasificación de daño con CORTEX.COMPLETE','Datos sintéticos: 800 siniestros de lunas (70% parabrisas, 20% lateral, 10% trasera)','Automatización: Verificación de cobertura + selección de taller + autorización','Dashboard Streamlit: Panel de gestión con auto-autorización y excepciones'],
+    datos: ['Siniestros: Tipo de luna, descripción del daño, modelo de vehículo','Cobertura: Póliza con/sin cobertura de lunas, franquicia','Talleres: 100 talleres especializados con zona, precio y valoración','Resolución: Reparar (35%), sustituir (60%), no cubierto (5%)'],
+    estratificacion: ['Auto-autorizar: Cobertura OK + daño estándar + taller disponible → sin intervención humana','Revisión rápida: Cobertura OK + daño atípico → validación en 2h','Revisión manual: Franquicia discutida o modelo premium → perito','No cubierto: Sin cobertura de lunas → informar al cliente con alternativas'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 800 siniestros de lunas variados','El pipeline clasifica, verifica y autoriza automáticamente','El dashboard muestra tasa de automatización y excepciones']
+  },
+  UC35: {
+    title: 'Desacoplamiento de Pricing: Riesgo vs. Comercial',
+    contexto: 'Estos Cortex Code Prompts construyen un framework que separa y monitoriza independientemente la prima de riesgo y los ajustes comerciales.',
+    foco: 'Gobierno del pricing — trazabilidad completa de la prima separando componente técnico de ajustes comerciales.',
+    reto: 'Determinar si las pérdidas se deben al modelo de riesgo o a los descuentos comerciales, con trazabilidad completa.',
+    objetivos: ['Generar cartera de pólizas con prima técnica y ajustes comerciales','Entrenar modelo de prima pura de riesgo con ML','Separar resultado técnico de resultado comercial','Monitorizar loss ratio por componente','Dashboard de trazabilidad de pricing'],
+    funcionalidades: ['ML: Modelo de prima pura de riesgo con ML.CLASSIFICATION','Datos sintéticos: 3.000 pólizas con desglose técnico/comercial y siniestralidad','Monitorización: Loss ratio técnico vs comercial por segmento','Dashboard Streamlit: Panel de gobierno del pricing con drill-down'],
+    datos: ['Pólizas: Prima total = Prima técnica + Ajuste comercial','Prima técnica: Output del modelo ML de riesgo puro','Ajuste comercial: Descuento retención, campaña, mediador, competencia','Siniestralidad: Frecuencia y coste real por póliza','Loss ratio: Técnico (siniestros/prima técnica), Comercial (descuento/prima total)'],
+    estratificacion: ['Pricing correcto: Loss ratio técnico < 80% y comercial < 10% → sin acción','Riesgo infravalorado: Loss ratio técnico > 90% → revisar modelo','Exceso de descuento: Loss ratio comercial > 15% → revisar política comercial','Doble problema: Ambos elevados → revisión integral de pricing'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se genera cartera con desglose técnico/comercial','El modelo ML estima la prima pura de riesgo','El dashboard monitoriza loss ratio por componente']
+  },
+  UC36: {
+    title: 'API Táctica de Rechazos Inteligentes en Hogar',
+    contexto: 'Estos Cortex Code Prompts construyen un motor de decisión que genera contra-ofertas automáticas antes de rechazar cotizaciones de hogar.',
+    foco: 'Conversión comercial — recuperación de cotizaciones de hogar rechazadas mediante contra-ofertas inteligentes.',
+    reto: 'Convertir el 35% de los rechazos de hogar en pólizas rentables mediante alternativas automáticas de cobertura.',
+    objetivos: ['Generar cotizaciones rechazadas con diferentes motivos de rechazo','Evaluar alternativas viables (franquicia, exclusión, recargo) con ML','Generar contra-ofertas automáticas con CORTEX.COMPLETE','Simular rentabilidad por escenario de contra-oferta','Dashboard de recuperación de rechazos'],
+    funcionalidades: ['ML: Evaluación de alternativas con ML.CLASSIFICATION','LLM: Generación de contra-ofertas con CORTEX.COMPLETE','Datos sintéticos: 1.000 cotizaciones rechazadas con 5 motivos','Dashboard Streamlit: Panel de contra-ofertas con simulación de rentabilidad'],
+    datos: ['Rechazos: Cotización original, motivo de rechazo, perfil del riesgo','Alternativas: Franquicia incrementada, exclusión específica, recargo, cobertura reducida','Contra-oferta: Nueva prima, condiciones modificadas, rentabilidad esperada','Resultado: Aceptada por cliente (35%), rechazada (65%)'],
+    estratificacion: ['Recuperación alta: Rechazo por zona pero riesgo bueno → franquicia mayor','Recuperación media: Rechazo por antigüedad → exclusión de cobertura específica','Recuperación baja: Rechazo por siniestralidad → recargo significativo','No recuperable: Riesgo inaceptable en cualquier escenario → declinar definitivamente'],
+    como_usar: ['Ejecutar prompts secuencialmente','Se generan 1.000 cotizaciones rechazadas','El motor evalúa alternativas y genera contra-ofertas','El dashboard muestra tasa de recuperación y rentabilidad']
   }
 };
 
@@ -1111,6 +1461,297 @@ const PROMPTS = {
       { title: 'Parsear y scoring', desc: 'Calcular score de compliance.', prompt: 'Crea tabla "scores_compliance" con TRY_PARSE_JSON. Calcula criterios_cumplidos (0-6) sumando los checks positivos y restando las infracciones. Agrupa por nivel de riesgo.' },
       { title: 'Ranking de agentes', desc: 'Compliance por agente.', prompt: 'Calcula score medio, llamadas de riesgo, promesas falsas y accesos no autorizados por agente. Ordena por score de compliance ascendente.' },
       { title: 'Dashboard compliance', desc: 'Panel de auditoría regulatoria.', prompt: 'Crea dashboard Streamlit con: KPIs (auditadas, riesgo crítico/alto, score medio, promesas falsas), distribución por riesgo, cumplimiento por criterio, tabla de llamadas de alto riesgo.' }
+    ]
+  },
+  UC18: {
+    title: 'Gestión de Leads con Asistente de Voz IA',
+    intro: 'Abre Cortex Code en Snowsight y ejecuta estos prompts para construir un asistente de cualificación de leads con Cortex AI y ML.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para gestión de leads.', prompt: 'Crea una base de datos llamada LEADS_SEGUROS_DB con esquema ANALYTICS y un warehouse LEADS_WH tamaño SMALL con auto-suspend de 60 segundos. Establece el contexto de sesión.' },
+      { title: 'Generar tabla de agentes', desc: 'Agentes especializados por producto y zona.', prompt: 'Genera una tabla "agentes" con 30 registros: agente_id, nombre, especialidad (Auto/Hogar/Vida/Salud/Empresas), zona (Norte/Centro/Sur/Este/Levante), disponibilidad (booleano), citas_hoy (0-8), tasa_conversion_historica (0.15-0.65).' },
+      { title: 'Generar leads entrantes', desc: '800 transcripciones de leads telefónicos.', prompt: 'Genera tabla "leads_entrantes" con 800 registros: lead_id, timestamp_llamada, canal_origen (Web/Telefono/Comparador/RRSS/Referido), transcripcion (textos simulados de clientes preguntando por seguros: "Buenos días, quiero información sobre un seguro de coche...", variando producto, urgencia y nivel de detalle), producto_interes, duracion_seg.' },
+      { title: 'Cualificar leads con IA', desc: 'CORTEX.COMPLETE para extraer datos estructurados.', prompt: 'Crea tabla "leads_cualificados" usando SNOWFLAKE.CORTEX.COMPLETE con mistral-large2 para extraer de cada transcripción un JSON con: producto_detectado, urgencia (alta/media/baja), presupuesto_mencionado (si/no/monto), tiene_poliza_actual (si/no), competidores_mencionados, resumen_necesidad (50 palabras). Parsea el JSON con TRY_PARSE_JSON.' },
+      { title: 'Scoring de propensión', desc: 'ML.CLASSIFICATION para predecir conversión.', prompt: 'Crea tabla de features para ML: canal_origen_encoded, producto_auto/hogar/vida/salud, urgencia_encoded, tiene_poliza_actual, presupuesto_mencionado, duracion_llamada, hora_del_dia, dia_semana. Añade target ha_convertido (35% conversión). Divide 80/20 y entrena SNOWFLAKE.ML.CLASSIFICATION "scoring_leads" con evaluate TRUE.' },
+      { title: 'Puntuar y asignar', desc: 'Scoring + asignación a agente óptimo.', prompt: 'Puntúa leads con el modelo. Clasifica: Lead Caliente (>=70%), Templado (40-70%), Frío (<40%). Asigna cada lead caliente al agente de su producto con mayor tasa_conversion_historica y disponibilidad. Genera tabla "asignaciones_leads" con lead_id, agente_id, prioridad, accion_recomendada.' },
+      { title: 'Generar resúmenes CRM', desc: 'Resúmenes estructurados para el CRM.', prompt: 'Usa CORTEX.COMPLETE para generar por cada lead caliente/templado: resumen_crm (3 líneas: PRODUCTO | NECESIDAD | ACCIÓN), argumentario_personalizado (50 palabras adaptadas al perfil del lead). Almacena en tabla "resumenes_crm".' },
+      { title: 'Análisis de pipeline', desc: 'Métricas de conversión por canal y producto.', prompt: 'Crea consultas analíticas: tasa de conversión por canal_origen, distribución de leads por producto y prioridad, top 5 agentes por tasa de conversión, tiempo medio de cualificación por canal. Crea vista "pipeline_leads" con KPIs agregados.' },
+      { title: 'Dashboard de leads', desc: 'Panel de gestión del pipeline de leads.', prompt: 'Crea dashboard Streamlit con: 4 KPIs (leads totales, calientes, tasa conversión, tiempo medio respuesta), gráfico de embudo (Entrantes → Cualificados → Calientes → Asignados), tabla de leads calientes con scoring y agente asignado, distribución por canal y producto.' },
+      { title: 'Pipeline automatizado', desc: 'Task para cualificación continua.', prompt: 'Crea una Task que cada 15 minutos: cualifique leads nuevos con CORTEX.COMPLETE, puntúe con el modelo ML, asigne a agentes y genere resúmenes CRM. Incluye ALTER TASK RESUME.' }
+    ]
+  },
+  UC19: {
+    title: 'Asistente Front para Tarificación Inteligente',
+    intro: 'Prompts para construir un asistente RAG sobre manuales de tarificación con Cortex Search para mediadores de seguros.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para el asistente de tarificación.', prompt: 'Crea base de datos TARIFICACION_ASISTENTE_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar manuales de tarificación', desc: 'Base de conocimiento por producto.', prompt: 'Genera tabla "manuales_tarificacion" con 150 registros: doc_id, producto (Auto/Hogar/Vida/Salud/RC), seccion (Coberturas/Exclusiones/Recargos/Descuentos/Franquicias/Normativa), titulo, contenido (textos detallados simulando manuales técnicos de tarificación: "La cobertura de RC obligatoria incluye daños a terceros hasta 70M€...", condiciones específicas por producto, tablas de factores, reglas de recargo/descuento).' },
+      { title: 'Generar tablas de primas', desc: 'Factores de tarificación por segmento.', prompt: 'Genera tabla "factores_prima" con 200 registros: factor_id, producto, variable (edad/zona/vehiculo/superficie/capital), rango, factor_multiplicador (0.7-1.8), descripcion. Ejemplo: Auto, edad, 18-25, factor 1.45, "Recargo conductor novel".' },
+      { title: 'Crear chunks indexables', desc: 'Fragmentar documentos para Cortex Search.', prompt: 'Crea tabla "chunks_tarificacion" dividiendo cada contenido en fragmentos de ~500 caracteres con solapamiento de 50: chunk_id, doc_id, producto, seccion, chunk_texto, chunk_orden. Incluye también los factores de prima como chunks descriptivos.' },
+      { title: 'Crear Cortex Search Service', desc: 'Indexar para búsqueda semántica.', prompt: 'Crea un CORTEX SEARCH SERVICE llamado tarificacion_search sobre chunks_tarificacion usando chunk_texto como columna de búsqueda y producto, seccion como atributos de filtrado. Warehouse COMPUTE_WH.' },
+      { title: 'Implementar RAG de tarificación', desc: 'Pipeline de consulta y generación de cotización.', prompt: 'Crea procedimiento almacenado consultar_tarifa(pregunta VARCHAR, producto VARCHAR) que: 1) Busque los 5 chunks más relevantes con Cortex Search filtrado por producto, 2) Construya prompt con contexto recuperado, 3) Use CORTEX.COMPLETE para generar respuesta con desglose de coberturas, factores aplicables y prima estimada. Prueba con: "Quiero asegurar un Toyota Corolla 2022 para conductor de 30 años en Madrid".' },
+      { title: 'Probar consultas tipo', desc: 'Validar con preguntas frecuentes de mediadores.', prompt: 'Prueba el asistente con 5 consultas: "¿Qué recargo aplica a un conductor novel en auto?", "¿La cobertura de incendio en hogar tiene franquicia?", "¿Cuál es el descuento por pago anual en vida?", "¿Qué exclusiones tiene la RC profesional?", "¿Cómo se calcula la prima de salud para mayores de 60?".' },
+      { title: 'Análisis de uso', desc: 'Métricas del asistente.', prompt: 'Crea tabla "log_consultas" que registre cada consulta: timestamp, mediador_id, producto, pregunta, chunks_recuperados, respuesta_generada, tiempo_respuesta_ms. Genera métricas: consultas por día, producto más consultado, tiempo medio de respuesta.' },
+      { title: 'Dashboard del asistente', desc: 'Interfaz conversacional para mediadores.', prompt: 'Crea dashboard Streamlit con: selector de producto, campo de texto para pregunta, área de respuesta con desglose de prima y factores, historial de consultas de la sesión, métricas de uso del asistente.' }
+    ]
+  },
+  UC20: {
+    title: 'Asistente IA para Seguros de Patinetes y VMPs',
+    intro: 'Prompts para construir un chatbot especializado en seguros de VMPs con RAG sobre normativa y Cortex AI.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para seguros de VMPs.', prompt: 'Crea base de datos SEGUROS_VMP_DB con esquema PUBLIC y warehouse COMPUTE_WH.' },
+      { title: 'Generar base normativa', desc: 'Documentos de normativa VMP y coberturas.', prompt: 'Genera tabla "normativa_vmp" con 100 registros simulando documentos legales y de producto: doc_id, tipo (DGT/Ordenanza/Condiciones/FAQ/Tarifa), ciudad (Madrid/Barcelona/Valencia/Sevilla/Nacional), titulo, contenido (textos realistas sobre: normativa DGT para patinetes, requisitos de seguro obligatorio, coberturas RC, exclusiones, límites de velocidad, zonas de circulación, sanciones).' },
+      { title: 'Generar tarifas VMP', desc: 'Tablas de primas por perfil de uso.', prompt: 'Genera tabla "tarifas_vmp" con 50 registros: tarifa_id, perfil (Urbano/Commuter/Deportivo/Flota), tipo_vmp (Patinete/E-bike/Segway/Monowheel), cobertura (RC_Obligatoria/Danos_Propios/Robo/Accidentes/Asistencia), prima_anual, franquicia, limite_cobertura.' },
+      { title: 'Indexar con Cortex Search', desc: 'Crear servicio de búsqueda semántica.', prompt: 'Crea tabla "chunks_vmp" dividiendo documentos en fragmentos de ~400 caracteres. Crea CORTEX SEARCH SERVICE vmp_search sobre chunks_vmp usando chunk_texto como búsqueda y tipo, ciudad como filtros.' },
+      { title: 'Implementar chatbot RAG', desc: 'Asistente conversacional especializado.', prompt: 'Crea procedimiento chat_vmp(pregunta VARCHAR) que: 1) Busque contexto relevante con Cortex Search, 2) Use CORTEX.COMPLETE con prompt especializado en VMPs para generar respuesta con citas, 3) Si detecta intención de compra, incluya cotización del perfil más cercano.' },
+      { title: 'Generar consultas simuladas', desc: '500 preguntas de clientes sobre VMPs.', prompt: 'Genera tabla "consultas_vmp" con 500 registros: consulta_id, tipo_usuario (Cliente/Agente), pregunta (variada: "¿Es obligatorio el seguro para mi patinete Xiaomi?", "¿Qué pasa si atropello a un peatón?", "¿Cuánto cuesta asegurar 10 patinetes para mi empresa de alquiler?"), producto_relacionado.' },
+      { title: 'Procesar consultas con IA', desc: 'Responder y analizar todas las consultas.', prompt: 'Procesa las 500 consultas con el chatbot RAG. Almacena respuestas en "respuestas_vmp": consulta_id, respuesta_generada, chunks_usados, tiempo_ms. Analiza sentimiento de las preguntas con CORTEX.SENTIMENT.' },
+      { title: 'Métricas de calidad', desc: 'Evaluar la calidad de las respuestas.', prompt: 'Usa CORTEX.COMPLETE para evaluar cada respuesta en: relevancia (1-5), completitud (1-5), precisión normativa (1-5). Calcula score medio y distribución. Identifica consultas sin respuesta satisfactoria.' },
+      { title: 'Dashboard VMP', desc: 'Interfaz del chatbot y métricas.', prompt: 'Crea dashboard Streamlit con: chat interface para consultas VMP, cotizador rápido por perfil, distribución de consultas por tipo, métricas de calidad de respuesta, top consultas sin resolver.' }
+    ]
+  },
+  UC21: {
+    title: 'Optimización Comercial de Oficinas con Feature Store',
+    intro: 'Prompts para construir un Feature Store 360 de la red comercial con Snowflake Feature Store y modelos ML de potencial.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos y Feature Store para red comercial.', prompt: 'Crea base de datos RED_COMERCIAL_DB con esquemas ANALYTICS y FEATURE_STORE. Crea warehouse RED_WH tamaño SMALL. Establece contexto.' },
+      { title: 'Generar datos de oficinas', desc: '200 oficinas con métricas de rendimiento.', prompt: 'Genera tabla "oficinas" con 200 registros: oficina_id, nombre, provincia, zona (Norte/Centro/Sur/Este/Levante), num_agentes (2-15), produccion_anual (200K-5M), cartera_polizas (500-15000), tasa_renovacion (0.70-0.95), mix_auto_pct, mix_hogar_pct, mix_vida_pct, mix_salud_pct, mix_empresas_pct.' },
+      { title: 'Generar datos de zona', desc: 'Datos sociodemográficos y competencia por zona.', prompt: 'Genera tabla "zonas" con 50 registros: zona_id, nombre, poblacion, renta_media, densidad_hab_km2, num_competidores, penetracion_seguros_pct, crecimiento_poblacion_pct, pct_vehiculos_turismo, precio_medio_m2_vivienda.' },
+      { title: 'Generar historial de producción', desc: '3 años de producción mensual por oficina.', prompt: 'Genera tabla "produccion_historica" con 200*36=7.200 registros: oficina_id, mes (2022-01 a 2024-12), polizas_nuevas_auto, polizas_nuevas_hogar, polizas_nuevas_vida, polizas_nuevas_salud, polizas_nuevas_empresas, prima_total, siniestralidad_pct.' },
+      { title: 'Crear Feature Store', desc: 'Entity OFICINA con 6 FeatureViews.', prompt: 'Usando Snowflake Feature Store: 1) Crea Entity OFICINA con join_keys=[oficina_id]. 2) Crea 6 FeatureViews: rendimiento_oficina (producción, cartera, renovación, siniestralidad), potencial_zona (población, renta, crecimiento, penetración), mix_cartera (% por producto, concentración HHI), perfil_demografico (renta, densidad, vehículos, vivienda), presencia_competencia (num competidores, cuota estimada), canal_digital (% ventas online, leads web, NPS digital). Registra todas en el Feature Store.' },
+      { title: 'Entrenar modelo de potencial', desc: 'ML.CLASSIFICATION para potencial por producto.', prompt: 'Usa Feature Store get_features() para construir training dataset con 40+ features. Añade target: alto_potencial_auto (top 30% oficinas por crecimiento de producción auto). Entrena SNOWFLAKE.ML.CLASSIFICATION "potencial_auto" con evaluate TRUE. Repite para hogar.' },
+      { title: 'Puntuar red completa', desc: 'Scoring de potencial para las 200 oficinas.', prompt: 'Puntúa todas las oficinas con ambos modelos. Clasifica: Alto Potencial (>=70%), Medio (40-70%), Bajo (<40%). Crea tabla "scoring_red" con oficina_id, potencial_auto, potencial_hogar, recomendacion_accion.' },
+      { title: 'Generar recomendaciones', desc: 'Acciones comerciales por oficina.', prompt: 'Usa CORTEX.COMPLETE para generar por cada oficina con alto potencial: recomendacion_textual (producto a impulsar, acciones concretas, recursos necesarios). Almacena en "recomendaciones_oficina".' },
+      { title: 'Dashboard de red comercial', desc: 'Panel de capacidades y potencial.', prompt: 'Crea dashboard Streamlit con: KPIs (oficinas, producción total, alto potencial, cartera), mapa de potencial por zona (tabla ordenable), top 20 oficinas por potencial, distribución de mix de cartera, recomendaciones por oficina seleccionable.' },
+      { title: 'Pipeline de actualización', desc: 'Task para refrescar features y scoring.', prompt: 'Crea Task mensual que: actualice las FeatureViews del Feature Store con datos del mes, re-puntúe las 200 oficinas, genere nuevas recomendaciones. ALTER TASK RESUME.' }
+    ]
+  },
+  UC22: {
+    title: 'Optimización Inteligente de Gestiones Comerciales',
+    intro: 'Prompts para construir un motor de priorización de gestiones comerciales con ML y generación de argumentarios con IA.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para gestiones comerciales.', prompt: 'Crea base de datos GESTIONES_COMERCIALES_DB con esquema ANALYTICS y warehouse GESTIONES_WH tamaño SMALL.' },
+      { title: 'Generar cartera de clientes', desc: '2.000 clientes con perfil y señales.', prompt: 'Genera tabla "clientes" con 2000 registros: cliente_id, nombre, edad, provincia, segmento (Particular/Autonomo/Pyme/Empresa), polizas_activas (0-5), prima_total_anual (0-15000), antiguedad_anos (0-20), nps_ultimo (1-10), num_siniestros_3a (0-4), fecha_ultimo_contacto, productos_contratados (texto: "Auto, Hogar").' },
+      { title: 'Generar historial de gestiones', desc: '6 meses de actividad comercial.', prompt: 'Genera tabla "historial_gestiones" con 5000 registros: gestion_id, agente_id (10 agentes), cliente_id, fecha, tipo (Visita/Llamada/Email/Reunion), producto_ofrecido, resultado (Venta/Seguimiento/Rechazado/No_Contactado), prima_vendida (si venta), tiempo_dedicado_min.' },
+      { title: 'Feature engineering', desc: 'Variables de propensión por cliente.', prompt: 'Crea tabla "features_clientes" con: edad, prima_actual, antiguedad, nps, siniestros_3a, dias_sin_contacto, num_productos, tiene_auto, tiene_hogar, tiene_vida, tiene_salud, ratio_contacto_venta_historico, valor_potencial_estimado (prima posible - prima actual). Target: acepta_oferta (30%).' },
+      { title: 'Entrenar scoring de propensión', desc: 'ML.CLASSIFICATION para priorizar clientes.', prompt: 'Divide 80/20 y entrena SNOWFLAKE.ML.CLASSIFICATION "scoring_gestiones" con target acepta_oferta y evaluate TRUE. Muestra feature importance.' },
+      { title: 'Puntuar y priorizar', desc: 'Scoring de toda la cartera.', prompt: 'Puntúa los 2.000 clientes. Clasifica: Prioritario (>=60%), Estándar (30-60%), Bajo (<30%). Calcula valor_esperado = probabilidad * prima_potencial. Ordena por valor_esperado descendente.' },
+      { title: 'Generar argumentarios', desc: 'Argumentarios personalizados con CORTEX.COMPLETE.', prompt: 'Para los top 100 clientes por valor_esperado, usa CORTEX.COMPLETE para generar: producto_recomendado, argumentario_personalizado (3 puntos clave adaptados al perfil), mejor_momento_contacto, canal_recomendado. Almacena en "argumentarios".' },
+      { title: 'Generar agenda optimizada', desc: 'Top 15 gestiones por agente para mañana.', prompt: 'Crea vista "agenda_diaria" que para cada agente seleccione los top 15 clientes de su zona por valor_esperado, incluyendo argumentario, producto recomendado y canal. Ordena por prioridad.' },
+      { title: 'Dashboard de productividad', desc: 'Panel de gestiones optimizadas.', prompt: 'Crea dashboard Streamlit con: KPIs (clientes priorizados, valor esperado total, gestiones programadas), agenda por agente seleccionable con argumentarios, distribución de propensión por segmento, métricas históricas de conversión.' },
+      { title: 'Pipeline diario', desc: 'Task para actualizar scoring y agenda cada día.', prompt: 'Crea Task diaria a las 6:00 que re-puntúe clientes, genere argumentarios para nuevos top y publique la agenda del día. ALTER TASK RESUME.' }
+    ]
+  },
+  UC23: {
+    title: 'Catastro Inteligente con IA Geoespacial',
+    intro: 'Prompts para construir un pipeline de enriquecimiento catastral para suscripción de hogar con detección de infraseguro.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para catastro inteligente.', prompt: 'Crea base de datos CATASTRO_INTELIGENTE_DB con esquema ANALYTICS y warehouse CATASTRO_WH tamaño SMALL.' },
+      { title: 'Generar datos catastrales', desc: '1.500 inmuebles con datos de catastro.', prompt: 'Genera tabla "inmuebles" con 1500 registros: inmueble_id, referencia_catastral (formato 14 caracteres), tipo_inmueble (Piso/Casa/Chalet/Adosado/Atico), superficie_m2 (40-400), antiguedad_anos (1-100), materiales (Hormigon/Ladrillo/Piedra/Madera/Mixto), num_plantas (1-4), tiene_garaje, tiene_trastero, calidad_construccion (Alta/Media/Baja), zona_catastral (50 zonas), codigo_postal.' },
+      { title: 'Generar datos de mercado', desc: 'Precios y transacciones por zona.', prompt: 'Genera tabla "mercado_inmobiliario" con 50 registros por zona: zona_id, precio_m2_venta, precio_m2_reconstruccion, variacion_interanual_pct, num_transacciones_ano, indice_demanda. Genera tabla "transacciones_recientes" con 500 ventas en los últimos 2 años.' },
+      { title: 'Generar pólizas actuales', desc: 'Pólizas de hogar vinculadas a inmuebles.', prompt: 'Genera tabla "polizas_hogar" con 1500 registros: poliza_id, inmueble_id, suma_asegurada_continente, suma_asegurada_contenido, prima_anual, fecha_contratacion, franquicia, coberturas_extra (texto).' },
+      { title: 'Estimar valor de reconstrucción', desc: 'Modelo ML de valoración.', prompt: 'Crea tabla features: superficie_m2, antiguedad, calidad_encoded, num_plantas, tiene_garaje, tiene_trastero, precio_m2_zona, tipo_inmueble_encoded. Target: valor_reconstruccion_estimado (discretizado: Bajo<80K, Medio 80-150K, Alto 150-300K, Muy_Alto>300K). Entrena ML.CLASSIFICATION "valoracion_catastral" con evaluate TRUE.' },
+      { title: 'Detectar discrepancias', desc: 'Comparar suma asegurada vs valor real.', prompt: 'Crea vista "analisis_infraseguro" que compare suma_asegurada_continente con valor_reconstruccion_estimado. Calcula ratio_cobertura = suma/valor. Clasifica: Infraseguro Grave (<70%), Infraseguro Moderado (70-90%), Correcto (90-110%), Sobreseguro (>110%). Cuenta pólizas por categoría.' },
+      { title: 'Generar recomendaciones', desc: 'Acciones por póliza con discrepancia.', prompt: 'Usa CORTEX.COMPLETE para generar por cada póliza con infraseguro: recomendacion (ajuste de suma, prima estimada nueva, riesgo de siniestro con cobertura insuficiente). Almacena en "recomendaciones_catastro".' },
+      { title: 'Dashboard de catastro', desc: 'Panel para suscriptores.', prompt: 'Crea dashboard Streamlit con: KPIs (inmuebles analizados, % infraseguro, gap medio de cobertura, prima adicional potencial), distribución por categoría (pie chart), tabla de pólizas con discrepancia ordenada por gap, filtro por zona y tipo de inmueble, drill-down por póliza con recomendación.' },
+      { title: 'Pipeline de monitorización', desc: 'Task para actualizar valoraciones.', prompt: 'Crea Task trimestral que actualice precios de mercado, re-valore inmuebles y genere nuevas alertas de infraseguro. ALTER TASK RESUME.' }
+    ]
+  },
+  UC24: {
+    title: 'Asistente IA para Gestión de Averías',
+    intro: 'Prompts para construir un asistente de diagnóstico de averías en carretera con Cortex AI y asignación de recursos.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para asistencia en carretera.', prompt: 'Crea base de datos ASISTENCIA_AVERIAS_DB con esquema ANALYTICS y warehouse ASISTENCIA_WH tamaño SMALL.' },
+      { title: 'Generar proveedores de asistencia', desc: '50 proveedores con ubicación y capacidad.', prompt: 'Genera tabla "proveedores" con 50 registros: proveedor_id, nombre, tipo (Grua/Mecanico/Arranque), provincia, latitud, longitud, disponible (booleano), tiempo_medio_llegada_min (15-90), valoracion (3.5-5.0), coste_servicio (50-300).' },
+      { title: 'Generar incidencias de avería', desc: '1.000 llamadas de asistencia.', prompt: 'Genera tabla "incidencias_averia" con 1000 registros: incidencia_id, timestamp_llamada, poliza_id, tipo_vehiculo (Turismo/SUV/Furgoneta/Moto), marca, modelo, ano_vehiculo, transcripcion (textos simulados: "Mi coche no arranca, hace un ruido de clic clic cuando giro la llave...", 8 tipos de avería: batería, pinchazo, sobrecalentamiento, fallo eléctrico, fallo motor, cierre centralizado, combustible, accidente leve), ubicacion_texto, latitud, longitud.' },
+      { title: 'Diagnosticar con IA', desc: 'CORTEX.COMPLETE para diagnóstico.', prompt: 'Crea tabla "diagnosticos" usando CORTEX.COMPLETE para analizar cada transcripción y generar JSON: causa_probable, tipo_asistencia_necesaria (Grua/Mecanico_In_Situ/Arranque_Auxiliar/Auto_Resoluble), urgencia (Alta/Media/Baja), puede_circular (si/no), instrucciones_cliente (si auto-resoluble). Parsea con TRY_PARSE_JSON.' },
+      { title: 'Clasificar tipo de asistencia', desc: 'ML para confirmar la clasificación.', prompt: 'Crea features: tipo_vehiculo_encoded, ano_vehiculo, tipo_averia_keywords (extraídos del diagnóstico), hora_del_dia, es_via_rapida, urgencia_encoded. Target: tipo_asistencia_real. Entrena ML.CLASSIFICATION "clasificador_asistencia" con evaluate TRUE.' },
+      { title: 'Asignar recurso óptimo', desc: 'Selección de proveedor por proximidad y tipo.', prompt: 'Crea procedimiento asignar_recurso(incidencia_id) que: filtre proveedores por tipo de asistencia y disponibilidad, calcule distancia euclidiana al cliente, seleccione el más cercano con valoración > 4.0, estime ETA. Crea tabla "asignaciones" con incidencia_id, proveedor_id, eta_estimado, coste_previsto.' },
+      { title: 'Generar parte de asistencia', desc: 'Parte automático con todos los datos.', prompt: 'Usa CORTEX.COMPLETE para generar por cada incidencia: parte_asistencia_texto (formato estándar con datos del vehículo, diagnóstico, recurso asignado, ETA, instrucciones). Almacena en "partes_asistencia".' },
+      { title: 'Dashboard de asistencia', desc: 'Panel de gestión de incidencias.', prompt: 'Crea dashboard Streamlit con: KPIs (incidencias hoy, tiempo medio asignación, tasa auto-resolución, NPS), mapa de incidencias activas (tabla con ubicación), distribución por tipo de avería, tabla de incidencias con estado y proveedor asignado.' },
+      { title: 'Pipeline de asistencia', desc: 'Task para procesamiento continuo.', prompt: 'Crea Task que cada 5 minutos procese incidencias nuevas: diagnostique, clasifique, asigne recurso y genere parte. ALTER TASK RESUME.' }
+    ]
+  },
+  UC25: {
+    title: 'Asistente IA Especializado en Batería',
+    intro: 'Prompts para construir un asistente de diagnóstico de batería que reduce envíos innecesarios de grúa.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para incidencias de batería.', prompt: 'Crea base de datos BATERIA_ASISTENTE_DB con esquema ANALYTICS y warehouse BATERIA_WH tamaño SMALL.' },
+      { title: 'Generar incidencias de batería', desc: '600 incidencias con diferentes causas raíz.', prompt: 'Genera tabla "incidencias_bateria" con 600 registros: incidencia_id, poliza_id, tipo_vehiculo, marca, modelo, ano_vehiculo, antiguedad_bateria_meses (6-72), temperatura_ambiente (-5 a 40), transcripcion (textos variados: "No arranca, las luces del salpicadero están débiles...", "He dejado las luces puestas toda la noche...", "Hace un ruido de clic pero no gira..."), sintomas_reportados, causa_real (Descarga_Accesorios 30%, Bateria_Agotada 25%, Borne_Suelto 10%, Alternador 15%, Fallo_Electrico 20%).' },
+      { title: 'Crear flujo de diagnóstico', desc: 'Preguntas guiadas con CORTEX.COMPLETE.', prompt: 'Crea procedimiento diagnosticar_bateria(incidencia_id) que use CORTEX.COMPLETE para: 1) Analizar la transcripción, 2) Generar 3 preguntas de diagnóstico diferencial, 3) Basándose en las respuestas simuladas, determinar causa probable y resolución. Almacena en "diagnostico_bateria": incidencia_id, preguntas_json, causa_diagnosticada, resolucion_recomendada.' },
+      { title: 'Clasificar resolución', desc: 'ML para predecir tipo de resolución.', prompt: 'Crea features: antiguedad_bateria, temperatura, hora_dia, tipo_vehiculo_encoded, sintomas_keywords. Target: resolucion (Arranque_Auxiliar/Sustitucion_InSitu/Grua). Entrena ML.CLASSIFICATION "resolucion_bateria" con evaluate TRUE.' },
+      { title: 'Generar guías de auto-resolución', desc: 'Instrucciones paso a paso para el cliente.', prompt: 'Para incidencias diagnosticadas como Arranque_Auxiliar, usa CORTEX.COMPLETE para generar: guia_paso_a_paso (5-7 pasos concretos adaptados al tipo de vehículo), advertencias_seguridad, cuando_escalar (señales de que necesita técnico). Almacena en "guias_autoresolucion".' },
+      { title: 'Medir tasas de resolución', desc: 'Análisis de resultados por tipo.', prompt: 'Genera tabla "resultados" simulando el resultado real: auto_resuelto (si/no), grua_enviada, tiempo_total_min, coste_total, nps_cliente. Calcula tasa de auto-resolución, ahorro por grúa evitada (coste grúa medio: 120€), NPS por tipo de resolución.' },
+      { title: 'Análisis de ahorro', desc: 'Cuantificar el impacto económico.', prompt: 'Calcula: grúas evitadas (auto-resueltas que habrían sido grúa), ahorro_total = grúas_evitadas * 120€, NPS promedio auto-resolución vs grúa, tiempo medio resolución por tipo.' },
+      { title: 'Dashboard de batería', desc: 'Panel de métricas del asistente.', prompt: 'Crea dashboard Streamlit con: KPIs (incidencias procesadas, tasa auto-resolución, ahorro estimado, NPS medio), distribución por causa raíz (pie chart), funnel de resolución (Diagnóstico → Guía → Resultado), tabla de incidencias con diagnóstico y resolución.' },
+      { title: 'Pipeline continuo', desc: 'Task para procesamiento de nuevas incidencias.', prompt: 'Crea Task que cada 10 minutos diagnostique nuevas incidencias de batería, clasifique resolución y genere guías. ALTER TASK RESUME.' }
+    ]
+  },
+  UC26: {
+    title: 'Asistente IA para Pinchazo de Rueda',
+    intro: 'Prompts para construir un asistente de guía de auto-resolución de pinchazos adaptado al modelo de vehículo.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para incidencias de pinchazo.', prompt: 'Crea base de datos PINCHAZO_ASISTENTE_DB con esquema ANALYTICS y warehouse PINCHAZO_WH tamaño SMALL.' },
+      { title: 'Generar base de vehículos', desc: '30 modelos con equipamiento de repuesto.', prompt: 'Genera tabla "vehiculos_equipamiento" con 30 registros: modelo_id, marca, modelo, tipo (Turismo/SUV/Furgoneta), tiene_rueda_repuesto (booleano), tiene_kit_antipinchazos (booleano), tiene_rueda_galleta (booleano), ubicacion_herramientas (texto: "Bajo alfombrilla maletero"), instrucciones_especiales (texto por modelo).' },
+      { title: 'Generar incidencias de pinchazo', desc: '500 incidencias variadas.', prompt: 'Genera tabla "incidencias_pinchazo" con 500 registros: incidencia_id, poliza_id, marca, modelo, tipo_pinchazo (Clavo/Corte_Lateral/Reventón/Desgaste/Válvula), rueda_afectada (Delantera_Izq/Delantera_Der/Trasera_Izq/Trasera_Der), ubicacion (Calle_Ciudad/Carretera/Autopista/Parking), condiciones (Dia_Seco/Dia_Lluvia/Noche/Noche_Lluvia), transcripcion (texto del cliente describiendo la situación).' },
+      { title: 'Indexar fichas técnicas', desc: 'Cortex Search sobre equipamiento.', prompt: 'Crea tabla "chunks_vehiculos" con instrucciones detalladas por modelo en formato texto. Crea CORTEX SEARCH SERVICE vehiculos_search sobre chunks_vehiculos usando chunk_texto como búsqueda y marca, modelo como filtros.' },
+      { title: 'Diagnosticar y decidir', desc: 'CORTEX.COMPLETE para evaluar auto-resolución.', prompt: 'Crea procedimiento diagnosticar_pinchazo(incidencia_id) que: identifique el modelo del vehículo, consulte equipamiento disponible, evalúe si el pinchazo es auto-resoluble (tiene repuesto + pinchazo no lateral + ubicación segura), genere JSON: auto_resoluble (si/no), motivo, equipamiento_disponible, riesgo_seguridad.' },
+      { title: 'Generar instrucciones adaptadas', desc: 'Guía paso a paso por modelo de vehículo.', prompt: 'Para incidencias auto-resolubles, usa Cortex Search para recuperar instrucciones del modelo y CORTEX.COMPLETE para generar: guia_paso_a_paso (8-10 pasos adaptados al modelo específico), tiempo_estimado_min, herramientas_necesarias, advertencias_seguridad.' },
+      { title: 'Medir auto-resolución', desc: 'Análisis de resultados por modelo y tipo.', prompt: 'Genera tabla "resultados_pinchazo" con: auto_resuelto, grua_enviada, tiempo_total, nps. Calcula tasa de auto-resolución por modelo de vehículo, por tipo de pinchazo y por condiciones. Identifica modelos con mejor/peor tasa.' },
+      { title: 'Dashboard de pinchazos', desc: 'Panel de métricas del asistente.', prompt: 'Crea dashboard Streamlit con: KPIs (incidencias, auto-resolución %, ahorro estimado, NPS), tasa de auto-resolución por modelo (bar chart), distribución por tipo de pinchazo, tabla de incidencias con diagnóstico y resultado.' },
+      { title: 'Pipeline de pinchazo', desc: 'Task para procesamiento continuo.', prompt: 'Crea Task que procese nuevas incidencias de pinchazo: diagnostique, decida, genere guía o escale a grúa. ALTER TASK RESUME.' }
+    ]
+  },
+  UC27: {
+    title: 'Asistente IA para Partes de Agua (Hogar)',
+    intro: 'Prompts para construir un asistente especializado en siniestros de agua que automatiza la apertura del parte y coordinación de profesionales.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para siniestros de agua.', prompt: 'Crea base de datos SINIESTROS_AGUA_DB con esquema ANALYTICS y warehouse AGUA_WH tamaño SMALL.' },
+      { title: 'Generar profesionales', desc: 'Red de fontaneros, peritos y restauradores.', prompt: 'Genera tabla "profesionales" con 80 registros: profesional_id, tipo (Fontanero/Perito/Restaurador/Limpieza), nombre, provincia, disponible, tiempo_medio_respuesta_h (1-48), valoracion (3.5-5.0), coste_servicio_medio.' },
+      { title: 'Generar siniestros de agua', desc: '500 siniestros con diferentes orígenes.', prompt: 'Genera tabla "siniestros_agua" con 500 registros: siniestro_id, poliza_id, fecha_aviso, transcripcion (textos simulados: "Hay una fuga de agua en el baño que está mojando al vecino de abajo...", 6 orígenes: rotura_tuberia, filtracion_tejado, desbordamiento, electrodomestico, rotura_caldera, infiltracion_vecino), origen_declarado, ubicacion_dano (Baño/Cocina/Salon/Dormitorio/Techo), hay_terceros_afectados, es_emergencia (30%).' },
+      { title: 'Recogida guiada de datos', desc: 'CORTEX.COMPLETE para completar el parte.', prompt: 'Crea procedimiento abrir_parte_agua(siniestro_id) que use CORTEX.COMPLETE para: 1) Analizar la transcripción, 2) Extraer datos estructurados: origen_agua, zona_afectada, extension_dano, terceros_implicados, urgencia, 3) Identificar datos faltantes y generar preguntas adicionales. Almacena en "partes_agua": siniestro_id, datos_extraidos_json, completitud_pct, datos_faltantes.' },
+      { title: 'Clasificar urgencia', desc: 'Sentimiento + reglas para priorizar.', prompt: 'Analiza sentimiento con CORTEX.SENTIMENT sobre cada transcripción. Combina con datos del parte para clasificar urgencia: Emergencia (fuga activa + terceros afectados), Urgente (fuga activa sin terceros), Normal (daños por humedad antigua), Convenio (daños a terceros → protocolo entre aseguradoras). Almacena en "urgencias_agua".' },
+      { title: 'Asignar profesionales', desc: 'Selección óptima por urgencia y zona.', prompt: 'Crea procedimiento que para cada siniestro: seleccione fontanero por urgencia y proximidad, asigne perito si importe estimado > 3.000€ o hay terceros, asigne restaurador si daños estructurales. Almacena en "asignaciones_profesionales".' },
+      { title: 'Generar parte completo', desc: 'Documento estándar del siniestro.', prompt: 'Usa CORTEX.COMPLETE para generar por cada siniestro: parte_formal (formato estándar con todos los campos: fecha, póliza, descripción detallada, origen, afectación, terceros, profesionales asignados, próximos pasos). Almacena en "partes_formales".' },
+      { title: 'Dashboard de siniestros de agua', desc: 'Panel de gestión.', prompt: 'Crea dashboard Streamlit con: KPIs (partes abiertos, emergencias activas, completitud media, profesionales asignados), distribución por origen (bar chart), tabla de siniestros con urgencia y estado, filtro por urgencia y zona.' },
+      { title: 'Pipeline de partes de agua', desc: 'Task para procesamiento continuo.', prompt: 'Crea Task que cada 15 minutos: procese nuevos avisos, extraiga datos, clasifique urgencia, asigne profesionales y genere partes. ALTER TASK RESUME.' }
+    ]
+  },
+  UC28: {
+    title: 'Smart Triage de Siniestros con Model Registry',
+    intro: 'Prompts para construir un sistema de triaje inteligente con modelos versionados en Snowflake Model Registry.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para triaje de siniestros.', prompt: 'Crea base de datos SMART_TRIAGE_DB con esquema ANALYTICS y warehouse TRIAGE_WH tamaño SMALL. Establece contexto.' },
+      { title: 'Generar siniestros históricos', desc: '2.000 siniestros con triaje manual conocido.', prompt: 'Genera tabla "siniestros_triaje" con 2000 registros: siniestro_id, tipo_siniestro (Auto_Colision/Auto_Robo/Hogar_Agua/Hogar_Incendio/Hogar_Robo/Salud/RC), importe_reclamado (500-150000), num_documentos_adjuntos (0-10), tiene_testigos, tiene_parte_policial, antiguedad_poliza_anos (0-25), num_siniestros_previos (0-5), descripcion (texto del asegurado describiendo el siniestro), triaje_manual (Express/Estandar/Complejo/Especial), tiempo_tramitacion_dias (1-180).' },
+      { title: 'Feature engineering para triaje', desc: 'Variables predictivas de complejidad.', prompt: 'Crea tabla "features_triaje" con: tipo_encoded, log_importe, num_documentos, tiene_testigos, tiene_parte_policial, antiguedad_poliza, siniestros_previos, palabras_clave_fraude (count de keywords sospechosas en descripción), importe_vs_media_tipo, es_fin_de_semana. Target: triaje_manual.' },
+      { title: 'Entrenar modelo v1', desc: 'Primer modelo con 6 meses de datos.', prompt: 'Filtra siniestros de primeros 6 meses (1.000 registros). Divide 80/20 y entrena SNOWFLAKE.ML.CLASSIFICATION "smart_triage_v1" con evaluate TRUE. Muestra métricas (accuracy, precision, recall por clase).' },
+      { title: 'Entrenar modelo v2', desc: 'Modelo mejorado con 12 meses y más features.', prompt: 'Usa los 2.000 registros completos. Añade features adicionales: sentimiento_descripcion (CORTEX.SENTIMENT sobre la descripción), longitud_descripcion, hora_aviso, canal_aviso. Entrena SNOWFLAKE.ML.CLASSIFICATION "smart_triage_v2" con evaluate TRUE. Compara métricas con v1.' },
+      { title: 'Registrar en Model Registry', desc: 'Ambas versiones con métricas.', prompt: 'Registra ambos modelos en Snowflake Model Registry: 1) smart_triage_model version v1 con métricas de accuracy, precision, recall, 2) smart_triage_model version v2 con las mismas métricas. Etiqueta v2 como "candidate" y v1 como "production". Lista versiones del modelo.' },
+      { title: 'Comparar versiones', desc: 'A/B test entre v1 y v2.', prompt: 'Crea vista "comparativa_versiones" que aplique ambos modelos a un set de validación (últimos 200 siniestros). Calcula: accuracy por modelo, concordancia entre modelos, casos donde discrepan, mejora de v2 respecto a v1 en cada clase de triaje.' },
+      { title: 'Asignar tramitadores', desc: 'Asignación basada en triaje ML.', prompt: 'Genera tabla "tramitadores" con 20 registros: tramitador_id, nombre, nivel (Junior/Senior/Especialista), especialidad, carga_actual (0-15). Crea procedimiento que asigne cada siniestro al tramitador óptimo según triaje ML + especialidad + carga. Almacena en "asignaciones_triaje".' },
+      { title: 'Dashboard de triaje', desc: 'Panel de control con comparativa de versiones.', prompt: 'Crea dashboard Streamlit con: KPIs (siniestros procesados, tiempo medio triaje, accuracy modelo activo), distribución de triaje por categoría, comparativa v1 vs v2 (métricas side-by-side), tabla de siniestros con triaje ML y tramitador, botón para promover v2 a producción.' },
+      { title: 'Pipeline de triaje', desc: 'Task para triaje continuo con modelo activo.', prompt: 'Crea Task que cada 10 minutos: procese siniestros nuevos con el modelo en producción, asigne tramitador, registre métricas. Si accuracy mensual cae debajo de 85%, genera alerta para reentrenamiento. ALTER TASK RESUME.' }
+    ]
+  },
+  UC29: {
+    title: 'Resumen Inteligente de Atestados Policiales',
+    intro: 'Prompts para construir un pipeline de extracción y resumen de atestados policiales con Cortex LLM.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para procesamiento de atestados.', prompt: 'Crea base de datos ATESTADOS_IA_DB con esquema ANALYTICS y warehouse ATESTADOS_WH tamaño SMALL.' },
+      { title: 'Generar atestados simulados', desc: '300 textos de atestados policiales.', prompt: 'Genera tabla "atestados" con 300 registros: atestado_id, numero_diligencias, fecha_accidente, tipo_accidente (Colision_Trasera/Colision_Frontal/Colision_Lateral/Alcance_Multiple/Atropello/Salida_Via/Colision_Rotonda/Choque_Estacionado), texto_completo (textos largos simulando atestados: "En la ciudad de Madrid, siendo las 14:30 horas del día..., el vehículo matrícula 1234ABC conducido por D. Juan García López, circulaba por la Calle Mayor cuando...", incluyendo declaraciones de conductores, testigos, descripción del croquis, lesiones, daños). Mínimo 300 palabras por atestado.' },
+      { title: 'Extraer entidades', desc: 'CORTEX.COMPLETE para extracción estructurada.', prompt: 'Crea tabla "entidades_extraidas" usando CORTEX.COMPLETE con prompt especializado para extraer de cada atestado un JSON: vehiculos (array con matricula, marca, modelo, color), conductores (array con nombre, dni, edad, lesiones), testigos (array con nombre), puntos_impacto, condiciones_via (seca/mojada/hielo), visibilidad (buena/reducida), senalizacion, velocidad_estimada. Parsea con TRY_PARSE_JSON.' },
+      { title: 'Determinar culpabilidad', desc: 'Análisis de culpabilidad con IA.', prompt: 'Usa CORTEX.COMPLETE con prompt especializado en análisis de culpabilidad basado en las entidades extraídas y el texto del atestado: culpabilidad (Asegurado_Culpable/Tercero_Culpable/Culpabilidad_Parcial/Indeterminada), confianza (Alta/Media/Baja), justificacion (3 puntos clave), articulos_aplicables. Almacena en "analisis_culpabilidad".' },
+      { title: 'Detectar inconsistencias', desc: 'Comparar declaraciones con hechos.', prompt: 'Usa CORTEX.COMPLETE para comparar las declaraciones de cada conductor con los daños descritos y el croquis: hay_inconsistencia (si/no), descripcion_inconsistencia, declaracion_contradictoria, implicacion_para_fraude (posible/improbable). Almacena en "inconsistencias_detectadas".' },
+      { title: 'Generar resumen ejecutivo', desc: 'Resumen estandarizado para tramitador.', prompt: 'Usa CORTEX.COMPLETE para generar por cada atestado: resumen_ejecutivo con formato fijo: FECHA_ACCIDENTE | TIPO | VEHÍCULOS IMPLICADOS | CULPABILIDAD | LESIONES | DAÑOS ESTIMADOS | ACCIÓN RECOMENDADA (subrogación/tramitación normal/investigación fraude). Almacena en "resumenes_atestados".' },
+      { title: 'Métricas de procesamiento', desc: 'Estadísticas de extracción y calidad.', prompt: 'Calcula: tasa de extracción exitosa por campo, distribución de culpabilidad, % con inconsistencias detectadas, tiempo medio de procesamiento. Crea vista "metricas_atestados".' },
+      { title: 'Dashboard de atestados', desc: 'Panel de procesamiento documental.', prompt: 'Crea dashboard Streamlit con: KPIs (atestados procesados, culpabilidad del tercero %, inconsistencias detectadas %, subrogaciones recomendadas), distribución por tipo de accidente, tabla de atestados con resumen y culpabilidad, filtro por tipo y culpabilidad, drill-down con resumen completo.' },
+      { title: 'Pipeline de atestados', desc: 'Task para procesamiento continuo.', prompt: 'Crea Task que cada 30 minutos: procese nuevos atestados, extraiga entidades, determine culpabilidad, detecte inconsistencias y genere resúmenes. ALTER TASK RESUME.' }
+    ]
+  },
+  UC30: {
+    title: 'Sofisticación Pricing Nuevo Negocio Hogar con Feature Store',
+    intro: 'Prompts para construir un Feature Store de riesgo hogar con 60+ variables y modelos ML de pricing que superan GLMs tradicionales.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos y Feature Store para pricing hogar.', prompt: 'Crea base de datos PRICING_HOGAR_DB con esquemas ANALYTICS y FEATURE_STORE. Crea warehouse PRICING_WH tamaño SMALL.' },
+      { title: 'Generar datos base de pólizas', desc: '3.000 pólizas de hogar con siniestralidad.', prompt: 'Genera tabla "polizas_hogar" con 3000 registros: poliza_id, referencia_catastral, tipo_inmueble (Piso/Casa/Chalet/Adosado), superficie_m2 (40-350), antiguedad_inmueble (1-80), zona_tarificaria (50 zonas), codigo_postal, suma_asegurada_continente, suma_asegurada_contenido, prima_glm_actual, num_siniestros_3a (0-4, 70% cero), coste_siniestros_3a, fecha_alta.' },
+      { title: 'Generar datos catastrales', desc: 'Features catastrales por inmueble.', prompt: 'Genera tabla "datos_catastrales" con 3000 registros: poliza_id, materiales_construccion (Hormigon/Ladrillo/Piedra/Mixto), calidad (Alta/Media/Baja), num_plantas, ano_ultima_reforma, tiene_sotano, tipo_cubierta (Plana/Inclinada/Mixta), aislamiento_termico (Si/No), instalacion_electrica_ano, instalacion_fontaneria_ano.' },
+      { title: 'Generar datos de zona', desc: 'Features ambientales y sociodemográficas.', prompt: 'Genera tablas: "siniestralidad_zona" (50 zonas: frecuencia_agua, frecuencia_incendio, frecuencia_robo, severidad_media), "clima_zona" (precipitacion_anual_mm, dias_helada, riesgo_inundacion 0-1, riesgo_granizo 0-1), "sociodemografico_zona" (renta_media, densidad, rotacion_vecinos_pct, tipo_zona: Urbano/Periurbano/Rural).' },
+      { title: 'Generar datos IoT', desc: 'Features de dispositivos conectados.', prompt: 'Genera tabla "iot_hogar" con 3000 registros: poliza_id, tiene_alarma_conectada (20%), tiene_detector_humo (30%), tiene_detector_agua (10%), tiene_smart_lock (15%), smart_home_score (0-100), ultima_revision_instalaciones_meses.' },
+      { title: 'Crear Feature Store', desc: 'Entity RIESGO_HOGAR con 5 FeatureViews.', prompt: 'Usando Snowflake Feature Store: 1) Crea Entity RIESGO_HOGAR con join_keys=[poliza_id]. 2) Crea 5 FeatureViews: fv_catastral (materiales, calidad, plantas, reforma, instalaciones), fv_siniestralidad (frecuencias y severidad zona), fv_clima (precipitación, heladas, inundación, granizo), fv_sociodemografico (renta, densidad, rotación, tipo zona), fv_iot (alarma, detectores, smart score). Registra todas.' },
+      { title: 'Entrenar modelo ML de pricing', desc: 'Modelo de frecuencia con 60+ features.', prompt: 'Usa Feature Store get_features() para construir training dataset con 60+ features. Target: tiene_siniestro_3a (discretizado: 0/1). Divide 80/20 y entrena ML.CLASSIFICATION "pricing_hogar_frecuencia" con evaluate TRUE. Compara accuracy vs modelo GLM simple (solo superficie, antiguedad, zona, suma: 4 vars).' },
+      { title: 'Calcular prima ML vs GLM', desc: 'Comparativa de pricing por segmento.', prompt: 'Puntúa las 3.000 pólizas con ambos modelos. Crea tabla "comparativa_pricing" con: poliza_id, prob_siniestro_ml, prob_siniestro_glm, prima_pura_ml (prob * severidad_media), prima_pura_glm, diferencia_pct, segmento_riesgo_ml (5 quintiles). Calcula loss ratio simulado por modelo.' },
+      { title: 'Dashboard de pricing', desc: 'Panel comparativo ML vs GLM.', prompt: 'Crea dashboard Streamlit con: KPIs (pólizas, prima media ML vs GLM, loss ratio ML vs GLM), distribución de diferencia ML-GLM (histograma), top features por importancia, scatter plot prima ML vs GLM, tabla de pólizas donde ML difiere > 15% del GLM.' },
+      { title: 'Pipeline de pricing', desc: 'Task para actualizar features y scoring.', prompt: 'Crea Task mensual que: actualice FeatureViews con datos nuevos, re-entrene modelo si hay > 500 nuevos siniestros, re-puntúe cartera completa. ALTER TASK RESUME.' }
+    ]
+  },
+  UC31: {
+    title: 'Sofisticación Suscripción Nuevo Negocio Hogar',
+    intro: 'Prompts para construir un modelo de suscripción de 5 niveles de riesgo con justificación IA para hogar.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para suscripción inteligente.', prompt: 'Crea base de datos SUSCRIPCION_HOGAR_DB con esquema ANALYTICS y warehouse SUSCRIPCION_WH tamaño SMALL.' },
+      { title: 'Generar solicitudes de hogar', desc: '2.000 solicitudes con resultado conocido.', prompt: 'Genera tabla "solicitudes_hogar" con 2000 registros: solicitud_id, tipo_inmueble, superficie, antiguedad, zona, materiales, calidad, suma_solicitada, coberturas_solicitadas (texto), tiene_alarma, siniestros_previos (0-5), motivo_anterior_cancelacion (NULL/Siniestralidad/Impago/Voluntaria), resultado_siniestralidad_3a (coste real, para entrenar).' },
+      { title: 'Crear target de 5 niveles', desc: 'Clasificación granular de riesgo.', prompt: 'Crea tabla "solicitudes_etiquetadas" añadiendo nivel_riesgo basado en resultado real: Preferente (loss ratio < 30%), Estandar (30-60%), Sub_Estandar (60-90%), Restrictivo (90-120%), Declinar (> 120%). Calcula distribución.' },
+      { title: 'Entrenar clasificador de 5 niveles', desc: 'ML.CLASSIFICATION multi-clase.', prompt: 'Crea features: tipo_encoded, superficie, antiguedad, zona_encoded, calidad_encoded, suma_solicitada, tiene_alarma, siniestros_previos, motivo_cancelacion_encoded. Target: nivel_riesgo (5 clases). Divide 80/20 y entrena ML.CLASSIFICATION "suscripcion_hogar" con evaluate TRUE.' },
+      { title: 'Generar condiciones por nivel', desc: 'Recomendaciones personalizadas con LLM.', prompt: 'Usa CORTEX.COMPLETE para generar por cada solicitud: nivel_recomendado (del modelo ML), condiciones_especificas (franquicia_recomendada, exclusiones_aplicables, recargo_pct), justificacion_suscriptor (3 puntos explicando la clasificación). Almacena en "recomendaciones_suscripcion".' },
+      { title: 'Análisis de rentabilidad', desc: 'Rentabilidad por nivel de riesgo.', prompt: 'Calcula por nivel: num_polizas, prima_media, siniestralidad_media, loss_ratio, resultado_tecnico. Calcula cuántas pólizas Preferentes el sistema binario habría rechazado (falsos negativos) y cuántas Declinar habría aceptado (falsos positivos).' },
+      { title: 'Simular impacto financiero', desc: 'Cuantificar mejora vs reglas binarias.', prompt: 'Compara: ingresos y pérdidas con reglas binarias (accept/reject) vs 5 niveles. Calcula: pólizas recuperadas (Preferente+Estándar que reglas rechazan), pérdidas evitadas (Declinar que reglas aceptan), mejora neta de resultado técnico.' },
+      { title: 'Dashboard de suscripción', desc: 'Panel de decisión para suscriptores.', prompt: 'Crea dashboard Streamlit con: KPIs (solicitudes, distribución por nivel, resultado técnico por nivel), gráfico de rentabilidad por nivel (bar chart), tabla de solicitudes con nivel + condiciones + justificación, comparativa 5 niveles vs binario.' },
+      { title: 'Pipeline de suscripción', desc: 'Task para clasificar solicitudes nuevas.', prompt: 'Crea Task que cada hora: clasifique solicitudes nuevas, genere condiciones y justificaciones, publique en tabla de decisiones. ALTER TASK RESUME.' }
+    ]
+  },
+  UC32: {
+    title: 'Automatización Tarificación Colectivos de Salud',
+    intro: 'Prompts para construir un pipeline de cotización automática de colectivos de seguros de salud.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para tarificación de colectivos.', prompt: 'Crea base de datos COLECTIVOS_SALUD_DB con esquema ANALYTICS y warehouse COLECTIVOS_WH tamaño SMALL.' },
+      { title: 'Generar colectivos', desc: '100 colectivos empresariales variados.', prompt: 'Genera tabla "colectivos" con 100 registros: colectivo_id, empresa, sector (Tecnologia/Banca/Industrial/Construccion/Hosteleria/Comercio/Sanidad/Educacion), num_empleados (50-5000), edad_media (28-55), pct_mujeres (30-70), provincia, tiene_historial_siniestralidad (50%), siniestralidad_previa_pct (60-130% si tiene), convenio_colectivo.' },
+      { title: 'Generar pirámides de edad', desc: 'Distribución de asegurados por colectivo.', prompt: 'Genera tabla "piramides_edad" con ~10 registros por colectivo (1.000 total): colectivo_id, rango_edad (18-25, 26-35, 36-45, 46-55, 56-65), num_asegurados, pct_beneficiarios_familia (30-60%), coste_medio_historico_rango.' },
+      { title: 'Entrenar modelo de siniestralidad', desc: 'ML para estimar coste por perfil.', prompt: 'Crea features: sector_encoded, num_empleados_log, edad_media, pct_mujeres, provincia_encoded, tiene_historial, siniestralidad_previa. Target: siniestralidad_categoria (Baja<70%/Media 70-100%/Alta>100%). Entrena ML.CLASSIFICATION "siniestralidad_colectivos" con evaluate TRUE.' },
+      { title: 'Calcular prima por asegurado', desc: 'Fórmula de pricing por rango de edad.', prompt: 'Crea procedimiento que para cada colectivo: 1) Obtenga predicción de siniestralidad del modelo ML, 2) Aplique factores por rango de edad, 3) Calcule prima_base * factor_sector * factor_siniestralidad * factor_tamaño. Genera tabla "primas_colectivo" con prima_por_asegurado, prima_total_anual, margen_esperado.' },
+      { title: 'Generar propuesta tarifaria', desc: 'Documento de propuesta con escenarios.', prompt: 'Usa CORTEX.COMPLETE para generar por cada colectivo: propuesta_texto con 3 escenarios (Básico/Estándar/Premium), desglose de coberturas por escenario, prima por asegurado y total, copago, cuadro médico, periodo de carencia. Almacena en "propuestas_colectivos".' },
+      { title: 'Análisis de sensibilidad', desc: 'Simulación de escenarios extremos.', prompt: 'Crea vista "sensibilidad" que para cada colectivo simule: escenario optimista (siniestralidad -15%), base, pesimista (+15%), catastrófico (+30%). Calcula break-even por escenario y margen en cada caso.' },
+      { title: 'Dashboard de colectivos', desc: 'Cotizador de colectivos con escenarios.', prompt: 'Crea dashboard Streamlit con: selector de colectivo, 3 tarjetas de escenario (Básico/Estándar/Premium) con prima, gráfico de sensibilidad, distribución de siniestralidad por sector, tabla de colectivos con prima y margen esperado.' },
+      { title: 'Pipeline de cotización', desc: 'Task para procesar solicitudes nuevas.', prompt: 'Crea Task que cada hora: procese nuevos colectivos, estime siniestralidad, genere primas y propuestas con 3 escenarios. ALTER TASK RESUME.' }
+    ]
+  },
+  UC33: {
+    title: 'Score Pricing Low Cost con Model Registry',
+    intro: 'Prompts para construir un modelo de pricing de alta precisión para productos low cost con A/B testing en Model Registry.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para pricing low cost.', prompt: 'Crea base de datos PRICING_LOWCOST_DB con esquema ANALYTICS y warehouse PRICING_LC_WH tamaño SMALL.' },
+      { title: 'Generar cotizaciones low cost', desc: '5.000 cotizaciones con señales digitales.', prompt: 'Genera tabla "cotizaciones_lowcost" con 5000 registros: cotizacion_id, edad_conductor (18-75), vehiculo_grupo (1-20), zona_tarificaria (50 zonas), bonus_malus (0.5-3.0), anos_carnet (0-50), tipo_uso (Particular/Profesional), km_anuales (5000-40000), dispositivo (Movil/Desktop/Tablet), hora_cotizacion (0-23), tiempo_en_web_seg (30-600), paginas_vistas (2-15), comparador_origen (Si/No), dia_semana, resultado_siniestralidad_3a (coste real, 75% cero).' },
+      { title: 'Feature engineering avanzado', desc: '50+ variables incluyendo señales digitales.', prompt: 'Crea tabla "features_lowcost" con 50+ variables: tradicionales (edad, vehículo, zona, bonus-malus, uso, km) + digitales (dispositivo_encoded, hora_cotizacion, es_hora_laboral, tiempo_web, paginas, es_comparador, dia_semana) + cruzadas (edad*bonus, zona*vehiculo, km*uso). Target: tiene_siniestro (discretizado 0/1).' },
+      { title: 'Entrenar modelo v1 conservador', desc: 'Modelo con margen de seguridad.', prompt: 'Divide 80/20 y entrena ML.CLASSIFICATION "pricing_lc_v1" con evaluate TRUE. Aplica recargo de seguridad +5% a la prima pura. Calcula: prima_v1 = prob_siniestro * severidad_media * 1.05. Loss ratio objetivo: 85%.' },
+      { title: 'Entrenar modelo v2 agresivo', desc: 'Modelo con todas las features digitales.', prompt: 'Entrena ML.CLASSIFICATION "pricing_lc_v2" con las 50+ features (incluyendo digitales). Sin recargo de seguridad. Prima_v2 = prob_siniestro * severidad_media. Loss ratio objetivo: 92%. Compara métricas con v1.' },
+      { title: 'Registrar en Model Registry', desc: 'Ambas versiones con A/B testing.', prompt: 'Registra en Snowflake Model Registry: 1) low_cost_pricing_model version v1_conservative con métricas y etiqueta "production" (50% tráfico), 2) version v2_aggressive con métricas y etiqueta "candidate" (50% tráfico). Lista versiones.' },
+      { title: 'Simular A/B test', desc: 'Asignar cotizaciones a v1 o v2 aleatoriamente.', prompt: 'Crea tabla "ab_test_results" asignando cada cotización 50/50 a v1 o v2. Calcula por versión: prima_media, loss_ratio simulado, tasa_conversion estimada (inversamente proporcional a prima), resultado_tecnico. Identifica la versión con mejor resultado.' },
+      { title: 'Monitorizar loss ratio', desc: 'Seguimiento por versión y segmento.', prompt: 'Crea vista "monitoring_ab" con: loss_ratio por versión global, por quintil de prima, por zona, por grupo de edad. Detecta segmentos donde v2 pierde dinero (loss ratio > 100%).' },
+      { title: 'Dashboard de A/B testing', desc: 'Panel de control de versiones.', prompt: 'Crea dashboard Streamlit con: KPIs por versión (prima media, loss ratio, conversión), gráfico comparativo de loss ratio por segmento, scatter de prima v1 vs v2, tabla de segmentos problemáticos, botón para promover versión ganadora a 100% tráfico.' },
+      { title: 'Pipeline de pricing', desc: 'Task para monitorización continua.', prompt: 'Crea Task diaria que: recalcule loss ratio por versión, detecte desviaciones > 5%, genere alerta si v2 supera loss ratio 95% en algún segmento. ALTER TASK RESUME.' }
+    ]
+  },
+  UC34: {
+    title: 'Valoración Inteligente de Daños en Lunas',
+    intro: 'Prompts para construir un pipeline de automatización de siniestros de lunas con Cortex AI.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para siniestros de lunas.', prompt: 'Crea base de datos LUNAS_SEGUROS_DB con esquema ANALYTICS y warehouse LUNAS_WH tamaño SMALL.' },
+      { title: 'Generar talleres especializados', desc: '100 talleres con precios y valoración.', prompt: 'Genera tabla "talleres_lunas" con 100 registros: taller_id, nombre, provincia, tipo_servicio (Reparacion_Y_Sustitucion/Solo_Sustitucion), precio_reparacion (60-120), precio_sustitucion (250-600), tiempo_medio_reparacion_h (1-3), valoracion_clientes (3.5-5.0), es_concertado (80%).' },
+      { title: 'Generar siniestros de lunas', desc: '800 siniestros variados.', prompt: 'Genera tabla "siniestros_lunas" con 800 registros: siniestro_id, poliza_id, tipo_luna (Parabrisas/Lateral/Trasera/Techo), descripcion_dano (texto: "Impacto de piedra en parabrisas, grieta de 15cm desde la zona del conductor...", variando tamaño, ubicación, tipo de impacto), marca_vehiculo, modelo_vehiculo, tiene_sensores_luna (20%), tiene_cobertura_lunas (85%), franquicia_lunas (0/50/100/150).' },
+      { title: 'Clasificar daño con IA', desc: 'CORTEX.COMPLETE para reparación vs sustitución.', prompt: 'Crea tabla "clasificacion_lunas" usando CORTEX.COMPLETE para analizar cada descripcion_dano y generar JSON: decision (Reparar/Sustituir), motivo, complejidad (Baja/Media/Alta), requiere_recalibracion_ADAS (si tiene sensores y se sustituye). Parsea con TRY_PARSE_JSON.' },
+      { title: 'Verificar cobertura', desc: 'Validación automática de póliza.', prompt: 'Crea tabla "verificacion_cobertura" cruzando siniestro con póliza: tiene_cobertura, franquicia_aplicable, coste_para_cliente, coste_para_aseguradora. Clasifica: Cubierto_Sin_Franquicia, Cubierto_Con_Franquicia, No_Cubierto.' },
+      { title: 'Seleccionar taller óptimo', desc: 'Mejor taller por zona y precio.', prompt: 'Crea procedimiento que para cada siniestro cubierto: filtre talleres por provincia, tipo_servicio compatible con decision (reparar/sustituir), ordene por (es_concertado DESC, precio ASC, valoracion DESC), seleccione el mejor. Almacena en "asignacion_taller".' },
+      { title: 'Auto-autorizar casos estándar', desc: 'Autorización sin intervención humana.', prompt: 'Crea tabla "autorizaciones" con: siniestro_id, auto_autorizado (si cobertura OK + taller concertado + no tiene sensores = TRUE), motivo_excepcion (si no auto-autorizado), estado (Autorizado/Pendiente_Revision/No_Cubierto). Calcula tasa de auto-autorización.' },
+      { title: 'Dashboard de lunas', desc: 'Panel de gestión de siniestros de lunas.', prompt: 'Crea dashboard Streamlit con: KPIs (siniestros, auto-autorización %, reparación vs sustitución %, coste medio), distribución por tipo de luna, tasa de auto-autorización por segmento, tabla de siniestros con estado y taller, cola de excepciones pendientes.' },
+      { title: 'Pipeline de lunas', desc: 'Task para procesamiento automático.', prompt: 'Crea Task que cada 15 minutos: clasifique nuevos siniestros, verifique cobertura, asigne taller y auto-autorice si procede. ALTER TASK RESUME.' }
+    ]
+  },
+  UC35: {
+    title: 'Desacoplamiento de Pricing: Riesgo vs. Comercial',
+    intro: 'Prompts para construir un framework de desacoplamiento que separa y monitoriza prima técnica y ajustes comerciales.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para gobierno del pricing.', prompt: 'Crea base de datos DESACOPLAMIENTO_PRICING_DB con esquema ANALYTICS y warehouse PRICING_GOV_WH tamaño SMALL.' },
+      { title: 'Generar cartera de pólizas', desc: '3.000 pólizas con desglose de prima.', prompt: 'Genera tabla "cartera_pricing" con 3000 registros: poliza_id, producto (Auto/Hogar), perfil_riesgo (A1-A5 para auto, H1-H5 para hogar), prima_tecnica_pura (calculada por modelo), ajuste_suscripcion_pct (-10 a +20), descuento_retencion_pct (0-25), descuento_campana_pct (0-15), comision_mediador_pct (10-25), prima_final_emitida. Que prima_final = prima_tecnica * (1+ajuste_suscripcion) * (1-descuento_retencion) * (1-descuento_campana).' },
+      { title: 'Generar siniestralidad', desc: 'Resultado real por póliza.', prompt: 'Genera tabla "siniestralidad_real" con: poliza_id, num_siniestros (0-3, 70% cero), coste_siniestros_total, coste_por_tipo (RC, daños propios, lunas, etc.). Loss ratio real = coste_siniestros / prima_final.' },
+      { title: 'Entrenar modelo de prima pura', desc: 'ML.CLASSIFICATION para riesgo técnico.', prompt: 'Crea features de riesgo puro (sin variables comerciales): perfil_encoded, antiguedad, siniestros_previos, zona, variables del riesgo. Target: tiene_siniestro (0/1). Entrena ML.CLASSIFICATION "prima_pura_riesgo" con evaluate TRUE. Calcula prima_pura_ml para cada póliza.' },
+      { title: 'Descomponer resultado', desc: 'Separar componente técnico y comercial.', prompt: 'Crea vista "descomposicion_pricing" con: poliza_id, prima_tecnica_ml, prima_final, descuento_total_pct (suma de todos los descuentos), loss_ratio_tecnico (siniestros/prima_tecnica_ml), loss_ratio_comercial (descuento_total/prima_final), resultado_tecnico, resultado_comercial.' },
+      { title: 'Análisis por segmento', desc: 'Loss ratio técnico vs comercial por perfil.', prompt: 'Crea vista "analisis_segmento" con loss_ratio_tecnico y loss_ratio_comercial por: producto, perfil_riesgo, canal (directo/mediador), antigüedad_poliza. Identifica segmentos donde: riesgo OK pero descuento excesivo, riesgo infravalorado, ambos problemáticos.' },
+      { title: 'Detectar anomalías', desc: 'Alertas de desviación.', prompt: 'Crea tabla "alertas_pricing" con: segmento, tipo_alerta (Riesgo_Infravalorado/Descuento_Excesivo/Doble_Problema), loss_ratio_tecnico, loss_ratio_comercial, num_polizas_afectadas, impacto_estimado_eur. Ordena por impacto descendente.' },
+      { title: 'Dashboard de gobierno pricing', desc: 'Panel de trazabilidad completa.', prompt: 'Crea dashboard Streamlit con: KPIs (loss ratio técnico, loss ratio comercial, descuento medio, alertas activas), gráfico waterfall (prima técnica → ajustes → prima final), scatter de loss ratio técnico vs comercial por segmento, tabla de alertas ordenada por impacto, drill-down por segmento.' },
+      { title: 'Pipeline de monitorización', desc: 'Task mensual de seguimiento.', prompt: 'Crea Task mensual que: actualice siniestralidad, recalcule loss ratios por componente, genere nuevas alertas si desviación > 5% respecto al mes anterior. ALTER TASK RESUME.' }
+    ]
+  },
+  UC36: {
+    title: 'API Táctica de Rechazos Inteligentes en Hogar',
+    intro: 'Prompts para construir un motor de contra-ofertas automáticas que convierte rechazos de hogar en pólizas rentables.',
+    steps: [
+      { title: 'Configurar entorno', desc: 'Base de datos para gestión de rechazos.', prompt: 'Crea base de datos RECHAZOS_HOGAR_DB con esquema ANALYTICS y warehouse RECHAZOS_WH tamaño SMALL.' },
+      { title: 'Generar cotizaciones rechazadas', desc: '1.000 cotizaciones con motivo de rechazo.', prompt: 'Genera tabla "cotizaciones_rechazadas" con 1000 registros: cotizacion_id, tipo_inmueble, superficie, antiguedad, zona, materiales, suma_solicitada, motivo_rechazo (Zona_Riesgo 25%/Antiguedad_Excesiva 20%/Siniestralidad_Previa 20%/Suma_Excesiva 15%/Sin_Alarma 10%/Multiples_Motivos 10%), prima_calculada_original, loss_ratio_estimado_original.' },
+      { title: 'Evaluar alternativas ML', desc: 'Buscar escenarios rentables.', prompt: 'Para cada rechazo, simula 4 alternativas: 1) Franquicia incrementada (500€→1000€), 2) Exclusión cobertura específica (agua o robo según motivo), 3) Recargo 15-30% sobre prima base, 4) Cobertura reducida (solo continente). Calcula loss_ratio_estimado de cada alternativa con el modelo ML. Almacena en "alternativas_evaluadas".' },
+      { title: 'Entrenar modelo de aceptación', desc: 'ML para predecir si el cliente acepta.', prompt: 'Genera target simulado: acepta_contraoferta (35%). Features: tipo_alternativa, descuento_vs_original, motivo_rechazo, perfil_cliente. Entrena ML.CLASSIFICATION "aceptacion_contraoferta" con evaluate TRUE.' },
+      { title: 'Generar contra-ofertas', desc: 'CORTEX.COMPLETE para crear propuesta.', prompt: 'Para cada rechazo donde al menos una alternativa tiene loss_ratio < 95%, usa CORTEX.COMPLETE para generar: texto_contraoferta (explicando al cliente qué cambia, por qué, y el nuevo precio), comparativa_coberturas (qué gana/pierde), prima_nueva, ahorro_vs_prima_standard. Almacena en "contraofertas".' },
+      { title: 'Simular resultados', desc: 'Cuantificar recuperación y rentabilidad.', prompt: 'Simula: de las 1.000 rechazadas, ¿cuántas reciben contra-oferta? (las que tienen alternativa rentable), ¿cuántas aceptan? (35%), ¿cuál es la prima recuperada total?, ¿cuál es el loss ratio esperado de las recuperadas? Almacena en "simulacion_resultados".' },
+      { title: 'Análisis de impacto', desc: 'Cuantificar valor para la compañía.', prompt: 'Calcula KPIs: pólizas recuperadas, prima nueva producción recuperada, resultado técnico esperado de recuperadas, coste medio de la contra-oferta vs beneficio. Crea vista "impacto_rechazos".' },
+      { title: 'Dashboard de rechazos', desc: 'Panel de recuperación de rechazos.', prompt: 'Crea dashboard Streamlit con: KPIs (rechazos analizados, contra-ofertas generadas, tasa aceptación, prima recuperada), funnel (Rechazados → Con alternativa → Contra-oferta enviada → Aceptada), distribución por motivo de rechazo, tabla de contra-ofertas con detalle.' },
+      { title: 'Pipeline de rechazos', desc: 'Task para procesar rechazos nuevos.', prompt: 'Crea Task que cada hora: evalúe alternativas para nuevos rechazos, genere contra-ofertas viables, registre en tabla de seguimiento. ALTER TASK RESUME.' }
     ]
   }
 };
