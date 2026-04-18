@@ -99,6 +99,7 @@
       <li><a href="#revisar">Revisar y Validar el C&oacute;digo Generado</a></li>
       <li><a href="#streamlit">Desplegar Dashboards Streamlit</a></li>
       <li><a href="#tasks">Automatizar con Tasks y Pipelines</a></li>
+      <li><a href="#costes">Comprobar Gasto Utilizado</a></li>
       <li><a href="#tips">Consejos y Buenas Pr&aacute;cticas</a></li>
       <li><a href="#faq">Preguntas Frecuentes</a></li>
     </ol>
@@ -431,8 +432,61 @@ ALTER TASK scoring_semanal RESUME;</div>
   </div>
 
   <!-- SECTION 10 -->
+  <div class="section" id="costes">
+    <h2><span class="step-num">10</span> Comprobar Gasto Utilizado</h2>
+    <p>Tras ejecutar uno o varios casos de uso, utiliza este prompt en Cortex Code para obtener un resumen consolidado de todos los cr&eacute;ditos y tokens consumidos en el d&iacute;a actual: warehouses, funciones Cortex AI, modelos ML y Cortex Code en Snowsight.</p>
+
+    <h3>Prompt &mdash; Resumen de costes del d&iacute;a</h3>
+    <p>Copia y pega este prompt directamente en Cortex Code (recuerda activar <code>/best-practices</code> antes):</p>
+
+    <div class="code-block"><span class="lang-tag">Prompt</span>Genera una consulta SQL que muestre un resumen consolidado de todos los costes y consumo
+de la cuenta Snowflake del d&iacute;a actual (CURRENT_DATE). Incluye las siguientes secciones:
+
+1. CR&Eacute;DITOS DE WAREHOUSE
+   - Fuente: SNOWFLAKE.ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY
+   - Columnas: warehouse_name, SUM(credits_used) AS creditos_warehouse
+   - Filtra por: DATE(start_time) = CURRENT_DATE()
+
+2. FUNCIONES CORTEX AI (tokens y cr&eacute;ditos)
+   - Fuente: SNOWFLAKE.ACCOUNT_USAGE.CORTEX_FUNCTIONS_USAGE_HISTORY
+   - Columnas: function_name, SUM(tokens_used) AS tokens_usados,
+     SUM(credits_used) AS creditos_cortex
+   - Filtra por: DATE(start_time) = CURRENT_DATE()
+
+3. FUNCIONES ML SERVERLESS (ML.CLASSIFICATION, ML.FORECAST, etc.)
+   - Fuente: SNOWFLAKE.ACCOUNT_USAGE.METERING_DAILY_HISTORY
+   - Filtra por: service_type IN ('ML_FUNCTIONS','SNOWPARK_ML')
+     AND DATE(usage_date) = CURRENT_DATE()
+   - Columnas: service_type, credits_used_compute AS creditos_ml
+
+4. CORTEX CODE EN SNOWSIGHT
+   - Fuente: SNOWFLAKE.ACCOUNT_USAGE.METERING_DAILY_HISTORY
+   - Filtra por: service_type = 'CORTEX_CODE'
+     AND DATE(usage_date) = CURRENT_DATE()
+   - Columnas: service_type, credits_used_compute AS creditos_cortex_code
+
+5. RESUMEN TOTAL POR TIPO DE SERVICIO
+   - Une todos los resultados anteriores con UNION ALL
+   - Columnas finales: tipo_servicio, nombre, tokens_usados, creditos_gastados
+   - Ordena por creditos_gastados DESC
+   - A&ntilde;ade una fila TOTAL al final con SUM de todos los cr&eacute;ditos
+
+Usa CTEs para cada secci&oacute;n. Si alguna vista no existe en la cuenta, sust&iacute;tuyela por
+SNOWFLAKE.ACCOUNT_USAGE.METERING_DAILY_HISTORY filtrando por el service_type equivalente.
+A&ntilde;ade comentarios explicando cada CTE.</div>
+
+    <div class="callout-warn">
+      <p><strong>Nota:</strong> Los datos de <code>ACCOUNT_USAGE</code> tienen una latencia de hasta <strong>45 minutos</strong>. Si acabas de ejecutar un caso de uso y no aparecen datos, espera unos minutos y vuelve a lanzar la consulta.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>Alternativa:</strong> Si <code>CORTEX_FUNCTIONS_USAGE_HISTORY</code> no est&aacute; disponible en tu cuenta, Cortex Code sustituir&aacute; autom&aacute;ticamente esa secci&oacute;n por <code>METERING_DAILY_HISTORY</code> con <code>service_type = 'AI_SERVICES'</code>.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 11 -->
   <div class="section" id="tips">
-    <h2><span class="step-num">10</span> Consejos y Buenas Pr&aacute;cticas</h2>
+    <h2><span class="step-num">11</span> Consejos y Buenas Pr&aacute;cticas</h2>
 
     <h3>Desarrollo</h3>
     <ul>
@@ -460,9 +514,9 @@ ALTER TASK scoring_semanal RESUME;</div>
     </ul>
   </div>
 
-  <!-- SECTION 11 -->
+  <!-- SECTION 12 -->
   <div class="section" id="faq">
-    <h2><span class="step-num">11</span> Preguntas Frecuentes</h2>
+    <h2><span class="step-num">12</span> Preguntas Frecuentes</h2>
 
     <div class="faq-item">
       <div class="faq-q">&iquest;Necesito saber SQL para usar los prompts?</div>
