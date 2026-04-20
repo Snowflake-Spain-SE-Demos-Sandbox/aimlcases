@@ -24,11 +24,20 @@
     }
 
     .logos {
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
       margin-bottom: 16px;
     }
+    .hackathon-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 20px; background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.35); border-radius: 80px;
+      color: #fff; font-size: 12px; font-weight: 600; text-decoration: none;
+      transition: all 0.2s; letter-spacing: 0.3px;
+    }
+    .hackathon-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.6); }
 
     .logo-snowflake {
       display: flex;
@@ -351,6 +360,10 @@
       <img src="bug-white.png" width="28" height="28" alt="Snowflake" />
       Snowflake
     </div>
+    <a href="hackathon.html" class="hackathon-btn">
+      &#127942; Organiza un CoCothon con tu equipo
+      <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="8,4 14,10 8,16"/></svg>
+    </a>
   </div>
   <p class="hero-eyebrow">Soluciones IA/ML por Industria</p>
   <h1 class="hero-title">Aceleradores de Inteligencia Artificial</h1>
