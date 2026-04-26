@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cortex REST API — Key Pair JWT + Benchmark vs AI_COMPLETE</title>
+<title>Cortex REST API — Key Pair JWT + Benchmark vs AI_COMPLETE | Snowflake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--b:#29B5E8;--db:#11567F;--nv:#0E2F44;--lb:#E8F7FC;--g50:#F8F9FA;--g100:#F0F2F4;--g200:#E1E5E9;--g300:#C8CED3;--g500:#8E99A4;--g700:#4A5568;--g900:#1A202C;--gn:#36B37E;--rd:#FF5630;--or:#FFAB00;--pp:#6554C0;--r:8px}
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,sans-serif;background:var(--g50);color:var(--g900);line-height:1.6;-webkit-font-smoothing:antialiased}
+:root{--b:#29B5E8;--db:#0a6fa8;--nv:#003545;--lb:#E8F7FC;--g50:#F5F5F5;--g100:#F0F2F4;--g200:#E1E5E9;--g300:#C8CED3;--g500:#8E99A4;--g700:#4A5568;--g900:#1A1A1A;--gn:#36B37E;--rd:#FF5630;--or:#FFAB00;--pp:#6554C0;--r:8px}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Lato',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--g50);color:var(--g900);line-height:1.6;-webkit-font-smoothing:antialiased}
 .en{display:none}
 body.lang-en .es{display:none!important}
 body.lang-en .en{display:block!important}
@@ -15,13 +18,19 @@ body.lang-en .sq.en{display:block!important}
 body.lang-en .sq.es{display:none!important}
 body.lang-en .nt.en,.lang-en .wr.en{display:block!important}
 body.lang-en .nt.es,.lang-en .wr.es{display:none!important}
-.hdr{background:linear-gradient(135deg,var(--nv),var(--db));color:#fff;padding:40px 0 0}
+.snfl-bar{background:#003545;border-bottom:1px solid rgba(41,181,232,.2);padding:0 32px}
+.snfl-bar-inner{max-width:1200px;margin:0 auto;height:52px;display:flex;align-items:center;justify-content:space-between}
+.snfl-logo{display:flex;align-items:center;gap:10px;color:#fff;font-size:18px;font-weight:900;letter-spacing:.5px;text-decoration:none}
+.snfl-logo img{height:28px;width:auto}
+.snfl-logo span{opacity:.95}
+.snfl-badge{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(41,181,232,.18);border:1px solid rgba(41,181,232,.35);color:var(--b);padding:3px 10px;border-radius:12px}
+.hdr{background:var(--nv);color:#fff;padding:40px 0 0;border-top:3px solid var(--b)}
 .hi{max-width:1200px;margin:0 auto;padding:0 32px;position:relative}
-.hdr h1{font-size:2rem;font-weight:700;margin-bottom:6px}.hdr .su{font-size:1.05rem;color:var(--b);margin-bottom:20px}
-.hdr .me{display:flex;gap:20px;font-size:.84rem;color:var(--g300);margin-bottom:14px;flex-wrap:wrap}
-.lbtn{position:absolute;top:0;right:32px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;padding:7px 18px;border-radius:20px;font-size:.8rem;font-weight:700;cursor:pointer;letter-spacing:.06em;transition:all .2s}
+.hdr h1{font-size:2rem;font-weight:900;margin-bottom:6px;letter-spacing:-.3px}.hdr .su{font-size:1.05rem;color:var(--b);margin-bottom:20px;font-weight:300}
+.hdr .me{display:flex;gap:20px;font-size:.84rem;color:var(--g300);margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.lbtn{position:absolute;top:0;right:32px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 18px;border-radius:20px;font-size:.78rem;font-weight:700;cursor:pointer;letter-spacing:.06em;transition:all .2s}
 .lbtn:hover{background:var(--b);border-color:var(--b)}
-.bh{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r) var(--r) 0 0;padding:28px 32px;margin-top:14px}
+.bh{background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08);border-top:1px solid rgba(41,181,232,.25);border-radius:var(--r) var(--r) 0 0;padding:28px 32px;margin-top:14px}
 .bh h2{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--b);margin-bottom:18px}
 .bg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .bc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:16px 18px}
@@ -39,25 +48,26 @@ body.lang-en .nt.es,.lang-en .wr.es{display:none!important}
 .pn{margin-top:16px;font-size:.75rem;color:var(--g300)}.pn strong{color:var(--b)}.pn a{color:var(--b)}
 .img-w{margin-top:20px;text-align:center}.img-w img{max-width:100%;border-radius:var(--r);border:1px solid rgba(255,255,255,.1)}.img-w .cap{font-size:.75rem;color:var(--g300);margin-top:8px}
 .cn{max-width:1200px;margin:0 auto;padding:36px 32px 80px}
-nav.tc{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:24px 28px;margin-bottom:36px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-nav.tc h2{font-size:.88rem;text-transform:uppercase;letter-spacing:.05em;color:var(--db);margin-bottom:14px}
+nav.tc{background:#fff;border:1px solid var(--g200);border-top:3px solid var(--b);border-radius:var(--r);padding:24px 28px;margin-bottom:36px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+nav.tc h2{font-size:.88rem;text-transform:uppercase;letter-spacing:.08em;color:var(--nv);margin-bottom:14px;font-weight:900}
 nav.tc ol{list-style:none;counter-reset:ts}nav.tc>ol>li{counter-increment:ts;margin-bottom:10px}
 nav.tc>ol>li>a{font-weight:600;color:var(--db);text-decoration:none;font-size:.92rem}
 nav.tc>ol>li>a::before{content:"PART" counter(ts) " — ";color:var(--b)}
 body:not(.lang-en) nav.tc>ol>li>a::before{content:"PARTE " counter(ts) " — "}
 body.lang-en nav.tc>ol>li>a::before{content:"PART " counter(ts) " — "}
 nav.tc ol ol{margin-left:22px;margin-top:5px;list-style:none}nav.tc ol ol li a{color:var(--g700);text-decoration:none;font-size:.86rem}nav.tc a:hover{color:var(--b)}
-.ph{background:linear-gradient(135deg,var(--db),var(--nv));color:#fff;padding:18px 26px;border-radius:var(--r);margin:44px 0 22px;font-size:1.15rem;font-weight:700}
-.st{background:#fff;border:1px solid var(--g200);border-radius:var(--r);margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden}
+.ph{background:var(--nv);color:#fff;border-left:4px solid var(--b);padding:16px 24px;border-radius:0 var(--r) var(--r) 0;margin:44px 0 22px;font-size:1.05rem;font-weight:900;letter-spacing:.02em;text-transform:uppercase}
+.st{background:#fff;border:1px solid var(--g200);border-radius:var(--r);margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.05);overflow:hidden;transition:box-shadow .2s}
+.st:hover{box-shadow:0 4px 16px rgba(0,0,0,.1)}
 .sh{display:flex;align-items:center;gap:12px;padding:16px 22px;background:var(--g50);border-bottom:1px solid var(--g200);cursor:pointer;user-select:none}.sh:hover{background:var(--lb)}
-.sn{display:flex;align-items:center;justify-content:center;min-width:30px;height:30px;background:var(--b);color:#fff;border-radius:50%;font-size:.78rem;font-weight:700;flex-shrink:0;padding:0 8px}
-.sl{font-size:.95rem;font-weight:600;color:var(--nv);flex:1}.sg{font-size:1.1rem;color:var(--g500);transition:transform .2s}
+.sn{display:flex;align-items:center;justify-content:center;min-width:30px;height:30px;background:var(--nv);color:#fff;border-radius:50%;font-size:.78rem;font-weight:700;flex-shrink:0;padding:0 8px;border:2px solid var(--b)}
+.sl{font-size:.95rem;font-weight:700;color:var(--nv);flex:1;letter-spacing:.01em}.sg{font-size:1.1rem;color:var(--g500);transition:transform .2s}
 .st.c .sb{display:none}.st.c .sg{transform:rotate(-90deg)}
 .sb{padding:22px}.sb p,.sb ul,.sb ol{margin-bottom:14px;color:var(--g700);font-size:.9rem}.sb ul,.sb ol{padding-left:18px}.sb li{margin-bottom:5px}
 .nt{background:var(--lb);border-left:4px solid var(--b);padding:11px 15px;border-radius:0 var(--r) var(--r) 0;margin-bottom:14px;font-size:.86rem;color:var(--db)}
 .wr{background:#FFF8E1;border-left:4px solid var(--or);padding:11px 15px;border-radius:0 var(--r) var(--r) 0;margin-bottom:14px;font-size:.86rem;color:#7A4F01}
 .sq{position:relative;margin-bottom:14px;border-radius:var(--r);overflow:hidden;border:1px solid var(--g200)}
-.sqh{display:flex;align-items:center;justify-content:space-between;padding:7px 13px;background:var(--g100);border-bottom:1px solid var(--g200);font-size:.72rem;color:var(--g500);text-transform:uppercase;letter-spacing:.04em}
+.sqh{display:flex;align-items:center;justify-content:space-between;padding:7px 13px;background:#E8F0F7;border-bottom:1px solid var(--g200);font-size:.72rem;color:var(--db);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 .sqh.dk{background:#1E293B;border-bottom-color:#334155;color:#94A3B8}
 .cp{display:flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--g300);border-radius:4px;padding:3px 9px;font-size:.72rem;color:var(--g700);cursor:pointer;transition:all .15s}
 .cp:hover{background:var(--b);color:#fff;border-color:var(--b)}.cp.ok{background:var(--gn);color:#fff;border-color:var(--gn)}.cp svg{width:13px;height:13px}
@@ -65,19 +75,23 @@ pre.sc{background:var(--g900);color:#E2E8F0;padding:16px 18px;overflow-x:auto;fo
 pre.tc2{background:#0F172A;color:#E2E8F0;padding:16px 18px;overflow-x:auto;font-family:'JetBrains Mono','Fira Code',Consolas,monospace;font-size:.78rem;line-height:1.6;margin:0;white-space:pre;word-wrap:normal}
 .it{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:.86rem}.it th{text-align:left;padding:9px 13px;background:var(--g50);border:1px solid var(--g200);font-weight:600;color:var(--db)}.it td{padding:9px 13px;border:1px solid var(--g200);color:var(--g700)}
 .ib{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r);padding:18px;margin-top:8px}.ib p:first-child{font-weight:700;color:var(--db);margin-bottom:10px}.ib ol{font-size:.86rem;color:var(--g700)}.ib .cc{margin-top:10px;font-weight:600;font-size:.88rem;color:var(--db)}
-.ft{text-align:center;padding:36px;color:var(--g500);font-size:.8rem;border-top:1px solid var(--g200);margin-top:50px}.ft a{color:var(--b)}
-@media(max-width:900px){.bg{grid-template-columns:1fr 1fr}.lbtn{position:static;margin-bottom:14px}}
-@media(max-width:600px){.bg{grid-template-columns:1fr}.hdr h1{font-size:1.4rem}.cn{padding:18px 14px 60px}.hi{padding:0 14px}.sb{padding:14px}}
+.ft{background:var(--nv);color:rgba(255,255,255,.5);font-size:.78rem;border-top:3px solid var(--b);margin-top:50px;padding:28px 32px;display:flex;align-items:center;justify-content:center;gap:16px}.ft a{color:var(--b);text-decoration:none}.ft a:hover{text-decoration:underline}.ft-logo{display:flex;align-items:center;gap:8px;color:#fff;font-weight:700;font-size:.88rem}
+@media(max-width:900px){.bg{grid-template-columns:1fr 1fr}.lbtn{position:static;margin-bottom:14px}.snfl-bar{padding:0 16px}}
+@media(max-width:600px){.bg{grid-template-columns:1fr}.hdr h1{font-size:1.4rem}.cn{padding:18px 14px 60px}.hi{padding:0 14px}.sb{padding:14px}.snfl-badge{display:none}}
 </style>
 </head>
 <body>
+<div class="snfl-bar"><div class="snfl-bar-inner">
+  <a class="snfl-logo" href="index.html"><img src="bug-white.png" alt="Snowflake"><span>Snowflake</span></a>
+  <a class="snfl-badge" href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-rest-api" target="_blank" style="text-decoration:none;cursor:pointer">Cortex AI &bull; REST API Guide &#8599;</a>
+</div></div>
 <header class="hdr"><div class="hi">
 <h1>Cortex REST API <span class="es">con</span><span class="en">with</span> Key Pair JWT</h1>
 <p class="su"><span class="es">Benchmark vs AI_COMPLETE &mdash; Configuraci&oacute;n desde cero</span><span class="en">Benchmark vs AI_COMPLETE &mdash; Setup from Scratch</span></p>
 <div class="me"><span>Daniel Sanchez</span><span>claude-sonnet-4-5 &bull; llama3.3-70b</span><span><span class="es">1,000 transcripciones call center seguros</span><span class="en">1,000 insurance call center transcripts</span></span></div>
 <button class="lbtn" id="lbtn" onclick="toggleLang()">&#127468;&#127463; English</button>
 <div class="bh">
-<h2><span class="es">Mega-Comparativa: 4 M&eacute;todos &mdash; Resultados Reales</span><span class="en">Mega-Comparison: 4 Methods &mdash; Real Results</span></h2>
+<h2><span class="es">Comparativa: 4 M&eacute;todos &mdash; Resultados Reales</span><span class="en">Comparison: 4 Methods &mdash; Real Results</span></h2>
 <div class="bg">
 <div class="bc w1"><div class="lb">REST API</div><div class="md">Llama 3.3-70b</div><div class="pr">$1.00</div><div class="dt">1.35M in &bull; <span class="es">Sin cache</span><span class="en">No cache</span> &bull; 40K out</div><div class="sv">94.6% <span class="es">ahorro</span><span class="en">savings</span></div></div>
 <div class="bc w2"><div class="lb">AI_COMPLETE</div><div class="md">Llama 3.3-70b</div><div class="pr">$2.00</div><div class="dt">1.35M in &bull; 40K out</div><div class="sv">89.2% <span class="es">ahorro</span><span class="en">savings</span></div></div>
@@ -113,7 +127,7 @@ pre.tc2{background:#0F172A;color:#E2E8F0;padding:16px 18px;overflow-x:auto;font-
 <li><a href="#p2c">Benchmark llama3.3-70b</a><ol>
 <li><a href="#s8b">Step 8b: REST API</a></li>
 <li><a href="#s9b">Step 9b: AI_COMPLETE</a></li>
-<li><a href="#s10b"><span class="es">Step 10b: Mega-comparativa</span><span class="en">Step 10b: Mega-comparison</span></a></li></ol></li>
+<li><a href="#s10b"><span class="es">Step 10b: Comparativa</span><span class="en">Step 10b: Comparison</span></a></li></ol></li>
 <li><a href="#p3"><span class="es">Operaciones</span><span class="en">Operations</span></a><ol>
 <li><a href="#s11">Key Rotation</a></li>
 <li><a href="#comp">PAT vs JWT</a></li></ol></li>
@@ -1527,7 +1541,7 @@ Transcript:
 </div></div>
 
 <!-- STEP 10b -->
-<div class="st" id="s10b"><div class="sh" onclick="tog(this)"><span class="sn">10b</span><span class="sl"><span class="es">Validaci&oacute;n y mega-comparativa (4 m&eacute;todos)</span><span class="en">Validation and mega-comparison (4 methods)</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="st" id="s10b"><div class="sh" onclick="tog(this)"><span class="sn">10b</span><span class="sl"><span class="es">Validaci&oacute;n y comparativa (4 m&eacute;todos)</span><span class="en">Validation and comparison (4 methods)</span></span><span class="sg">&#9660;</span></div><div class="sb">
 <div class="sq es"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">-- 10b.1 Success rate (UDF Llama)
 SELECT COUNT(*) AS total,
     SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) AS success,
@@ -1553,7 +1567,7 @@ FROM (
     FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE_LLAMA GROUP BY modelo
 ) combined ORDER BY total_cost_usd;
 
--- 10b.3 Mega-comparativa: 4 métodos
+-- 10b.3 Comparativa: 4 métodos
 SELECT metodo, modelo, total_rows, total_prompt_tokens, total_cached_tokens,
     total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
     ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS ahorro_pct
@@ -1607,7 +1621,7 @@ FROM (
     FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE_LLAMA GROUP BY model
 ) combined ORDER BY total_cost_usd;
 
--- 10b.3 Mega-comparison: 4 methods
+-- 10b.3 Comparison: 4 methods
 SELECT method, model, total_rows, total_prompt_tokens, total_cached_tokens,
     total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
     ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS savings_pct
@@ -1735,7 +1749,7 @@ ALTER USER DSANCHEZ UNSET RSA_PUBLIC_KEY;</pre></div>
 <p style="font-size:.86rem;color:var(--g700)"><span class="es">Ambos requieren: Network Rule + Secret + External Access Integration.</span><span class="en">Both require: Network Rule + Secret + External Access Integration.</span></p>
 </div></div>
 </main>
-<footer class="ft">Cortex REST API <span class="es">con</span><span class="en">with</span> Key Pair JWT &bull; Daniel Sanchez &bull; Snowflake &bull; <a href="https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf" target="_blank">Credit Consumption Table (PDF)</a></footer>
+<footer class="ft"><div class="ft-logo"><img src="bug-white.png" alt="Snowflake" style="height:20px"><span>Snowflake</span></div><span>&bull;</span><span>Cortex REST API &bull; Key Pair JWT &bull; Daniel Sanchez</span><span>&bull;</span><a href="https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf" target="_blank">Credit Consumption Table (PDF)</a></footer>
 <script>
 function tog(el){el.parentElement.classList.toggle('c')}
 function toggleLang(){
