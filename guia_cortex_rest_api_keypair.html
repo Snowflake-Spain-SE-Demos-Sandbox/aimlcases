@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cortex REST API — Key Pair JWT + Benchmark vs AI_COMPLETE</title>
+<style>
+:root{--b:#29B5E8;--db:#11567F;--nv:#0E2F44;--lb:#E8F7FC;--g50:#F8F9FA;--g100:#F0F2F4;--g200:#E1E5E9;--g300:#C8CED3;--g500:#8E99A4;--g700:#4A5568;--g900:#1A202C;--gn:#36B37E;--rd:#FF5630;--or:#FFAB00;--pp:#6554C0;--r:8px}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,sans-serif;background:var(--g50);color:var(--g900);line-height:1.6;-webkit-font-smoothing:antialiased}
+.en{display:none}
+body.lang-en .es{display:none!important}
+body.lang-en .en{display:block!important}
+body.lang-en span.en{display:inline!important}
+body.lang-en .sq.en{display:block!important}
+body.lang-en .sq.es{display:none!important}
+body.lang-en .nt.en,.lang-en .wr.en{display:block!important}
+body.lang-en .nt.es,.lang-en .wr.es{display:none!important}
+.hdr{background:linear-gradient(135deg,var(--nv),var(--db));color:#fff;padding:40px 0 0}
+.hi{max-width:1200px;margin:0 auto;padding:0 32px;position:relative}
+.hdr h1{font-size:2rem;font-weight:700;margin-bottom:6px}.hdr .su{font-size:1.05rem;color:var(--b);margin-bottom:20px}
+.hdr .me{display:flex;gap:20px;font-size:.84rem;color:var(--g300);margin-bottom:14px;flex-wrap:wrap}
+.lbtn{position:absolute;top:0;right:32px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;padding:7px 18px;border-radius:20px;font-size:.8rem;font-weight:700;cursor:pointer;letter-spacing:.06em;transition:all .2s}
+.lbtn:hover{background:var(--b);border-color:var(--b)}
+.bh{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r) var(--r) 0 0;padding:28px 32px;margin-top:14px}
+.bh h2{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--b);margin-bottom:18px}
+.bg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.bc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:16px 18px}
+.bc.w1{border-color:var(--gn);background:rgba(54,179,126,.12)}.bc.w2{border-color:var(--gn);background:rgba(54,179,126,.06)}.bc.l1{border-color:rgba(255,86,48,.3);background:rgba(255,86,48,.08)}
+.bc .lb{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--g300);margin-bottom:2px}
+.bc .md{font-size:.72rem;color:var(--b);margin-bottom:4px;font-weight:500}
+.bc .pr{font-size:1.9rem;font-weight:700}.bc.w1 .pr,.bc.w2 .pr{color:var(--gn)}.bc.l1 .pr{color:var(--rd)}
+.bc .dt{font-size:.76rem;color:var(--g300);margin-top:3px}
+.bc .sv{display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:.68rem;font-weight:700}
+.bc.w1 .sv,.bc.w2 .sv{background:rgba(54,179,126,.2);color:var(--gn)}.bc.l1 .sv{background:rgba(255,86,48,.15);color:var(--rd)}
+.rt-w{overflow-x:auto;margin-top:20px}.rt{width:100%;border-collapse:collapse;font-size:.82rem}
+.rt th{text-align:left;padding:8px 12px;font-weight:600;color:var(--b);border-bottom:1px solid rgba(255,255,255,.1);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+.rt td{padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--g200)}.rt td:first-child{color:#fff;font-weight:500}
+.rt tr.tt td{font-weight:700;color:#fff;border-top:2px solid rgba(255,255,255,.15)}.rt .na{color:var(--g500)}.rt .hl{color:var(--gn);font-weight:600}
+.pn{margin-top:16px;font-size:.75rem;color:var(--g300)}.pn strong{color:var(--b)}.pn a{color:var(--b)}
+.img-w{margin-top:20px;text-align:center}.img-w img{max-width:100%;border-radius:var(--r);border:1px solid rgba(255,255,255,.1)}.img-w .cap{font-size:.75rem;color:var(--g300);margin-top:8px}
+.cn{max-width:1200px;margin:0 auto;padding:36px 32px 80px}
+nav.tc{background:#fff;border:1px solid var(--g200);border-radius:var(--r);padding:24px 28px;margin-bottom:36px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+nav.tc h2{font-size:.88rem;text-transform:uppercase;letter-spacing:.05em;color:var(--db);margin-bottom:14px}
+nav.tc ol{list-style:none;counter-reset:ts}nav.tc>ol>li{counter-increment:ts;margin-bottom:10px}
+nav.tc>ol>li>a{font-weight:600;color:var(--db);text-decoration:none;font-size:.92rem}
+nav.tc>ol>li>a::before{content:"PART" counter(ts) " — ";color:var(--b)}
+body:not(.lang-en) nav.tc>ol>li>a::before{content:"PARTE " counter(ts) " — "}
+body.lang-en nav.tc>ol>li>a::before{content:"PART " counter(ts) " — "}
+nav.tc ol ol{margin-left:22px;margin-top:5px;list-style:none}nav.tc ol ol li a{color:var(--g700);text-decoration:none;font-size:.86rem}nav.tc a:hover{color:var(--b)}
+.ph{background:linear-gradient(135deg,var(--db),var(--nv));color:#fff;padding:18px 26px;border-radius:var(--r);margin:44px 0 22px;font-size:1.15rem;font-weight:700}
+.st{background:#fff;border:1px solid var(--g200);border-radius:var(--r);margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden}
+.sh{display:flex;align-items:center;gap:12px;padding:16px 22px;background:var(--g50);border-bottom:1px solid var(--g200);cursor:pointer;user-select:none}.sh:hover{background:var(--lb)}
+.sn{display:flex;align-items:center;justify-content:center;min-width:30px;height:30px;background:var(--b);color:#fff;border-radius:50%;font-size:.78rem;font-weight:700;flex-shrink:0;padding:0 8px}
+.sl{font-size:.95rem;font-weight:600;color:var(--nv);flex:1}.sg{font-size:1.1rem;color:var(--g500);transition:transform .2s}
+.st.c .sb{display:none}.st.c .sg{transform:rotate(-90deg)}
+.sb{padding:22px}.sb p,.sb ul,.sb ol{margin-bottom:14px;color:var(--g700);font-size:.9rem}.sb ul,.sb ol{padding-left:18px}.sb li{margin-bottom:5px}
+.nt{background:var(--lb);border-left:4px solid var(--b);padding:11px 15px;border-radius:0 var(--r) var(--r) 0;margin-bottom:14px;font-size:.86rem;color:var(--db)}
+.wr{background:#FFF8E1;border-left:4px solid var(--or);padding:11px 15px;border-radius:0 var(--r) var(--r) 0;margin-bottom:14px;font-size:.86rem;color:#7A4F01}
+.sq{position:relative;margin-bottom:14px;border-radius:var(--r);overflow:hidden;border:1px solid var(--g200)}
+.sqh{display:flex;align-items:center;justify-content:space-between;padding:7px 13px;background:var(--g100);border-bottom:1px solid var(--g200);font-size:.72rem;color:var(--g500);text-transform:uppercase;letter-spacing:.04em}
+.sqh.dk{background:#1E293B;border-bottom-color:#334155;color:#94A3B8}
+.cp{display:flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--g300);border-radius:4px;padding:3px 9px;font-size:.72rem;color:var(--g700);cursor:pointer;transition:all .15s}
+.cp:hover{background:var(--b);color:#fff;border-color:var(--b)}.cp.ok{background:var(--gn);color:#fff;border-color:var(--gn)}.cp svg{width:13px;height:13px}
+pre.sc{background:var(--g900);color:#E2E8F0;padding:16px 18px;overflow-x:auto;font-family:'JetBrains Mono','Fira Code','SF Mono',Consolas,monospace;font-size:.78rem;line-height:1.6;margin:0;white-space:pre;word-wrap:normal}
+pre.tc2{background:#0F172A;color:#E2E8F0;padding:16px 18px;overflow-x:auto;font-family:'JetBrains Mono','Fira Code',Consolas,monospace;font-size:.78rem;line-height:1.6;margin:0;white-space:pre;word-wrap:normal}
+.it{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:.86rem}.it th{text-align:left;padding:9px 13px;background:var(--g50);border:1px solid var(--g200);font-weight:600;color:var(--db)}.it td{padding:9px 13px;border:1px solid var(--g200);color:var(--g700)}
+.ib{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r);padding:18px;margin-top:8px}.ib p:first-child{font-weight:700;color:var(--db);margin-bottom:10px}.ib ol{font-size:.86rem;color:var(--g700)}.ib .cc{margin-top:10px;font-weight:600;font-size:.88rem;color:var(--db)}
+.ft{text-align:center;padding:36px;color:var(--g500);font-size:.8rem;border-top:1px solid var(--g200);margin-top:50px}.ft a{color:var(--b)}
+@media(max-width:900px){.bg{grid-template-columns:1fr 1fr}.lbtn{position:static;margin-bottom:14px}}
+@media(max-width:600px){.bg{grid-template-columns:1fr}.hdr h1{font-size:1.4rem}.cn{padding:18px 14px 60px}.hi{padding:0 14px}.sb{padding:14px}}
+</style>
+</head>
+<body>
+<header class="hdr"><div class="hi">
+<h1>Cortex REST API <span class="es">con</span><span class="en">with</span> Key Pair JWT</h1>
+<p class="su"><span class="es">Benchmark vs AI_COMPLETE &mdash; Configuraci&oacute;n desde cero</span><span class="en">Benchmark vs AI_COMPLETE &mdash; Setup from Scratch</span></p>
+<div class="me"><span>Daniel Sanchez</span><span>claude-sonnet-4-5 &bull; llama3.3-70b</span><span><span class="es">1,000 transcripciones call center seguros</span><span class="en">1,000 insurance call center transcripts</span></span></div>
+<button class="lbtn" id="lbtn" onclick="toggleLang()">&#127468;&#127463; English</button>
+<div class="bh">
+<h2><span class="es">Mega-Comparativa: 4 M&eacute;todos &mdash; Resultados Reales</span><span class="en">Mega-Comparison: 4 Methods &mdash; Real Results</span></h2>
+<div class="bg">
+<div class="bc w1"><div class="lb">REST API</div><div class="md">Llama 3.3-70b</div><div class="pr">$1.00</div><div class="dt">1.35M in &bull; <span class="es">Sin cache</span><span class="en">No cache</span> &bull; 40K out</div><div class="sv">94.6% <span class="es">ahorro</span><span class="en">savings</span></div></div>
+<div class="bc w2"><div class="lb">AI_COMPLETE</div><div class="md">Llama 3.3-70b</div><div class="pr">$2.00</div><div class="dt">1.35M in &bull; 40K out</div><div class="sv">89.2% <span class="es">ahorro</span><span class="en">savings</span></div></div>
+<div class="bc w2"><div class="lb">REST API + Cache</div><div class="md">Claude Sonnet 4.5</div><div class="pr">$2.20</div><div class="dt">320K in &bull; 1.09M cached &bull; 61K out</div><div class="sv">88.2% <span class="es">ahorro</span><span class="en">savings</span></div></div>
+<div class="bc l1"><div class="lb">AI_COMPLETE</div><div class="md">Claude Sonnet 4.5</div><div class="pr">$18.56</div><div class="dt">2.29M in &bull; 104K out</div><div class="sv">Baseline</div></div>
+</div>
+<div class="rt-w"><table class="rt">
+<thead><tr><th><span class="es">M&eacute;todo</span><span class="en">Method</span></th><th><span class="es">Modelo</span><span class="en">Model</span></th><th>Prompt tk</th><th>Cache tk</th><th>Output tk</th><th>Input $</th><th>Cache $</th><th>Output $</th><th>Total $</th><th><span class="es">Ahorro</span><span class="en">Savings</span></th></tr></thead>
+<tbody>
+<tr><td>REST API</td><td>Llama 3.3-70b</td><td>1,347,805</td><td class="hl">1,323,072</td><td>39,648</td><td>$0.97</td><td>$0.00</td><td>$0.03</td><td class="hl">$1.00</td><td class="hl">94.6%</td></tr>
+<tr><td>AI_COMPLETE</td><td>Llama 3.3-70b</td><td>1,346,805</td><td class="na">N/A</td><td>39,585</td><td>$1.94</td><td class="na">N/A</td><td>$0.06</td><td>$2.00</td><td>89.2%</td></tr>
+<tr><td>REST API + Cache</td><td>Claude Sonnet 4.5</td><td>320,268</td><td class="hl">1,087,784</td><td>60,597</td><td>$0.96</td><td>$0.33</td><td>$0.91</td><td class="hl">$2.20</td><td class="hl">88.2%</td></tr>
+<tr class="tt"><td>AI_COMPLETE</td><td>Claude Sonnet 4.5</td><td>2,293,268</td><td class="na">N/A</td><td>103,666</td><td>$15.14</td><td class="na">N/A</td><td>$3.42</td><td>$18.56</td><td>&mdash;</td></tr>
+</tbody></table></div>
+<div class="pn"><strong><span class="es">Precios:</span><span class="en">Pricing:</span></strong> Claude REST: In $3.00/M | Out $15.00/M | Cache $0.30/M &bull; Claude AI_COMPLETE: In 1.65cr/M | Out 8.25cr/M &bull; Llama REST: In/Out $0.72/M &bull; Llama AI_COMPLETE: In/Out 0.36cr/M &bull; 1 cr = $4.00 &bull; <a href="https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf" target="_blank"><span class="es">Tabla de precios oficial Snowflake (PDF)</span><span class="en">Snowflake Official Pricing Table (PDF)</span></a></div>
+<div class="img-w"><img src="cacheprompt.webp" alt="Prompt Caching en Cortex REST API"><div class="cap"><span class="es">Arquitectura de Prompt Caching en Cortex REST API</span><span class="en">Prompt Caching Architecture in Cortex REST API</span></div></div>
+</div></div></header>
+
+<main class="cn">
+<nav class="tc"><h2><span class="es">Contenido</span><span class="en">Contents</span></h2><ol>
+<li><a href="#p1"><span class="es">Configuraci&oacute;n de la cuenta</span><span class="en">Account Setup</span></a><ol>
+<li><a href="#s1"><span class="es">Step 1: Descubrimiento</span><span class="en">Step 1: Discovery</span></a></li>
+<li><a href="#s2">Step 2: RSA Key Pair</a></li>
+<li><a href="#s3"><span class="es">Step 3: Public key</span><span class="en">Step 3: Public key</span></a></li>
+<li><a href="#s4"><span class="es">Step 4: Infraestructura</span><span class="en">Step 4: Infrastructure</span></a></li>
+<li><a href="#s5">Step 5: UDF</a></li>
+<li><a href="#s6">Step 6: Test</a></li></ol></li>
+<li><a href="#p2a">Benchmark claude-sonnet-4-5</a><ol>
+<li><a href="#s7"><span class="es">Step 7: Datos</span><span class="en">Step 7: Data</span></a></li>
+<li><a href="#s8">Step 8: REST API</a></li>
+<li><a href="#s9">Step 9: AI_COMPLETE</a></li>
+<li><a href="#s10">Step 10: Benchmark</a></li></ol></li>
+<li><a href="#p2c">Benchmark llama3.3-70b</a><ol>
+<li><a href="#s8b">Step 8b: REST API</a></li>
+<li><a href="#s9b">Step 9b: AI_COMPLETE</a></li>
+<li><a href="#s10b"><span class="es">Step 10b: Mega-comparativa</span><span class="en">Step 10b: Mega-comparison</span></a></li></ol></li>
+<li><a href="#p3"><span class="es">Operaciones</span><span class="en">Operations</span></a><ol>
+<li><a href="#s11">Key Rotation</a></li>
+<li><a href="#comp">PAT vs JWT</a></li></ol></li>
+</ol></nav>
+
+<div class="ph" id="p1"><span class="es">PARTE 1 &mdash; Configuraci&oacute;n de la Cuenta desde Cero</span><span class="en">PART 1 &mdash; Account Setup from Scratch</span></div>
+
+<!-- STEP 1 -->
+<div class="st" id="s1"><div class="sh" onclick="tog(this)"><span class="sn">1</span><span class="sl"><span class="es">Descubrimiento de la cuenta</span><span class="en">Account Discovery</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">-- 1.1 Obtener org, account y usuario actual
+SELECT
+    CURRENT_ORGANIZATION_NAME() AS org_name,
+    CURRENT_ACCOUNT_NAME()      AS account_name,
+    CURRENT_USER()              AS user_name;
+
+-- 1.2 Obtener el hostname correcto (necesario para Network Rule y UDF)
+-- Busca el valor con type = SNOWFLAKE_DEPLOYMENT_REGIONLESS
+SELECT value:host::STRING AS hostname
+FROM TABLE(FLATTEN(PARSE_JSON(SYSTEM$ALLOWLIST())))
+WHERE value:type::STRING = 'SNOWFLAKE_DEPLOYMENT_REGIONLESS';
+-- ANOTA este valor — lo necesitas en el Step 4 y Step 5
+-- Ejemplo: aikoqom-aqb12336.snowflakecomputing.com</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">-- 1.1 Get org, account and current user
+SELECT
+    CURRENT_ORGANIZATION_NAME() AS org_name,
+    CURRENT_ACCOUNT_NAME()      AS account_name,
+    CURRENT_USER()              AS user_name;
+
+-- 1.2 Get the correct hostname (needed for Network Rule and UDF)
+-- Look for the value with type = SNOWFLAKE_DEPLOYMENT_REGIONLESS
+SELECT value:host::STRING AS hostname
+FROM TABLE(FLATTEN(PARSE_JSON(SYSTEM$ALLOWLIST())))
+WHERE value:type::STRING = 'SNOWFLAKE_DEPLOYMENT_REGIONLESS';
+-- NOTE this value — you need it in Steps 4 and 5
+-- Example: aikoqom-aqb12336.snowflakecomputing.com</pre></div>
+</div></div>
+
+<!-- STEP 2 -->
+<div class="st" id="s2"><div class="sh" onclick="tog(this)"><span class="sn">2</span><span class="sl"><span class="es">Generar RSA Key Pair (terminal local, NO en Snowflake)</span><span class="en">Generate RSA Key Pair (local terminal, NOT in Snowflake)</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh dk"><span>Terminal</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="tc2"># Generar private key (sin passphrase para simplificar)
+openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out cortex_rsa_key.p8 -nocrypt
+
+# Generar public key
+openssl rsa -in cortex_rsa_key.p8 -pubout -out cortex_rsa_key.pub
+
+# Ver la public key (copiar el contenido SIN los headers BEGIN/END)
+cat cortex_rsa_key.pub
+
+# Ver la private key (la necesitaras para el secret)
+cat cortex_rsa_key.p8</pre></div>
+<div class="sq en"><div class="sqh dk"><span>Terminal</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="tc2"># Generate private key (no passphrase for simplicity)
+openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out cortex_rsa_key.p8 -nocrypt
+
+# Generate public key
+openssl rsa -in cortex_rsa_key.p8 -pubout -out cortex_rsa_key.pub
+
+# Show the public key (copy the content WITHOUT the BEGIN/END headers)
+cat cortex_rsa_key.pub
+
+# Show the private key (you'll need it for the secret)
+cat cortex_rsa_key.p8</pre></div>
+</div></div>
+
+<!-- STEP 3 -->
+<div class="st" id="s3"><div class="sh" onclick="tog(this)"><span class="sn">3</span><span class="sl"><span class="es">Asignar la public key al usuario de Snowflake</span><span class="en">Assign the public key to the Snowflake user</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">USE ROLE ACCOUNTADMIN;
+
+-- REEMPLAZA con tu public key SIN los headers BEGIN/END PUBLIC KEY
+ALTER USER DSANCHEZ SET RSA_PUBLIC_KEY = '&lt;TU_PUBLIC_KEY_AQUI&gt;';
+
+-- Verificar que se asigno correctamente
+DESC USER DSANCHEZ;
+-- Busca RSA_PUBLIC_KEY_FP en la salida (debe tener un fingerprint SHA256)</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">USE ROLE ACCOUNTADMIN;
+
+-- REPLACE with your public key WITHOUT the BEGIN/END PUBLIC KEY headers
+ALTER USER DSANCHEZ SET RSA_PUBLIC_KEY = '&lt;YOUR_PUBLIC_KEY_HERE&gt;';
+
+-- Verify it was assigned correctly
+DESC USER DSANCHEZ;
+-- Look for RSA_PUBLIC_KEY_FP in the output (should show a SHA256 fingerprint)</pre></div>
+</div></div>
+
+<!-- STEP 4 -->
+<div class="st" id="s4"><div class="sh" onclick="tog(this)"><span class="sn">4</span><span class="sl"><span class="es">Crear infraestructura (DB, Network Rule, Secret, EAI)</span><span class="en">Create infrastructure (DB, Network Rule, Secret, EAI)</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">USE ROLE ACCOUNTADMIN;
+
+-- 4.1 Base de datos
+CREATE DATABASE IF NOT EXISTS CORTEX_UTILS
+    COMMENT = 'Utilidades para Cortex REST API y AI Functions';
+CREATE SCHEMA IF NOT EXISTS CORTEX_UTILS.PUBLIC;
+USE DATABASE CORTEX_UTILS;
+USE SCHEMA PUBLIC;
+
+-- 4.2 Network Rule (egress al propio account)
+-- REEMPLAZA con el hostname del Step 1.2
+CREATE OR REPLACE NETWORK RULE CORTEX_UTILS.PUBLIC.CORTEX_EGRESS_RULE
+    MODE = EGRESS
+    TYPE = HOST_PORT
+    VALUE_LIST = ('&lt;REEMPLAZA con el hostname del Step 1.2&gt;:443');
+
+-- 4.3 Secret: almacenar la PRIVATE KEY completa (con headers)
+-- PEGA la private key completa incluyendo BEGIN/END PRIVATE KEY
+CREATE OR REPLACE SECRET CORTEX_UTILS.PUBLIC.CORTEX_RSA_PRIVATE_KEY
+    TYPE = GENERIC_STRING
+    SECRET_STRING = '-----BEGIN PRIVATE KEY-----
+&lt;TU_PRIVATE_KEY_AQUI&gt;
+-----END PRIVATE KEY-----';
+
+-- 4.4 External Access Integration
+CREATE OR REPLACE EXTERNAL ACCESS INTEGRATION CORTEX_KEYPAIR_INTEGRATION
+    ALLOWED_NETWORK_RULES = (CORTEX_UTILS.PUBLIC.CORTEX_EGRESS_RULE)
+    ALLOWED_AUTHENTICATION_SECRETS = (CORTEX_UTILS.PUBLIC.CORTEX_RSA_PRIVATE_KEY)
+    ENABLED = TRUE
+    COMMENT = 'Loopback integration for Cortex REST API with Key Pair JWT';</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">USE ROLE ACCOUNTADMIN;
+
+-- 4.1 Database
+CREATE DATABASE IF NOT EXISTS CORTEX_UTILS
+    COMMENT = 'Utilities for Cortex REST API and AI Functions';
+CREATE SCHEMA IF NOT EXISTS CORTEX_UTILS.PUBLIC;
+USE DATABASE CORTEX_UTILS;
+USE SCHEMA PUBLIC;
+
+-- 4.2 Network Rule (egress to your own account)
+-- REPLACE with the hostname from Step 1.2
+CREATE OR REPLACE NETWORK RULE CORTEX_UTILS.PUBLIC.CORTEX_EGRESS_RULE
+    MODE = EGRESS
+    TYPE = HOST_PORT
+    VALUE_LIST = ('&lt;REPLACE with the hostname from Step 1.2&gt;:443');
+
+-- 4.3 Secret: store the FULL PRIVATE KEY (including headers)
+-- PASTE the full private key including BEGIN/END PRIVATE KEY
+CREATE OR REPLACE SECRET CORTEX_UTILS.PUBLIC.CORTEX_RSA_PRIVATE_KEY
+    TYPE = GENERIC_STRING
+    SECRET_STRING = '-----BEGIN PRIVATE KEY-----
+&lt;YOUR_PRIVATE_KEY_HERE&gt;
+-----END PRIVATE KEY-----';
+
+-- 4.4 External Access Integration
+CREATE OR REPLACE EXTERNAL ACCESS INTEGRATION CORTEX_KEYPAIR_INTEGRATION
+    ALLOWED_NETWORK_RULES = (CORTEX_UTILS.PUBLIC.CORTEX_EGRESS_RULE)
+    ALLOWED_AUTHENTICATION_SECRETS = (CORTEX_UTILS.PUBLIC.CORTEX_RSA_PRIVATE_KEY)
+    ENABLED = TRUE
+    COMMENT = 'Loopback integration for Cortex REST API with Key Pair JWT';</pre></div>
+</div></div>
+
+<!-- STEP 5 -->
+<div class="st" id="s5"><div class="sh" onclick="tog(this)"><span class="sn">5</span><span class="sl"><span class="es">UDF LLM_KEYPAIR_COMPLETE con JWT din&aacute;mico</span><span class="en">UDF LLM_KEYPAIR_COMPLETE with dynamic JWT</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<ul><li><span class="es">Vectorized (batch 20) &bull; Async HTTP &bull; Exponential backoff (8 retries)</span><span class="en">Vectorized (batch 20) &bull; Async HTTP &bull; Exponential backoff (8 retries)</span></li><li>Claude &rarr; /messages &bull; OpenAI/Llama &rarr; /chat/completions</li><li>Prompt caching (Claude) &bull; Concurrency=3 &bull; JWT TTL=60s</li></ul>
+<div class="wr es">Reemplaza <code>_ACCOUNT</code> y <code>_USER</code> con tus valores del Step 1.</div>
+<div class="wr en">Replace <code>_ACCOUNT</code> and <code>_USER</code> with your values from Step 1.</div>
+<div class="sq es"><div class="sqh"><span>SQL &mdash; UDF completa</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">CREATE OR REPLACE FUNCTION CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    model_name VARCHAR,
+    system_prompt VARCHAR,
+    data_prompt VARCHAR,
+    response_format VARCHAR DEFAULT NULL
+)
+RETURNS VARIANT
+LANGUAGE PYTHON
+RUNTIME_VERSION = '3.12'
+PACKAGES = ('snowflake-snowpark-python', 'pandas', 'aiohttp', 'pydantic', 'pyjwt', 'cryptography')
+HANDLER = 'complete_batch'
+EXTERNAL_ACCESS_INTEGRATIONS = (cortex_keypair_integration)
+SECRETS = ('private_key' = cortex_utils.public.cortex_rsa_private_key)
+AS $$
+import json
+import asyncio
+import time
+import hashlib
+import base64
+import aiohttp
+import pandas as pd
+import jwt
+from typing import Optional
+from pydantic import BaseModel
+from cryptography.hazmat.primitives import serialization
+from _snowflake import get_generic_secret_string, vectorized
+
+_ACCOUNT = "aikoqom-aqb12336"
+_USER = "DSANCHEZ"
+_BASE_URL = f"https://{_ACCOUNT}.snowflakecomputing.com/api/v2/cortex/v1"
+_MESSAGES_ENDPOINT = f"{_BASE_URL}/messages"
+_CHAT_ENDPOINT = f"{_BASE_URL}/chat/completions"
+
+_MAX_BATCH_ROWS = 20
+_MAX_RETRIES = 8
+_BASE_DELAY = 2.0
+_MAX_DELAY = 60.0
+_CONCURRENCY_LIMIT = 3
+_JWT_TTL_SECONDS = 60
+
+
+def _generate_jwt(private_key_pem: str) -> str:
+    account_upper = _ACCOUNT.upper()
+    user_upper = _USER.upper()
+    qualified_user = f"{account_upper}.{user_upper}"
+    private_key = serialization.load_pem_private_key(
+        private_key_pem.encode('utf-8'), password=None,
+    )
+    public_key_der = private_key.public_key().public_bytes(
+        serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo,
+    )
+    sha256_hash = hashlib.sha256(public_key_der).digest()
+    fingerprint = "SHA256:" + base64.b64encode(sha256_hash).decode('utf-8')
+    now = int(time.time())
+    payload = {
+        "iss": f"{qualified_user}.{fingerprint}",
+        "sub": qualified_user,
+        "iat": now,
+        "exp": now + _JWT_TTL_SECONDS,
+    }
+    return jwt.encode(payload, private_key, algorithm="RS256")
+
+
+class BatchCompletionResult(BaseModel):
+    success: bool
+    response: Optional[str] = None
+    error: Optional[str] = None
+    model: Optional[str] = None
+    usage: Optional[dict] = None
+    retries: Optional[int] = None
+    def to_dict(self) -> dict: return self.model_dump(exclude_none=True)
+    @classmethod
+    def success_result(cls, response, usage, model, retries=0):
+        return cls(success=True, response=response, model=model, usage=usage, retries=retries)
+    @classmethod
+    def error_result(cls, error, retries=0): return cls(success=False, error=error, retries=retries)
+    @classmethod
+    def empty_result(cls): return cls(success=True, response="")
+
+
+class CortexAsyncClient:
+    def __init__(self, token: str): self.token = token
+    @staticmethod
+    def _is_claude(model: str) -> bool: return "claude" in model.lower()
+    def _get_headers(self, is_claude: bool) -> dict:
+        headers = {
+            "Authorization": f"Bearer {self.token}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Snowflake-Authorization-Token-Type": "KEYPAIR_JWT",
+        }
+        if is_claude: headers["anthropic-version"] = "2023-06-01"
+        return headers
+    @staticmethod
+    def _parse_response_format(fmt_str):
+        if pd.isna(fmt_str) or str(fmt_str).strip() in ('None', 'nan', ''): return None
+        try: return json.loads(fmt_str)
+        except json.JSONDecodeError: return {"type": str(fmt_str)}
+    @staticmethod
+    def _normalize_usage(usage: dict, is_claude: bool) -> dict:
+        if not is_claude: return usage
+        return {
+            "prompt_tokens": usage.get("input_tokens", 0),
+            "completion_tokens": usage.get("output_tokens", 0),
+            "total_tokens": usage.get("input_tokens", 0) + usage.get("output_tokens", 0),
+            "prompt_tokens_details": {"cached_tokens": usage.get("cache_read_input_tokens", 0)},
+            "cache_creation_input_tokens": usage.get("cache_creation_input_tokens", 0),
+            "cache_read_input_tokens": usage.get("cache_read_input_tokens", 0),
+        }
+    @staticmethod
+    def _parse_content(result: dict, is_claude: bool) -> str:
+        if is_claude:
+            for block in result.get("content", []):
+                if block.get("type") == "text": return block.get("text", "")
+            return ""
+        return result.get("choices", [{}])[0].get("message", {}).get("content", "")
+    async def _fetch_with_retry(self, session, semaphore, payload, headers, endpoint, row_idx, model, is_claude):
+        retries = 0; delay = _BASE_DELAY
+        for attempt in range(_MAX_RETRIES + 1):
+            async with semaphore:
+                try:
+                    async with session.post(endpoint, json=payload, headers=headers) as resp:
+                        if resp.status == 200:
+                            result = await resp.json()
+                            return row_idx, BatchCompletionResult.success_result(
+                                self._parse_content(result, is_claude),
+                                self._normalize_usage(result.get("usage", {}), is_claude),
+                                model, retries)
+                        if resp.status == 429 or resp.status &gt;= 500:
+                            retries += 1
+                            if attempt &lt; _MAX_RETRIES:
+                                ra = resp.headers.get("Retry-After")
+                                if ra: delay = min(float(ra), _MAX_DELAY)
+                            else:
+                                error_text = await resp.text()
+                                return row_idx, BatchCompletionResult.error_result(
+                                    f"HTTP_{resp.status} after {retries} retries: {error_text[:200]}", retries)
+                        else:
+                            error_text = await resp.text()
+                            return row_idx, BatchCompletionResult.error_result(f"HTTP_{resp.status}: {error_text[:200]}", retries)
+                except asyncio.TimeoutError:
+                    retries += 1
+                    if attempt &gt;= _MAX_RETRIES:
+                        return row_idx, BatchCompletionResult.error_result(f"Timeout after {retries} retries", retries)
+                except Exception as e: return row_idx, BatchCompletionResult.error_result(str(e)[:200], retries)
+            await asyncio.sleep(delay); delay = min(delay * 2, _MAX_DELAY)
+        return row_idx, BatchCompletionResult.error_result("Exhausted retries", _MAX_RETRIES)
+    def _build_payload_messages_api(self, model, sys_prompt, user_prompt):
+        payload = {"model": model, "max_tokens": 4096, "temperature": 0, "stream": False,
+                   "messages": [{"role": "user", "content": user_prompt}]}
+        if sys_prompt:
+            payload["system"] = [{"type": "text", "text": sys_prompt, "cache_control": {"type": "ephemeral"}}]
+        return payload
+    def _build_payload_chat_api(self, model, sys_prompt, user_prompt, resp_fmt):
+        messages = []
+        if sys_prompt: messages.append({"role": "system", "content": sys_prompt})
+        messages.append({"role": "user", "content": user_prompt})
+        payload = {"model": model, "messages": messages, "temperature": 0, "stream": False}
+        if resp_fmt: payload["response_format"] = resp_fmt
+        return payload
+    async def process_dataframe(self, df):
+        if df.empty: return []
+        model = str(df.iloc[0, 0]); sys_prompt = str(df.iloc[0, 1]) if pd.notna(df.iloc[0, 1]) else ""
+        has_fmt_col = df.shape[1] &gt; 3; is_claude = self._is_claude(model)
+        endpoint = _MESSAGES_ENDPOINT if is_claude else _CHAT_ENDPOINT
+        headers = self._get_headers(is_claude)
+        semaphore = asyncio.Semaphore(_CONCURRENCY_LIMIT)
+        connector = aiohttp.TCPConnector(limit=_MAX_BATCH_ROWS, ssl=False)
+        timeout = aiohttp.ClientTimeout(total=180)
+        async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
+            tasks = []
+            for i, row in df.iterrows():
+                user_prompt = str(row[2]) if pd.notna(row[2]) else ""
+                if not user_prompt:
+                    tasks.append(asyncio.sleep(0, result=(i, BatchCompletionResult.empty_result())))
+                    continue
+                if is_claude: payload = self._build_payload_messages_api(model, sys_prompt, user_prompt)
+                else:
+                    resp_fmt = self._parse_response_format(row[3]) if has_fmt_col else None
+                    payload = self._build_payload_chat_api(model, sys_prompt, user_prompt, resp_fmt)
+                tasks.append(self._fetch_with_retry(session, semaphore, payload, headers, endpoint, i, model, is_claude))
+            results = await asyncio.gather(*tasks)
+            return [res[1].to_dict() for res in sorted(results, key=lambda x: x[0])]
+
+
+@vectorized(input=pd.DataFrame, max_batch_size=_MAX_BATCH_ROWS)
+def complete_batch(df):
+    private_key_pem = get_generic_secret_string('private_key')
+    token = _generate_jwt(private_key_pem)
+    client = CortexAsyncClient(token)
+    results = asyncio.run(client.process_dataframe(df))
+    return pd.Series(results)
+$$;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; Full UDF</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">-- Same UDF code — language-agnostic Python
+-- See Spanish version above (identical code)
+-- Only _ACCOUNT and _USER values need to be updated
+CREATE OR REPLACE FUNCTION CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    model_name VARCHAR,
+    system_prompt VARCHAR,
+    data_prompt VARCHAR,
+    response_format VARCHAR DEFAULT NULL
+)
+RETURNS VARIANT
+LANGUAGE PYTHON
+RUNTIME_VERSION = '3.12'
+PACKAGES = ('snowflake-snowpark-python', 'pandas', 'aiohttp', 'pydantic', 'pyjwt', 'cryptography')
+HANDLER = 'complete_batch'
+EXTERNAL_ACCESS_INTEGRATIONS = (cortex_keypair_integration)
+SECRETS = ('private_key' = cortex_utils.public.cortex_rsa_private_key)
+AS $$
+import json, asyncio, time, hashlib, base64, aiohttp, pandas as pd, jwt
+from typing import Optional
+from pydantic import BaseModel
+from cryptography.hazmat.primitives import serialization
+from _snowflake import get_generic_secret_string, vectorized
+
+_ACCOUNT = "aikoqom-aqb12336"  -- Replace with YOUR account identifier
+_USER = "DSANCHEZ"             -- Replace with YOUR username
+_BASE_URL = f"https://{_ACCOUNT}.snowflakecomputing.com/api/v2/cortex/v1"
+_MESSAGES_ENDPOINT = f"{_BASE_URL}/messages"
+_CHAT_ENDPOINT = f"{_BASE_URL}/chat/completions"
+_MAX_BATCH_ROWS = 20
+_MAX_RETRIES = 8
+_BASE_DELAY = 2.0
+_MAX_DELAY = 60.0
+_CONCURRENCY_LIMIT = 3
+_JWT_TTL_SECONDS = 60
+
+def _generate_jwt(private_key_pem: str) -> str:
+    account_upper = _ACCOUNT.upper(); user_upper = _USER.upper()
+    qualified_user = f"{account_upper}.{user_upper}"
+    private_key = serialization.load_pem_private_key(private_key_pem.encode('utf-8'), password=None)
+    public_key_der = private_key.public_key().public_bytes(
+        serialization.Encoding.DER, serialization.PublicFormat.SubjectPublicKeyInfo)
+    fingerprint = "SHA256:" + base64.b64encode(hashlib.sha256(public_key_der).digest()).decode('utf-8')
+    now = int(time.time())
+    return jwt.encode({"iss": f"{qualified_user}.{fingerprint}", "sub": qualified_user,
+                       "iat": now, "exp": now + _JWT_TTL_SECONDS}, private_key, algorithm="RS256")
+
+class BatchCompletionResult(BaseModel):
+    success: bool; response: Optional[str] = None; error: Optional[str] = None
+    model: Optional[str] = None; usage: Optional[dict] = None; retries: Optional[int] = None
+    def to_dict(self): return self.model_dump(exclude_none=True)
+    @classmethod
+    def success_result(cls, r, u, m, ret=0): return cls(success=True,response=r,model=m,usage=u,retries=ret)
+    @classmethod
+    def error_result(cls, e, ret=0): return cls(success=False, error=e, retries=ret)
+    @classmethod
+    def empty_result(cls): return cls(success=True, response="")
+
+class CortexAsyncClient:
+    def __init__(self, token): self.token = token
+    @staticmethod
+    def _is_claude(model): return "claude" in model.lower()
+    def _get_headers(self, is_claude):
+        h = {"Authorization": f"Bearer {self.token}", "Content-Type": "application/json",
+             "Accept": "application/json", "X-Snowflake-Authorization-Token-Type": "KEYPAIR_JWT"}
+        if is_claude: h["anthropic-version"] = "2023-06-01"
+        return h
+    @staticmethod
+    def _parse_response_format(fmt_str):
+        if pd.isna(fmt_str) or str(fmt_str).strip() in ('None','nan',''): return None
+        try: return json.loads(fmt_str)
+        except: return {"type": str(fmt_str)}
+    @staticmethod
+    def _normalize_usage(usage, is_claude):
+        if not is_claude: return usage
+        return {"prompt_tokens": usage.get("input_tokens",0), "completion_tokens": usage.get("output_tokens",0),
+                "total_tokens": usage.get("input_tokens",0)+usage.get("output_tokens",0),
+                "prompt_tokens_details": {"cached_tokens": usage.get("cache_read_input_tokens",0)},
+                "cache_creation_input_tokens": usage.get("cache_creation_input_tokens",0),
+                "cache_read_input_tokens": usage.get("cache_read_input_tokens",0)}
+    @staticmethod
+    def _parse_content(result, is_claude):
+        if is_claude:
+            for b in result.get("content",[]):
+                if b.get("type")=="text": return b.get("text","")
+            return ""
+        return result.get("choices",[{}])[0].get("message",{}).get("content","")
+    async def _fetch_with_retry(self, session, semaphore, payload, headers, endpoint, idx, model, is_claude):
+        retries=0; delay=_BASE_DELAY
+        for attempt in range(_MAX_RETRIES+1):
+            async with semaphore:
+                try:
+                    async with session.post(endpoint, json=payload, headers=headers) as resp:
+                        if resp.status==200:
+                            result=await resp.json()
+                            return idx, BatchCompletionResult.success_result(
+                                self._parse_content(result,is_claude),
+                                self._normalize_usage(result.get("usage",{}),is_claude), model, retries)
+                        if resp.status==429 or resp.status&gt;=500:
+                            retries+=1
+                            if attempt&lt;_MAX_RETRIES:
+                                ra=resp.headers.get("Retry-After")
+                                if ra: delay=min(float(ra),_MAX_DELAY)
+                            else: return idx,BatchCompletionResult.error_result(f"HTTP_{resp.status}: {(await resp.text())[:200]}",retries)
+                        else: return idx,BatchCompletionResult.error_result(f"HTTP_{resp.status}: {(await resp.text())[:200]}",retries)
+                except asyncio.TimeoutError:
+                    retries+=1
+                    if attempt&gt;=_MAX_RETRIES: return idx,BatchCompletionResult.error_result(f"Timeout after {retries} retries",retries)
+                except Exception as e: return idx,BatchCompletionResult.error_result(str(e)[:200],retries)
+            await asyncio.sleep(delay); delay=min(delay*2,_MAX_DELAY)
+        return idx,BatchCompletionResult.error_result("Exhausted retries",_MAX_RETRIES)
+    def _build_payload_messages(self, model, sys_p, usr_p):
+        p={"model":model,"max_tokens":4096,"temperature":0,"stream":False,"messages":[{"role":"user","content":usr_p}]}
+        if sys_p: p["system"]=[{"type":"text","text":sys_p,"cache_control":{"type":"ephemeral"}}]
+        return p
+    def _build_payload_chat(self, model, sys_p, usr_p, fmt):
+        msgs=[]
+        if sys_p: msgs.append({"role":"system","content":sys_p})
+        msgs.append({"role":"user","content":usr_p})
+        p={"model":model,"messages":msgs,"temperature":0,"stream":False}
+        if fmt: p["response_format"]=fmt
+        return p
+    async def process_dataframe(self, df):
+        if df.empty: return []
+        model=str(df.iloc[0,0]); sys_p=str(df.iloc[0,1]) if pd.notna(df.iloc[0,1]) else ""
+        has_fmt=df.shape[1]&gt;3; is_claude=self._is_claude(model)
+        endpoint=_MESSAGES_ENDPOINT if is_claude else _CHAT_ENDPOINT; headers=self._get_headers(is_claude)
+        semaphore=asyncio.Semaphore(_CONCURRENCY_LIMIT)
+        async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(limit=_MAX_BATCH_ROWS,ssl=False),
+                                         timeout=aiohttp.ClientTimeout(total=180)) as session:
+            tasks=[]
+            for i,row in df.iterrows():
+                usr_p=str(row[2]) if pd.notna(row[2]) else ""
+                if not usr_p: tasks.append(asyncio.sleep(0,result=(i,BatchCompletionResult.empty_result()))); continue
+                if is_claude: payload=self._build_payload_messages(model,sys_p,usr_p)
+                else: payload=self._build_payload_chat(model,sys_p,usr_p,self._parse_response_format(row[3]) if has_fmt else None)
+                tasks.append(self._fetch_with_retry(session,semaphore,payload,headers,endpoint,i,model,is_claude))
+            results=await asyncio.gather(*tasks)
+            return [r[1].to_dict() for r in sorted(results,key=lambda x:x[0])]
+
+@vectorized(input=pd.DataFrame, max_batch_size=_MAX_BATCH_ROWS)
+def complete_batch(df):
+    private_key_pem=get_generic_secret_string('private_key')
+    token=_generate_jwt(private_key_pem)
+    client=CortexAsyncClient(token)
+    return pd.Series(asyncio.run(client.process_dataframe(df)))
+$$;</pre></div>
+</div></div>
+
+<!-- STEP 6 -->
+<div class="st" id="s6"><div class="sh" onclick="tog(this)"><span class="sn">6</span><span class="sl"><span class="es">Test r&aacute;pido</span><span class="en">Quick test</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">-- 6.1 Test con Claude (Messages API)
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'claude-sonnet-4-5',
+    'Responde en español, una frase.',
+    'Qué es Snowflake?'
+) AS test_claude;
+
+-- 6.2 Test con OpenAI (Chat Completions API)
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'openai-gpt-4.1',
+    'Responde en español, una frase.',
+    'Qué es Snowflake?'
+) AS test_openai;
+
+-- 6.3 Test con Llama — IMPORTANTE: REST API usa snowflake-llama-3.3-70b (no llama3.3-70b)
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'snowflake-llama-3.3-70b',
+    'Responde en español, una frase.',
+    'Qué es Snowflake?'
+) AS test_llama;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">-- 6.1 Test with Claude (Messages API)
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'claude-sonnet-4-5',
+    'Answer in English, one sentence.',
+    'What is Snowflake?'
+) AS test_claude;
+
+-- 6.2 Test with OpenAI (Chat Completions API)
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'openai-gpt-4.1',
+    'Answer in English, one sentence.',
+    'What is Snowflake?'
+) AS test_openai;
+
+-- 6.3 Test with Llama — IMPORTANT: REST API uses snowflake-llama-3.3-70b (not llama3.3-70b)
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'snowflake-llama-3.3-70b',
+    'Answer in English, one sentence.',
+    'What is Snowflake?'
+) AS test_llama;</pre></div>
+</div></div>
+
+<div class="ph" id="p2a">PARTE 2A &mdash; Benchmark claude-sonnet-4-5</div>
+
+<!-- STEP 7 -->
+<div class="st" id="s7"><div class="sh" onclick="tog(this)"><span class="sn">7</span><span class="sl"><span class="es">Datos de prueba &mdash; 1000 transcripciones</span><span class="en">Test data &mdash; 1000 call transcripts</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh"><span>SQL &mdash; Crear tabla LLAMADAS</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.LLAMADAS AS
+WITH transcripciones AS (
+  SELECT column1 AS motivo, column2 AS variante, column3 AS transcripcion FROM (VALUES
+    ('Siniestro', 0, 'Cliente: Buenos días, llamo porque he tenido un accidente de tráfico esta mañana en la M-40, a la altura de la salida 12. Agente: Lamento mucho escuchar eso. ¿Se encuentra usted bien? ¿Hay heridos? Cliente: Sí, estoy bien, solo el susto. El otro conductor también está bien, pero los dos coches tienen daños importantes. Agente: Me alegro de que estén bien. Voy a abrir el parte de siniestro. Necesito su número de póliza, por favor. Cliente: Es la 4789-2234-A. Agente: Perfecto, la tengo localizada. ¿Tiene usted fotos del accidente y el parte amistoso firmado? Cliente: Sí, hicimos fotos y rellenamos el parte. Agente: Excelente. Le voy a enviar un enlace para que suba la documentación. Un perito se pondrá en contacto con usted en las próximas 48 horas para valorar los daños. ¿Necesita un vehículo de sustitución? Cliente: Sí, por favor, lo necesito para ir al trabajo. Agente: Perfecto, le activo el servicio. Recibirá una llamada de la empresa de alquiler hoy mismo.'),
+    ('Siniestro', 1, 'Cliente: Hola, buenas tardes. Quería reportar un robo en mi vivienda. Entraron anoche mientras estábamos de vacaciones. Agente: Lo siento mucho. ¿Ha presentado ya denuncia en la policía? Cliente: Sí, esta mañana a primera hora. Tengo el número de denuncia aquí. Agente: Muy bien, es imprescindible para tramitar el siniestro. Dígame su número de póliza del seguro de hogar. Cliente: Es la HG-88712-2024. Agente: La localizo. Tiene usted la póliza de hogar Premium con cobertura de robo hasta 15.000 euros. ¿Puede indicarme qué objetos han sustraído? Cliente: Se llevaron dos portátiles, una televisión, joyas de mi mujer y algo de efectivo. Agente: Entendido. Necesitaré que prepare un listado detallado con el valor estimado de cada objeto y, si es posible, facturas de compra. Le envío por email el formulario de declaración de siniestro. Un perito visitará su domicilio en los próximos tres días. Cliente: ¿Y mientras tanto puedo cambiar la cerradura? Agente: Por supuesto, guarde la factura del cerrajero, también está cubierto.'),
+    ('Siniestro', 2, 'Cliente: Buenas, llamo porque ha habido una inundación en mi piso por una rotura de tubería del vecino de arriba. Agente: Vaya, lo siento. ¿Los daños son graves? Cliente: Bastante, se ha estropeado todo el parqué del salón y hay humedades en el techo. Agente: Entiendo. ¿Su vecino tiene seguro de hogar? Cliente: Dice que sí, pero no quiere darme los datos. Agente: No se preocupe, con su propia póliza podemos gestionar la reparación y luego reclamamos a la compañía del vecino. Necesito su número de póliza. Cliente: Es la HG-45621-2023. Agente: Perfecto. Le abro parte de siniestro por daños por agua. Le recomiendo que haga fotos de todos los daños antes de tocar nada. Un perito acudirá en 48-72 horas. ¿Necesita alojamiento alternativo mientras se repara? Cliente: No, de momento podemos quedarnos, solo afectó al salón. Agente: De acuerdo. Si la situación cambia, tiene cobertura de alojamiento temporal hasta 10 días.'),
+    ('Siniestro', 3, 'Cliente: Hola, me ha pillado una granizada fortísima con el coche aparcado en la calle y tiene todo el capó y el techo lleno de abolladuras. Agente: Entiendo, las granizadas pueden causar daños muy extensos. ¿Tiene usted la cobertura de fenómenos atmosféricos en su póliza? Cliente: Creo que sí, tengo el seguro a todo riesgo. Agente: Déjeme verificar. Sí, su póliza 4523-7891-B incluye cobertura de fenómenos meteorológicos sin franquicia. Abriré el parte ahora mismo. ¿Puede enviar fotos del vehículo desde varios ángulos? Cliente: Sí, las hago ahora mismo. Agente: Perfecto. Tiene dos talleres concertados cerca de su código postal. Le envío las direcciones por SMS. Puede llevar el coche directamente y ellos gestionan con nosotros la reparación completa. Cliente: ¿Tendré coche de sustitución? Agente: Sí, el taller le proporcionará uno mientras dure la reparación.'),
+    ('Cambio_Poliza', 0, 'Cliente: Buenos días, quería modificar mi póliza de coche. Me he comprado un vehículo nuevo y necesito actualizar los datos. Agente: Por supuesto. Necesito los datos del nuevo vehículo: marca, modelo, matrícula y fecha de compra. Cliente: Es un Seat León 2024, matrícula 1234-BCD, lo compré la semana pasada. Agente: Perfecto. ¿Quiere mantener las mismas coberturas que tenía? Tenía un todo riesgo con franquicia de 300 euros. Cliente: Sí, las mismas coberturas, pero me gustaría añadir asistencia en viaje porque viajo mucho. Agente: Con la asistencia en viaje Premium, que incluye Europa completa, la prima anual le quedaría en 847 euros, unos 72 euros más que antes. Cliente: Me parece bien, adelante. Agente: Le hago el cambio efectivo desde hoy. Recibirá la nueva documentación por email en unos minutos. Recuerde llevar la tarjeta verde en la guantera.'),
+    ('Cambio_Poliza', 1, 'Cliente: Hola, llamo porque quiero añadir a mi hijo como conductor habitual en el seguro del coche. Acaba de sacarse el carnet. Agente: Entendido. ¿Qué edad tiene su hijo? Cliente: Tiene 19 años, se sacó el carnet hace dos meses. Agente: De acuerdo. Al ser menor de 25 años y con menos de dos años de antigüedad de carnet, hay un recargo en la prima. Actualmente paga 620 euros anuales. Con su hijo incluido como conductor habitual, pasaría a 895 euros. Cliente: Vaya, es bastante más. ¿No hay algún descuento? Agente: Puedo ofrecerle instalar una caja telemática que monitoriza la conducción. Si su hijo conduce de forma segura, el recargo se reduce un 20% a los seis meses. Cliente: Eso suena bien, inclúyalo con la caja telemática. Agente: Perfecto, le tramito el cambio. Le enviaremos la caja por mensajería en 3-5 días. Tiene instrucciones de instalación muy sencillas.'),
+    ('Cambio_Poliza', 2, 'Cliente: Buenas tardes, quiero ampliar la cobertura de mi seguro de hogar. Hemos hecho una reforma y ahora el contenido vale bastante más. Agente: Claro, es importante tener el capital asegurado actualizado. ¿Cuál es su póliza actual? Cliente: HG-33210-2023. Agente: La veo. Tiene actualmente un capital de contenido de 25.000 euros. ¿A cuánto querría subirlo? Cliente: Hemos puesto una cocina nueva, muebles y electrodomésticos. Creo que ahora el contenido ronda los 45.000 euros. Agente: Con ese ajuste, la prima anual pasa de 312 a 418 euros. También le recomendaría actualizar el capital de continente si la reforma afectó a la estructura. Cliente: Solo fue la cocina y el baño, no estructura. Agente: Entonces con actualizar contenido es suficiente. Le aplico el cambio desde hoy y le envío el suplemento de póliza actualizado por email.'),
+    ('Cambio_Poliza', 3, 'Cliente: Hola, me acabo de jubilar y quiero cambiar mi seguro de vida. Ya no necesito tanta cobertura porque la hipoteca está pagada. Agente: Enhorabuena por la jubilación. Veamos su póliza actual. ¿Cuál es el número? Cliente: VD-12340-2019. Agente: Tiene una póliza de vida con capital de 200.000 euros vinculada a la hipoteca. Efectivamente, si ya no tiene deuda, podemos ajustarla. ¿Qué capital le gustaría mantener? Cliente: Con 50.000 euros para cubrir gastos y dejar algo a mis hijos sería suficiente. Agente: Con esa reducción, la prima mensual baja de 89 a 31 euros. Además, a partir de los 65 años le aplico la tarifa sénior que tiene un pequeño descuento adicional. Cliente: Estupendo, haga el cambio. Agente: Tramitado. El nuevo recibo se reflejará en la próxima mensualidad.'),
+    ('Cancelacion', 0, 'Cliente: Buenos días, quiero cancelar mi seguro de coche. He vendido el vehículo. Agente: Entendido. Necesito verificar algunos datos. ¿Su número de póliza, por favor? Cliente: 5567-8832-C. Agente: La localizo. La póliza vence el 15 de agosto. Al cancelar antes de vencimiento, le corresponde la devolución proporcional de la prima no consumida, que serían aproximadamente 312 euros. Cliente: Perfecto, ¿cómo lo gestionamos? Agente: Necesito que me envíe la baja temporal o definitiva del vehículo de la DGT y una solicitud de cancelación firmada. Le envío el formulario por email ahora mismo. Una vez recibamos la documentación, procesamos la cancelación en 48 horas y la devolución se hace en su cuenta bancaria en 10-15 días. Cliente: ¿Y si compro otro coche más adelante? Agente: Puede reactivar una póliza nueva y le mantendríamos la bonificación por buen historial. Tiene 5 años sin siniestros, así que tendría un descuento del 30%.'),
+    ('Cancelacion', 1, 'Cliente: Hola, quiero darme de baja del seguro de hogar. He encontrado una oferta mejor en otra compañía. Agente: Lamento escuchar eso. ¿Puedo preguntarle qué le han ofrecido? Quizás pueda igualar o mejorar las condiciones. Cliente: Me ofrecen las mismas coberturas por 280 euros al año, y con ustedes pago 365. Agente: Entiendo la diferencia. Déjeme consultar con el departamento de retención... Puedo ofrecerle mantener su póliza actual con todas las coberturas por 290 euros anuales, aplicando un descuento de fidelidad del 20%. Además le incluyo asistencia informática sin coste adicional. Cliente: Mmm, es interesante pero prefiero cambiarme, ya he firmado con la otra compañía. Agente: Entiendo perfectamente. La cancelación será efectiva a la fecha de vencimiento de la póliza, que es el 3 de noviembre. Necesito una solicitud por escrito con 30 días de antelación. Le envío el formulario ahora. Cliente: Gracias por intentarlo.'),
+    ('Cancelacion', 2, 'Cliente: Buenas tardes, quiero cancelar todos mis seguros con ustedes. Estoy muy descontento con el servicio que me dieron en el último siniestro. Agente: Lamento mucho que haya tenido una mala experiencia. ¿Puede explicarme qué ocurrió para ver si podemos solucionarlo? Cliente: Tuve un accidente hace tres meses y todavía no me han reparado el coche. El perito tardó un mes en venir y el taller dice que no le autorizan las piezas. Agente: Entiendo su frustración, no es el nivel de servicio que queremos dar. Déjeme escalar su caso ahora mismo al supervisor de siniestros para que se resuelva de forma urgente. En cuanto a la cancelación, tiene todo el derecho, pero le pido que me dé 24 horas para resolver el tema del siniestro primero. Cliente: Bueno, si pueden arreglarlo rápido... pero estoy muy enfadado. Agente: Lo comprendo perfectamente. Le llamo mañana antes de las 12 con una solución concreta. ¿Le parece? Cliente: De acuerdo, pero si mañana no hay solución, cancelo todo.'),
+    ('Cancelacion', 3, 'Cliente: Hola, llamo para cancelar el seguro de vida que tengo contratado. Ya no me interesa mantenerlo. Agente: Entendido. ¿Puedo preguntarle el motivo? Nos ayuda a mejorar. Cliente: Básicamente el precio. Pago 95 euros al mes y he visto opciones por la mitad. Agente: Comprendo. Su póliza VD-55678-2020 tiene un capital de 250.000 euros. Antes de proceder, le comento que al cancelar perdería la antigüedad acumulada de 6 años, lo cual afecta si en el futuro quiere contratar de nuevo, especialmente si su estado de salud cambia. Cliente: No lo había pensado. ¿Tienen alguna opción más económica? Agente: Puedo ofrecerle reducir el capital a 150.000 euros, que bajaría la cuota a 52 euros mensuales. O pasar a una modalidad de riesgo puro sin ahorro por 38 euros. Cliente: La de 38 euros me interesa. ¿Qué cubre exactamente? Agente: Cubre fallecimiento e invalidez permanente. Le envío comparativa detallada por email para que lo revise tranquilamente. Si decide cambiar, lo tramitamos por teléfono.'),
+    ('Facturacion', 0, 'Cliente: Buenos días, me han cobrado dos veces la cuota del seguro de coche este mes. Agente: Vaya, disculpe las molestias. Voy a revisar su cuenta ahora mismo. ¿Cuál es su número de póliza? Cliente: 3345-6677-D. Agente: Efectivamente, veo un doble cargo del 5 de abril. El primer cargo de 52,30 euros es el correcto, y hay otro idéntico que parece un error del sistema de cobros. Inicio la solicitud de devolución ahora mismo. Cliente: ¿Cuándo me devuelven el dinero? Agente: La devolución se procesará en un plazo de 5-7 días hábiles directamente en la cuenta bancaria donde se realizó el cargo. Le envío un email de confirmación con el número de referencia de la devolución. Cliente: De acuerdo, pero no quiero que vuelva a pasar. Agente: He puesto una nota en su expediente para que se revise manualmente el próximo cobro. También voy a notificar al departamento de facturación para que investiguen el origen del duplicado.'),
+    ('Facturacion', 1, 'Cliente: Hola, no entiendo el recibo que me ha llegado. Me cobran 120 euros más que el año pasado y nadie me avisó de la subida. Agente: Entiendo su preocupación. Déjeme revisar su póliza. ¿El número, por favor? Cliente: 7789-1122-E. Agente: Veo que la prima ha pasado de 540 a 660 euros. El incremento se debe a dos factores: la actualización del baremo de siniestralidad de su zona, que subió un 12%, y el IPC aplicado del 3,5%. Ambos factores están recogidos en las condiciones generales. Cliente: Pero yo no he tenido ningún siniestro, ¿por qué pago más? Agente: Tiene razón, su historial es impecable. Déjeme ver qué puedo hacer... Puedo aplicarle un descuento por buen conductor del 15%, lo que dejaría su prima en 561 euros, incluso menos que el año pasado. Cliente: Eso está mucho mejor. Aplíquelo, por favor. Agente: Hecho. El siguiente recibo ya reflejará el nuevo importe. Le envío el desglose actualizado por email.'),
+    ('Facturacion', 2, 'Cliente: Buenas, quiero cambiar la forma de pago de mi seguro. Ahora pago anual y prefiero fraccionarlo en mensualidades. Agente: Por supuesto. El fraccionamiento mensual tiene un pequeño recargo del 3% sobre la prima anual. Su póliza actual es de 780 euros anuales. Con pago mensual serían 12 cuotas de 67 euros. Cliente: Me parece bien, así es más fácil de gestionar. ¿Qué necesitan? Agente: Solo necesito confirmar la cuenta bancaria para la domiciliación. ¿Mantiene la misma cuenta? Cliente: Sí, la misma que tienen registrada. Agente: Perfecto. El cambio se aplica a partir del próximo período de cobro. El primer recibo mensual se pasará el día 5 del mes que viene. Le envío por email el nuevo cuadro de pagos detallado. Cliente: Una pregunta más, ¿si luego quiero volver al pago anual puedo? Agente: Sí, puede cambiarlo en cualquier momento y se le eliminaría el recargo del 3%.'),
+    ('Facturacion', 3, 'Cliente: Buenos días, he recibido un cargo de 45 euros en concepto de gastos de gestión que no entiendo. Nunca me habían cobrado eso. Agente: Déjeme revisar su cuenta. ¿Su número de póliza? Cliente: 2233-4455-F. Agente: Ya lo veo. El cargo corresponde a los gastos de emisión del duplicado de póliza que solicitó el mes pasado, más el envío certificado de la documentación. Cliente: Pero yo pedí un duplicado porque ustedes me enviaron mal la póliza original con datos erróneos. No debería pagar por su error. Agente: Tiene toda la razón, déjeme verificar... Efectivamente, consta una incidencia previa por error en los datos del tomador. En ese caso el duplicado no tiene coste. Procedo a anular el cargo de 45 euros y generar el abono correspondiente. Cliente: Gracias. ¿Y puedo confirmar que los datos ahora sí están correctos? Agente: Sí, le leo los datos actuales para que los verifique: nombre, DNI, dirección... ¿todo correcto? Cliente: Sí, ahora sí. Gracias por solucionarlo.'),
+    ('Consulta_Cobertura', 0, 'Cliente: Hola, buenas tardes. Me voy de viaje a Tailandia la semana que viene y quería saber si mi seguro de viaje cubre la asistencia sanitaria allí. Agente: Vamos a comprobarlo. ¿Cuál es su número de póliza de viaje? Cliente: VJ-44521-2024. Agente: Perfecto. Tiene la póliza de viaje Internacional que cubre asistencia sanitaria hasta 100.000 euros en destino, incluyendo hospitalización, cirugía de urgencia, repatriación sanitaria y medicamentos prescritos. Tailandia está cubierta sin exclusiones. Cliente: ¿Y si tengo que ir al hospital, pago yo y luego reclamo, o ustedes se hacen cargo directamente? Agente: Tiene un servicio de asistencia 24 horas. Si necesita atención médica, llame al +34 900 123 456 y le derivamos a un centro concertado donde no tendrá que adelantar nada. Si por urgencia acude a un centro no concertado, adelante el pago y le reembolsamos en un máximo de 15 días con las facturas originales. Cliente: ¿Cubre también deportes de aventura? Agente: Deportes de aventura no extremos sí: snorkel, kayak, senderismo. El buceo con botella o puenting requieren un suplemento. ¿Quiere añadirlo? Son solo 18 euros más.'),
+    ('Consulta_Cobertura', 1, 'Cliente: Buenos días, mi vecino tiene un perro que ha mordido a mi hija en la escalera del edificio. ¿Esto lo cubre mi seguro de hogar? Agente: Siento mucho lo ocurrido. ¿Su hija está bien? Cliente: Sí, tiene una herida en la mano, fuimos a urgencias y le dieron puntos. Agente: En este caso, la responsabilidad civil recae sobre el dueño del perro, es decir, su vecino. Su seguro de hogar no cubriría esto directamente, pero sí el seguro de responsabilidad civil de su vecino. Lo que sí puede hacer es reclamar los gastos médicos a través de nuestro servicio de defensa jurídica, que está incluido en su póliza. Cliente: ¿Y eso cómo funciona? Agente: Nuestro equipo legal se encargará de reclamar al seguro de su vecino la indemnización por las lesiones, gastos médicos y cualquier perjuicio. Es un servicio gratuito incluido en su póliza. Le paso con el departamento de defensa jurídica para que inicien el expediente. ¿Le parece? Cliente: Sí, por favor.'),
+    ('Consulta_Cobertura', 2, 'Cliente: Hola, estoy pensando en montar un pequeño taller de cerámica en el garaje de mi casa. ¿Mi seguro de hogar cubriría algún problema relacionado con eso? Agente: Es una buena pregunta. Déjeme revisar su póliza de hogar. ¿Número de póliza? Cliente: HG-99002-2024. Agente: Su póliza de hogar estándar cubre la vivienda como uso residencial. Si realiza una actividad profesional o comercial en el domicilio, necesitaría añadir una extensión de actividad profesional en domicilio. Sin ella, cualquier daño relacionado con el taller, como un incendio causado por el horno de cerámica, podría no estar cubierto. Cliente: ¿Y cuánto cuesta esa extensión? Agente: Para un taller artesanal de bajo riesgo, el suplemento sería de unos 85 euros anuales. Incluiría responsabilidad civil profesional hasta 150.000 euros y daños al contenido del taller. ¿Quiere que le prepare un presupuesto detallado? Cliente: Sí, por favor, envíemelo por email.'),
+    ('Consulta_Cobertura', 3, 'Cliente: Buenas tardes, me acaban de diagnosticar una enfermedad y necesito una operación. ¿Mi seguro de salud la cubre? Agente: Lamento escuchar eso. Vamos a revisar su póliza. ¿Cuál es el número? Cliente: SA-78823-2023. Agente: Tiene la póliza de salud Completa. ¿Puede indicarme qué tipo de intervención le han recomendado? Cliente: Es una operación de hernia discal lumbar. Agente: La cirugía de hernia discal está cubierta en su póliza sin período de carencia, ya que lleva más de un año con nosotros. Tiene acceso a todos los hospitales de nuestro cuadro médico. ¿Su traumatólogo le ha derivado a algún cirujano en concreto? Cliente: Sí, al doctor Martínez del Hospital Central. Agente: Está en nuestro cuadro. No necesita autorización previa para la consulta, pero sí para la intervención. Le explico: pida cita con el cirujano, él emitirá un informe de necesidad quirúrgica, y con ese informe nosotros autorizamos la operación en 48 horas. La hospitalización, la intervención y la rehabilitación posterior están cubiertas al 100%.'),
+    ('Asistencia', 0, 'Cliente: ¡Hola! Se me ha quedado el coche parado en la autopista y no arranca. Estoy en el kilómetro 234 de la AP-7 dirección Barcelona. Agente: Tranquilo, le enviamos asistencia en carretera ahora mismo. ¿El vehículo está en un lugar seguro? Cliente: Sí, he podido llegar al arcén y he puesto los triángulos. Agente: Muy bien, ha hecho lo correcto. Una grúa estará con usted en aproximadamente 30-45 minutos. ¿Puede indicarme la matrícula del vehículo? Cliente: 5678-FGH. Agente: Localizado. Su póliza incluye asistencia en carretera completa: grúa hasta el taller más cercano, y si no es reparable en el día, le llevamos a usted y a sus acompañantes a su domicilio o destino. ¿Viaja solo? Cliente: No, voy con mi mujer y mis dos hijos. Agente: Sin problema, el servicio de taxi o vehículo alternativo cubre hasta 4 pasajeros. Le mando la confirmación por SMS con el número de expediente y el teléfono directo de la grúa por si necesita contactar con ellos. Quédese en un lugar seguro fuera del vehículo.'),
+    ('Asistencia', 1, 'Cliente: Buenas noches, perdone la hora, pero me he quedado encerrado fuera de casa. Se me ha cerrado la puerta con las llaves dentro. Agente: No se preocupe, estamos disponibles las 24 horas. ¿Cuál es su dirección? Cliente: Calle Mayor 45, 3º B, Madrid. Agente: ¿Tiene póliza de hogar con nosotros? Cliente: Sí, la HG-22110-2024. Agente: Perfecto, su póliza incluye servicio de cerrajería de urgencia. Le envío un cerrajero ahora mismo. El tiempo estimado de llegada es de 20-40 minutos dependiendo de la disponibilidad. El servicio de apertura está cubierto hasta 150 euros, que normalmente es suficiente para una apertura estándar. Si la cerradura necesita sustitución, el coste adicional de la cerradura nueva correría por su cuenta, pero la mano de obra estaría cubierta. Cliente: Muchas gracias, hace bastante frío aquí fuera. Agente: Le mando la confirmación por SMS con los datos del cerrajero y su hora estimada de llegada. Si tarda más de 45 minutos, llámenos de nuevo.'),
+    ('Asistencia', 2, 'Cliente: Hola, tengo una fuga de agua en la cocina y está saliendo agua sin parar. No encuentro la llave de paso. Agente: Entiendo la urgencia. Lo primero, ¿puede localizar la llave general del agua de su vivienda? Suele estar en un cuadro cerca de la puerta de entrada o debajo del fregadero. Cliente: La he encontrado, ya la he cerrado. Pero hay bastante agua en el suelo. Agente: Bien hecho. ¿Tiene póliza de hogar con nosotros? Cliente: Sí, la HG-55432-2023. Agente: Su póliza incluye servicio de fontanería de urgencia. Le envío un fontanero ahora mismo. El servicio de urgencia cubre la primera hora de intervención y los materiales básicos. ¿Puede indicarme de dónde sale la fuga? Cliente: Parece que es de debajo del fregadero, de una tubería que conecta con el lavavajillas. Agente: Entendido, se lo indico al fontanero. Llegará en unos 30-60 minutos. Mientras tanto, si puede, coloque toallas o cubos para recoger el agua residual que pueda quedar en las tuberías. Le envío SMS con los datos del profesional.'),
+    ('Asistencia', 3, 'Cliente: Buenos días, llamo desde Portugal, estamos de vacaciones y mi mujer se ha puesto muy enferma. Necesita un médico urgente. Agente: ¿Dónde se encuentran exactamente? Cliente: En Lagos, en el Algarve. Agente: ¿Tiene seguro de viaje o tarjeta sanitaria europea? Cliente: Tenemos la póliza de viaje VJ-33210-2024. Agente: Perfecto, Portugal está cubierto en su póliza. Le voy a derivar inmediatamente a nuestro centro de coordinación médica. Ellos le indicarán el centro médico más cercano concertado o, si la situación es grave, enviarán una ambulancia. ¿Cuáles son los síntomas de su mujer? Cliente: Tiene fiebre alta, vómitos y dolor abdominal muy fuerte desde anoche. Agente: Esos síntomas requieren atención urgente. Le paso ahora mismo con el médico coordinador que le dará instrucciones y activará la asistencia. No cuelgue, le transfiero directamente. Mientras tanto, le envío por SMS el número de emergencias local y la dirección del hospital de Lagos. Cliente: Muchas gracias, estamos muy preocupados. Agente: Están en buenas manos, no se preocupe.')
+  )
+),
+num_variantes AS (
+  SELECT motivo, COUNT(*) AS cnt FROM transcripciones GROUP BY motivo
+),
+base AS (
+  SELECT
+    ROW_NUMBER() OVER (ORDER BY SEQ4())                              AS llamada_id,
+    DATEADD('day', -UNIFORM(0, 365, RANDOM()), CURRENT_DATE())      AS fecha,
+    UNIFORM(1, 20, RANDOM())                                         AS agente_id,
+    UNIFORM(60, 900, RANDOM())                                       AS duracion_seg,
+    CASE MOD(ABS(RANDOM()), 6)
+      WHEN 0 THEN 'Siniestro'
+      WHEN 1 THEN 'Cambio_Poliza'
+      WHEN 2 THEN 'Cancelacion'
+      WHEN 3 THEN 'Facturacion'
+      WHEN 4 THEN 'Consulta_Cobertura'
+      ELSE 'Asistencia'
+    END AS motivo_real
+  FROM TABLE(GENERATOR(rowcount =&gt; 1000))
+),
+base_with_variant AS (
+  SELECT b.*, MOD(ABS(RANDOM()), nv.cnt) AS variante_idx
+  FROM base b JOIN num_variantes nv ON nv.motivo = b.motivo_real
+)
+SELECT bv.llamada_id, bv.fecha, bv.agente_id, bv.duracion_seg, bv.motivo_real, t.transcripcion
+FROM base_with_variant bv
+JOIN transcripciones t ON t.motivo = bv.motivo_real AND t.variante = bv.variante_idx;
+
+-- Verificar distribución
+SELECT motivo_real, COUNT(*) AS qty
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS
+GROUP BY motivo_real ORDER BY qty DESC;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; Create CALLS table</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.CALLS AS
+WITH transcripts AS (
+  SELECT column1 AS reason, column2 AS variant, column3 AS transcript FROM (VALUES
+    ('Claim', 0, 'Customer: Good morning, I am calling because I had a car accident this morning on I-95, near exit 12. Agent: I am so sorry to hear that. Are you okay? Any injuries? Customer: Yes, I am fine, just shaken up. The other driver is also fine, but both cars have significant damage. Agent: I am glad you are both okay. I will open a claim now. I need your policy number please. Customer: It is 4789-2234-A. Agent: Perfect, I have it here. Do you have photos of the accident and a signed accident report? Customer: Yes, we took photos and completed the report. Agent: Excellent. I will send you a link to upload the documentation. An adjuster will contact you within 48 hours to assess the damage. Do you need a rental car? Customer: Yes please, I need it for work. Agent: Perfect, I am activating the service. The rental company will call you today.'),
+    ('Claim', 1, 'Customer: Hello, good afternoon. I would like to report a burglary at my home. Someone broke in last night while we were on vacation. Agent: I am so sorry. Have you filed a police report? Customer: Yes, first thing this morning. I have the report number here. Agent: Good, it is required to process the claim. Please give me your homeowner policy number. Customer: It is HG-88712-2024. Agent: I have it here. You have our Premium homeowner policy with theft coverage up to $15,000. Can you tell me what was taken? Customer: They took two laptops, a TV, my wife jewelry, and some cash. Agent: Understood. I will need a detailed list with the estimated value of each item and, if possible, purchase receipts. I am emailing you the claim declaration form now. An adjuster will visit your home within three days. Customer: Can I change the locks in the meantime? Agent: Of course, save the locksmith invoice, that is covered too.'),
+    ('Claim', 2, 'Customer: Hi, I am calling because there was water damage in my apartment from a burst pipe in the unit upstairs. Agent: I am sorry to hear that. Is the damage serious? Customer: Quite bad, the hardwood floor in the living room is ruined and there is water damage on the ceiling. Agent: I understand. Does your neighbor have homeowner insurance? Customer: They say yes, but they will not give me the details. Agent: Do not worry, with your own policy we can handle the repairs and then recover costs from your neighbor insurer. I need your policy number. Customer: It is HG-45621-2023. Agent: Perfect. I am opening a water damage claim. I recommend photographing all damage before touching anything. An adjuster will visit in 48-72 hours. Do you need temporary accommodation while repairs are done? Customer: No, we can stay for now, it only affected the living room. Agent: Alright. If the situation changes, you have temporary accommodation coverage for up to 10 days.'),
+    ('Claim', 3, 'Customer: Hi, my car got caught in a severe hailstorm while parked on the street and the hood and roof are covered in dents. Agent: I understand, hailstorms can cause extensive damage. Do you have weather-related coverage on your policy? Customer: I think so, I have comprehensive insurance. Agent: Let me check. Yes, your policy 4523-7891-B includes weather event coverage with no deductible. I will open the claim right now. Can you send photos of the vehicle from several angles? Customer: Yes, I will take them right away. Agent: Perfect. There are two in-network repair shops near your zip code. I will send the addresses by text. You can take the car directly and they will handle everything with us. Customer: Will I get a loaner car? Agent: Yes, the shop will provide one for the duration of the repair.'),
+    ('Policy_Change', 0, 'Customer: Good morning, I would like to update my car insurance. I bought a new vehicle and need to update the details. Agent: Of course. I need the new vehicle information: make, model, license plate, and purchase date. Customer: It is a 2024 Honda Civic, plate 1234-BCD, I bought it last week. Agent: Perfect. Would you like to keep the same coverage you had? You had comprehensive with a $300 deductible. Customer: Yes, same coverage, but I would like to add roadside assistance because I travel a lot. Agent: With the Premium roadside assistance package, which covers the continental US, your annual premium would be $847, about $72 more than before. Customer: That sounds good, please go ahead. Agent: I am making the change effective today. You will receive the new documentation by email within a few minutes. Remember to keep your insurance card in the glove compartment.'),
+    ('Policy_Change', 1, 'Customer: Hi, I am calling because I want to add my son as a regular driver on my car insurance. He just got his license. Agent: Understood. How old is your son? Customer: He is 19, he got his license two months ago. Agent: Got it. Being under 25 with less than two years of driving experience, there will be a surcharge. You currently pay $620 per year. With your son added as a regular driver, it would be $895. Customer: Wow, that is quite a bit more. Is there any discount? Agent: I can offer to install a telematics device that monitors driving behavior. If your son drives safely, the surcharge is reduced by 20% after six months. Customer: That sounds good, include it with the telematics device. Agent: Perfect, I will process the change. We will send the device by mail in 3-5 days. Installation instructions are very straightforward.'),
+    ('Policy_Change', 2, 'Customer: Good afternoon, I want to expand my homeowner insurance coverage. We renovated and now the contents are worth significantly more. Agent: Of course, it is important to keep the insured value updated. What is your current policy? Customer: HG-33210-2023. Agent: I see it. You currently have contents coverage of $25,000. How much would you like to increase it to? Customer: We installed a new kitchen, furniture, and appliances. I think the contents are now around $45,000. Agent: With that adjustment, the annual premium goes from $312 to $418. I would also recommend updating the structure coverage if the renovation affected the building. Customer: It was just the kitchen and bathroom, not the structure. Agent: Then updating the contents is sufficient. I am applying the change today and I will email you the updated policy endorsement.'),
+    ('Policy_Change', 3, 'Customer: Hi, I just retired and want to adjust my life insurance. I do not need as much coverage now that the mortgage is paid off. Agent: Congratulations on your retirement. Let us review your current policy. What is the number? Customer: VD-12340-2019. Agent: You have a life policy with $200,000 in coverage linked to your mortgage. You are right, if there is no more debt, we can adjust it. How much coverage would you like to keep? Customer: $50,000 to cover expenses and leave something for my children would be enough. Agent: With that reduction, the monthly premium drops from $89 to $31. Also, from age 65, I can apply the senior rate which has an additional small discount. Customer: Excellent, please make the change. Agent: Done. The new charge will appear on your next monthly statement.'),
+    ('Cancellation', 0, 'Customer: Good morning, I want to cancel my car insurance. I sold the vehicle. Agent: Understood. I need to verify some details. Your policy number please? Customer: 5567-8832-C. Agent: I have it. The policy expires on August 15. When canceling before the renewal date, you are entitled to a prorated refund of the unused premium, which would be approximately $312. Customer: Perfect, how do we handle that? Agent: I need you to send me the vehicle title transfer document and a signed cancellation request. I will email you the form right now. Once we receive the documentation, we process the cancellation within 48 hours and the refund goes to your bank account within 10-15 days. Customer: And if I buy another car later? Agent: You can reactivate a new policy and we would maintain your good history discount. You have 5 years without claims, so you would get a 30% discount.'),
+    ('Cancellation', 1, 'Customer: Hi, I want to cancel my homeowner insurance. I found a better deal with another company. Agent: I am sorry to hear that. May I ask what they offered? Perhaps I can match or improve the terms. Customer: They are offering the same coverage for $280 a year, and I am paying $365 with you. Agent: I understand the difference. Let me check with our retention department... I can offer to keep your current policy with all coverage for $290 annually, applying a 20% loyalty discount. I will also include IT assistance at no extra charge. Customer: Hmm, that is interesting but I prefer to switch, I have already signed with the other company. Agent: I completely understand. The cancellation will be effective on your policy expiration date, which is November 3rd. I need a written request 30 days in advance. I will send you the form now. Customer: Thank you for trying.'),
+    ('Cancellation', 2, 'Customer: Good afternoon, I want to cancel all my insurance policies with you. I am very unhappy with the service I received on my last claim. Agent: I am very sorry to hear you have had a bad experience. Can you explain what happened so we can try to resolve it? Customer: I had an accident three months ago and my car still has not been repaired. The adjuster took a month to come and the repair shop says the parts have not been approved. Agent: I understand your frustration, that is not the level of service we want to provide. Let me escalate your case right now to the claims supervisor for urgent resolution. As for the cancellation, you have every right, but I am asking you to give me 24 hours to resolve the claim issue first. Customer: Well, if you can fix it quickly... but I am very upset. Agent: I completely understand. I will call you tomorrow before noon with a concrete solution. Does that work? Customer: Alright, but if there is no solution tomorrow, I am canceling everything.'),
+    ('Cancellation', 3, 'Customer: Hi, I am calling to cancel the life insurance policy I have with you. I am no longer interested in keeping it. Agent: Understood. May I ask why? It helps us improve. Customer: Basically the price. I pay $95 a month and I have seen options for half that. Agent: I understand. Your policy VD-55678-2020 has $250,000 in coverage. Before proceeding, I want to mention that canceling would mean losing the 6 years of accumulated tenure, which matters if you want to apply again in the future, especially if your health changes. Customer: I had not thought of that. Do you have a more affordable option? Agent: I can offer to reduce the coverage to $150,000, which would lower the premium to $52 per month. Or switch to a pure risk plan without savings for $38. Customer: The $38 option interests me. What exactly does it cover? Agent: It covers death and permanent disability. I will send you a detailed comparison by email to review at your leisure. If you decide to switch, we can process it over the phone.'),
+    ('Billing', 0, 'Customer: Good morning, I was charged twice for my car insurance premium this month. Agent: I am sorry about that. Let me review your account right away. What is your policy number? Customer: 3345-6677-D. Agent: I can confirm there is a duplicate charge on April 5th. The first charge of $52.30 is correct, and there is an identical one that appears to be a billing system error. I am initiating a refund request right now. Customer: When will I get my money back? Agent: The refund will be processed within 5-7 business days directly to the bank account where the charge was made. I will send you a confirmation email with the refund reference number. Customer: OK, but I do not want this to happen again. Agent: I have added a note to your account for manual review of the next charge. I will also notify the billing department to investigate the source of the duplicate.'),
+    ('Billing', 1, 'Customer: Hi, I do not understand the bill I received. I am being charged $120 more than last year and nobody told me about the increase. Agent: I understand your concern. Let me review your policy. The number please? Customer: 7789-1122-E. Agent: I can see the premium went from $540 to $660. The increase is due to two factors: the claims frequency update for your area, which rose 12%, and a 3.5% inflation adjustment. Both factors are included in the general terms. Customer: But I have not had any claims, why am I paying more? Agent: You are right, your record is perfect. Let me see what I can do... I can apply a safe driver discount of 15%, which would bring your premium to $561, even less than last year. Customer: That is much better. Please apply it. Agent: Done. Your next bill will reflect the new amount. I will email you the updated breakdown.'),
+    ('Billing', 2, 'Customer: Hi, I want to change my payment method. I currently pay annually and I would prefer monthly installments. Agent: Of course. Monthly payments have a small 3% surcharge on the annual premium. Your current policy is $780 per year. With monthly payments, that would be 12 installments of $67. Customer: That works for me, it is easier to manage. What do you need? Agent: I just need to confirm the bank account for direct debit. Are you keeping the same account? Customer: Yes, the same one you have on file. Agent: Perfect. The change takes effect from the next billing period. The first monthly payment will be on the 5th of next month. I will email you the new payment schedule. Customer: One more question, can I switch back to annual payment later? Agent: Yes, you can change it at any time and the 3% surcharge would be removed.'),
+    ('Billing', 3, 'Customer: Good morning, I received a $45 charge for management fees that I do not understand. I have never been charged this before. Agent: Let me review your account. Your policy number? Customer: 2233-4455-F. Agent: I see it. The charge corresponds to the policy duplicate issuance fee you requested last month, plus certified mail delivery costs. Customer: But I requested a duplicate because you sent me the original policy with incorrect information. I should not have to pay for your mistake. Agent: You are absolutely right, let me verify... I can confirm there is a prior incident logged for an error in the policyholder data. In that case there is no charge for the duplicate. I am voiding the $45 charge and processing a credit. Customer: Thank you. Can I also confirm the information is now correct? Agent: Yes, let me read your current details so you can verify: name, ID, address... is everything correct? Customer: Yes, it is now. Thank you for resolving this.'),
+    ('Coverage_Query', 0, 'Customer: Hi, good afternoon. I am traveling to Thailand next week and wanted to know if my travel insurance covers medical assistance there. Agent: Let me check. What is your travel policy number? Customer: VJ-44521-2024. Agent: Perfect. You have the International travel policy which covers medical assistance up to $100,000 at destination, including hospitalization, emergency surgery, medical repatriation, and prescribed medications. Thailand is covered without exclusions. Customer: If I need to go to the hospital, do I pay upfront and then claim, or do you handle it directly? Agent: You have a 24-hour assistance service. If you need medical care, call +1 800 123 456 and we will direct you to an in-network facility where you will not need to pay upfront. If in an emergency you go to an out-of-network facility, pay upfront and we will reimburse within 15 days with original invoices. Customer: Does it cover adventure sports? Agent: Non-extreme adventure sports yes: snorkeling, kayaking, hiking. Scuba diving or bungee jumping require a supplement. Would you like to add it? It is only $18 more.'),
+    ('Coverage_Query', 1, 'Customer: Good morning, my neighbor dog bit my daughter in the building hallway. Does my homeowner insurance cover this? Agent: I am so sorry to hear that. Is your daughter okay? Customer: Yes, she has a cut on her hand, we went to the emergency room and she got stitches. Agent: In this case, civil liability lies with the dog owner, your neighbor. Your homeowner insurance does not cover this directly, but your neighbor liability insurance should. What you can do is claim medical expenses through our legal defense service, which is included in your policy. Customer: How does that work? Agent: Our legal team will handle the claim against your neighbor insurer for injury compensation, medical expenses, and any other damages. It is a free service included in your policy. Let me transfer you to the legal defense department to start the case. Shall I? Customer: Yes, please.'),
+    ('Coverage_Query', 2, 'Customer: Hi, I am thinking about setting up a small ceramics workshop in my home garage. Would my homeowner insurance cover any issues related to that? Agent: That is a good question. Let me review your homeowner policy. Policy number? Customer: HG-99002-2024. Agent: Your standard homeowner policy covers the property for residential use. If you are conducting a professional or commercial activity at home, you would need to add a home-based business extension. Without it, any damage related to the workshop, such as a fire caused by the kiln, might not be covered. Customer: How much does that extension cost? Agent: For a low-risk artisan workshop, the supplement would be about $85 per year. It would include professional liability up to $150,000 and coverage for workshop contents. Would you like me to prepare a detailed quote? Customer: Yes please, send it by email.'),
+    ('Coverage_Query', 3, 'Customer: Good afternoon, I was just diagnosed with a condition and need surgery. Does my health insurance cover it? Agent: I am sorry to hear that. Let me review your policy. What is the number? Customer: SA-78823-2023. Agent: You have the Complete health plan. Can you tell me what type of procedure they have recommended? Customer: It is a lumbar disc herniation surgery. Agent: Spinal surgery is covered under your plan with no waiting period, since you have been with us for over a year. You have access to all hospitals in our network. Has your doctor referred you to a specific surgeon? Customer: Yes, to Dr. Martinez at Central Hospital. Agent: That hospital is in our network. You do not need prior authorization for the consultation, but you do for the surgery itself. Here is how it works: schedule an appointment with the surgeon, they will issue a surgical necessity report, and with that report we authorize the operation within 48 hours. Hospitalization, the procedure, and post-operative rehabilitation are covered 100%.'),
+    ('Assistance', 0, 'Customer: Hello! My car broke down on the highway and will not start. I am at mile marker 234 on I-95 heading north. Agent: Stay calm, we are sending roadside assistance right now. Is the vehicle in a safe location? Customer: Yes, I managed to pull over to the shoulder and set out warning triangles. Agent: Good job. A tow truck will be there in approximately 30-45 minutes. Can you give me the vehicle license plate? Customer: 5678-FGH. Agent: Found it. Your policy includes full roadside assistance: towing to the nearest repair shop, and if it cannot be fixed the same day, we will arrange transportation for you and your passengers to your home or destination. Are you traveling alone? Customer: No, I am with my wife and two children. Agent: No problem, the taxi or alternative vehicle service covers up to 4 passengers. I will send you a text with the case number and the tow truck driver direct number in case you need to contact them. Please stay in a safe place away from the vehicle.'),
+    ('Assistance', 1, 'Customer: Good evening, sorry for the late hour, but I am locked out of my apartment. The door closed with my keys inside. Agent: No worries, we are available 24 hours. What is your address? Customer: 45 Main Street, Apt 3B. Agent: Do you have a homeowner policy with us? Customer: Yes, HG-22110-2024. Agent: Perfect, your policy includes emergency locksmith service. I am sending a locksmith right now. Estimated arrival is 20-40 minutes depending on availability. The lock-opening service is covered up to $150, which is typically sufficient for a standard opening. If the lock needs to be replaced, the additional cost of the new lock would be your responsibility, but labor is covered. Customer: Thank you so much, it is quite cold out here. Agent: I will send you a text with the locksmith details and estimated arrival time. If they take more than 45 minutes, please call us back.'),
+    ('Assistance', 2, 'Customer: Hi, there is a water leak in the kitchen and it will not stop. I cannot find the shutoff valve. Agent: I understand the urgency. First, can you find the main water shutoff for your unit? It is usually in a panel near the front door or under the sink. Customer: I found it, I have already turned it off. But there is quite a bit of water on the floor. Agent: Well done. Do you have a homeowner policy with us? Customer: Yes, HG-55432-2023. Agent: Your policy includes emergency plumbing service. I am sending a plumber right now. The emergency service covers the first hour of work and basic materials. Can you tell me where the leak is coming from? Customer: It looks like it is from under the sink, from a pipe connected to the dishwasher. Agent: Understood, I will pass that along to the plumber. They will arrive in about 30-60 minutes. In the meantime, place towels or buckets to collect any residual water that may still be in the pipes. I will send you a text with the plumber details.'),
+    ('Assistance', 3, 'Customer: Good morning, I am calling from Portugal, we are on vacation and my wife has become very ill. She needs a doctor urgently. Agent: Where are you exactly? Customer: In Lagos, in the Algarve. Agent: Do you have travel insurance? Customer: We have the travel policy VJ-33210-2024. Agent: Perfect, Portugal is covered under your policy. I am going to connect you immediately with our medical coordination center. They will direct you to the nearest in-network medical facility or, if the situation is serious, they will send an ambulance. What are your wife symptoms? Customer: She has a high fever, vomiting, and severe abdominal pain since last night. Agent: Those symptoms require urgent attention. I am transferring you right now to the medical coordinator who will give you instructions and activate the assistance. Please hold, I will transfer you directly. In the meantime, I will text you the local emergency number and the address of the Lagos hospital. Customer: Thank you so much, we are very worried. Agent: You are in good hands, do not worry.')
+  )
+),
+num_variants AS (
+  SELECT reason, COUNT(*) AS cnt FROM transcripts GROUP BY reason
+),
+base AS (
+  SELECT
+    ROW_NUMBER() OVER (ORDER BY SEQ4())                              AS call_id,
+    DATEADD('day', -UNIFORM(0, 365, RANDOM()), CURRENT_DATE())      AS date,
+    UNIFORM(1, 20, RANDOM())                                         AS agent_id,
+    UNIFORM(60, 900, RANDOM())                                       AS duration_sec,
+    CASE MOD(ABS(RANDOM()), 6)
+      WHEN 0 THEN 'Claim'
+      WHEN 1 THEN 'Policy_Change'
+      WHEN 2 THEN 'Cancellation'
+      WHEN 3 THEN 'Billing'
+      WHEN 4 THEN 'Coverage_Query'
+      ELSE 'Assistance'
+    END AS actual_reason
+  FROM TABLE(GENERATOR(rowcount =&gt; 1000))
+),
+base_with_variant AS (
+  SELECT b.*, MOD(ABS(RANDOM()), nv.cnt) AS variant_idx
+  FROM base b JOIN num_variants nv ON nv.reason = b.actual_reason
+)
+SELECT bv.call_id, bv.date, bv.agent_id, bv.duration_sec, bv.actual_reason, t.transcript
+FROM base_with_variant bv
+JOIN transcripts t ON t.reason = bv.actual_reason AND t.variant = bv.variant_idx;
+
+-- Verify distribution
+SELECT actual_reason, COUNT(*) AS qty
+FROM CORTEX_UTILS.PUBLIC.CALLS
+GROUP BY actual_reason ORDER BY qty DESC;</pre></div>
+</div></div>
+
+<!-- STEP 8 -->
+<div class="st" id="s8"><div class="sh" onclick="tog(this)"><span class="sn">8</span><span class="sl"><span class="es">UDF REST API + prompt caching (claude-sonnet-4-5)</span><span class="en">UDF REST API + prompt caching (claude-sonnet-4-5)</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="nt es">System prompt ~1,300 tokens (&gt;1024) activa caching. Table 6b: Input $3.00/M | Output $15.00/M | Cache Read $0.30/M</div>
+<div class="nt en">System prompt ~1,300 tokens (&gt;1024) activates caching. Table 6b: Input $3.00/M | Output $15.00/M | Cache Read $0.30/M</div>
+<div class="sq es"><div class="sqh"><span>SQL &mdash; LLAMADAS_ANALISIS</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS AS
+SELECT
+    l.llamada_id, l.fecha, l.agente_id, l.duracion_seg, l.motivo_real,
+    r.value:success::BOOLEAN       AS llm_success,
+    r.value:response::VARCHAR      AS llm_raw,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')) AS llm_parsed,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):tipo_seguro::VARCHAR        AS tipo_seguro,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):sentimiento::VARCHAR        AS sentimiento,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):id_cliente::VARCHAR         AS id_cliente,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):cantidad_reclamacion::FLOAT AS cantidad_reclamacion,
+    'claude-sonnet-4-5'       AS modelo,
+    'REST API (Key Pair JWT)'  AS metodo,
+    r.value:usage:prompt_tokens::INT                               AS prompt_tokens,
+    r.value:usage:prompt_tokens_details:cached_tokens::INT         AS cached_tokens,
+    r.value:usage:completion_tokens::INT                           AS completion_tokens,
+    r.value:usage:total_tokens::INT                                AS total_tokens,
+    r.value:retries::INT                                           AS retries,
+    ROUND(r.value:usage:prompt_tokens::INT * 3.00 / 1000000, 6)   AS input_cost_usd,
+    ROUND(NVL(r.value:usage:prompt_tokens_details:cached_tokens::INT, 0) * 0.30 / 1000000, 6) AS cache_read_cost_usd,
+    ROUND(r.value:usage:completion_tokens::INT * 15.00 / 1000000, 6) AS output_cost_usd,
+    ROUND(r.value:usage:prompt_tokens::INT * 3.00 / 1000000
+        + NVL(r.value:usage:prompt_tokens_details:cached_tokens::INT, 0) * 0.30 / 1000000
+        + r.value:usage:completion_tokens::INT * 15.00 / 1000000, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS l,
+LATERAL FLATTEN(INPUT =&gt; ARRAY_CONSTRUCT(
+    CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+        'claude-sonnet-4-5',
+        'Eres una analista senior especializada en el sector asegurador español con más de 15 años de experiencia en auditoría de calidad de call centers. Tu tarea es analizar transcripciones de llamadas telefónicas de un call center de una compañía de seguros y extraer información estructurada.
+
+## CAMPOS A EXTRAER
+
+Debes devolver ÚNICAMENTE un objeto JSON con estos 4 campos, sin texto adicional antes ni después:
+
+1. **tipo_seguro** (string): El ramo del seguro al que se refiere la llamada.
+   Valores permitidos: "Automóvil", "Hogar", "Vida", "Salud", "Viaje", "Otro"
+   - Automóvil: accidentes de tráfico, coches, motos, matrículas, grúas, talleres, conductores, carnet, DGT, vehículos de sustitución
+   - Hogar: vivienda, piso, casa, robo en domicilio, inundación, cerradura, fontanería, incendio, reforma, contenido, continente, comunidad de vecinos
+   - Vida: fallecimiento, invalidez, hipoteca vinculada, capital asegurado vida, jubilación, beneficiarios, herencia
+   - Salud: hospital, operación, cirugía, médico, cuadro médico, rehabilitación, diagnóstico, enfermedad, pruebas médicas
+   - Viaje: viaje, aeropuerto, repatriación, equipaje, destino internacional, asistencia en el extranjero, vacaciones
+   - Otro: si no encaja claramente en ninguna de las anteriores
+
+2. **sentimiento** (string): El tono emocional predominante del CLIENTE (no del agente).
+   Valores permitidos: "Positivo", "Neutro", "Negativo", "Mixto"
+
+3. **id_cliente** (string o null): Número de póliza o identificador mencionado. null si no aparece.
+
+4. **cantidad_reclamacion** (number o null): Importe principal en euros. null si no se menciona.
+
+## EJEMPLOS
+
+Transcripción: "Cliente: Hola, he tenido un accidente con mi coche. Mi póliza es la 4789-2234-A. Agente: Le abro parte de siniestro. ¿Necesita vehículo de sustitución? Cliente: Sí, muchas gracias."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Positivo", "id_cliente": "4789-2234-A", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Quiero cancelar todo, estoy harto. Llevo tres meses esperando. Agente: Déjeme escalar el caso. Cliente: Si lo solucionan mañana vale, si no cancelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": null, "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me han robado en casa, póliza HG-88712-2024. Objetos por 8000 euros. Agente: Cobertura hasta 15000 euros."
+Respuesta: {"tipo_seguro": "Hogar", "sentimiento": "Neutro", "id_cliente": "HG-88712-2024", "cantidad_reclamacion": 8000}
+
+Transcripción: "Cliente: Me cobran 120 euros más, póliza 7789-1122-E. Agente: Le aplico descuento del 15%. Cliente: Aplíquelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": "7789-1122-E", "cantidad_reclamacion": 120}
+
+Transcripción: "Cliente: Llamo desde Portugal, mi mujer enferma, póliza VJ-33210-2024. Agente: Portugal cubierto."
+Respuesta: {"tipo_seguro": "Viaje", "sentimiento": "Negativo", "id_cliente": "VJ-33210-2024", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me jubilé, quiero reducir vida, póliza VD-12340-2019. Capital 200000 a 50000. Agente: Prima baja de 89 a 31."
+Respuesta: {"tipo_seguro": "Vida", "sentimiento": "Positivo", "id_cliente": "VD-12340-2019", "cantidad_reclamacion": null}
+
+## FORMATO DE RESPUESTA
+Responde SOLO con el JSON. Sin texto, sin markdown, sin explicaciones.',
+        l.transcripcion
+    )
+)) r;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; CALLS_ANALYSIS</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS AS
+SELECT
+    l.call_id, l.date, l.agent_id, l.duration_sec, l.actual_reason,
+    r.value:success::BOOLEAN       AS llm_success,
+    r.value:response::VARCHAR      AS llm_raw,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')) AS llm_parsed,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):insurance_type::VARCHAR  AS insurance_type,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):sentiment::VARCHAR       AS sentiment,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):customer_id::VARCHAR     AS customer_id,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):claim_amount::FLOAT      AS claim_amount,
+    'claude-sonnet-4-5'       AS model,
+    'REST API (Key Pair JWT)'  AS method,
+    r.value:usage:prompt_tokens::INT                               AS prompt_tokens,
+    r.value:usage:prompt_tokens_details:cached_tokens::INT         AS cached_tokens,
+    r.value:usage:completion_tokens::INT                           AS completion_tokens,
+    r.value:usage:total_tokens::INT                                AS total_tokens,
+    r.value:retries::INT                                           AS retries,
+    -- Pricing: Table 6b REST API Prompt Caching, claude-sonnet-4-5 AWS Global
+    -- Input: $3.00/M | Output: $15.00/M | Cache Read: $0.30/M
+    ROUND(r.value:usage:prompt_tokens::INT * 3.00 / 1000000, 6)   AS input_cost_usd,
+    ROUND(NVL(r.value:usage:prompt_tokens_details:cached_tokens::INT, 0) * 0.30 / 1000000, 6) AS cache_read_cost_usd,
+    ROUND(r.value:usage:completion_tokens::INT * 15.00 / 1000000, 6) AS output_cost_usd,
+    ROUND(r.value:usage:prompt_tokens::INT * 3.00 / 1000000
+        + NVL(r.value:usage:prompt_tokens_details:cached_tokens::INT, 0) * 0.30 / 1000000
+        + r.value:usage:completion_tokens::INT * 15.00 / 1000000, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.CALLS l,
+LATERAL FLATTEN(INPUT =&gt; ARRAY_CONSTRUCT(
+    CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+        'claude-sonnet-4-5',
+        'You are a senior analyst specializing in the insurance industry with over 15 years of experience in call center quality auditing. Your task is to analyze transcripts of phone calls from an insurance company call center and extract structured information.
+
+## FIELDS TO EXTRACT
+
+Return ONLY a JSON object with these 4 fields, with no additional text before or after:
+
+1. **insurance_type** (string): The insurance branch the call refers to.
+   Allowed values: "Auto", "Home", "Life", "Health", "Travel", "Other"
+   - Auto: traffic accidents, cars, motorcycles, plates, tow trucks, repair shops, drivers, license, DMV, replacement vehicles
+   - Home: residence, apartment, house, home theft, flooding, locks, plumbing, fire, renovation, contents, structure, HOA
+   - Life: death, disability, mortgage-linked, insured capital, retirement, beneficiaries, inheritance
+   - Health: hospital, surgery, operation, doctor, medical network, rehabilitation, diagnosis, illness, medical tests
+   - Travel: trip, airport, repatriation, luggage, international destination, assistance abroad, vacation
+   - Other: if it does not clearly fit any of the above
+
+2. **sentiment** (string): The predominant emotional tone of the CUSTOMER (not the agent).
+   Allowed values: "Positive", "Neutral", "Negative", "Mixed"
+
+3. **customer_id** (string or null): Policy number or identifier mentioned. null if not present.
+
+4. **claim_amount** (number or null): Main amount in dollars. null if not mentioned.
+
+## EXAMPLES
+
+Transcript: "Customer: Hi, I had a car accident. My policy is 4789-2234-A. Agent: I will open a claim. Do you need a replacement vehicle? Customer: Yes, thanks."
+Response: {"insurance_type": "Auto", "sentiment": "Positive", "customer_id": "4789-2234-A", "claim_amount": null}
+
+Transcript: "Customer: I want to cancel everything, I am done with this. Three months waiting. Agent: Let me escalate. Customer: If it is fixed tomorrow fine, otherwise I am canceling."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": null, "claim_amount": null}
+
+Transcript: "Customer: My home was burglarized, policy HG-88712-2024. Items worth $8000. Agent: Coverage up to $15000."
+Response: {"insurance_type": "Home", "sentiment": "Neutral", "customer_id": "HG-88712-2024", "claim_amount": 8000}
+
+Transcript: "Customer: I am being charged $120 more, policy 7789-1122-E. Agent: I will apply 15% discount. Customer: Please do."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": "7789-1122-E", "claim_amount": 120}
+
+Transcript: "Customer: Calling from Portugal, my wife is sick, policy VJ-33210-2024. Agent: Portugal is covered."
+Response: {"insurance_type": "Travel", "sentiment": "Negative", "customer_id": "VJ-33210-2024", "claim_amount": null}
+
+Transcript: "Customer: I retired, want to reduce life coverage, policy VD-12340-2019. $200k down to $50k. Agent: Premium drops from $89 to $31."
+Response: {"insurance_type": "Life", "sentiment": "Positive", "customer_id": "VD-12340-2019", "claim_amount": null}
+
+## RESPONSE FORMAT
+Reply ONLY with the JSON. No text, no markdown, no explanations.',
+        l.transcript
+    )
+)) r;</pre></div>
+</div></div>
+
+<!-- STEP 9 -->
+<div class="st" id="s9"><div class="sh" onclick="tog(this)"><span class="sn">9</span><span class="sl"><span class="es">AI_COMPLETE nativa + structured output (claude-sonnet-4-5)</span><span class="en">Native AI_COMPLETE + structured output (claude-sonnet-4-5)</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="nt es">Mismo prompt que Step 8. Usa response_format JSON schema. Table 6a: Input 1.65 cr/M | Output 8.25 cr/M | 1 cr = $4.00</div>
+<div class="nt en">Same prompt as Step 8. Uses response_format JSON schema. Table 6a: Input 1.65 cr/M | Output 8.25 cr/M | 1 cr = $4.00</div>
+<div class="sq es"><div class="sqh"><span>SQL &mdash; LLAMADAS_ANALISIS_NATIVE</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE AS
+SELECT
+    l.llamada_id, l.fecha, l.agente_id, l.duracion_seg, l.motivo_real,
+    r.raw:tipo_seguro::VARCHAR        AS tipo_seguro,
+    r.raw:sentimiento::VARCHAR        AS sentimiento,
+    r.raw:id_cliente::VARCHAR         AS id_cliente,
+    r.raw:cantidad_reclamacion::FLOAT AS cantidad_reclamacion,
+    r.raw                             AS llm_parsed,
+    'claude-sonnet-4-5'  AS modelo,
+    'AI_COMPLETE Native' AS metodo,
+    r.usage:prompt_tokens::INT     AS prompt_tokens,
+    r.usage:completion_tokens::INT AS completion_tokens,
+    r.usage:total_tokens::INT      AS total_tokens,
+    ROUND(r.usage:prompt_tokens::INT * 1.65 / 1000000, 6)     AS input_cost_credits,
+    ROUND(r.usage:completion_tokens::INT * 8.25 / 1000000, 6) AS output_cost_credits,
+    ROUND(r.usage:prompt_tokens::INT * 1.65 / 1000000
+        + r.usage:completion_tokens::INT * 8.25 / 1000000, 6) AS total_cost_credits,
+    ROUND((r.usage:prompt_tokens::INT * 1.65 / 1000000
+        + r.usage:completion_tokens::INT * 8.25 / 1000000) * 4.00, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS l,
+LATERAL (
+    SELECT PARSE_JSON(res):structured_output[0]:raw_message AS raw, PARSE_JSON(res):usage AS usage
+    FROM (
+        SELECT AI_COMPLETE(
+            model  =&gt; 'claude-sonnet-4-5',
+            prompt =&gt; 'Eres una analista senior especializada en el sector asegurador español con más de 15 años de experiencia en auditoría de calidad de call centers. Tu tarea es analizar transcripciones de llamadas telefónicas de un call center de una compañía de seguros y extraer información estructurada.
+
+## CAMPOS A EXTRAER
+
+Debes devolver ÚNICAMENTE un objeto JSON con estos 4 campos, sin texto adicional antes ni después:
+
+1. **tipo_seguro** (string): El ramo del seguro al que se refiere la llamada.
+   Valores permitidos: "Automóvil", "Hogar", "Vida", "Salud", "Viaje", "Otro"
+   - Automóvil: accidentes de tráfico, coches, motos, matrículas, grúas, talleres, conductores, carnet, DGT, vehículos de sustitución
+   - Hogar: vivienda, piso, casa, robo en domicilio, inundación, cerradura, fontanería, incendio, reforma, contenido, continente, comunidad de vecinos
+   - Vida: fallecimiento, invalidez, hipoteca vinculada, capital asegurado vida, jubilación, beneficiarios, herencia
+   - Salud: hospital, operación, cirugía, médico, cuadro médico, rehabilitación, diagnóstico, enfermedad, pruebas médicas
+   - Viaje: viaje, aeropuerto, repatriación, equipaje, destino internacional, asistencia en el extranjero, vacaciones
+   - Otro: si no encaja claramente en ninguna de las anteriores
+
+2. **sentimiento** (string): El tono emocional predominante del CLIENTE (no del agente).
+   Valores permitidos: "Positivo", "Neutro", "Negativo", "Mixto"
+
+3. **id_cliente** (string o null): Número de póliza o identificador mencionado. null si no aparece.
+
+4. **cantidad_reclamacion** (number o null): Importe principal en euros. null si no se menciona.
+
+## EJEMPLOS
+
+Transcripción: "Cliente: Hola, he tenido un accidente con mi coche. Mi póliza es la 4789-2234-A. Agente: Le abro parte de siniestro. ¿Necesita vehículo de sustitución? Cliente: Sí, muchas gracias."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Positivo", "id_cliente": "4789-2234-A", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Quiero cancelar todo, estoy harto. Llevo tres meses esperando. Agente: Déjeme escalar el caso. Cliente: Si lo solucionan mañana vale, si no cancelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": null, "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me han robado en casa, póliza HG-88712-2024. Objetos por 8000 euros. Agente: Cobertura hasta 15000 euros."
+Respuesta: {"tipo_seguro": "Hogar", "sentimiento": "Neutro", "id_cliente": "HG-88712-2024", "cantidad_reclamacion": 8000}
+
+Transcripción: "Cliente: Me cobran 120 euros más, póliza 7789-1122-E. Agente: Le aplico descuento del 15%. Cliente: Aplíquelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": "7789-1122-E", "cantidad_reclamacion": 120}
+
+Transcripción: "Cliente: Llamo desde Portugal, mi mujer enferma, póliza VJ-33210-2024. Agente: Portugal cubierto."
+Respuesta: {"tipo_seguro": "Viaje", "sentimiento": "Negativo", "id_cliente": "VJ-33210-2024", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me jubilé, quiero reducir vida, póliza VD-12340-2019. Capital 200000 a 50000. Agente: Prima baja de 89 a 31."
+Respuesta: {"tipo_seguro": "Vida", "sentimiento": "Positivo", "id_cliente": "VD-12340-2019", "cantidad_reclamacion": null}
+
+## FORMATO DE RESPUESTA
+Responde SOLO con el JSON. Sin texto, sin markdown, sin explicaciones.
+
+Transcripción:
+' || l.transcripcion,
+            response_format =&gt; {
+                'type': 'json',
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'tipo_seguro':          {'type': 'string', 'enum': ['Automóvil', 'Hogar', 'Vida', 'Salud', 'Viaje', 'Otro']},
+                        'sentimiento':          {'type': 'string', 'enum': ['Positivo', 'Neutro', 'Negativo', 'Mixto']},
+                        'id_cliente':           {'type': ['string', 'null']},
+                        'cantidad_reclamacion': {'type': ['number', 'null']}
+                    },
+                    'required': ['tipo_seguro', 'sentimiento', 'id_cliente', 'cantidad_reclamacion'],
+                    'additionalProperties': false
+                }
+            },
+            show_details =&gt; TRUE
+        ) AS res
+    )
+) r;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; CALLS_ANALYSIS_NATIVE</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE AS
+SELECT
+    l.call_id, l.date, l.agent_id, l.duration_sec, l.actual_reason,
+    r.raw:insurance_type::VARCHAR  AS insurance_type,
+    r.raw:sentiment::VARCHAR       AS sentiment,
+    r.raw:customer_id::VARCHAR     AS customer_id,
+    r.raw:claim_amount::FLOAT      AS claim_amount,
+    r.raw                          AS llm_parsed,
+    'claude-sonnet-4-5'  AS model,
+    'AI_COMPLETE Native' AS method,
+    r.usage:prompt_tokens::INT     AS prompt_tokens,
+    r.usage:completion_tokens::INT AS completion_tokens,
+    r.usage:total_tokens::INT      AS total_tokens,
+    -- Pricing: Table 6a AI_COMPLETE claude-sonnet-4-5
+    -- Input: 1.65 cr/M | Output: 8.25 cr/M | 1 credit = $4.00
+    ROUND(r.usage:prompt_tokens::INT * 1.65 / 1000000, 6)     AS input_cost_credits,
+    ROUND(r.usage:completion_tokens::INT * 8.25 / 1000000, 6) AS output_cost_credits,
+    ROUND(r.usage:prompt_tokens::INT * 1.65 / 1000000
+        + r.usage:completion_tokens::INT * 8.25 / 1000000, 6) AS total_cost_credits,
+    ROUND((r.usage:prompt_tokens::INT * 1.65 / 1000000
+        + r.usage:completion_tokens::INT * 8.25 / 1000000) * 4.00, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.CALLS l,
+LATERAL (
+    SELECT PARSE_JSON(res):structured_output[0]:raw_message AS raw, PARSE_JSON(res):usage AS usage
+    FROM (
+        SELECT AI_COMPLETE(
+            model  =&gt; 'claude-sonnet-4-5',
+            prompt =&gt; 'You are a senior analyst specializing in the insurance industry with over 15 years of experience in call center quality auditing. Your task is to analyze transcripts of phone calls from an insurance company call center and extract structured information.
+
+## FIELDS TO EXTRACT
+
+Return ONLY a JSON object with these 4 fields, with no additional text before or after:
+
+1. **insurance_type** (string): The insurance branch the call refers to.
+   Allowed values: "Auto", "Home", "Life", "Health", "Travel", "Other"
+   - Auto: traffic accidents, cars, motorcycles, plates, tow trucks, repair shops, drivers, license, DMV, replacement vehicles
+   - Home: residence, apartment, house, home theft, flooding, locks, plumbing, fire, renovation, contents, structure, HOA
+   - Life: death, disability, mortgage-linked, insured capital, retirement, beneficiaries, inheritance
+   - Health: hospital, surgery, operation, doctor, medical network, rehabilitation, diagnosis, illness, medical tests
+   - Travel: trip, airport, repatriation, luggage, international destination, assistance abroad, vacation
+   - Other: if it does not clearly fit any of the above
+
+2. **sentiment** (string): The predominant emotional tone of the CUSTOMER (not the agent).
+   Allowed values: "Positive", "Neutral", "Negative", "Mixed"
+
+3. **customer_id** (string or null): Policy number or identifier mentioned. null if not present.
+
+4. **claim_amount** (number or null): Main amount in dollars. null if not mentioned.
+
+## EXAMPLES
+
+Transcript: "Customer: Hi, I had a car accident. My policy is 4789-2234-A. Agent: I will open a claim. Do you need a replacement vehicle? Customer: Yes, thanks."
+Response: {"insurance_type": "Auto", "sentiment": "Positive", "customer_id": "4789-2234-A", "claim_amount": null}
+
+Transcript: "Customer: I want to cancel everything, I am done. Three months waiting. Agent: Let me escalate. Customer: If it is fixed tomorrow fine, otherwise I am canceling."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": null, "claim_amount": null}
+
+Transcript: "Customer: My home was burglarized, policy HG-88712-2024. Items worth $8000. Agent: Coverage up to $15000."
+Response: {"insurance_type": "Home", "sentiment": "Neutral", "customer_id": "HG-88712-2024", "claim_amount": 8000}
+
+Transcript: "Customer: I am being charged $120 more, policy 7789-1122-E. Agent: I will apply 15% discount. Customer: Please do."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": "7789-1122-E", "claim_amount": 120}
+
+Transcript: "Customer: Calling from Portugal, my wife is sick, policy VJ-33210-2024. Agent: Portugal is covered."
+Response: {"insurance_type": "Travel", "sentiment": "Negative", "customer_id": "VJ-33210-2024", "claim_amount": null}
+
+Transcript: "Customer: I retired, want to reduce life coverage, policy VD-12340-2019. $200k down to $50k. Agent: Premium drops from $89 to $31."
+Response: {"insurance_type": "Life", "sentiment": "Positive", "customer_id": "VD-12340-2019", "claim_amount": null}
+
+## RESPONSE FORMAT
+Reply ONLY with the JSON. No text, no markdown, no explanations.
+
+Transcript:
+' || l.transcript,
+            response_format =&gt; {
+                'type': 'json',
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'insurance_type': {'type': 'string', 'enum': ['Auto', 'Home', 'Life', 'Health', 'Travel', 'Other']},
+                        'sentiment':      {'type': 'string', 'enum': ['Positive', 'Neutral', 'Negative', 'Mixed']},
+                        'customer_id':    {'type': ['string', 'null']},
+                        'claim_amount':   {'type': ['number', 'null']}
+                    },
+                    'required': ['insurance_type', 'sentiment', 'customer_id', 'claim_amount'],
+                    'additionalProperties': false
+                }
+            },
+            show_details =&gt; TRUE
+        ) AS res
+    )
+) r;</pre></div>
+</div></div>
+
+<!-- STEP 10 -->
+<div class="st" id="s10"><div class="sh" onclick="tog(this)"><span class="sn">10</span><span class="sl"><span class="es">Validaci&oacute;n y benchmark Claude</span><span class="en">Validation and benchmark Claude</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">-- 11.1 Success rate y retries (UDF)
+SELECT COUNT(*) AS total,
+    SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) AS success,
+    ROUND(SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 1) AS success_pct,
+    SUM(CASE WHEN tipo_seguro IS NOT NULL THEN 1 ELSE 0 END) AS parsed_json
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS;
+
+-- 11.2 Distribución de retries
+SELECT retries, COUNT(*) AS cnt
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS
+GROUP BY retries ORDER BY retries;
+
+-- Comparativa de costes Claude
+SELECT metodo, modelo, total_rows, total_prompt_tokens, total_cached_tokens,
+    total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
+    ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS ahorro_pct
+FROM (
+    SELECT 'REST API (Key Pair + Cache)' AS metodo, modelo, COUNT(*) AS total_rows,
+        SUM(prompt_tokens) AS total_prompt_tokens, SUM(NVL(cached_tokens, 0)) AS total_cached_tokens,
+        SUM(completion_tokens) AS total_output_tokens, ROUND(SUM(input_cost_usd), 4) AS input_cost,
+        ROUND(SUM(cache_read_cost_usd), 4) AS cache_cost, ROUND(SUM(output_cost_usd), 4) AS output_cost,
+        ROUND(SUM(total_cost_usd), 4) AS total_cost_usd
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS WHERE llm_success GROUP BY modelo
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', modelo, COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL, ROUND(SUM(output_cost_credits) * 4, 4),
+        ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE GROUP BY modelo
+) combined ORDER BY total_cost_usd;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">-- 11.1 Success rate and retries (UDF)
+SELECT COUNT(*) AS total,
+    SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) AS success,
+    ROUND(SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 1) AS success_pct,
+    SUM(CASE WHEN insurance_type IS NOT NULL THEN 1 ELSE 0 END) AS parsed_json
+FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS;
+
+-- 11.2 Retry distribution
+SELECT retries, COUNT(*) AS cnt
+FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS
+GROUP BY retries ORDER BY retries;
+
+-- Claude cost comparison
+SELECT method, model, total_rows, total_prompt_tokens, total_cached_tokens,
+    total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
+    ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS savings_pct
+FROM (
+    SELECT 'REST API (Key Pair + Cache)' AS method, model, COUNT(*) AS total_rows,
+        SUM(prompt_tokens) AS total_prompt_tokens, SUM(NVL(cached_tokens, 0)) AS total_cached_tokens,
+        SUM(completion_tokens) AS total_output_tokens, ROUND(SUM(input_cost_usd), 4) AS input_cost,
+        ROUND(SUM(cache_read_cost_usd), 4) AS cache_cost, ROUND(SUM(output_cost_usd), 4) AS output_cost,
+        ROUND(SUM(total_cost_usd), 4) AS total_cost_usd
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS WHERE llm_success GROUP BY model
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', model, COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL, ROUND(SUM(output_cost_credits) * 4, 4),
+        ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE GROUP BY model
+) combined ORDER BY total_cost_usd;</pre></div>
+</div></div>
+
+<div class="ph" id="p2c"><span class="es">PARTE 2C &mdash; Benchmark llama3.3-70b (sin caching)</span><span class="en">PART 2C &mdash; Benchmark llama3.3-70b (no caching)</span></div>
+
+<!-- STEP 8b -->
+<div class="st" id="s8b"><div class="sh" onclick="tog(this)"><span class="sn">8b</span><span class="sl"><span class="es">UDF REST API &mdash; snowflake-llama-3.3-70b</span><span class="en">UDF REST API &mdash; snowflake-llama-3.3-70b</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="wr es">REST API: <code>snowflake-llama-3.3-70b</code>. Sin caching. Input/Output: $0.72/M</div>
+<div class="wr en">REST API: <code>snowflake-llama-3.3-70b</code>. No caching. Input/Output: $0.72/M</div>
+<div class="sq es"><div class="sqh"><span>SQL &mdash; LLAMADAS_ANALISIS_LLAMA</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_LLAMA AS
+SELECT
+    l.llamada_id, l.fecha, l.agente_id, l.duracion_seg, l.motivo_real,
+    r.value:success::BOOLEAN       AS llm_success,
+    r.value:response::VARCHAR      AS llm_raw,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')) AS llm_parsed,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):tipo_seguro::VARCHAR        AS tipo_seguro,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):sentimiento::VARCHAR        AS sentimiento,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):id_cliente::VARCHAR         AS id_cliente,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):cantidad_reclamacion::FLOAT AS cantidad_reclamacion,
+    'snowflake-llama-3.3-70b'  AS modelo,
+    'REST API (Key Pair JWT)'   AS metodo,
+    r.value:usage:prompt_tokens::INT                               AS prompt_tokens,
+    r.value:usage:prompt_tokens_details:cached_tokens::INT         AS cached_tokens,
+    r.value:usage:completion_tokens::INT                           AS completion_tokens,
+    r.value:usage:total_tokens::INT                                AS total_tokens,
+    r.value:retries::INT                                           AS retries,
+    ROUND(r.value:usage:prompt_tokens::INT * 0.72 / 1000000, 6)   AS input_cost_usd,
+    ROUND(NVL(r.value:usage:prompt_tokens_details:cached_tokens::INT, 0) * 0.00 / 1000000, 6) AS cache_read_cost_usd,
+    ROUND(r.value:usage:completion_tokens::INT * 0.72 / 1000000, 6) AS output_cost_usd,
+    ROUND(r.value:usage:prompt_tokens::INT * 0.72 / 1000000
+        + r.value:usage:completion_tokens::INT * 0.72 / 1000000, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS l,
+LATERAL FLATTEN(INPUT =&gt; ARRAY_CONSTRUCT(
+    CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+        'snowflake-llama-3.3-70b',
+        'Eres una analista senior especializada en el sector asegurador español con más de 15 años de experiencia en auditoría de calidad de call centers. Tu tarea es analizar transcripciones de llamadas telefónicas de un call center de una compañía de seguros y extraer información estructurada.
+
+## CAMPOS A EXTRAER
+
+Debes devolver ÚNICAMENTE un objeto JSON con estos 4 campos, sin texto adicional antes ni después:
+
+1. **tipo_seguro** (string): El ramo del seguro al que se refiere la llamada.
+   Valores permitidos: "Automóvil", "Hogar", "Vida", "Salud", "Viaje", "Otro"
+   - Automóvil: accidentes de tráfico, coches, motos, matrículas, grúas, talleres, conductores, carnet, DGT, vehículos de sustitución
+   - Hogar: vivienda, piso, casa, robo en domicilio, inundación, cerradura, fontanería, incendio, reforma, contenido, continente, comunidad de vecinos
+   - Vida: fallecimiento, invalidez, hipoteca vinculada, capital asegurado vida, jubilación, beneficiarios, herencia
+   - Salud: hospital, operación, cirugía, médico, cuadro médico, rehabilitación, diagnóstico, enfermedad, pruebas médicas
+   - Viaje: viaje, aeropuerto, repatriación, equipaje, destino internacional, asistencia en el extranjero, vacaciones
+   - Otro: si no encaja claramente en ninguna de las anteriores
+
+2. **sentimiento** (string): El tono emocional predominante del CLIENTE (no del agente).
+   Valores permitidos: "Positivo", "Neutro", "Negativo", "Mixto"
+
+3. **id_cliente** (string o null): Número de póliza o identificador mencionado. null si no aparece.
+
+4. **cantidad_reclamacion** (number o null): Importe principal en euros. null si no se menciona.
+
+## EJEMPLOS
+
+Transcripción: "Cliente: Hola, he tenido un accidente con mi coche. Mi póliza es la 4789-2234-A. Agente: Le abro parte de siniestro. ¿Necesita vehículo de sustitución? Cliente: Sí, muchas gracias."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Positivo", "id_cliente": "4789-2234-A", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Quiero cancelar todo, estoy harto. Llevo tres meses esperando. Agente: Déjeme escalar el caso. Cliente: Si lo solucionan mañana vale, si no cancelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": null, "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me han robado en casa, póliza HG-88712-2024. Objetos por 8000 euros. Agente: Cobertura hasta 15000 euros."
+Respuesta: {"tipo_seguro": "Hogar", "sentimiento": "Neutro", "id_cliente": "HG-88712-2024", "cantidad_reclamacion": 8000}
+
+Transcripción: "Cliente: Me cobran 120 euros más, póliza 7789-1122-E. Agente: Le aplico descuento del 15%. Cliente: Aplíquelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": "7789-1122-E", "cantidad_reclamacion": 120}
+
+Transcripción: "Cliente: Llamo desde Portugal, mi mujer enferma, póliza VJ-33210-2024. Agente: Portugal cubierto."
+Respuesta: {"tipo_seguro": "Viaje", "sentimiento": "Negativo", "id_cliente": "VJ-33210-2024", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me jubilé, quiero reducir vida, póliza VD-12340-2019. Capital 200000 a 50000. Agente: Prima baja de 89 a 31."
+Respuesta: {"tipo_seguro": "Vida", "sentimiento": "Positivo", "id_cliente": "VD-12340-2019", "cantidad_reclamacion": null}
+
+## FORMATO DE RESPUESTA
+Responde SOLO con el JSON. Sin texto, sin markdown, sin explicaciones.',
+        l.transcripcion
+    )
+)) r;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; CALLS_ANALYSIS_LLAMA</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_LLAMA AS
+SELECT
+    l.call_id, l.date, l.agent_id, l.duration_sec, l.actual_reason,
+    r.value:success::BOOLEAN       AS llm_success,
+    r.value:response::VARCHAR      AS llm_raw,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')) AS llm_parsed,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):insurance_type::VARCHAR  AS insurance_type,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):sentiment::VARCHAR       AS sentiment,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):customer_id::VARCHAR     AS customer_id,
+    TRY_PARSE_JSON(REGEXP_REPLACE(r.value:response::VARCHAR, '```json\\n?|```\\n?', '')):claim_amount::FLOAT      AS claim_amount,
+    'snowflake-llama-3.3-70b'  AS model,
+    'REST API (Key Pair JWT)'   AS method,
+    r.value:usage:prompt_tokens::INT                               AS prompt_tokens,
+    r.value:usage:prompt_tokens_details:cached_tokens::INT         AS cached_tokens,
+    r.value:usage:completion_tokens::INT                           AS completion_tokens,
+    r.value:usage:total_tokens::INT                                AS total_tokens,
+    r.value:retries::INT                                           AS retries,
+    -- Pricing: Table 6b REST API llama3.3-70b — Input: $0.72/M | Output: $0.72/M | No caching
+    ROUND(r.value:usage:prompt_tokens::INT * 0.72 / 1000000, 6)   AS input_cost_usd,
+    ROUND(0, 6)                                                    AS cache_read_cost_usd,
+    ROUND(r.value:usage:completion_tokens::INT * 0.72 / 1000000, 6) AS output_cost_usd,
+    ROUND(r.value:usage:prompt_tokens::INT * 0.72 / 1000000
+        + r.value:usage:completion_tokens::INT * 0.72 / 1000000, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.CALLS l,
+LATERAL FLATTEN(INPUT =&gt; ARRAY_CONSTRUCT(
+    CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+        'snowflake-llama-3.3-70b',
+        'You are a senior analyst specializing in the insurance industry with over 15 years of experience in call center quality auditing. Your task is to analyze transcripts of phone calls from an insurance company call center and extract structured information.
+
+## FIELDS TO EXTRACT
+
+Return ONLY a JSON object with these 4 fields, with no additional text before or after:
+
+1. **insurance_type** (string): The insurance branch the call refers to.
+   Allowed values: "Auto", "Home", "Life", "Health", "Travel", "Other"
+   - Auto: traffic accidents, cars, motorcycles, plates, tow trucks, repair shops, drivers, license, DMV, replacement vehicles
+   - Home: residence, apartment, house, home theft, flooding, locks, plumbing, fire, renovation, contents, structure, HOA
+   - Life: death, disability, mortgage-linked, insured capital, retirement, beneficiaries, inheritance
+   - Health: hospital, surgery, operation, doctor, medical network, rehabilitation, diagnosis, illness, medical tests
+   - Travel: trip, airport, repatriation, luggage, international destination, assistance abroad, vacation
+   - Other: if it does not clearly fit any of the above
+
+2. **sentiment** (string): The predominant emotional tone of the CUSTOMER (not the agent).
+   Allowed values: "Positive", "Neutral", "Negative", "Mixed"
+
+3. **customer_id** (string or null): Policy number or identifier mentioned. null if not present.
+
+4. **claim_amount** (number or null): Main amount in dollars. null if not mentioned.
+
+## EXAMPLES
+
+Transcript: "Customer: Hi, I had a car accident. My policy is 4789-2234-A. Agent: I will open a claim. Do you need a replacement vehicle? Customer: Yes, thanks."
+Response: {"insurance_type": "Auto", "sentiment": "Positive", "customer_id": "4789-2234-A", "claim_amount": null}
+
+Transcript: "Customer: I want to cancel everything, I am done. Three months waiting. Agent: Let me escalate. Customer: If it is fixed tomorrow fine, otherwise I am canceling."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": null, "claim_amount": null}
+
+Transcript: "Customer: My home was burglarized, policy HG-88712-2024. Items worth $8000. Agent: Coverage up to $15000."
+Response: {"insurance_type": "Home", "sentiment": "Neutral", "customer_id": "HG-88712-2024", "claim_amount": 8000}
+
+Transcript: "Customer: I am being charged $120 more, policy 7789-1122-E. Agent: I will apply 15% discount. Customer: Please do."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": "7789-1122-E", "claim_amount": 120}
+
+Transcript: "Customer: Calling from Portugal, my wife is sick, policy VJ-33210-2024. Agent: Portugal is covered."
+Response: {"insurance_type": "Travel", "sentiment": "Negative", "customer_id": "VJ-33210-2024", "claim_amount": null}
+
+Transcript: "Customer: I retired, want to reduce life coverage, policy VD-12340-2019. $200k down to $50k. Agent: Premium drops from $89 to $31."
+Response: {"insurance_type": "Life", "sentiment": "Positive", "customer_id": "VD-12340-2019", "claim_amount": null}
+
+## RESPONSE FORMAT
+Reply ONLY with the JSON. No text, no markdown, no explanations.',
+        l.transcript
+    )
+)) r;</pre></div>
+</div></div>
+
+<!-- STEP 9b -->
+<div class="st" id="s9b"><div class="sh" onclick="tog(this)"><span class="sn">9b</span><span class="sl"><span class="es">AI_COMPLETE nativa &mdash; llama3.3-70b</span><span class="en">Native AI_COMPLETE &mdash; llama3.3-70b</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="nt es">AI_COMPLETE usa <code>llama3.3-70b</code>. In/Out 0.36 cr/M x $4 = $1.44/M</div>
+<div class="nt en">AI_COMPLETE uses <code>llama3.3-70b</code>. In/Out 0.36 cr/M x $4 = $1.44/M</div>
+<div class="sq es"><div class="sqh"><span>SQL &mdash; LLAMADAS_ANALISIS_NATIVE_LLAMA</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE_LLAMA AS
+SELECT
+    l.llamada_id, l.fecha, l.agente_id, l.duracion_seg, l.motivo_real,
+    r.raw:tipo_seguro::VARCHAR        AS tipo_seguro,
+    r.raw:sentimiento::VARCHAR        AS sentimiento,
+    r.raw:id_cliente::VARCHAR         AS id_cliente,
+    r.raw:cantidad_reclamacion::FLOAT AS cantidad_reclamacion,
+    r.raw                             AS llm_parsed,
+    'llama3.3-70b'       AS modelo,
+    'AI_COMPLETE Native' AS metodo,
+    r.usage:prompt_tokens::INT     AS prompt_tokens,
+    r.usage:completion_tokens::INT AS completion_tokens,
+    r.usage:total_tokens::INT      AS total_tokens,
+    ROUND(r.usage:prompt_tokens::INT * 0.36 / 1000000, 6)     AS input_cost_credits,
+    ROUND(r.usage:completion_tokens::INT * 0.36 / 1000000, 6) AS output_cost_credits,
+    ROUND(r.usage:prompt_tokens::INT * 0.36 / 1000000
+        + r.usage:completion_tokens::INT * 0.36 / 1000000, 6) AS total_cost_credits,
+    ROUND((r.usage:prompt_tokens::INT * 0.36 / 1000000
+        + r.usage:completion_tokens::INT * 0.36 / 1000000) * 4.00, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS l,
+LATERAL (
+    SELECT PARSE_JSON(res):structured_output[0]:raw_message AS raw, PARSE_JSON(res):usage AS usage
+    FROM (
+        SELECT AI_COMPLETE(
+            model  =&gt; 'llama3.3-70b',
+            prompt =&gt; 'Eres una analista senior especializada en el sector asegurador español con más de 15 años de experiencia en auditoría de calidad de call centers. Tu tarea es analizar transcripciones de llamadas telefónicas de un call center de una compañía de seguros y extraer información estructurada.
+
+## CAMPOS A EXTRAER
+
+Debes devolver ÚNICAMENTE un objeto JSON con estos 4 campos, sin texto adicional antes ni después:
+
+1. **tipo_seguro** (string): El ramo del seguro al que se refiere la llamada.
+   Valores permitidos: "Automóvil", "Hogar", "Vida", "Salud", "Viaje", "Otro"
+   - Automóvil: accidentes de tráfico, coches, motos, matrículas, grúas, talleres, conductores, carnet, DGT, vehículos de sustitución
+   - Hogar: vivienda, piso, casa, robo en domicilio, inundación, cerradura, fontanería, incendio, reforma, contenido, continente, comunidad de vecinos
+   - Vida: fallecimiento, invalidez, hipoteca vinculada, capital asegurado vida, jubilación, beneficiarios, herencia
+   - Salud: hospital, operación, cirugía, médico, cuadro médico, rehabilitación, diagnóstico, enfermedad, pruebas médicas
+   - Viaje: viaje, aeropuerto, repatriación, equipaje, destino internacional, asistencia en el extranjero, vacaciones
+   - Otro: si no encaja claramente en ninguna de las anteriores
+
+2. **sentimiento** (string): El tono emocional predominante del CLIENTE (no del agente).
+   Valores permitidos: "Positivo", "Neutro", "Negativo", "Mixto"
+
+3. **id_cliente** (string o null): Número de póliza o identificador mencionado. null si no aparece.
+
+4. **cantidad_reclamacion** (number o null): Importe principal en euros. null si no se menciona.
+
+## EJEMPLOS
+
+Transcripción: "Cliente: Hola, he tenido un accidente con mi coche. Mi póliza es la 4789-2234-A. Agente: Le abro parte de siniestro. ¿Necesita vehículo de sustitución? Cliente: Sí, muchas gracias."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Positivo", "id_cliente": "4789-2234-A", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Quiero cancelar todo, estoy harto. Llevo tres meses esperando. Agente: Déjeme escalar el caso. Cliente: Si lo solucionan mañana vale, si no cancelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": null, "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me han robado en casa, póliza HG-88712-2024. Objetos por 8000 euros. Agente: Cobertura hasta 15000 euros."
+Respuesta: {"tipo_seguro": "Hogar", "sentimiento": "Neutro", "id_cliente": "HG-88712-2024", "cantidad_reclamacion": 8000}
+
+Transcripción: "Cliente: Me cobran 120 euros más, póliza 7789-1122-E. Agente: Le aplico descuento del 15%. Cliente: Aplíquelo."
+Respuesta: {"tipo_seguro": "Automóvil", "sentimiento": "Mixto", "id_cliente": "7789-1122-E", "cantidad_reclamacion": 120}
+
+Transcripción: "Cliente: Llamo desde Portugal, mi mujer enferma, póliza VJ-33210-2024. Agente: Portugal cubierto."
+Respuesta: {"tipo_seguro": "Viaje", "sentimiento": "Negativo", "id_cliente": "VJ-33210-2024", "cantidad_reclamacion": null}
+
+Transcripción: "Cliente: Me jubilé, quiero reducir vida, póliza VD-12340-2019. Capital 200000 a 50000. Agente: Prima baja de 89 a 31."
+Respuesta: {"tipo_seguro": "Vida", "sentimiento": "Positivo", "id_cliente": "VD-12340-2019", "cantidad_reclamacion": null}
+
+## FORMATO DE RESPUESTA
+Responde SOLO con el JSON. Sin texto, sin markdown, sin explicaciones.
+
+Transcripción:
+' || l.transcripcion,
+            response_format =&gt; {
+                'type': 'json',
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'tipo_seguro':          {'type': 'string', 'enum': ['Automóvil', 'Hogar', 'Vida', 'Salud', 'Viaje', 'Otro']},
+                        'sentimiento':          {'type': 'string', 'enum': ['Positivo', 'Neutro', 'Negativo', 'Mixto']},
+                        'id_cliente':           {'type': ['string', 'null']},
+                        'cantidad_reclamacion': {'type': ['number', 'null']}
+                    },
+                    'required': ['tipo_seguro', 'sentimiento', 'id_cliente', 'cantidad_reclamacion'],
+                    'additionalProperties': false
+                }
+            },
+            show_details =&gt; TRUE
+        ) AS res
+    )
+) r;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; CALLS_ANALYSIS_NATIVE_LLAMA</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">CREATE OR REPLACE TABLE CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE_LLAMA AS
+SELECT
+    l.call_id, l.date, l.agent_id, l.duration_sec, l.actual_reason,
+    r.raw:insurance_type::VARCHAR  AS insurance_type,
+    r.raw:sentiment::VARCHAR       AS sentiment,
+    r.raw:customer_id::VARCHAR     AS customer_id,
+    r.raw:claim_amount::FLOAT      AS claim_amount,
+    r.raw                          AS llm_parsed,
+    'llama3.3-70b'       AS model,
+    'AI_COMPLETE Native' AS method,
+    r.usage:prompt_tokens::INT     AS prompt_tokens,
+    r.usage:completion_tokens::INT AS completion_tokens,
+    r.usage:total_tokens::INT      AS total_tokens,
+    -- Pricing: Table 6a AI_COMPLETE llama3.3-70b
+    -- Input: 0.36 cr/M | Output: 0.36 cr/M | 1 credit = $4.00
+    ROUND(r.usage:prompt_tokens::INT * 0.36 / 1000000, 6)     AS input_cost_credits,
+    ROUND(r.usage:completion_tokens::INT * 0.36 / 1000000, 6) AS output_cost_credits,
+    ROUND(r.usage:prompt_tokens::INT * 0.36 / 1000000
+        + r.usage:completion_tokens::INT * 0.36 / 1000000, 6) AS total_cost_credits,
+    ROUND((r.usage:prompt_tokens::INT * 0.36 / 1000000
+        + r.usage:completion_tokens::INT * 0.36 / 1000000) * 4.00, 6) AS total_cost_usd
+FROM CORTEX_UTILS.PUBLIC.CALLS l,
+LATERAL (
+    SELECT PARSE_JSON(res):structured_output[0]:raw_message AS raw, PARSE_JSON(res):usage AS usage
+    FROM (
+        SELECT AI_COMPLETE(
+            model  =&gt; 'llama3.3-70b',
+            prompt =&gt; 'You are a senior analyst specializing in the insurance industry with over 15 years of experience in call center quality auditing. Your task is to analyze transcripts of phone calls from an insurance company call center and extract structured information.
+
+## FIELDS TO EXTRACT
+
+Return ONLY a JSON object with these 4 fields, with no additional text before or after:
+
+1. **insurance_type** (string): The insurance branch the call refers to.
+   Allowed values: "Auto", "Home", "Life", "Health", "Travel", "Other"
+   - Auto: traffic accidents, cars, motorcycles, plates, tow trucks, repair shops, drivers, license, DMV, replacement vehicles
+   - Home: residence, apartment, house, home theft, flooding, locks, plumbing, fire, renovation, contents, structure, HOA
+   - Life: death, disability, mortgage-linked, insured capital, retirement, beneficiaries, inheritance
+   - Health: hospital, surgery, operation, doctor, medical network, rehabilitation, diagnosis, illness, medical tests
+   - Travel: trip, airport, repatriation, luggage, international destination, assistance abroad, vacation
+   - Other: if it does not clearly fit any of the above
+
+2. **sentiment** (string): The predominant emotional tone of the CUSTOMER (not the agent).
+   Allowed values: "Positive", "Neutral", "Negative", "Mixed"
+
+3. **customer_id** (string or null): Policy number or identifier mentioned. null if not present.
+
+4. **claim_amount** (number or null): Main amount in dollars. null if not mentioned.
+
+## EXAMPLES
+
+Transcript: "Customer: Hi, I had a car accident. My policy is 4789-2234-A. Agent: I will open a claim. Do you need a replacement vehicle? Customer: Yes, thanks."
+Response: {"insurance_type": "Auto", "sentiment": "Positive", "customer_id": "4789-2234-A", "claim_amount": null}
+
+Transcript: "Customer: I want to cancel everything, I am done. Three months waiting. Agent: Let me escalate. Customer: If it is fixed tomorrow fine, otherwise I am canceling."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": null, "claim_amount": null}
+
+Transcript: "Customer: My home was burglarized, policy HG-88712-2024. Items worth $8000. Agent: Coverage up to $15000."
+Response: {"insurance_type": "Home", "sentiment": "Neutral", "customer_id": "HG-88712-2024", "claim_amount": 8000}
+
+Transcript: "Customer: I am being charged $120 more, policy 7789-1122-E. Agent: I will apply 15% discount. Customer: Please do."
+Response: {"insurance_type": "Auto", "sentiment": "Mixed", "customer_id": "7789-1122-E", "claim_amount": 120}
+
+Transcript: "Customer: Calling from Portugal, my wife is sick, policy VJ-33210-2024. Agent: Portugal is covered."
+Response: {"insurance_type": "Travel", "sentiment": "Negative", "customer_id": "VJ-33210-2024", "claim_amount": null}
+
+Transcript: "Customer: I retired, want to reduce life coverage, policy VD-12340-2019. $200k down to $50k. Agent: Premium drops from $89 to $31."
+Response: {"insurance_type": "Life", "sentiment": "Positive", "customer_id": "VD-12340-2019", "claim_amount": null}
+
+## RESPONSE FORMAT
+Reply ONLY with the JSON. No text, no markdown, no explanations.
+
+Transcript:
+' || l.transcript,
+            response_format =&gt; {
+                'type': 'json',
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'insurance_type': {'type': 'string', 'enum': ['Auto', 'Home', 'Life', 'Health', 'Travel', 'Other']},
+                        'sentiment':      {'type': 'string', 'enum': ['Positive', 'Neutral', 'Negative', 'Mixed']},
+                        'customer_id':    {'type': ['string', 'null']},
+                        'claim_amount':   {'type': ['number', 'null']}
+                    },
+                    'required': ['insurance_type', 'sentiment', 'customer_id', 'claim_amount'],
+                    'additionalProperties': false
+                }
+            },
+            show_details =&gt; TRUE
+        ) AS res
+    )
+) r;</pre></div>
+</div></div>
+
+<!-- STEP 10b -->
+<div class="st" id="s10b"><div class="sh" onclick="tog(this)"><span class="sn">10b</span><span class="sl"><span class="es">Validaci&oacute;n y mega-comparativa (4 m&eacute;todos)</span><span class="en">Validation and mega-comparison (4 methods)</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">-- 10b.1 Success rate (UDF Llama)
+SELECT COUNT(*) AS total,
+    SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) AS success,
+    ROUND(SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 1) AS success_pct,
+    SUM(CASE WHEN tipo_seguro IS NOT NULL THEN 1 ELSE 0 END) AS parsed_json
+FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_LLAMA;
+
+-- 10b.2 Comparativa costes Llama
+SELECT metodo, modelo, total_rows, total_prompt_tokens, total_cached_tokens,
+    total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
+    ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS ahorro_pct
+FROM (
+    SELECT 'REST API (Key Pair)' AS metodo, modelo, COUNT(*) AS total_rows,
+        SUM(prompt_tokens) AS total_prompt_tokens, SUM(NVL(cached_tokens, 0)) AS total_cached_tokens,
+        SUM(completion_tokens) AS total_output_tokens, ROUND(SUM(input_cost_usd), 4) AS input_cost,
+        ROUND(SUM(cache_read_cost_usd), 4) AS cache_cost, ROUND(SUM(output_cost_usd), 4) AS output_cost,
+        ROUND(SUM(total_cost_usd), 4) AS total_cost_usd
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_LLAMA WHERE llm_success GROUP BY modelo
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', modelo, COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL, ROUND(SUM(output_cost_credits) * 4, 4),
+        ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE_LLAMA GROUP BY modelo
+) combined ORDER BY total_cost_usd;
+
+-- 10b.3 Mega-comparativa: 4 métodos
+SELECT metodo, modelo, total_rows, total_prompt_tokens, total_cached_tokens,
+    total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
+    ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS ahorro_pct
+FROM (
+    SELECT 'REST API (Cache)' AS metodo, modelo, COUNT(*) AS total_rows,
+        SUM(prompt_tokens), SUM(NVL(cached_tokens, 0)), SUM(completion_tokens),
+        ROUND(SUM(input_cost_usd), 4), ROUND(SUM(cache_read_cost_usd), 4),
+        ROUND(SUM(output_cost_usd), 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS WHERE llm_success GROUP BY modelo
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', modelo,
+        COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL,
+        ROUND(SUM(output_cost_credits) * 4, 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE GROUP BY modelo
+    UNION ALL
+    SELECT 'REST API (No Cache)', modelo,
+        COUNT(*), SUM(prompt_tokens), SUM(NVL(cached_tokens, 0)), SUM(completion_tokens),
+        ROUND(SUM(input_cost_usd), 4), ROUND(SUM(cache_read_cost_usd), 4),
+        ROUND(SUM(output_cost_usd), 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_LLAMA WHERE llm_success GROUP BY modelo
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', modelo,
+        COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL,
+        ROUND(SUM(output_cost_credits) * 4, 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE_LLAMA GROUP BY modelo
+) combined ORDER BY total_cost_usd;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">-- 10b.1 Success rate (UDF Llama)
+SELECT COUNT(*) AS total,
+    SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) AS success,
+    ROUND(SUM(CASE WHEN llm_success THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 1) AS success_pct,
+    SUM(CASE WHEN insurance_type IS NOT NULL THEN 1 ELSE 0 END) AS parsed_json
+FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_LLAMA;
+
+-- 10b.2 Llama cost comparison
+SELECT method, model, total_rows, total_prompt_tokens, total_cached_tokens,
+    total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
+    ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS savings_pct
+FROM (
+    SELECT 'REST API (Key Pair)' AS method, model, COUNT(*) AS total_rows,
+        SUM(prompt_tokens) AS total_prompt_tokens, SUM(NVL(cached_tokens, 0)) AS total_cached_tokens,
+        SUM(completion_tokens) AS total_output_tokens, ROUND(SUM(input_cost_usd), 4) AS input_cost,
+        ROUND(SUM(cache_read_cost_usd), 4) AS cache_cost, ROUND(SUM(output_cost_usd), 4) AS output_cost,
+        ROUND(SUM(total_cost_usd), 4) AS total_cost_usd
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_LLAMA WHERE llm_success GROUP BY model
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', model, COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL, ROUND(SUM(output_cost_credits) * 4, 4),
+        ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE_LLAMA GROUP BY model
+) combined ORDER BY total_cost_usd;
+
+-- 10b.3 Mega-comparison: 4 methods
+SELECT method, model, total_rows, total_prompt_tokens, total_cached_tokens,
+    total_output_tokens, input_cost, cache_cost, output_cost, total_cost_usd,
+    ROUND(1 - total_cost_usd / NULLIF(MAX(total_cost_usd) OVER (), 0), 3) AS savings_pct
+FROM (
+    SELECT 'REST API (Cache)' AS method, model, COUNT(*) AS total_rows,
+        SUM(prompt_tokens), SUM(NVL(cached_tokens, 0)), SUM(completion_tokens),
+        ROUND(SUM(input_cost_usd), 4), ROUND(SUM(cache_read_cost_usd), 4),
+        ROUND(SUM(output_cost_usd), 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS WHERE llm_success GROUP BY model
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', model,
+        COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL,
+        ROUND(SUM(output_cost_credits) * 4, 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE GROUP BY model
+    UNION ALL
+    SELECT 'REST API (No Cache)', model,
+        COUNT(*), SUM(prompt_tokens), SUM(NVL(cached_tokens, 0)), SUM(completion_tokens),
+        ROUND(SUM(input_cost_usd), 4), ROUND(SUM(cache_read_cost_usd), 4),
+        ROUND(SUM(output_cost_usd), 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_LLAMA WHERE llm_success GROUP BY model
+    UNION ALL
+    SELECT 'AI_COMPLETE Native', model,
+        COUNT(*), SUM(prompt_tokens), NULL, SUM(completion_tokens),
+        ROUND(SUM(input_cost_credits) * 4, 4), NULL,
+        ROUND(SUM(output_cost_credits) * 4, 4), ROUND(SUM(total_cost_usd), 4)
+    FROM CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE_LLAMA GROUP BY model
+) combined ORDER BY total_cost_usd;</pre></div>
+<div class="ib">
+<p class="es">¿Por qué REST API es siempre más barato?</p>
+<p class="en">Why is REST API always cheaper?</p>
+<ol class="es">
+<li><strong>Claude + Cache:</strong> 77% de tokens son cache reads a $0.30/M vs $3.00/M.</li>
+<li><strong>Llama sin cache:</strong> REST $0.72/M vs AI_COMPLETE 0.36cr x $4 = $1.44/M (2x).</li>
+<li><strong>Multiplicador créditos:</strong> AI_COMPLETE siempre paga $4/cr.</li>
+<li><strong>Llama ~10x más barato</strong> que Claude en ambos métodos.</li>
+</ol>
+<ol class="en">
+<li><strong>Claude + Cache:</strong> 77% of tokens are cache reads at $0.30/M vs $3.00/M.</li>
+<li><strong>Llama no cache:</strong> REST $0.72/M vs AI_COMPLETE 0.36cr x $4 = $1.44/M (2x).</li>
+<li><strong>Credit multiplier:</strong> AI_COMPLETE always pays $4/cr.</li>
+<li><strong>Llama ~10x cheaper</strong> than Claude in both methods.</li>
+</ol>
+<p class="cc es">Conclusión: Llama REST ($1.00) es el más barato. Claude REST ($2.20) mejor calidad. AI_COMPLETE Claude ($18.56) es 18.5x más caro.</p>
+<p class="cc en">Conclusion: Llama REST ($1.00) is the cheapest. Claude REST ($2.20) best quality. AI_COMPLETE Claude ($18.56) is 18.5x more expensive.</p>
+</div>
+</div></div>
+
+<div class="ph" id="p3"><span class="es">PARTE 3 &mdash; Operaciones</span><span class="en">PART 3 &mdash; Operations</span></div>
+
+<!-- STEP 11 -->
+<div class="st" id="s11"><div class="sh" onclick="tog(this)"><span class="sn">11</span><span class="sl"><span class="es">Key Rotation y Limpieza</span><span class="en">Key Rotation and Cleanup</span></span><span class="sg">&#9660;</span></div><div class="sb">
+<div class="sq es"><div class="sqh dk"><span>Terminal</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="tc2">openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out cortex_rsa_key_2.p8 -nocrypt
+openssl rsa -in cortex_rsa_key_2.p8 -pubout -out cortex_rsa_key_2.pub</pre></div>
+<div class="sq en"><div class="sqh dk"><span>Terminal</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="tc2">openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out cortex_rsa_key_2.p8 -nocrypt
+openssl rsa -in cortex_rsa_key_2.p8 -pubout -out cortex_rsa_key_2.pub</pre></div>
+<div class="sq es"><div class="sqh"><span>SQL &mdash; Rotaci&oacute;n</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">-- 1. Asignar nueva key como key 2
+ALTER USER DSANCHEZ SET RSA_PUBLIC_KEY_2 = '&lt;NUEVA_PUBLIC_KEY&gt;';
+
+-- 2. Actualizar secret con nueva private key
+ALTER SECRET cortex_utils.public.cortex_rsa_private_key
+    SET SECRET_STRING = '&lt;NUEVA_PRIVATE_KEY_COMPLETA&gt;';
+
+-- 3. Verificar que funciona con la nueva key
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'claude-sonnet-4-5', 'Test', 'Hola'
+);
+
+-- 4. Eliminar key antigua y promover key 2 a key 1
+ALTER USER DSANCHEZ UNSET RSA_PUBLIC_KEY;
+ALTER USER DSANCHEZ SET RSA_PUBLIC_KEY = '&lt;NUEVA_PUBLIC_KEY&gt;';
+ALTER USER DSANCHEZ UNSET RSA_PUBLIC_KEY_2;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; Key Rotation</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">-- 1. Assign new key as key 2 (zero-downtime rotation)
+ALTER USER DSANCHEZ SET RSA_PUBLIC_KEY_2 = '&lt;NEW_PUBLIC_KEY&gt;';
+
+-- 2. Update secret with new private key
+ALTER SECRET cortex_utils.public.cortex_rsa_private_key
+    SET SECRET_STRING = '&lt;NEW_FULL_PRIVATE_KEY&gt;';
+
+-- 3. Verify it works with the new key
+SELECT CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(
+    'claude-sonnet-4-5', 'Test', 'Hello'
+);
+
+-- 4. Remove old key and promote key 2 to key 1
+ALTER USER DSANCHEZ UNSET RSA_PUBLIC_KEY;
+ALTER USER DSANCHEZ SET RSA_PUBLIC_KEY = '&lt;NEW_PUBLIC_KEY&gt;';
+ALTER USER DSANCHEZ UNSET RSA_PUBLIC_KEY_2;</pre></div>
+<div class="sq es"><div class="sqh"><span>SQL &mdash; Limpieza (opcional)</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copiar</span></button></div><pre class="sc">DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.LLAMADAS;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_LLAMA;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.LLAMADAS_ANALISIS_NATIVE_LLAMA;
+DROP FUNCTION IF EXISTS CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(VARCHAR, VARCHAR, VARCHAR, VARCHAR);
+DROP EXTERNAL ACCESS INTEGRATION IF EXISTS CORTEX_KEYPAIR_INTEGRATION;
+DROP SECRET IF EXISTS CORTEX_UTILS.PUBLIC.CORTEX_RSA_PRIVATE_KEY;
+DROP NETWORK RULE IF EXISTS CORTEX_UTILS.PUBLIC.CORTEX_EGRESS_RULE;
+ALTER USER DSANCHEZ UNSET RSA_PUBLIC_KEY;</pre></div>
+<div class="sq en"><div class="sqh"><span>SQL &mdash; Cleanup (optional)</span><button class="cp" onclick="cc(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg><span class="cp-lbl">Copy</span></button></div><pre class="sc">DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.CALLS;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_LLAMA;
+DROP TABLE IF EXISTS CORTEX_UTILS.PUBLIC.CALLS_ANALYSIS_NATIVE_LLAMA;
+DROP FUNCTION IF EXISTS CORTEX_UTILS.PUBLIC.LLM_KEYPAIR_COMPLETE(VARCHAR, VARCHAR, VARCHAR, VARCHAR);
+DROP EXTERNAL ACCESS INTEGRATION IF EXISTS CORTEX_KEYPAIR_INTEGRATION;
+DROP SECRET IF EXISTS CORTEX_UTILS.PUBLIC.CORTEX_RSA_PRIVATE_KEY;
+DROP NETWORK RULE IF EXISTS CORTEX_UTILS.PUBLIC.CORTEX_EGRESS_RULE;
+ALTER USER DSANCHEZ UNSET RSA_PUBLIC_KEY;</pre></div>
+</div></div>
+
+<!-- PAT vs JWT -->
+<div class="st" id="comp"><div class="sh" onclick="tog(this)"><span class="sn" style="background:var(--pp)">vs</span><span class="sl">PAT vs Key Pair JWT</span><span class="sg">&#9660;</span></div><div class="sb">
+<table class="it"><thead><tr>
+<th><span class="es">Aspecto</span><span class="en">Aspect</span></th>
+<th>PAT</th>
+<th>Key Pair JWT</th>
+</tr></thead><tbody>
+<tr><td><span class="es">Tipo de secret</span><span class="en">Secret type</span></td><td>GENERIC_STRING (token)</td><td>GENERIC_STRING (priv key)</td></tr>
+<tr><td><span class="es">Expiración</span><span class="en">Expiration</span></td><td><span class="es">Manual (configurable)</span><span class="en">Manual (configurable)</span></td><td><span class="es">Auto (60s por JWT)</span><span class="en">Auto (60s per JWT)</span></td></tr>
+<tr><td><span class="es">Rotación</span><span class="en">Rotation</span></td><td><span class="es">Regenerar PAT manualmente</span><span class="en">Regenerate PAT manually</span></td><td><span class="es">Key rotation nativa (2 keys)</span><span class="en">Native key rotation (2 keys)</span></td></tr>
+<tr><td>Header extra</td><td><span class="es">Ninguno</span><span class="en">None</span></td><td><code>X-Snowflake-Authorization-Token-Type: KEYPAIR_JWT</code></td></tr>
+<tr><td>Packages extra</td><td><span class="es">Ninguno</span><span class="en">None</span></td><td><code>pyjwt</code>, <code>cryptography</code></td></tr>
+<tr><td><span class="es">Pre-requisitos</span><span class="en">Prerequisites</span></td><td>Auth Policy + TYPE=PERSON</td><td><span class="es">Solo ALTER USER (RSA key)</span><span class="en">Only ALTER USER (RSA key)</span></td></tr>
+</tbody></table>
+<p style="font-size:.86rem;color:var(--g700)"><span class="es">Ambos requieren: Network Rule + Secret + External Access Integration.</span><span class="en">Both require: Network Rule + Secret + External Access Integration.</span></p>
+</div></div>
+</main>
+<footer class="ft">Cortex REST API <span class="es">con</span><span class="en">with</span> Key Pair JWT &bull; Daniel Sanchez &bull; Snowflake &bull; <a href="https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf" target="_blank">Credit Consumption Table (PDF)</a></footer>
+<script>
+function tog(el){el.parentElement.classList.toggle('c')}
+function toggleLang(){
+  var isEn=document.body.classList.toggle('lang-en');
+  document.getElementById('lbtn').textContent=isEn?'\uD83C\uDDEA\uD83C\uDDF8 Espa\xF1ol':'\uD83C\uDDEC\uD83C\uDDE7 English';
+  document.querySelectorAll('.cp-lbl').forEach(function(el){
+    el.textContent=isEn?'Copy':'Copiar';
+  });
+}
+function cc(btn){
+  var b=btn.closest('.sq');
+  var pres=b.querySelectorAll('pre');
+  var p=pres.length===1?pres[0]:Array.from(pres).find(function(x){return getComputedStyle(x).display!=='none'})||pres[0];
+  var t=p.textContent||p.innerText;
+  var isEn=document.body.classList.contains('lang-en');
+  navigator.clipboard.writeText(t).then(function(){
+    btn.classList.add('ok');
+    var lbl=btn.querySelector('.cp-lbl');
+    if(lbl)lbl.textContent=isEn?'Copied!':'Copiado';
+    setTimeout(function(){btn.classList.remove('ok');if(lbl)lbl.textContent=isEn?'Copy':'Copiar';},2000);
+  });
+}
+</script>
+</body>
+</html>
