@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>Snowflake — Kaggle Datasets: Mantenimiento Predictivo IoT</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+    }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #003545, #11567F);
+      color: #fff;
+      padding: 32px 48px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .hero-left { flex: 1; }
+
+    .logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-snowflake {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .stats-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 28px;
+      text-align: center;
+      color: #1a1a1a;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .stats-box .stat-number {
+      font-size: 40px;
+      font-weight: 700;
+      color: #20BEFF;
+      line-height: 1;
+    }
+
+    .stats-box .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .stats-box .stat-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+
+    .stats-box .stat-time-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .stats-divider {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 10px 0;
+    }
+
+    /* ── SECTION INTRO ───────────────────────────────────── */
+    .intro {
+      background: #fff;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .intro h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #11567F;
+      margin-bottom: 14px;
+    }
+
+    .intro p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── FILTERS ─────────────────────────────────────────── */
+    .filters-bar {
+      background: #fff;
+      padding: 20px 48px 0;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filters-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 80px;
+      border: 1.5px solid #ccc;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: #29B5E8; color: #29B5E8; }
+
+    .filter-btn.active {
+      background: #29B5E8;
+      border-color: #29B5E8;
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #ccc;
+      border-radius: 80px;
+      padding: 7px 14px;
+      gap: 8px;
+      min-width: 200px;
+      background: #fff;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #444;
+      width: 100%;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #aaa; }
+
+    /* ── RESULTS COUNT ────────────────────────────────────── */
+    .results-count {
+      padding: 14px 48px 8px;
+      font-size: 13px;
+      color: #666;
+      background: #f5f5f5;
+    }
+
+    /* ── CARDS GRID ──────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      padding: 16px 48px 48px;
+      background: #f5f5f5;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e2e2e2;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-badges { display: flex; gap: 6px; align-items: center; }
+
+    .badge-id {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-cat {
+      background: #E0F4FD;
+      color: #11567F;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .badge-cat.mantenimiento { background: #E3F2FD; color: #1565C0; }
+    .badge-cat.nativo        { background: #E8F5E9; color: #2E7D32; }
+    .prompt-natural {
+      position: relative; background: #F8FAFB; color: #1a1a1a;
+      border-radius: 8px; padding: 16px 18px;
+      font-family: 'Lato', -apple-system, sans-serif;
+      font-size: 13.5px; line-height: 1.85; white-space: pre-wrap;
+      word-break: break-word; border-left: 4px solid #20BEFF;
+    }
+    .prompt-natural .copy-btn {
+      position: absolute; top: 8px; right: 10px;
+      background: rgba(32,190,255,0.12); border: 1px solid rgba(32,190,255,0.4);
+      color: #0A7BBF; font-size: 11px; padding: 3px 10px;
+      border-radius: 4px; cursor: pointer;
+    }
+    .prompt-natural .copy-btn:hover { background: rgba(32,190,255,0.25); }
+
+    .card-time {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      padding: 0 18px 12px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #11567F;
+      line-height: 1.3;
+    }
+
+    .pain-point {
+      margin: 0 18px 14px;
+      background: #F0F7FA;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pain-point-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #D45B90;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .pain-point p {
+      font-size: 13px;
+      color: #2a2a2a;
+      line-height: 1.55;
+    }
+
+    .card-desc {
+      padding: 0 18px 14px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-features {
+      padding: 0 18px 16px;
+      list-style: none;
+    }
+
+    .card-features li {
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-features li::before {
+      content: '✓';
+      color: #29B5E8;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .card-actions {
+      padding: 14px 18px 18px;
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      background: #29B5E8;
+      color: #fff;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover { background: #11567F; }
+
+    .btn-tertiary {
+      flex: 1;
+      padding: 10px;
+      background: #003545;
+      color: #29B5E8;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-tertiary:hover { background: #11567F; }
+
+    .card-actions { flex-wrap: wrap; }
+
+    .prompt-step { margin-bottom: 18px; }
+    .prompt-step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prompt-step-num { background: #003545; color: #29B5E8; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .prompt-step-title { font-size: 13px; font-weight: 600; color: #333; }
+    .prompt-step-desc { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+    .prompt-code { position: relative; background: #003545; color: #e0e0e0; border-radius: 8px; padding: 12px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .prompt-code .copy-btn { position: absolute; top: 6px; right: 8px; background: rgba(255,255,255,0.1); border: none; color: #aaa; font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
+    .prompt-code .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .prompt-code .kw { color: #29B5E8; }
+    .modal-box .prompt-intro { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 92%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #D45B90; }
+    .modal-box h2 { color: #11567F; font-size: 20px; margin-bottom: 6px; }
+    .modal-box h3 { font-size: 15px; color: #333; margin: 18px 0 8px; }
+    .modal-box p, .modal-box li { font-size: 13px; line-height: 1.7; color: #444; }
+    .modal-box ul { padding-left: 20px; margin: 6px 0; }
+    .modal-box .guide-badge { display: inline-block; background: #E0F4FD; color: #11567F; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; margin-bottom: 10px; }
+    .modal-box .guide-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #eee; font-size: 12px; color: #888; }
+
+    @media (max-width: 700px) {
+      .hero { flex-direction: column; padding: 24px 20px; }
+      .cards-grid { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .filters-bar { padding: 16px 16px 0; }
+      .results-count { padding: 12px 16px 6px; }
+    }
+    </style>
+</head>
+<body>
+
+<header class="hero" style="background:linear-gradient(135deg,#20BEFF,#0A7BBF);">
+  <div class="hero-left">
+    <div class="logos"></div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
+    <p class="hero-eyebrow">Kaggle Datasets × Snowflake ML</p>
+    <h1 class="hero-title">Kaggle Datasets en Snowflake</h1>
+    <p class="hero-subtitle">Casos de uso end-to-end con datasets reales de Kaggle — desde la carga del dato hasta el modelo en producción, en dos enfoques: XGBoost+SPCS y 100% Snowflake Nativo</p>
+    <p class="hero-tagline">XGBoost · ML.CLASSIFICATION · Model Registry · Kaggle API | Compara ambos enfoques</p>
+  </div>
+  <div class="stats-box">
+    <div class="stat-number">2</div>
+    <div class="stat-label">Casos de Uso</div>
+    <hr class="stats-divider"/>
+    <div class="stat-time">20-60 min</div>
+    <div class="stat-time-label">Tiempo de Configuración</div>
+  </div>
+</header>
+
+<section class="intro">
+  <h2>El Mismo Pipeline, Dos Enfoques — Elige el que Mejor se Adapta</h2>
+  <p>Ambos casos de uso resuelven el mismo problema de mantenimiento predictivo IoT con el mismo dataset de Kaggle (100.000 lecturas de 50 máquinas) y obtienen resultados comparables. UC01 usa XGBoost con Snowpark ML y registra el modelo en Model Registry con target WAREHOUSE (45-60 min, máximo control sobre el modelo). UC02 hace exactamente lo mismo usando solo funciones nativas de Snowflake: SQL window functions, ML.CLASSIFICATION y modelo!PREDICT() (20-30 min, sin dependencias externas).</p>
+</section>
+
+<div class="filters-bar">
+  <div class="filters-left" id="filterBtns">
+    <button class="filter-btn active" data-filter="all">Todos (2)</button>
+    <button class="filter-btn" data-filter="mantenimiento">XGBoost + Model Registry (1)</button>
+    <button class="filter-btn" data-filter="nativo">Snowflake Nativo (1)</button>
+  </div>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
+      <circle cx="9" cy="9" r="7"/><line x1="15" y1="15" x2="19" y2="19"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Buscar casos de uso..." />
+  </div>
+</div>
+
+<div class="results-count" id="resultsCount">Mostrando 2 de 2 casos de uso</div>
+<main class="cards-grid" id="cardsGrid"></main>
+
+<script>
+const USE_CASES = [
+  {
+    id:"UC01", cat:"mantenimiento", catLabel:"XGBoost + Registry", time:"45-60 min",
+    title:"Mantenimiento Predictivo con XGBoost y Snowflake Model Registry",
+    pain:"El tiempo de inactividad no planificado en manufactura cuesta al sector industrial mas de 50.000 millones de dolares anuales. Los sistemas de mantenimiento reactivo detectan los fallos despues de que ocurren. La dificultad nunca estuvo en los algoritmos: estuvo en construir toda la infraestructura: ETL, feature stores, registros de modelos, orquestacion de contenedores, APIs REST.",
+    desc:"Pipeline completo end-to-end usando el dataset real de Kaggle (100.000 lecturas IoT de 50 maquinas): carga directa con kagglehub, External Access Integration para PyPI y Kaggle, EDA con visualizaciones, 36 features engineered con rolling stats y z-scores, XGBoost con class weighting y Group-Based Split por MACHINE_ID, y registro en Model Registry con target WAREHOUSE para inferencia batch directa.",
+    features:[
+      "Carga directa desde Kaggle con kagglehub — sin descarga manual ni ETL manual",
+      "36 features engineered: rolling means/stdev/delta, z-scores por maquina, interacciones",
+      "XGBoost con scale_pos_weight y Group-Based Split (MACHINE_ID 1-40 train, 41-50 test)",
+      "Model Registry con target WAREHOUSE — inferencia batch con mv.run() sin infraestructura SPCS"
+    ]
+  },
+  {
+    id:"UC02", cat:"nativo", catLabel:"Snowflake Nativo", time:"20-30 min",
+    title:"Mantenimiento Predictivo 100% Nativo con Snowflake ML.CLASSIFICATION",
+    pain:"El enfoque XGBoost+SPCS es potente pero requiere Python, Snowpark ML, gestion de contenedores y configuracion de infraestructura. Para la mayoria de casos de uso de manufactura (inference batch, pipelines programados, integracion con otras tablas Snowflake) existe una alternativa mas rapida, sin dependencias externas y completamente nativa.",
+    desc:"El mismo pipeline de mantenimiento predictivo IoT resuelto usando exclusivamente funciones nativas de Snowflake: SQL window functions para los 36 features engineered, SNOWFLAKE.ML.CLASSIFICATION para el modelo, SHOW_EVALUATION_METRICS/CONFUSION_MATRIX/FEATURE_IMPORTANCE para evaluacion, y modelo!PREDICT() para inferencia batch. Sin Python, sin contenedores, sin SPCS. Resultados comparables a UC01 en un tercio del tiempo.",
+    features:[
+      "SQL window functions para rolling stats, z-scores y deltas — sin Python ni pandas",
+      "SNOWFLAKE.ML.CLASSIFICATION con Group-Based Split en SQL (WHERE MACHINE_ID <= 40)",
+      "SHOW_EVALUATION_METRICS + SHOW_CONFUSION_MATRIX + SHOW_FEATURE_IMPORTANCE nativos",
+      "modelo!PREDICT() con OBJECT_CONSTRUCT para inferencia batch — sin SPCS ni contenedores"
+    ]
+  }
+];
+
+const TOTAL = 2;
+
+function renderCards(list) {
+  const grid = document.getElementById('cardsGrid');
+  const count = document.getElementById('resultsCount');
+  grid.innerHTML = '';
+  count.textContent = "Mostrando " + list.length + " de " + TOTAL + " casos de uso";
+  list.forEach(uc => {
+    const catClass = { 'XGBoost + SPCS':'mantenimiento', 'Snowflake Nativo':'nativo' }[uc.catLabel] || '';
+    grid.innerHTML += `
+      <article class="card">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge-id">${uc.id}</span>
+            <span class="badge-cat ${catClass}">${uc.catLabel}</span>
+          </div>
+          <span class="card-time">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2">
+              <circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/>
+            </svg>
+            ${uc.time}
+          </span>
+        </div>
+        <h3 class="card-title">${uc.title}</h3>
+        <div class="pain-point">
+          <div class="pain-point-label">Problema</div>
+          <p>${uc.pain}</p>
+        </div>
+        <p class="card-desc">${uc.desc}</p>
+        <ul class="card-features">
+          ${uc.features.map(f => "<li>" + f + "</li>").join('')}
+        </ul>
+        <div class="card-actions">
+          <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guia</a>
+          <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
+        </div>
+      </article>`;
+  });
+}
+
+let activeFilter = 'all';
+let searchTerm = '';
+
+function applyFilters() {
+  let result = USE_CASES;
+  if (activeFilter !== 'all') result = result.filter(u => u.cat === activeFilter);
+  if (searchTerm) result = result.filter(u =>
+    u.title.toLowerCase().includes(searchTerm) ||
+    u.desc.toLowerCase().includes(searchTerm) ||
+    u.pain.toLowerCase().includes(searchTerm)
+  );
+  renderCards(result);
+}
+
+document.getElementById('filterBtns').addEventListener('click', e => {
+  if (!e.target.matches('.filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeFilter = e.target.dataset.filter;
+  applyFilters();
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+
+renderCards(USE_CASES);
+
+
+const GUIAS = {
+  UC01: {
+    title: "Mantenimiento Predictivo con XGBoost y Endpoint REST en SPCS",
+    contexto: "Pipeline completo de ML para deteccion de anomalias en equipamiento industrial usando el dataset Kaggle Smart Manufacturing IoT (100.000 lecturas, 50 maquinas). Abarca desde la carga con kagglehub hasta un endpoint REST sub-20ms en SPCS, impulsado por prompts en lenguaje natural con Cortex Code.",
+    foco: "Manufactura IoT — deteccion de anomalias en sensores industriales con maximo control sobre hiperparametros y despliegue como servicio REST de alta disponibilidad.",
+    reto: "Construir un pipeline end-to-end con XGBoost, engineered features, Model Registry y SPCS para inferencia en tiempo real, sin escribir codigo manualmente.",
+    objetivos: [
+      "Cargar el dataset de Kaggle directamente con kagglehub sin descarga manual",
+      "EDA completo con visualizaciones: histogramas, boxplots, correlaciones, t-tests con effect size",
+      "Identificar y excluir columnas con data leakage (DOWNTIME_RISK, PREDICTED_REMAINING_LIFE, MAINTENANCE_REQUIRED)",
+      "Construir 36 features: rolling means/stdev/delta, z-scores por MACHINE_ID, interacciones y hora del dia",
+      "Entrenar XGBoost con scale_pos_weight y Group-Based Split (MACHINE_ID 1-40 train, 41-50 test)",
+      "Registrar en Snowflake Model Registry con metricas y esquema de inferencia",
+      "Desplegar en SPCS con create_service() y exponer endpoint REST",
+      "Validar latencia con 1.000 requests (objetivo: p50 < 10ms, p99 < 25ms)"
+    ],
+    funcionalidades: [
+      "kagglehub.dataset_download() — carga directa sin ETL manual",
+      "EDA con pandas + matplotlib: histogramas overlaid por ANOMALY_FLAG, boxplots, correlacion heatmap",
+      "36 features: rolling_5m/10m/30m de temperatura y vibracion, z-scores por MACHINE_ID, interaccion temp x vib, hora del dia",
+      "XGBClassifier con scale_pos_weight calculado automaticamente, Group-Based Split por MACHINE_ID",
+      "Model Registry: log_model() con metricas ROC-AUC, PR-AUC, Precision, Recall",
+      "SPCS: create_service() con ingress_enabled=True, 4 workers, SYSTEM_COMPUTE_POOL_CPU",
+      "Benchmark: 1.000 requests HTTP POST con perfil de latencia completo (p50, p95, p99)"
+    ],
+    datos: [
+      "Dataset: Smart Manufacturing IoT-Cloud Monitoring (Kaggle CC0, 100.000 filas, 13 columnas)",
+      "Sensores: TEMPERATURE, VIBRATION, HUMIDITY, PRESSURE, ENERGY_CONSUMPTION",
+      "Target: ANOMALY_FLAG (binaria, ~8.7% positivos), FAILURE_TYPE (5 clases)",
+      "Excluidos por leakage: DOWNTIME_RISK, PREDICTED_REMAINING_LIFE, MAINTENANCE_REQUIRED",
+      "Split: MACHINE_ID 1-40 = train (~80K filas), MACHINE_ID 41-50 = test (~20K filas)"
+    ],
+    estratificacion: [
+      "ANOMALY_FLAG=1, prob >= 0.80: Parar maquina, activar mantenimiento urgente",
+      "ANOMALY_FLAG=1, prob 0.50-0.80: Programar inspeccion en las proximas 4 horas",
+      "ANOMALY_FLAG=0, temperatura o vibracion en percentil 95: Monitorizacion intensiva",
+      "ANOMALY_FLAG=0, prob < 0.20: Operacion normal, ronda de inspeccion estandar"
+    ],
+    como_usar: [
+      "Prerequisito: cuenta de Kaggle con API key configurada (KAGGLE_USERNAME y KAGGLE_KEY)",
+      "Abrir un Snowflake Notebook en Workspaces y Cortex Code en esquina inferior derecha",
+      "Ejecutar los 10 prompts secuencialmente — duracion total 45-60 minutos",
+      "Una vez desplegado, el endpoint REST esta disponible para integracion con sistemas SCADA"
+    ]
+  },
+  UC02: {
+    title: "Mantenimiento Predictivo 100% Nativo con Snowflake ML.CLASSIFICATION",
+    contexto: "El mismo problema de mantenimiento predictivo IoT (dataset Kaggle, 100.000 lecturas, 50 maquinas) resuelto usando exclusivamente funciones nativas de Snowflake. Sin Python externo, sin contenedores, sin SPCS. Todo en SQL + Cortex ML. Resultados comparables a UC01 en un tercio del tiempo.",
+    foco: "Manufactura IoT — deteccion de anomalias en sensores industriales usando SNOWFLAKE.ML.CLASSIFICATION con feature engineering 100% en SQL para casos de uso de inference batch y pipelines programados.",
+    reto: "Replicar los mismos resultados de UC01 (precision, recall, feature importance) usando exclusivamente funciones nativas de Snowflake, sin dependencias externas ni infraestructura de contenedores.",
+    objetivos: [
+      "Cargar el CSV de Kaggle en Snowflake via Snowsight Load Data o COPY INTO desde stage",
+      "EDA con SQL puro: CORR(), APPROX_PERCENTILE(), GROUP BY para distribuciones y tasas de anomalia",
+      "Feature engineering completo con SQL window functions: rolling stats, z-scores, deltas, interacciones",
+      "Crear conjuntos train/test separando por MACHINE_ID directamente en SQL (WHERE MACHINE_ID <= 40)",
+      "Entrenar SNOWFLAKE.ML.CLASSIFICATION con evaluate => TRUE — una sola sentencia SQL",
+      "Evaluar con SHOW_EVALUATION_METRICS, SHOW_CONFUSION_MATRIX, SHOW_FEATURE_IMPORTANCE",
+      "Inferencia batch con modelo!PREDICT usando OBJECT_CONSTRUCT(* EXCLUDE (ANOMALY_FLAG))",
+      "Comparar metricas con UC01 y analizar trade-offs de cada enfoque"
+    ],
+    funcionalidades: [
+      "EDA nativo: CORR() para correlaciones, APPROX_PERCENTILE(0.25/0.75/0.95) para distribucion, GROUP BY MACHINE_ID para tasas de anomalia",
+      "Window functions SQL: AVG/STDDEV OVER (PARTITION BY MACHINE_ID ORDER BY TIMESTAMP ROWS BETWEEN N PRECEDING AND CURRENT ROW) para rolling stats a 5, 10 y 30 minutos",
+      "Z-scores nativos: (col - AVG(col) OVER (PARTITION BY MACHINE_ID)) / NULLIF(STDDEV(col) OVER (PARTITION BY MACHINE_ID), 0)",
+      "SNOWFLAKE.ML.CLASSIFICATION: una sola CREATE MODEL con TARGET_COLNAME, evaluate => TRUE",
+      "SHOW_EVALUATION_METRICS — metricas accuracy, precision, recall, F1, ROC-AUC",
+      "SHOW_CONFUSION_MATRIX — matriz de confusion con verdaderos/falsos positivos y negativos",
+      "SHOW_FEATURE_IMPORTANCE — ranking de las features mas influyentes en el modelo",
+      "modelo!PREDICT(OBJECT_CONSTRUCT(* EXCLUDE (ANOMALY_FLAG))) para inferencia SQL"
+    ],
+    datos: [
+      "Dataset: el mismo Smart Manufacturing IoT-Cloud Monitoring (Kaggle CC0, 100.000 filas)",
+      "Carga: Snowsight Load Data (UI) o COPY INTO desde internal stage con el CSV descargado",
+      "Feature engineering: tabla FEATURES_IOT con 36 columnas calculadas con SQL window functions",
+      "Train: CREATE TABLE IOT_TRAIN AS SELECT * FROM FEATURES_IOT WHERE MACHINE_ID <= 40",
+      "Test:  CREATE TABLE IOT_TEST  AS SELECT * FROM FEATURES_IOT WHERE MACHINE_ID > 40"
+    ],
+    estratificacion: [
+      "ANOMALY_PREDICTED = ANOMALIA, prob >= 0.80: Parar maquina, activar mantenimiento urgente",
+      "ANOMALY_PREDICTED = ANOMALIA, prob 0.50-0.80: Programar inspeccion en proximas 4 horas",
+      "ANOMALY_PREDICTED = NORMAL, pero temperatura o vibracion en percentil 95: Monitorizar",
+      "ANOMALY_PREDICTED = NORMAL, prob < 0.20: Operacion normal"
+    ],
+    como_usar: [
+      "No requiere Python ni dependencias externas — solo SQL en Cortex Code o Snowsight",
+      "Ejecutar los 8 prompts secuencialmente — duracion total 20-30 minutos",
+      "El modelo queda como objeto Snowflake persistente y consultable desde cualquier hoja SQL",
+      "Ideal para: inference batch programada, pipelines de monitoreo con Tasks, integracion con Dynamic Tables"
+    ]
+  }
+};
+
+function verGuia(ucId) {
+  const g = GUIAS[ucId];
+  if (!g) { alert('Guia no disponible para ' + ucId); return; }
+  const box = document.getElementById('guiaModalBox');
+  let h = "<button class=\"modal-close\" onclick=\"cerrarModal('guiaModal')\">&times;</button>";
+  h += "<span class=\"guide-badge\">" + ucId + "</span>";
+  h += "<h2>" + g.title + "</h2>";
+  h += "<h3>Contexto de Negocio</h3><p>" + g.contexto + "</p>";
+  h += "<p><strong>Foco:</strong> " + g.foco + "</p>";
+  h += "<p><strong>Reto:</strong> " + g.reto + "</p>";
+  h += "<h3>Objetivos de Aprendizaje</h3><ul>" + g.objetivos.map(o => "<li>" + o + "</li>").join('') + "</ul>";
+  h += "<h3>Funcionalidades</h3><ul>" + g.funcionalidades.map(f => "<li>" + f + "</li>").join('') + "</ul>";
+  h += "<h3>Datos del Dataset</h3><ul>" + g.datos.map(d => "<li>" + d + "</li>").join('') + "</ul>";
+  h += "<h3>Estratificacion de Alertas</h3><ul>" + g.estratificacion.map(e => "<li>" + e + "</li>").join('') + "</ul>";
+  h += "<h3>Como Usar</h3><ul>" + g.como_usar.map(c => "<li>" + c + "</li>").join('') + "</ul>";
+  h += "<p class=\"guide-footer\">Dataset: Kaggle CC0 Public Domain | kaggle.com/datasets/ziya07/smart-manufacturing-iot-cloud-monitoring-dataset</p>";
+  box.innerHTML = h;
+  document.getElementById('guiaModal').classList.add('active');
+}
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
+});
+function cerrarModal(id) { document.getElementById(id).classList.remove('active'); }
+
+const PROMPTS = {
+  UC01: {
+    title: "Mantenimiento Predictivo con XGBoost y Model Registry",
+    intro: "Ejecuta estos 10 prompts en Cortex Code dentro de un Snowflake Notebook en Container Runtime. Cada prompt describe lo que necesitas — Cortex Code genera el codigo Python.",
+    steps: [
+      {
+        title: "Crear Notebook, Compute Pool y External Access Integration",
+        desc: "Punto de partida: crea el notebook Container Runtime y configura los requisitos de infraestructura.",
+        prompt: "OBJETIVO\nCrear el notebook de trabajo y configurar los dos requisitos de infraestructura antes de ejecutar ninguna celda.\n\nPASO 0 — CREAR EL NOTEBOOK\nEn Snowsight, ve al menú lateral > Projects > Workspaces. En el panel 'My Workspace', haz clic en '+ Add new' > Notebook. Cuando el notebook cargue, en la esquina superior derecha selecciona el runtime: haz clic en el selector de entorno y elige 'Container Runtime'. Este modo es necesario para instalar librerias externas como kagglehub.\n\nPASO A — COMPUTE POOL\nContainer Runtime requiere un Compute Pool de SPCS. Primero comprueba si ya existe alguno ejecutando SHOW COMPUTE POOLS desde una hoja SQL de Snowsight.\n\nSi hay un pool en estado ACTIVE o IDLE, conecta el notebook a el: icono de engranaje del notebook > Service Settings > Compute Pool. Selecciona el pool disponible y guarda.\n\nSi no hay ningun pool disponible, necesitas crearlo. Esto requiere el rol ACCOUNTADMIN o el privilegio CREATE COMPUTE POOL. Crea un pool llamado COCO_COMPUTE_POOL con familia de instancia CPU_X64_XS, minimo 1 nodo y maximo 1 nodo. Espera a que pase a estado ACTIVE (3-5 minutos) y luego conecta el notebook desde Service Settings.\n\nSi no tienes permisos, solicita a tu administrador que cree COCO_COMPUTE_POOL con esas especificaciones y te otorgue acceso.\n\nPASO B — EXTERNAL ACCESS INTEGRATION\nCrea una network rule de tipo EGRESS para PyPI (pypi.org y files.pythonhosted.org) y otra para Kaggle (api.kaggle.com y storage.googleapis.com). Combina ambas en una External Access Integration llamada KAGGLE_PYPI_ACCESS_INTEGRATION.\n\nEn Service Settings del notebook, anade KAGGLE_PYPI_ACCESS_INTEGRATION en la seccion External Access y guarda.\n\nVERIFICACION\nEl notebook debe mostrar el compute pool conectado y el servicio en estado Running antes de continuar."
+      },
+      {
+        title: "Configurar entorno e instalar kagglehub",
+        desc: "Instala kagglehub en el notebook.",
+        prompt: "OBJETIVO\nInstalar la libreria kagglehub en el entorno Python del notebook.\n\nINSTALACION\nInstala kagglehub con pip en modo silencioso. Verifica que la instalacion fue correcta importando kagglehub y mostrando su version."
+      },
+      {
+        title: "Cargar dataset de Kaggle a Snowflake",
+        desc: "Descarga el CSV directamente con kagglehub y cargalo en la tabla IOT.",
+        prompt: "OBJETIVO\nDescargar el dataset Smart Manufacturing IoT de Kaggle y cargarlo en una tabla Snowflake llamada IOT.\n\nPASOS\nCrea la base de datos COCO_AD con esquema PUBLIC si no existe.\n\nDescarga el dataset usando kagglehub con el identificador ziya07/smart-manufacturing-iot-cloud-monitoring-dataset. Imprime la ruta local donde se descargo el CSV.\n\nLee el CSV con pandas. El DataFrame debe tener 100.000 filas y 13 columnas.\n\nObtén la sesion de Snowflake desde el notebook y carga el DataFrame en la tabla COCO_AD.PUBLIC.IOT usando la funcion write_pandas.\n\nIMPORTANTE — API DE write_pandas\nwrite_pandas devuelve un objeto, no una tupla. No desestructures el resultado con comas. Para verificar la carga, ejecuta una query SQL separada: SELECT COUNT(*) FROM COCO_AD.PUBLIC.IOT.\n\nVERIFICACION\nMuestra el conteo de filas, los nombres de columna y sus tipos de datos."
+      },
+      {
+        title: "Analisis exploratorio de datos con visualizaciones",
+        desc: "Entiende distribuciones, correlaciones y detecta data leakage.",
+        prompt: "OBJETIVO\nRealizar un EDA completo con visualizaciones sobre COCO_AD.PUBLIC.IOT para guiar las decisiones del modelo.\n\nCONFIGURACION DE VISUALIZACIONES\nLa primera linea de la celda debe ser el magic %matplotlib inline. No uses matplotlib.use() en ninguna variante porque suprime el display en el notebook.\n\nVISUALIZACIONES REQUERIDAS\n\n1. Distribucion de sensores por clase\n   Histogramas de los cinco sensores superpuestos para registros normales vs anomalos.\n\n2. Boxplots comparativos\n   Un boxplot por sensor mostrando la diferencia de distribucion entre ambas clases.\n\n3. Heatmap de correlacion\n   Matriz de correlacion de todas las variables numericas con ANOMALY_FLAG. Resalta en rojo las columnas con correlacion superior a 0.5 — son candidatas a data leakage.\n\n4. T-tests con effect size\n   Para cada sensor calcula el estadistico t y el effect size Cohen d. Muestra los resultados ordenados por effect size descendente.\n\n5. Tasa de anomalias por maquina\n   Grafico de barras con el porcentaje de anomalias de cada MACHINE_ID.\n\nCONCLUSION\nIdentifica y nombra las columnas que NO deben usarse como features por data leakage."
+      },
+      {
+        title: "Ingenieria de features (36 variables)",
+        desc: "Construye rolling statistics, z-scores, deltas e interacciones por maquina.",
+        prompt: "OBJETIVO\nCrear un DataFrame llamado features_df con todos los features para el modelo, ordenado por MACHINE_ID y TIMESTAMP.\n\nFEATURES A CONSTRUIR\n\nVariables originales:\n  - Los cinco sensores, MACHINE_STATUS y MACHINE_ID codificado\n\nEstadisticas moviles (dentro de cada MACHINE_ID):\n  - Media movil de temperatura y vibracion a 5, 10 y 30 lecturas  (6 features)\n  - Desviacion tipica movil a esas mismas ventanas  (6 features)\n\nCambio y tendencia:\n  - Delta de temperatura y vibracion respecto a la lectura anterior  (2 features)\n  - Interaccion: temperatura multiplicada por vibracion  (1 feature)\n\nNormalizacion por maquina:\n  - Z-score de temperatura y vibracion por MACHINE_ID  (2 features)\n\nTemporal:\n  - Hora del dia del TIMESTAMP  (1 feature)\n\nEXCLUIR por data leakage:\n  DOWNTIME_RISK, PREDICTED_REMAINING_LIFE, MAINTENANCE_REQUIRED, FAILURE_TYPE\n\nTarget: ANOMALY_FLAG como columna VARCHAR con valores ANOMALIA y NORMAL.\n\nVERIFICACION\nMuestra el numero total de features y las primeras filas del DataFrame resultante."
+      },
+      {
+        title: "Group-Based Split por MACHINE_ID",
+        desc: "Divide train/test por maquina completa para evitar leakage temporal.",
+        prompt: "OBJETIVO\nDividir features_df en conjuntos de entrenamiento y test usando Group-Based Split por maquina.\n\nDIVISION\n  - Entrenamiento: MACHINE_ID del 1 al 40  (~80.000 filas)\n  - Test:          MACHINE_ID del 41 al 50  (~20.000 filas)\n\nPOR QUE ESTE METODO\nSplit por maquina completa, nunca por filas aleatorias. Esto evita que el modelo vea datos temporales de una maquina en entrenamiento y los datos posteriores de la misma maquina en test, lo cual inflaria artificialmente las metricas.\n\nVERIFICACION\nMuestra el tamano de cada conjunto, la tasa de anomalias en cada uno, y confirma que ningun MACHINE_ID aparece en ambos conjuntos."
+      },
+      {
+        title: "Entrenar XGBoost con class weighting",
+        desc: "Entrena el modelo compensando el desequilibrio de clases (~8.7% anomalias).",
+        prompt: "OBJETIVO\nEntrenar un XGBClassifier para deteccion de anomalias con class weighting.\n\nCONFIGURACION\nCalcula scale_pos_weight como la razon entre el numero de registros normales y el de anomalias en el conjunto de entrenamiento. Este parametro compensa el desequilibrio sin necesidad de sobremuestreo.\n\nParametros:\n  - n_estimators: 300\n  - max_depth: 6\n  - learning_rate: 0.1\n  - subsample: 0.8\n  - colsample_bytree: 0.8\n  - scale_pos_weight: calculado arriba\n\nMuestra el tiempo de entrenamiento y el numero total de features utilizadas."
+      },
+      {
+        title: "Evaluar el modelo con metricas completas",
+        desc: "Calcula metricas, curvas ROC/PR y feature importance sobre el conjunto de test.",
+        prompt: "OBJETIVO\nEvaluar el rendimiento del modelo XGBoost sobre el conjunto de test (MACHINE_ID 41-50).\n\nCONFIGURACION DE VISUALIZACIONES\nLa primera linea de la celda debe ser el magic %matplotlib inline para activar el backend interactivo del notebook. No uses matplotlib.use() en ninguna de sus variantes porque suprime el display. Si ya existe en el notebook una llamada anterior a matplotlib.use(), eliminala o ponla en comentario antes de ejecutar esta celda.\n\nMETRICAS\n  - Accuracy, Precision, Recall y F1-score para ambas clases\n  - ROC-AUC y PR-AUC\n\nVISUALIZACIONES (en una sola figura con 4 subplots)\n  1. Matriz de confusion con heatmap\n  2. Curva ROC con area bajo la curva\n  3. Curva Precision-Recall con area bajo la curva\n  4. Feature importance top 20\n\nINTERPRETACION\nComenta que features dominan (se espera que temperatura y sus rolling stats sean las mas importantes) y si los resultados son consistentes con el EDA."
+      },
+      {
+        title: "Registrar en Snowflake Model Registry con target WAREHOUSE",
+        desc: "Versiona el modelo especificando target WAREHOUSE para inferencia directa sin SPCS.",
+        prompt: "OBJETIVO\nRegistrar el modelo XGBoost en Snowflake Model Registry usando target platform WAREHOUSE, que permite inferencia batch directa desde Python o SQL sin necesidad de desplegar servicios de contenedor.\n\nCONFIGURACION DEL REGISTRO\n  - Base de datos y esquema: COCO_AD.PUBLIC\n  - Nombre del modelo:   IOT_ANOMALY_DETECTOR\n  - Version:             V1\n  - Target platform:     TargetPlatform.WAREHOUSE  — especificar explicitamente este valor\n  - Sample input data:   primeras 100 filas de X_test como pandas DataFrame\n  - Task:                TABULAR_BINARY_CLASSIFICATION\n  - Metricas:            roc_auc, pr_auc y recall de la clase ANOMALIA\n\nPOR QUE TARGET WAREHOUSE\nCon target WAREHOUSE el modelo puede ejecutarse directamente con mv.run() desde cualquier notebook o tarea Snowflake, sin configurar image repositories ni compute pools de SPCS.\n\nVERIFICACION\nLlama a reg.show_models() para confirmar el registro. Ejecuta mv.run() con las primeras 10 filas de X_test para verificar que la inferencia devuelve predicciones correctas."
+      },
+      {
+        title: "Test de inferencia batch y perfil de rendimiento",
+        desc: "Mide el rendimiento real de inferencia batch con mv.run() sobre 1.000 filas.",
+        prompt: "OBJETIVO\nMedir el rendimiento de inferencia del modelo registrado en modo batch usando mv.run(), que es el metodo correcto para produccion.\n\nCREAR EL DATASET DE PRUEBA\nCrea un pandas DataFrame de 1.000 filas con las mismas columnas que X_test:\n  - 800 filas con valores de sensores en rango normal\n  - 200 filas con valores claramente anomalos (temperatura alta, vibracion alta)\n\nINFERENCIA BATCH CORRECTA\nEjecuta mv.run() pasando el DataFrame completo de 1.000 filas en una sola llamada. Esto procesa todas las filas de una vez, que es como se usaria en produccion para monitorizar una flota de maquinas.\n\nMETRICAS DE RENDIMIENTO\n  - Tiempo total de la llamada batch\n  - Latencia media por prediccion: tiempo_total dividido entre 1.000\n  - Throughput: predicciones por segundo\n\nNOTA IMPORTANTE SOBRE BENCHMARKING\nNo ejecutes 1.000 llamadas individuales a mv.run(). Cada llamada individual añade aproximadamente 1 segundo de overhead de red y Python — eso mide el coste de la llamada, no el rendimiento del modelo. El benchmark correcto es una sola llamada batch.\n\nVALIDACION\nComprueba que el modelo clasifica correctamente las 200 filas anomalas (recall esperado superior al 80%). Muestra la distribucion de predicciones entre ANOMALIA y NORMAL."
+      },
+      {
+        title: "Generar informe HTML explicativo de la sesion",
+        desc: "Crea un documento HTML autocontenido que explique todo lo construido a un usuario final.",
+        prompt: "OBJETIVO\nGenerar un fichero HTML autocontenido y visualmente atractivo que documente el pipeline de mantenimiento predictivo construido en esta sesion, orientado a un usuario final no tecnico o a un responsable de negocio.\n\nCONTENIDO DEL INFORME\n\n1. Contexto del problema\nExplica por que el mantenimiento reactivo en fabricas es costoso (50.000 millones de dolares anuales en paradas no planificadas), las limitaciones de los enfoques tradicionales y como el analisis predictivo de sensores IoT anticipa los fallos.\n\n2. El dataset Kaggle\nDescribe el dataset: 100.000 lecturas de 50 maquinas con 5 sensores. Incluye un diagrama de arquitectura generado con HTML y CSS: sensores, transmision IoT, Snowflake.\n\n3. Como funciona Cortex Code\nExplica el concepto central: el usuario escribe prompts en lenguaje natural y Cortex Code genera automaticamente el codigo Python y SQL sin que el usuario programe nada. Incluye un diagrama de flujo del pipeline: kagglehub, EDA, 36 features, XGBoost, Model Registry, inferencia batch.\n\n4. Ventajas del lenguaje natural\nDestaca 4 ventajas concretas: velocidad (pipeline en 45-60 minutos vs semanas de desarrollo), accesibilidad (cualquier persona con conocimiento del negocio puede dirigir el analisis), reduccion de errores (Cortex Code aplica buenas practicas automaticamente) y mantenibilidad (todo en Snowflake sin dependencias externas).\n\n5. Resultados del modelo\nMuestra ROC-AUC, precision y recall para la clase anomalia. Incluye una tabla comparativa de rendimiento.\n\n6. Uso en produccion\nExplica como mv.run() invoca el modelo para monitorizar nuevas maquinas.\n\nESTILO\nDiseno moderno con gradientes azules corporativos, iconos SVG, diagramas de arquitectura con HTML y CSS puro sin imagenes externas. Fichero completamente autocontenido para compartir por email.\n\nNOMBRE DEL FICHERO\nGuarda como informe_mantenimiento_predictivo_xgboost.html"
+      },
+      {
+        title: "Generar informe HTML explicativo de la sesion",
+        desc: "Crea un documento HTML autocontenido que explique todo lo construido a un usuario final.",
+        prompt: "OBJETIVO\nGenerar un fichero HTML autocontenido y visualmente atractivo que documente el pipeline de mantenimiento predictivo construido en esta sesion, orientado a un usuario final no tecnico o a un responsable de negocio.\n\nCONTENIDO DEL INFORME\n\n1. Contexto del problema\nExplica por que el mantenimiento reactivo en fabricas es costoso (50.000 millones de dolares anuales en paradas no planificadas), las limitaciones de los enfoques tradicionales y como el analisis predictivo de sensores IoT anticipa los fallos.\n\n2. El dataset Kaggle\nDescribe el dataset: 100.000 lecturas de 50 maquinas con 5 sensores. Incluye un diagrama de arquitectura generado con HTML y CSS: sensores, transmision IoT, Snowflake.\n\n3. Como funciona Cortex Code\nExplica el concepto central: el usuario escribe prompts en lenguaje natural y Cortex Code genera automaticamente el codigo Python y SQL sin que el usuario programe nada. Incluye un diagrama de flujo del pipeline: kagglehub, EDA, 36 features, XGBoost, Model Registry, inferencia batch.\n\n4. Ventajas del lenguaje natural\nDestaca 4 ventajas concretas: velocidad (pipeline en 45-60 minutos vs semanas de desarrollo), accesibilidad (cualquier persona con conocimiento del negocio puede dirigir el analisis), reduccion de errores (Cortex Code aplica buenas practicas automaticamente) y mantenibilidad (todo en Snowflake sin dependencias externas).\n\n5. Resultados del modelo\nMuestra ROC-AUC, precision y recall para la clase anomalia. Incluye una tabla comparativa de rendimiento.\n\n6. Uso en produccion\nExplica como mv.run() invoca el modelo para monitorizar nuevas maquinas.\n\nESTILO\nDiseno moderno con gradientes azules corporativos, iconos SVG, diagramas de arquitectura con HTML y CSS puro sin imagenes externas. Fichero completamente autocontenido para compartir por email.\n\nNOMBRE DEL FICHERO\nGuarda como informe_mantenimiento_predictivo_xgboost.html"
+      }
+    ]
+  },
+  UC02: {
+    title: "Mantenimiento Predictivo 100% Nativo con Snowflake ML.CLASSIFICATION",
+    intro: "Ejecuta estos 8 prompts en Cortex Code (Snowsight). No escribas SQL manualmente — describe lo que necesitas y Cortex Code generara todo el codigo. No se requiere Python, contenedores ni SPCS.",
+    steps: [
+      { title: "Configurar entorno y cargar dataset", desc: "Crea la base de datos y carga el CSV de Kaggle en Snowflake.", prompt: "OBJETIVO\nConfigurar el entorno de trabajo y cargar el dataset de Kaggle en Snowflake.\n\nACCIONES\nCrea una base de datos llamada COCO_AD_NATIVE con un esquema PUBLIC.\n\nPara cargar el dataset, necesito instrucciones paso a paso para subir el fichero CSV del dataset 'Smart Manufacturing IoT-Cloud Monitoring' de Kaggle (kaggle.com/datasets/ziya07/smart-manufacturing-iot-cloud-monitoring-dataset) a una tabla llamada IOT, usando la funcionalidad de carga de datos de Snowsight. El sistema debe detectar automaticamente los tipos de columna.\n\nVERIFICACION\nUna vez cargada, confirma que la tabla tiene exactamente 100.000 filas y muestra el nombre y tipo de dato de cada columna." },
+      { title: "Analisis exploratorio de datos (EDA)", desc: "Analiza distribuciones, correlaciones y tasas de anomalia con SQL nativo.", prompt: "OBJETIVO\nEntender el dataset antes de entrenar el modelo: distribuciones, correlaciones y columnas con data leakage.\n\nANALISIS REQUERIDOS (en este orden)\n1. Distribucion de clases — Calcula el porcentaje de registros normales vs anomalos en el campo ANOMALY_FLAG para cuantificar el desequilibrio.\n\n2. Estadisticas por clase — Para cada uno de los cinco sensores (TEMPERATURE, VIBRATION, HUMIDITY, PRESSURE, ENERGY_CONSUMPTION), calcula la media y la desviacion tipica separando los registros con ANOMALY_FLAG=0 y ANOMALY_FLAG=1. Esto revela que sensores tienen mayor separacion entre clases.\n\n3. Correlacion de Pearson — Calcula la correlacion de cada sensor con ANOMALY_FLAG usando la funcion nativa de Snowflake. Los sensores con mayor correlacion seran los predictores mas valiosos.\n\n4. Tasa de anomalias por maquina — Agrupa por MACHINE_ID y calcula el porcentaje de anomalias de cada maquina, ordenando de mayor a menor.\n\nCONCLUSION ESPERADA\nIdentifica las columnas DOWNTIME_RISK, PREDICTED_REMAINING_LIFE y MAINTENANCE_REQUIRED como columnas con data leakage (correlacion > 0.9 con el target) que deben excluirse del modelo." },
+      { title: "Feature engineering con ventanas temporales por maquina", desc: "Construye los 36 features usando SQL window functions de Snowflake.", prompt: "OBJETIVO\nCrear la tabla FEATURES_IOT en COCO_AD_NATIVE.PUBLIC con todos los features para el modelo. Los datos deben estar ordenados por MACHINE_ID y TIMESTAMP.\n\nFEATURES A INCLUIR\n\nVariables originales de sensor:\n  - TEMPERATURE, VIBRATION, HUMIDITY, PRESSURE, ENERGY_CONSUMPTION\n  - MACHINE_STATUS y MACHINE_ID\n\nEstadisticas moviles (calculadas dentro de cada MACHINE_ID):\n  - Media movil de TEMPERATURE y VIBRATION en ventanas de 5, 10 y 30 lecturas\n  - Desviacion tipica movil de TEMPERATURE y VIBRATION en esas mismas ventanas\n\nFeatures de cambio y tendencia:\n  - Delta de TEMPERATURE y VIBRATION (diferencia respecto a la lectura anterior de la misma maquina)\n  - Feature de interaccion: TEMPERATURE multiplicada por VIBRATION\n\nNormalizacion por maquina:\n  - Z-score de TEMPERATURE y VIBRATION (media y desviacion calculadas por cada MACHINE_ID)\n\nTemporal:\n  - Hora del dia extraida del campo TIMESTAMP\n\nEXCLUIR (introducen data leakage):\n  - DOWNTIME_RISK, PREDICTED_REMAINING_LIFE, MAINTENANCE_REQUIRED, FAILURE_TYPE\n\nVERIFICACION\nConserva ANOMALY_FLAG como columna target. Confirma que la tabla tiene el mismo numero de filas que la original y muestra el total de features creados." },
+      { title: "Crear conjuntos de entrenamiento y test con Group-Based Split", desc: "Divide los datos por MACHINE_ID para evitar leakage temporal entre maquinas.", prompt: "OBJETIVO\nDividir FEATURES_IOT en dos conjuntos usando Group-Based Split por maquina.\n\nDIVISION\n  - Entrenamiento (IOT_TRAIN): maquinas con MACHINE_ID del 1 al 40\n  - Test (IOT_TEST): maquinas con MACHINE_ID del 41 al 50\n\nIMPORTANTE: La division debe hacerse por MACHINE_ID completo, nunca por filas aleatorias. Esto evita el leakage temporal y garantiza que el modelo se evalua sobre maquinas que nunca ha visto durante el entrenamiento.\n\nCONVERSION DEL TARGET\nSNOWFLAKE.ML.CLASSIFICATION requiere que la columna objetivo sea de tipo VARCHAR. Convierte ANOMALY_FLAG en ambas tablas:\n  - Valor 1  =>  'ANOMALIA'\n  - Valor 0  =>  'NORMAL'\n\nVERIFICACION\nMuestra el tamano de cada conjunto y la tasa de anomalias en cada uno para confirmar que la distribucion es comparable entre train y test." },
+      { title: "Entrenar modelo de clasificacion nativo de Snowflake", desc: "Entrena el modelo con SNOWFLAKE.ML.CLASSIFICATION usando evaluate habilitado.", prompt: "OBJETIVO\nEntrenar el modelo de deteccion de anomalias usando la funcion nativa SNOWFLAKE.ML.CLASSIFICATION.\n\nCONFIGURACION\n  - Nombre del modelo:   modelo_iot_anomaly\n  - Datos de entrada:    tabla IOT_TRAIN\n  - Variable objetivo:   columna ANOMALY_FLAG_STR\n  - Evaluacion:          activar la opcion evaluate para generar metricas automaticamente\n\nNo es necesario especificar hiperparametros. Snowflake selecciona y optimiza el algoritmo internamente.\n\nVERIFICACION\nIndica cuanto tiempo ha tardado el entrenamiento y confirma que el modelo queda almacenado como un objeto persistente en Snowflake, disponible para consultas de evaluacion e inferencia sin necesidad de volver a entrenarlo." },
+      { title: "Evaluar el modelo con las metricas nativas de Snowflake", desc: "Revisa metricas, confusion matrix y feature importance con las funciones del modelo.", prompt: "OBJETIVO\nEvaluar el modelo modelo_iot_anomaly usando las tres funciones de evaluacion nativas de Snowflake ML.\n\nEVALUACIONES A EJECUTAR\n\n1. Metricas de rendimiento\n   Muestra accuracy, precision, recall y F1 para ambas clases, y el ROC-AUC global.\n   El recall para la clase ANOMALIA es el indicador critico: un valor bajo significa fallos no detectados.\n\n2. Matriz de confusion\n   Desglosa verdaderos positivos, falsos positivos, verdaderos negativos y falsos negativos.\n   Ayuda a entender el tipo de error que comete el modelo.\n\n3. Importancia de features\n   Muestra el ranking de las variables mas influyentes en las predicciones del modelo.\n   Espero ver temperatura y vibracion (y sus medias moviles) en las posiciones mas altas.\n\nINTERPRETACION\nCompara cualitativamente estos resultados con los obtenidos en UC01 con XGBoost. Indica si las diferencias de precision/recall son significativas para un caso de uso de produccion." },
+      { title: "Inferencia batch sobre el conjunto de test", desc: "Genera predicciones sobre datos nuevos usando la funcion PREDICT del modelo.", prompt: "OBJETIVO\nEjecutar la inferencia del modelo modelo_iot_anomaly sobre el conjunto de test IOT_TEST en modo batch.\n\nRESULTADO ESPERADO\nCrea una tabla llamada PREDICCIONES_IOT que incluya:\n  - Todos los campos originales de IOT_TEST\n  - Clase predicha (ANOMALIA o NORMAL)\n  - Probabilidad de que el registro sea una anomalia\n\nUsa un umbral de clasificacion de 0.5. Excluye las columnas ANOMALY_FLAG y ANOMALY_FLAG_STR del input al modelo para evitar que el target contamine la prediccion.\n\nANALISIS POST-INFERENCIA\n  1. Muestra la distribucion cruzada entre la clase real y la clase predicha (equivalente a una confusion matrix manual) para ver cuantos verdaderos positivos y falsos negativos hay sobre el test.\n  2. Calcula precision y recall para la clase ANOMALIA usando esa tabla de resultados." },
+      { title: "Analisis de trade-offs y recomendaciones de uso", desc: "Compara ambos enfoques y genera recomendaciones de cuando usar cada uno.", prompt: "OBJETIVO\nGenerar un analisis comparativo entre UC01 (XGBoost + SPCS) y UC02 (Snowflake Nativo) para ayudar al equipo a elegir el enfoque correcto segun el caso de uso.\n\nDIMENSIONES A COMPARAR\n\nImplementacion\n  - Tiempo total de desarrollo de cada enfoque\n  - Dependencias externas y complejidad de infraestructura\n  - Curva de aprendizaje para el equipo de datos\n\nRendimiento del modelo\n  - Precision y recall para la clase ANOMALIA en ambos enfoques\n  - Son las diferencias estadisticamente significativas para produccion?\n\nInferencia y latencia\n  - Latencia de inferencia: batch SQL vs endpoint REST en SPCS\n  - Escalabilidad: cuantas maquinas puede monitorizar cada enfoque en tiempo real?\n\nCoste operativo\n  - Estimacion de creditos de Snowflake para entrenamiento e inferencia en cada opcion\n  - Coste de mantenimiento a lo largo del tiempo\n\nRECOMENDACION FINAL\nCuando usar el enfoque nativo (UC02) y cuando merece la pena el mayor esfuerzo de SPCS (UC01). Presenta las conclusiones en un formato claro para compartir con el equipo tecnico y con negocio." },
+      { title: "Generar informe HTML explicativo de la sesion", desc: "Crea un documento HTML autocontenido que explique el enfoque nativo a un usuario final o responsable de negocio.", prompt: "OBJETIVO\nGenerar un fichero HTML autocontenido y visualmente atractivo que documente el pipeline nativo de mantenimiento predictivo construido en esta sesion, orientado a un usuario final no tecnico.\n\nCONTENIDO DEL INFORME\n\n1. Contexto del problema\nExplica por que el mantenimiento reactivo en fabricas es costoso, las limitaciones de los enfoques tradicionales y como la prediccion sobre sensores IoT permite anticipar los fallos.\n\n2. El dataset Kaggle\nDescribe el dataset: 100.000 lecturas de 50 maquinas con 5 sensores. Incluye un diagrama de arquitectura con HTML y CSS puro: sensores, transmision IoT, tabla en Snowflake.\n\n3. Como funciona Cortex Code con SQL nativo\nExplica el concepto: el usuario describe en lenguaje natural y Cortex Code genera SQL con window functions, SNOWFLAKE.ML.CLASSIFICATION y modelo!PREDICT sin programar. Incluye un diagrama de flujo del pipeline nativo.\n\n4. Ventajas del enfoque nativo con lenguaje natural\nDestaca 4 ventajas: velocidad (20-30 minutos de implementacion), cero dependencias externas (sin Python ni contenedores), SQL estandar que cualquier analista entiende y costes operativos minimos.\n\n5. Resultados y comparativa\nMuestra las metricas del modelo. Tabla comparativa UC01 (XGBoost) vs UC02 (Nativo): resultados similares con mucho menor esfuerzo.\n\n6. Cuando usar cada enfoque\nTabla clara de decision: Nativo (UC02) para inference batch y pipelines programados; XGBoost + Registry (UC01) para maximo control o inferencia desde aplicaciones externas.\n\nESTILO\nDiseno moderno con gradientes verdes corporativos, iconos SVG, diagramas de arquitectura con HTML y CSS puro sin imagenes externas. Fichero completamente autocontenido para compartir por email.\n\nNOMBRE DEL FICHERO\nGuarda como informe_mantenimiento_predictivo_nativo.html" }
+    ]
+  }
+};
+
+function verPrompts(ucId) {
+  const data = PROMPTS[ucId];
+  if (!data) { alert('Prompts no disponibles para ' + ucId); return; }
+  const box = document.getElementById('promptsModalBox');
+  const promptClass = 'prompt-natural';
+  let html = "<button class=\"modal-close\" onclick=\"cerrarModal('promptsModal')\">&times;</button>";
+  html += "<span class=\"guide-badge\">" + ucId + "</span>";
+  html += "<h2>" + data.title + " &mdash; Cortex Code Prompts</h2>";
+  html += "<p class=\"prompt-intro\">" + data.intro + "</p>";
+  data.steps.forEach((s, i) => {
+    const escaped = s.prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    html += "<div class=\"prompt-step\">";
+    html += "<div class=\"prompt-step-header\"><span class=\"prompt-step-num\">" + (i+1) + "</span><span class=\"prompt-step-title\">" + s.title + "</span></div>";
+    html += "<div class=\"prompt-step-desc\">" + s.desc + "</div>";
+    html += "<div class=\"" + promptClass + "\" id=\"prompt_" + ucId + "_" + i + "\"><button class=\"copy-btn\" onclick=\"copiarPrompt('prompt_" + ucId + "_" + i + "')\">Copiar</button>" + escaped + "</div>";
+    html += "</div>";
+  });
+  html += "<p class=\"guide-footer\">Ejecuta cada prompt en Cortex Code (Snowsight) | Dataset: Kaggle CC0 Public Domain</p>";
+  box.innerHTML = html;
+  document.getElementById('promptsModal').classList.add('active');
+}
+
+function copiarPrompt(id) {
+  const el = document.getElementById(id);
+  const btn = el.querySelector('.copy-btn');
+  const text = el.textContent.replace('Copiar', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '!Copiado!';
+    setTimeout(() => btn.textContent = 'Copiar', 1500);
+  });
+}
+</script>
+
+<div class="modal-overlay" id="guiaModal">
+  <div class="modal-box" id="guiaModalBox"></div>
+</div>
+
+<div class="modal-overlay" id="promptsModal">
+  <div class="modal-box" id="promptsModalBox" style="max-width:780px;"></div>
+</div>
+</body>
+</html>
