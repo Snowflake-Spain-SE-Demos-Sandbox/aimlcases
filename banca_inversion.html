@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>Snowflake — Soluciones IA/ML para Banca de Inversión y Custodia</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+    }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #003545, #11567F);
+      color: #fff;
+      padding: 32px 48px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .hero-left { flex: 1; }
+
+    .logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-snowflake {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .stats-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 28px;
+      text-align: center;
+      color: #1a1a1a;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .stats-box .stat-number {
+      font-size: 40px;
+      font-weight: 700;
+      color: #1B6CA8;
+      line-height: 1;
+    }
+
+    .stats-box .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .stats-box .stat-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+
+    .stats-box .stat-time-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .stats-divider {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 10px 0;
+    }
+
+    /* ── SECTION INTRO ───────────────────────────────────── */
+    .intro {
+      background: #fff;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .intro h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #11567F;
+      margin-bottom: 14px;
+    }
+
+    .intro p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── FILTERS ─────────────────────────────────────────── */
+    .filters-bar {
+      background: #fff;
+      padding: 20px 48px 0;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filters-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 80px;
+      border: 1.5px solid #ccc;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: #29B5E8; color: #29B5E8; }
+
+    .filter-btn.active {
+      background: #29B5E8;
+      border-color: #29B5E8;
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #ccc;
+      border-radius: 80px;
+      padding: 7px 14px;
+      gap: 8px;
+      min-width: 200px;
+      background: #fff;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #444;
+      width: 100%;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #aaa; }
+
+    /* ── RESULTS COUNT ────────────────────────────────────── */
+    .results-count {
+      padding: 14px 48px 8px;
+      font-size: 13px;
+      color: #666;
+      background: #f5f5f5;
+    }
+
+    /* ── CARDS GRID ──────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      padding: 16px 48px 48px;
+      background: #f5f5f5;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e2e2e2;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-badges { display: flex; gap: 6px; align-items: center; }
+
+    .badge-id {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-cat {
+      background: #E0F4FD;
+      color: #11567F;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .badge-cat.custodia    { background: #E8F2FB; color: #1B6CA8; }
+    .badge-cat.distribucion { background: #EAF7F0; color: #1A7A4A; }
+    .badge-cat.trading     { background: #FFF8E7; color: #B8860B; }
+    .badge-cat.compliance  { background: #FFF0F5; color: #B03A6B; }
+    .badge-cat.operaciones { background: #F5EEF8; color: #7D3C98; }
+
+    .card-time {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      padding: 0 18px 12px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #11567F;
+      line-height: 1.3;
+    }
+
+    .pain-point {
+      margin: 0 18px 14px;
+      background: #F0F7FA;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pain-point-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #D45B90;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .pain-point p {
+      font-size: 13px;
+      color: #2a2a2a;
+      line-height: 1.55;
+    }
+
+    .card-desc {
+      padding: 0 18px 14px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-features {
+      padding: 0 18px 16px;
+      list-style: none;
+    }
+
+    .card-features li {
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-features li::before {
+      content: '✓';
+      color: #29B5E8;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .card-actions {
+      padding: 14px 18px 18px;
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      background: #29B5E8;
+      color: #fff;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover { background: #11567F; }
+
+    .btn-tertiary {
+      flex: 1;
+      padding: 10px;
+      background: #003545;
+      color: #29B5E8;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-tertiary:hover { background: #11567F; }
+
+    .card-actions { flex-wrap: wrap; }
+
+    .prompt-step { margin-bottom: 18px; }
+    .prompt-step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prompt-step-num { background: #003545; color: #29B5E8; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .prompt-step-title { font-size: 13px; font-weight: 600; color: #333; }
+    .prompt-step-desc { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+    .prompt-code { position: relative; background: #003545; color: #e0e0e0; border-radius: 8px; padding: 12px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .prompt-code .copy-btn { position: absolute; top: 6px; right: 8px; background: rgba(255,255,255,0.1); border: none; color: #aaa; font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
+    .prompt-code .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .prompt-code .kw { color: #29B5E8; }
+    .modal-box .prompt-intro { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 92%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #D45B90; }
+    .modal-box h2 { color: #11567F; font-size: 20px; margin-bottom: 6px; }
+    .modal-box h3 { font-size: 15px; color: #333; margin: 18px 0 8px; }
+    .modal-box p, .modal-box li { font-size: 13px; line-height: 1.7; color: #444; }
+    .modal-box ul { padding-left: 20px; margin: 6px 0; }
+    .modal-box .guide-badge { display: inline-block; background: #E0F4FD; color: #11567F; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; margin-bottom: 10px; }
+    .modal-box .guide-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #eee; font-size: 12px; color: #888; }
+
+    @media (max-width: 700px) {
+      .hero { flex-direction: column; padding: 24px 20px; }
+      .cards-grid { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .filters-bar { padding: 16px 16px 0; }
+      .results-count { padding: 12px 16px 6px; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<header class="hero" style="background:linear-gradient(135deg,#1B6CA8,#0D4F8A);">
+  <div class="hero-left">
+    <div class="logos">
+    </div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
+    <p class="hero-eyebrow">Banca de Inversión y Custodia × Snowflake</p>
+    <h1 class="hero-title">Soluciones IA/ML para Banca de Inversión y Custodia</h1>
+    <p class="hero-subtitle">Guías y Prompts de Cortex Code listos para desplegar en equipos de banca de inversión, custodia y distribución de fondos</p>
+    <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
+  </div>
+
+  <div class="stats-box">
+    <div class="stat-number">20</div>
+    <div class="stat-label">Casos de Uso</div>
+    <hr class="stats-divider"/>
+    <div class="stat-time">8-15 min</div>
+    <div class="stat-time-label">Tiempo de Configuración</div>
+  </div>
+</header>
+
+<!-- ── INTRO ──────────────────────────────────────────────── -->
+<section class="intro">
+  <h2>Acelera la Transformación Digital de la Banca de Inversión con IA</h2>
+  <p>Cada solución incluye Cortex Code Prompts con datos sintéticos, guías paso a paso e implementaciones SQL-first con Cortex AI/ML. Cubre reconciliación T+1 con Feature Store, procesamiento de eventos corporativos con LLM, KYC/AML automatizado, análisis de documentos KID/KIID, detección de fallos de liquidación y reporting regulatorio EMIR/SFTR. Todo el procesamiento permanece dentro de Snowflake, sin dependencias externas.</p>
+</section>
+
+<!-- ── FILTERS ───────────────────────────────────────────── -->
+<div class="filters-bar">
+  <div class="filters-left" id="filterBtns">
+    <button class="filter-btn active" data-filter="all">Todos (20)</button>
+    <button class="filter-btn" data-filter="custodia">Activos y Custodia (4)</button>
+    <button class="filter-btn" data-filter="distribucion">Distribución de Fondos (5)</button>
+    <button class="filter-btn" data-filter="trading">Trading y Mercados (4)</button>
+    <button class="filter-btn" data-filter="compliance">Cumplimiento y Riesgo (5)</button>
+    <button class="filter-btn" data-filter="operaciones">Operaciones e Eficiencia (2)</button>
+  </div>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
+      <circle cx="9" cy="9" r="7"/><line x1="15" y1="15" x2="19" y2="19"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Buscar casos de uso…" />
+  </div>
+</div>
+
+<!-- ── RESULTS COUNT ─────────────────────────────────────── -->
+<div class="results-count" id="resultsCount">Mostrando 20 de 20 casos de uso</div>
+
+<!-- ── CARDS ─────────────────────────────────────────────── -->
+<main class="cards-grid" id="cardsGrid"></main>
+
+<script>
+const USE_CASES = [
+  {
+    id:"UC01", cat:"custodia", catLabel:"Activos y Custodia", time:"14 min",
+    title:"Reconciliación Automática de Posiciones con Feature Store",
+    pain:"Las plataformas de custodia reconcilian posiciones manualmente contra Euroclear y Clearstream. El proceso T+1 tarda 4-6 horas, con un 5-8% de breaks que requieren intervención manual y generan penalizaciones CSDR.",
+    desc:"Feature Store centralizado con Entity CUENTA_CUSTODIA y 6 FeatureViews que agrega posiciones propias, confirmaciones de depositarios y mensajes SWIFT. SNOWFLAKE.ML.CLASSIFICATION detecta discrepancias automáticamente antes del cierre de T+1, reduciendo breaks manuales un 80%.",
+    features:["Feature Store: Entity CUENTA_CUSTODIA con 6 FeatureViews","ML.CLASSIFICATION para detección de discrepancias T+1","Integración con confirmaciones Euroclear/Clearstream","Alertas automáticas y dashboard de breaks en tiempo real"]
+  },
+  {
+    id:"UC02", cat:"custodia", catLabel:"Activos y Custodia", time:"12 min",
+    title:"Corporate Actions Intelligence con LLM",
+    pain:"El procesamiento de eventos corporativos (dividendos, splits, canjes, OPAs) requiere extraer datos de fuentes heterogéneas: PDFs, feeds Bloomberg, SWIFT, correos. Un error en un evento corporativo puede causar pérdidas millonarias y conflictos con clientes.",
+    desc:"Pipeline con CORTEX.COMPLETE que procesa automáticamente eventos corporativos desde múltiples fuentes, extrae datos estructurados (tipo evento, fechas, ratios, condiciones), valida la consistencia y genera instrucciones de processing para las cuentas afectadas.",
+    features:["CORTEX.COMPLETE para extracción de eventos corporativos multi-fuente","Validación automática de consistencia entre fuentes","Generación de instrucciones de processing para cuentas afectadas","Dashboard de eventos pendientes con alertas de plazo"]
+  },
+  {
+    id:"UC03", cat:"custodia", catLabel:"Activos y Custodia", time:"11 min",
+    title:"Detección de Errores en Instrucciones SWIFT MT540/541",
+    pain:"El 3-5% de las instrucciones SWIFT de liquidación contienen errores (cuenta incorrecta, ISIN inválido, monto incorrecto) que causan fallos de liquidación con penalizaciones CSDR de hasta 100bps del nominal.",
+    desc:"Validación pre-trade de instrucciones MT540/541/543/544 con SNOWFLAKE.ML.CLASSIFICATION que detecta errores antes del envío a la cámara. Analiza patrones históricos de instrucciones fallidas para identificar anomalías y generar alertas correctivas automáticamente.",
+    features:["ML.CLASSIFICATION para validación pre-envío de instrucciones SWIFT","Detección de patrones de instrucciones históricamente fallidas","Alertas correctivas automáticas antes del envío","Reducción de penalizaciones CSDR y failed trades"]
+  },
+  {
+    id:"UC04", cat:"custodia", catLabel:"Activos y Custodia", time:"10 min",
+    title:"Clasificación y Enrutamiento de Mensajería ISO 20022",
+    pain:"La migración a ISO 20022 genera miles de mensajes MX diarios que deben interpretarse, clasificarse y enrutarse correctamente. El equipo de operaciones dedica el 40% del tiempo a clasificar mensajes manualmente.",
+    desc:"Pipeline NLP con CORTEX.COMPLETE que interpreta automáticamente mensajes MT/MX (ISO 20022), clasifica por tipo de operación, extrae entidades clave (cuentas, importes, fechas valor) y los enruta al sistema de back-office correspondiente en tiempo real.",
+    features:["CORTEX.COMPLETE para interpretación de mensajes MT/MX","Clasificación automática por tipo de operación","Extracción de entidades (cuentas, importes, fechas valor)","Enrutamiento inteligente al sistema destino correspondiente"]
+  },
+  {
+    id:"UC05", cat:"distribucion", catLabel:"Distribución de Fondos", time:"13 min",
+    title:"Motor de Recomendación de Fondos ESG",
+    pain:"Los distribuidores de fondos tienen catálogos de 10.000+ fondos pero recomiendan activamente los mismos 20-30. La falta de personalización reduce la captación neta y aumenta la rotación de carteras.",
+    desc:"Motor de recomendación con SNOWFLAKE.ML.CLASSIFICATION y embeddings de texto que sugiere fondos a distribuidores según perfil de riesgo del cliente, benchmark objetivo, preferencias ESG y composición actual de cartera, aumentando el universo de fondos recomendados activamente.",
+    features:["ML.CLASSIFICATION + EMBED_TEXT para matching fondos-distribuidores","Filtrado por perfil MiFID, benchmark y criterios ESG","Diversificación automática respecto a cartera actual","Dashboard de recomendaciones con justificación LLM"]
+  },
+  {
+    id:"UC06", cat:"distribucion", catLabel:"Distribución de Fondos", time:"15 min",
+    title:"Análisis de Documentos KID/KIID/Prospectus con LLM",
+    pain:"Las plataformas de distribución gestionan millones de documentos regulatorios de fondos (KID, KIID, Prospectus). La extracción manual de datos clave tarda días por fondo y genera inconsistencias en la base de datos de producto.",
+    desc:"Pipeline de inteligencia documental con CORTEX.COMPLETE que extrae automáticamente los campos críticos: categoría SRRI, costes totales, horizonte de inversión, estrategia, restricciones y advertencias regulatorias, generando una base de datos estructurada de 50+ campos por fondo.",
+    features:["CORTEX.COMPLETE para extracción masiva de documentos KID/KIID","Extracción de SRRI, costes TER/OCF, horizonte y estrategia","Validación de consistencia entre versiones de documentos","Base de datos estructurada de 50+ campos por fondo"]
+  },
+  {
+    id:"UC07", cat:"distribucion", catLabel:"Distribución de Fondos", time:"12 min",
+    title:"Detección de Fondos Duplicados y Similares",
+    pain:"Los catálogos de distribución tienen 10.000+ fondos con alta redundancia: fondos espejo, clones con distintos TER, versiones cubiertas y no cubiertas. El 20-30% son fondos sustancialmente similares que confunden a los asesores.",
+    desc:"Clustering con EMBED_TEXT y VECTOR_COSINE_SIMILARITY sobre estrategia, benchmark, composición y política de inversión de los fondos. Identifica grupos de fondos sustancialmente similares y recomienda consolidación o racionalización del catálogo con justificación LLM.",
+    features:["EMBED_TEXT para vectorización de estrategias de fondos","VECTOR_COSINE_SIMILARITY para clustering de similitud","Identificación de grupos de fondos sustancialmente idénticos","Recomendaciones de racionalización del catálogo con LLM"]
+  },
+  {
+    id:"UC08", cat:"distribucion", catLabel:"Distribución de Fondos", time:"14 min",
+    title:"Predicción de Flujos de Suscripción/Reembolso con Model Registry",
+    pain:"Las plataformas de distribución necesitan anticipar los flujos netos de suscripción/reembolso para gestionar la liquidez. Las previsiones manuales tienen un error del 30-40%, causando tensiones de tesorería.",
+    desc:"Modelo de forecasting de flujos netos con SNOWFLAKE.ML.FORECAST, registrado en Model Registry para versionado y producción. Predice flujos semanales por fondo combinando histórico, performance relativa, condiciones de mercado y estacionalidad.",
+    features:["ML.FORECAST para predicción de flujos netos semanales","Model Registry: flujos_fondos_model con versionado y métricas","Factores: performance, spreads, condiciones mercado, estacionalidad","Dashboard de cash flow forecast con intervalos de confianza"]
+  },
+  {
+    id:"UC09", cat:"distribucion", catLabel:"Distribución de Fondos", time:"13 min",
+    title:"Automatización de Onboarding de Fondos",
+    pain:"El alta de un nuevo fondo en una plataforma de distribución requiere 3-5 días de extracción manual de datos desde documentos legales, prospectos y fichas técnicas. Las plataformas reciben 500+ nuevos fondos al mes.",
+    desc:"Pipeline automatizado con CORTEX.COMPLETE que extrae y valida todos los datos necesarios para el alta de un fondo: datos maestros, clasificaciones regulatorias, restricciones de distribución, datos de pricing y documentación requerida, reduciendo el tiempo de onboarding a 2 horas.",
+    features:["CORTEX.COMPLETE + AI_EXTRACT para extracción de documentos legales","Validación automática contra fuentes externas","Generación de checklist de onboarding con estado de completitud","Integración con workflow de aprobación de nuevos fondos"]
+  },
+  {
+    id:"UC10", cat:"trading", catLabel:"Trading y Mercados", time:"15 min",
+    title:"Asistente de Mercados en Tiempo Real con RAG",
+    pain:"Los gestores y traders dedican 2-3 horas diarias buscando información sobre posiciones, P&L y noticias de mercado en múltiples sistemas. La información dispersa retrasa las decisiones de inversión.",
+    desc:"Chatbot conversacional con CORTEX SEARCH y CORTEX.COMPLETE sobre posiciones en tiempo real, P&L, noticias de mercado y reportes de análisis. Responde preguntas en lenguaje natural como '¿cuál es mi exposición a renta fija italiana?' o '¿cómo ha afectado el BCE a mi cartera?'",
+    features:["CORTEX SEARCH sobre posiciones, P&L y noticias de mercado","CORTEX.COMPLETE para respuestas contextualizadas en lenguaje natural","Integración con feeds de noticias y análisis en tiempo real","Dashboard conversacional con historial de consultas"]
+  },
+  {
+    id:"UC11", cat:"trading", catLabel:"Trading y Mercados", time:"12 min",
+    title:"Generación Automática de Informes de Cartera",
+    pain:"Los gestores de wealth management dedican 4-6 horas semanales generando comentarios de cartera personalizados. Los informes genéricos no reflejan el contexto específico de cada cliente ni sus objetivos.",
+    desc:"Pipeline con CORTEX.COMPLETE que genera comentarios de cartera personalizados: performance atribuida, análisis de contribución por activo, comparativa vs. benchmark, perspectivas y recomendaciones adaptadas al perfil de riesgo y objetivos del cliente.",
+    features:["CORTEX.COMPLETE para generación de comentarios personalizados","Análisis de atribución de performance por activo y sector","Comparativa automática vs. benchmark y objetivos del cliente","Informes en múltiples formatos (PDF, email, portal cliente)"]
+  },
+  {
+    id:"UC12", cat:"trading", catLabel:"Trading y Mercados", time:"11 min",
+    title:"Análisis de Sentimiento para Ideas de Inversión",
+    pain:"Los analistas no pueden monitorizar manualmente miles de noticias, earnings calls y redes sociales relevantes para sus posiciones. Las señales de inversión se detectan tarde, cuando el precio ya ha reaccionado.",
+    desc:"Pipeline NLP con CORTEX.SENTIMENT sobre noticias financieras, transcripciones de earnings calls, informes de analistas y redes sociales para generar señales de sentimiento por activo. Detecta cambios de tendencia y genera alertas de inversión priorizadas.",
+    features:["CORTEX.SENTIMENT sobre noticias, earnings y redes sociales","Señales de sentimiento agregadas por activo y sector","Detección de cambios de tendencia con alertas automáticas","Dashboard de heat-map de sentimiento de mercado"]
+  },
+  {
+    id:"UC13", cat:"trading", catLabel:"Trading y Mercados", time:"13 min",
+    title:"Detección de Anomalías en Órdenes Pre-Ejecución",
+    pain:"El 0.5-1% de las órdenes de trading contienen errores (precio fuera de rango, volumen excesivo, activo equivocado) o patrones potencialmente manipuladores. La detección manual pre-ejecución es imposible al volumen actual.",
+    desc:"SNOWFLAKE.ML.ANOMALY_DETECTION sobre el flujo de órdenes en tiempo real para identificar órdenes erróneas o con patrones sospechosos antes de su envío al mercado. Analiza precio, volumen, timing y contexto de cartera con alta precisión y baja tasa de falsos positivos.",
+    features:["ML.ANOMALY_DETECTION para validación pre-ejecución de órdenes","Análisis multidimensional: precio, volumen, timing, contexto","Baja tasa de falsos positivos mediante contextualización de cartera","Integración con OMS para bloqueo automático de órdenes sospechosas"]
+  },
+  {
+    id:"UC14", cat:"compliance", catLabel:"Cumplimiento y Riesgo", time:"15 min",
+    title:"Automatización KYC/AML con NLP e IA",
+    pain:"El proceso KYC de nuevos clientes institucionales tarda 2-4 semanas de revisión manual de documentación (estatutos, accionariado, poderes notariales). El backlog de revisiones KYC es uno de los principales cuellos de botella del negocio.",
+    desc:"Pipeline de automatización KYC con CORTEX.COMPLETE que extrae y verifica información de documentos corporativos, identifica beneficiarios últimos (UBO), detecta alertas AML/PEP/sancionados y genera un informe de due diligence estructurado con scoring de riesgo.",
+    features:["CORTEX.COMPLETE para extracción de documentos corporativos (estatutos, poderes)","Identificación automática de UBOs y estructura accionarial","Screening AML/PEP/sancionados contra listas internacionales","Informe de due diligence estructurado con scoring de riesgo"]
+  },
+  {
+    id:"UC15", cat:"compliance", catLabel:"Cumplimiento y Riesgo", time:"14 min",
+    title:"Monitorización de Operaciones Sospechosas AMLD",
+    pain:"Las plataformas de custodia y distribución deben detectar patrones de blanqueo en millones de operaciones diarias. Los sistemas de reglas actuales generan un 95% de falsos positivos, colapsando los equipos de compliance.",
+    desc:"SNOWFLAKE.ML.ANOMALY_DETECTION sobre patrones de operaciones para detectar actividad sospechosa: operaciones circulares, fragmentación de importes, concentración en jurisdicciones de riesgo. Reduce falsos positivos un 70% vs. sistemas de reglas.",
+    features:["ML.ANOMALY_DETECTION para detección de patrones AMLD","Análisis de grafos de redes de contrapartes","Reducción de falsos positivos del 95% al 25%","Alertas priorizadas con explicabilidad para el equipo compliance"]
+  },
+  {
+    id:"UC16", cat:"compliance", catLabel:"Cumplimiento y Riesgo", time:"12 min",
+    title:"Clasificación MiFID II de Clientes y Productos",
+    pain:"El matching manual entre perfil MiFID II del cliente y características del producto genera errores de clasificación. Las entidades reciben sanciones por distribuir productos no adecuados al perfil del cliente.",
+    desc:"SNOWFLAKE.ML.CLASSIFICATION que automatiza el matching cliente-producto según MiFID II/PRIIPs: verifica adecuación del perfil de riesgo, horizonte temporal, conocimiento y experiencia. Genera la justificación regulatoria de cada recomendación con audit trail completo.",
+    features:["ML.CLASSIFICATION para matching cliente-producto MiFID II","Verificación automática de 8 criterios de adecuación MiFID","Generación de justificación regulatoria con CORTEX.COMPLETE","Audit trail completo de decisiones de adecuación"]
+  },
+  {
+    id:"UC17", cat:"compliance", catLabel:"Cumplimiento y Riesgo", time:"11 min",
+    title:"Revisión de Contratos de Custodia con LLM",
+    pain:"La revisión de contratos de Global Custody (ISDA, CSA, Custody Agreement) requiere semanas de trabajo legal. Los abogados dedican el 60% del tiempo a comparar clausulados estándar vs. desviaciones contractuales.",
+    desc:"CORTEX.COMPLETE para revisar, comparar y analizar contratos de custodia y derivados. Identifica desviaciones del clausulado estándar, detecta cláusulas de riesgo, compara versiones y genera un resumen ejecutivo de puntos de negociación.",
+    features:["CORTEX.COMPLETE para análisis y comparación de contratos","Detección de desviaciones del clausulado estándar ISDA/CSA","Identificación de cláusulas de riesgo operacional o legal","Resumen ejecutivo de puntos de negociación para equipo jurídico"]
+  },
+  {
+    id:"UC18", cat:"compliance", catLabel:"Cumplimiento y Riesgo", time:"13 min",
+    title:"Reporting Regulatorio Automático EMIR/SFTR/AIFMD",
+    pain:"La generación de reportes regulatorios (EMIR para derivados, SFTR para repos, AIFMD para alternativos) requiere transformar posiciones en formatos específicos. El proceso manual ocupa 3-5 personas y genera errores frecuentes.",
+    desc:"Pipeline con CORTEX.COMPLETE que transforma datos de posiciones y transacciones en formatos XML/ISO requeridos, valida la completitud y consistencia de los datos y gestiona los re-envíos de correcciones a repositorios regulatorios.",
+    features:["CORTEX.COMPLETE para transformación a formatos regulatorios XML/ISO","Validación automática de completitud y consistencia de datos","Gestión de flujos de corrección y re-envío automático","Dashboard de estado de reporting con alertas de deadline"]
+  },
+  {
+    id:"UC19", cat:"operaciones", catLabel:"Operaciones e Eficiencia", time:"12 min",
+    title:"Help Desk Inteligente para Back-Office con RAG",
+    pain:"El equipo de back-office recibe 200-500 consultas diarias sobre estados de liquidaciones, motivos de breaks e instrucciones pendientes. El 70% son preguntas repetitivas que consumen tiempo de especialistas.",
+    desc:"Agente IA con CORTEX SEARCH sobre bases de conocimiento operativas (SWIFTs, procedimientos, histórico de incidencias) y CORTEX.COMPLETE para resolver consultas en lenguaje natural. Responde automáticamente el 80% de las consultas sin intervención humana.",
+    features:["CORTEX SEARCH sobre SWIFTs, procedimientos e histórico de incidencias","CORTEX.COMPLETE para respuestas contextualizadas en lenguaje natural","Resolución automática del 80% de consultas repetitivas","Escalada inteligente a especialistas para casos complejos"]
+  },
+  {
+    id:"UC20", cat:"operaciones", catLabel:"Operaciones e Eficiencia", time:"15 min",
+    title:"Predicción de Fallos de Liquidación con Feature Store y Model Registry",
+    pain:"El 2-3% de las liquidaciones fallan en T+2, generando penalizaciones CSDR, costes de buy-in y daño reputacional. La detección de fallos potenciales después del trade deja poco margen para medidas correctoras.",
+    desc:"Feature Store con Entity OPERACION_LIQUIDACION y 8 FeatureViews que centraliza señales pre-trade. Modelo en Model Registry predice fallos de liquidación con 24h de antelación con un 85% de accuracy, activando medidas preventivas como securities lending o petición de buy-in anticipada.",
+    features:["Feature Store: Entity OPERACION_LIQUIDACION con 8 FeatureViews","Model Registry: settlement_failure_model con versionado y A/B testing","Predicción de fallos 24h antes con 85% de accuracy","Activación automática de medidas preventivas (securities lending, buy-in)"]
+  }
+];
+
+const TOTAL = 20;
+
+function renderCards(list) {
+  const grid = document.getElementById('cardsGrid');
+  const count = document.getElementById('resultsCount');
+  grid.innerHTML = '';
+  count.textContent = `Mostrando ${list.length} de ${TOTAL} casos de uso`;
+  list.forEach(uc => {
+    const catClass = { 'Activos y Custodia':'custodia', 'Distribución de Fondos':'distribucion', 'Trading y Mercados':'trading', 'Cumplimiento y Riesgo':'compliance', 'Operaciones e Eficiencia':'operaciones' }[uc.catLabel] || '';
+    grid.innerHTML += `
+      <article class="card">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge-id">${uc.id}</span>
+            <span class="badge-cat ${catClass}">${uc.catLabel}</span>
+          </div>
+          <span class="card-time">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2">
+              <circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/>
+            </svg>
+            ${uc.time}
+          </span>
+        </div>
+        <h3 class="card-title">${uc.title}</h3>
+        <div class="pain-point">
+          <div class="pain-point-label">Problema</div>
+          <p>${uc.pain}</p>
+        </div>
+        <p class="card-desc">${uc.desc}</p>
+        <ul class="card-features">
+          ${uc.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+        <div class="card-actions">
+          <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
+          <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
+        </div>
+      </article>`;
+  });
+}
+
+let activeFilter = 'all';
+let searchTerm = '';
+
+function applyFilters() {
+  let result = USE_CASES;
+  if (activeFilter !== 'all') result = result.filter(u => u.cat === activeFilter);
+  if (searchTerm) result = result.filter(u =>
+    u.title.toLowerCase().includes(searchTerm) ||
+    u.desc.toLowerCase().includes(searchTerm) ||
+    u.pain.toLowerCase().includes(searchTerm)
+  );
+  renderCards(result);
+}
+
+document.getElementById('filterBtns').addEventListener('click', e => {
+  if (!e.target.matches('.filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeFilter = e.target.dataset.filter;
+  applyFilters();
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+
+renderCards(USE_CASES);
+
+
+const GUIAS = {
+  UC01: {
+    title: 'Reconciliación Automática de Posiciones con Feature Store',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de reconciliación T+1 usando Snowflake Feature Store para centralizar posiciones de custodia y ML para detectar discrepancias automáticamente.',
+    foco: 'Custodia de valores — reconciliación automática de posiciones contra depositarios centrales Euroclear y Clearstream.',
+    reto: 'Detectar discrepancias de posición antes del cierre T+1, reduciendo breaks manuales un 80% y eliminando penalizaciones CSDR.',
+    objetivos: ['Crear Feature Store con Entity CUENTA_CUSTODIA y 6 FeatureViews', 'Integrar posiciones propias, confirmaciones y mensajes SWIFT en el Feature Store', 'Entrenar ML.CLASSIFICATION para detección de discrepancias', 'Evaluar el modelo y generar alertas automáticas', 'Construir dashboard de reconciliación y breaks en tiempo real'],
+    funcionalidades: ['Feature Store: Entity CUENTA_CUSTODIA con FeatureViews de posiciones, confirmaciones depositarios, SWIFTs, historial, riesgo y mercado', 'ML: Clasificación binaria DISCREPANCIA/OK entrenada sobre el Feature Store', 'Datos sintéticos: 5.000 posiciones diarias en 500 cuentas de custodia', 'Dashboard Streamlit: Panel de breaks con priorización por importe y fecha valor'],
+    datos: ['Posiciones propias: saldo_t0, saldo_t1, isin, cuenta, depositario', 'Confirmaciones: saldo_euroclear, saldo_clearstream, fecha_confirmacion', 'SWIFTs: mensajes MT548 de estado de liquidación pendientes', 'Feature Store: 60+ features por cuenta agregadas en 6 FeatureViews'],
+    estratificacion: ['Break Crítico (importe > 1M€): Alertar inmediatamente a gestor de custodia', 'Break Significativo (100K-1M€): Revisión en <2h por operador', 'Break Menor (<100K€): Cola de resolución en jornada', 'OK: Sin acción requerida'],
+    como_usar: ['Ejecutar prompts secuencialmente en Cortex Code', 'Crear el Feature Store y las 6 FeatureViews antes de entrenar', 'El modelo se entrena en 45-90 segundos', 'El dashboard muestra breaks en tiempo real con priorización automática']
+  },
+  UC02: {
+    title: 'Corporate Actions Intelligence con LLM',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de procesamiento automatizado de eventos corporativos usando CORTEX.COMPLETE para extraer datos estructurados de múltiples fuentes heterogéneas.',
+    foco: 'Custodia de valores — procesamiento automático de dividendos, splits, canjes, OPAs y otros eventos corporativos.',
+    reto: 'Procesar eventos corporativos de múltiples fuentes en tiempo real, eliminando errores manuales y asegurando el processing correcto de todas las cuentas afectadas.',
+    objetivos: ['Generar datos sintéticos de eventos corporativos de múltiples fuentes', 'Extraer datos estructurados con CORTEX.COMPLETE', 'Validar consistencia entre fuentes (Bloomberg, SWIFT, PDF)', 'Calcular impacto por cuenta', 'Generar instrucciones de processing y dashboard de eventos'],
+    funcionalidades: ['LLM: Extracción de entidades de eventos con CORTEX.COMPLETE', 'Datos sintéticos: 200 eventos de 6 tipos (dividendo, split, canje, OPA, amortización, derecho)', 'Validación: Consistencia cruzada entre fuentes con alertas de discrepancia', 'Dashboard Streamlit: Panel de eventos pendientes con alertas de plazo y impacto'],
+    datos: ['Eventos: Tipo, ISIN, fecha ex, fecha pago, ratio, condiciones especiales', 'Fuentes: Bloomberg XML, SWIFT MT564, PDFs de custodios', 'Cuentas afectadas: Saldo en posición × ratio del evento', 'Estado: Pendiente / Procesado / Discrepancia entre fuentes'],
+    estratificacion: ['Discrepancia entre fuentes: Bloquear processing hasta resolución manual', 'Evento complejo (OPA, canje): Revisión por especialista antes de procesar', 'Evento estándar (dividendo, split): Auto-processing sin intervención', 'Fecha límite < 24h: Alertar y priorizar proceso'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan eventos con textos de múltiples fuentes', 'CORTEX.COMPLETE extrae y estructura datos de cada fuente', 'El dashboard muestra discrepancias y estado de processing']
+  },
+  UC03: {
+    title: 'Detección de Errores en Instrucciones SWIFT MT540/541',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de validación pre-envío de instrucciones SWIFT de liquidación usando ML.CLASSIFICATION entrenado sobre patrones históricos de errores.',
+    foco: 'Operaciones de custodia — validación automática de instrucciones MT540 (entrega contra pago) y MT541 (recepción contra pago) antes del envío.',
+    reto: 'Detectar el 95% de las instrucciones erróneas antes de su envío, eliminando penalizaciones CSDR y costes de gestión de fallos.',
+    objetivos: ['Generar instrucciones SWIFT sintéticas con diferentes tipos de error', 'Construir features de validación de instrucciones', 'Entrenar ML.CLASSIFICATION para detección de errores', 'Integrar validación en pipeline pre-envío', 'Dashboard de validación con alertas correctivas'],
+    funcionalidades: ['ML: Clasificación binaria ERROR_INSTRUCCION/OK con ML.CLASSIFICATION', 'Datos sintéticos: 10.000 instrucciones SWIFT con 8% de errores etiquetados', 'Tipos de error: ISIN inválido, cuenta incorrecta, monto fuera de rango, BIC incorrecto, fecha pasada', 'Dashboard Streamlit: Cola de validación con tipo de error y sugerencia correctiva'],
+    datos: ['Instrucciones: MT540/541/543/544 con campos ISIN, cuenta, BIC, importe, fecha valor', 'Errores históricos: Instrucciones fallidas etiquetadas por tipo de error', 'Scoring ML: Probabilidad de error + tipo más probable', 'Cola de corrección: Instrucciones sospechosas con sugerencia automática'],
+    estratificacion: ['Error Muy Probable (>=80%): Bloquear envío y alertar operador inmediatamente', 'Error Posible (40-80%): Enviar con warning para confirmación manual', 'Probable OK (<40%): Enviar automáticamente al sistema de liquidación', 'Error Confirmado: Registrar para reentrenamiento del modelo'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan instrucciones con errores realistas', 'El modelo aprende patrones de error en 30-60 segundos', 'El dashboard muestra cola de validación con alertas']
+  },
+  UC04: {
+    title: 'Clasificación y Enrutamiento de Mensajería ISO 20022',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline NLP para clasificar y enrutar automáticamente mensajes MT/MX (ISO 20022) usando CORTEX.COMPLETE.',
+    foco: 'Mensajería interbancaria — interpretación y enrutamiento automático de mensajes financieros en la migración a ISO 20022.',
+    reto: 'Procesar 10.000+ mensajes MT/MX diarios con clasificación automática, eliminando el 40% del tiempo dedicado a clasificación manual.',
+    objetivos: ['Generar mensajes MT/MX sintéticos de múltiples tipos', 'Clasificar por tipo de operación con CORTEX.COMPLETE', 'Extraer entidades clave (cuentas, importes, fechas valor)', 'Crear tabla de reglas de enrutamiento', 'Dashboard de mensajería con métricas de enrutamiento'],
+    funcionalidades: ['LLM: Clasificación de mensajes con CORTEX.COMPLETE', 'Datos sintéticos: 2.000 mensajes de 8 tipos (pago, liquidación, custody, confirmación, estado, corrección, cancelación, consulta)', 'Extracción: Cuentas IBAN/BIC, importes, ISINs, fechas valor, referencias', 'Dashboard Streamlit: Panel de mensajería con enrutamiento y estadísticas'],
+    datos: ['Mensajes: Texto completo de mensajes MT103, MT202, MT540, MT548, MX equivalentes', 'Clasificación: Tipo de mensaje + sistema destino + prioridad', 'Entidades extraídas: Cuentas, importes, referencias, fechas', 'Enrutamiento: Sistema SWIFT, core bancario, custodia, treasury, risk'],
+    estratificacion: ['Urgente (mismo día): Prioridad máxima, enrutamiento inmediato', 'Estándar (D): Procesamiento en cola estándar', 'Informativo: Registro y archivo sin acción', 'Error de clasificación: Cola de revisión manual'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan mensajes financieros con texto realista', 'CORTEX.COMPLETE clasifica y extrae entidades', 'El dashboard muestra volumen, tipos y eficiencia de enrutamiento']
+  },
+  UC05: {
+    title: 'Motor de Recomendación de Fondos ESG',
+    contexto: 'Estos Cortex Code Prompts construyen un motor de recomendación de fondos usando ML.CLASSIFICATION y embeddings para plataformas de distribución como Allfunds e Inversis.',
+    foco: 'Distribución de fondos — recomendación personalizada de fondos a distribuidores y asesores según perfil de cliente y criterios ESG.',
+    reto: 'Aumentar el universo activo de fondos recomendados de 20-30 a 200+ fondos por distribuidor, mejorando la captación neta un 25%.',
+    objetivos: ['Vectorizar estrategias de fondos con EMBED_TEXT', 'Generar perfiles de distribuidores y clientes', 'Entrenar ML.CLASSIFICATION para matching fondos-distribuidores', 'Filtrar por criterios ESG y perfil MiFID', 'Dashboard de recomendaciones con justificación'],
+    funcionalidades: ['ML: Recomendación con ML.CLASSIFICATION + EMBED_TEXT vectorización', 'Datos sintéticos: 1.000 fondos con estrategias, 200 distribuidores con perfiles', 'Scoring: Compatibilidad fondo-distribuidor + score ESG + diversificación', 'Dashboard Streamlit: Top-N recomendaciones con justificación LLM por distribuidor'],
+    datos: ['Fondos: ISIN, gestora, estrategia, benchmark, SRRI, ESG score, comisión', 'Distribuidores: Perfil de cliente mayoritario, mandatos, restricciones, cartera actual', 'Embeddings: Vectores de estrategia de 1.536 dimensiones por fondo', 'Recomendaciones: Top-10 por distribuidor con score de compatibilidad'],
+    estratificacion: ['Compatibilidad Alta (score > 0.85): Recomendación activa con argumentario', 'Compatible (0.70-0.85): Incluir en radar con seguimiento', 'Baja Compatibilidad (0.50-0.70): Solo bajo demanda explícita', 'Incompatible (<0.50): Excluir del universo recomendable'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan fondos y distribuidores con perfiles detallados', 'EMBED_TEXT vectoriza las estrategias de fondos', 'El dashboard muestra recomendaciones personalizadas con score']
+  },
+  UC06: {
+    title: 'Análisis de Documentos KID/KIID/Prospectus con LLM',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de extracción masiva de datos de documentos regulatorios de fondos usando CORTEX.COMPLETE.',
+    foco: 'Distribución de fondos — base de datos estructurada de características de fondos extraída automáticamente de KID, KIID y Prospectus.',
+    reto: 'Procesar 500+ documentos de nuevos fondos al mes en horas en lugar de días, con consistencia y trazabilidad completa.',
+    objetivos: ['Generar documentos KID/KIID sintéticos con contenido realista', 'Extraer SRRI, costes TER/OCF y horizonte con CORTEX.COMPLETE', 'Extraer estrategia, restricciones y advertencias regulatorias', 'Validar consistencia entre versiones del mismo fondo', 'Dashboard de base de datos de producto con búsqueda'],
+    funcionalidades: ['LLM: Extracción de 50+ campos con CORTEX.COMPLETE sobre texto de documentos', 'Datos sintéticos: 300 documentos KID/KIID de fondos de 6 categorías', 'Validación: Detección de cambios entre versiones del mismo documento', 'Dashboard Streamlit: Base de datos de fondos con filtros y exportación'],
+    datos: ['KID/KIID: Textos con SRRI, costes, horizonte, estrategia, advertencias', 'Datos extraídos: 50+ campos estructurados en JSON por documento', 'Historial de versiones: Cambios detectados entre actualizaciones', 'Calidad: Score de completitud y confianza de extracción por campo'],
+    estratificacion: ['Extracción completa (>95% campos): Carga automática a base de datos', 'Extracción parcial (70-95%): Revisión de campos faltantes', 'Extracción deficiente (<70%): Reprocesamiento o revisión manual', 'Cambio significativo vs. versión anterior: Alertar al equipo de producto'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan documentos con estructura realista de KID/KIID', 'CORTEX.COMPLETE extrae campos estructurados en JSON', 'El dashboard permite búsqueda y comparación de fondos']
+  },
+  UC07: {
+    title: 'Detección de Fondos Duplicados y Similares',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de clustering de fondos usando EMBED_TEXT y VECTOR_COSINE_SIMILARITY para identificar duplicados y solapamientos en catálogos de distribución.',
+    foco: 'Racionalización de catálogos — identificación de fondos sustancialmente similares para optimizar el catálogo de distribución.',
+    reto: 'Reducir la redundancia del 30% en catálogos de fondos, simplificando la selección para asesores y mejorando la experiencia del distribuidor.',
+    objetivos: ['Vectorizar estrategias de fondos con EMBED_TEXT', 'Calcular similitud coseno entre fondos', 'Identificar clusters de fondos sustancialmente similares', 'Analizar solapamiento de cartera con duplicados', 'Dashboard de racionalización con recomendaciones LLM'],
+    funcionalidades: ['Vectorización: EMBED_TEXT sobre descripción de estrategia + benchmark + política', 'Similitud: VECTOR_COSINE_SIMILARITY para comparación par a par', 'Clustering: Identificación de grupos con similitud > 0.90', 'Dashboard Streamlit: Mapa de calor de similitud y recomendaciones de consolidación'],
+    datos: ['Fondos: 1.000 con descripción de estrategia, benchmark, categoría Morningstar', 'Vectores: Embeddings de estrategia de 1.536 dimensiones por fondo', 'Clusters: Grupos de fondos con similitud > 0.85', 'Solapamiento: % de cartera cubierta por fondos similares en catálogo'],
+    estratificacion: ['Duplicado Exacto (similitud > 0.95): Eliminar uno del catálogo activo', 'Muy Similar (0.85-0.95): Consolidar y elegir el de menor TER', 'Similar (0.70-0.85): Mantener ambos con diferenciación clara', 'Distinto (<0.70): Sin acción requerida'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan fondos con estrategias variadas', 'EMBED_TEXT vectoriza y VECTOR_COSINE_SIMILARITY calcula similitud', 'El dashboard muestra clusters y recomienda consolidaciones']
+  },
+  UC08: {
+    title: 'Predicción de Flujos de Suscripción/Reembolso con Model Registry',
+    contexto: 'Estos Cortex Code Prompts construyen un modelo de forecasting de flujos netos de fondos con SNOWFLAKE.ML.FORECAST y lo registran en Model Registry para gestión de producción.',
+    foco: 'Gestión de liquidez — predicción de flujos semanales por fondo para optimizar la tesorería de plataformas de distribución.',
+    reto: 'Reducir el error de previsión de flujos del 30-40% al 8-12%, evitando tensiones de tesorería en la plataforma.',
+    objetivos: ['Generar series históricas de flujos por fondo con factores de mercado', 'Entrenar ML.FORECAST para predicción semanal', 'Evaluar accuracy y registrar en Model Registry v1', 'Mejorar con más features y registrar v2', 'Dashboard de cash flow forecast por fondo y plataforma'],
+    funcionalidades: ['ML.FORECAST: Predicción de flujos netos semanales por fondo', 'Model Registry: flujos_fondos_model v1 y v2 con métricas MAPE, RMSE', 'Datos sintéticos: 3 años de histórico de flujos para 100 fondos', 'Dashboard Streamlit: Forecast de liquidez con intervalos de confianza y alertas'],
+    datos: ['Flujos: Suscripciones y reembolsos semanales por fondo (3 años)', 'Factores externos: Performance relativa, spreads de mercado, noticias de gestora', 'Modelo v1: 6 features (performance, estacionalidad, tendencia, volatilidad, flows_lag)', 'Modelo v2: 12 features (añade noticias sentimiento, competencia, datos de plataforma)'],
+    estratificacion: ['Salida Masiva Predicha (>10% AUM): Alertar y pre-activar líneas de liquidez', 'Salida Significativa (5-10%): Monitorizar y preparar tesorería', 'Flujo Estable (±5%): Sin acción especial', 'Entrada Significativa (>5%): Optimizar inversión del efectivo recibido'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se genera histórico de 3 años de flujos con factores externos', 'ML.FORECAST entrena en la serie temporal', 'Model Registry versiona los modelos con métricas comparables']
+  },
+  UC09: {
+    title: 'Automatización de Onboarding de Fondos',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de onboarding automatizado de fondos usando CORTEX.COMPLETE y AI_EXTRACT para procesar documentación legal y técnica.',
+    foco: 'Operaciones de distribución — automatización del alta de nuevos fondos en plataformas procesando documentación desde diversas fuentes.',
+    reto: 'Reducir el tiempo de onboarding de 3-5 días a 2 horas, escalando la capacidad para procesar 500+ fondos nuevos al mes.',
+    objetivos: ['Generar documentos de onboarding sintéticos (prospectos, fichas, contratos)', 'Extraer datos maestros del fondo con CORTEX.COMPLETE', 'Extraer clasificaciones regulatorias y restricciones', 'Validar datos contra fuentes externas', 'Dashboard de estado de onboarding con checklist'],
+    funcionalidades: ['LLM: Extracción de datos maestros con CORTEX.COMPLETE y AI_EXTRACT', 'Datos sintéticos: 100 fondos con documentación completa de onboarding', 'Validación: Cruce con registro de la CNMV, ESMA y datos de Bloomberg', 'Dashboard Streamlit: Estado del onboarding con checklist y bloqueantes'],
+    datos: ['Documentos: Prospecto, DFI/KID, contrato distribución, ficha de producto', 'Datos maestros: ISIN, gestora, categoría, clases, comisiones, cut-off', 'Restricciones: Países de distribución, inversores elegibles, montos mínimos', 'Checklist: 25 campos requeridos con estado (OK/Pendiente/Error)'],
+    estratificacion: ['Onboarding completo (checklist 100%): Alta automática en plataforma', 'Casi completo (90-99%): Alta con campos pendientes en 24h', 'Incompleto (70-90%): Solicitar documentación adicional a la gestora', 'Bloqueado (<70%): Escalar a equipo de relaciones con gestoras'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan paquetes de documentación de onboarding', 'CORTEX.COMPLETE extrae datos de cada documento', 'El dashboard muestra el estado de onboarding por fondo']
+  },
+  UC10: {
+    title: 'Asistente de Mercados en Tiempo Real con RAG',
+    contexto: 'Estos Cortex Code Prompts construyen un chatbot conversacional para gestores y traders usando CORTEX SEARCH y CORTEX.COMPLETE sobre datos de posiciones, P&L y noticias en tiempo real.',
+    foco: 'Trading y gestión de carteras — asistente conversacional que responde preguntas en lenguaje natural sobre posiciones, exposiciones y mercado.',
+    reto: 'Reducir de 2-3 horas a minutos el tiempo dedicado a buscar información de mercado, acelerando las decisiones de inversión.',
+    objetivos: ['Crear base de conocimiento de posiciones y noticias de mercado', 'Construir índice Cortex Search sobre posiciones y P&L', 'Implementar pipeline RAG con CORTEX.COMPLETE', 'Desarrollar chatbot con historial de conversación', 'Dashboard conversacional con métricas de calidad'],
+    funcionalidades: ['Cortex Search: Índice sobre posiciones, P&L, noticias y análisis', 'LLM: CORTEX.COMPLETE para respuestas contextualizadas multi-documento', 'Datos sintéticos: 10.000 posiciones en 50 carteras, 1.000 noticias de mercado', 'Dashboard Streamlit: Interfaz conversacional con historial y referencias de fuente'],
+    datos: ['Posiciones: Cartera, activo, ISIN, exposición nominal, P&L diario, P&L YTD', 'Noticias: Titulares y texto de noticias financieras por activo e índice', 'Análisis: Informes de analistas y comentarios de mercado por sector', 'Consultas: Histórico de preguntas y respuestas con rating de utilidad'],
+    estratificacion: ['Respuesta directa: Pregunta sobre datos estructurados (posición, P&L) → respuesta inmediata SQL', 'Respuesta RAG: Pregunta sobre contexto o análisis → búsqueda Cortex Search + síntesis LLM', 'Escalada: Pregunta fuera de alcance → derivar a especialista con contexto', 'Sin datos: Reconocer límite y sugerir fuentes alternativas'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan posiciones y noticias de mercado', 'Cortex Search indexa todo el contenido', 'El chatbot responde preguntas en lenguaje natural con referencias']
+  },
+  UC11: {
+    title: 'Generación Automática de Informes de Cartera',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de generación automática de comentarios de cartera personalizados para clientes de wealth management usando CORTEX.COMPLETE.',
+    foco: 'Wealth management — informes de cartera personalizados con análisis de atribución, comparativa vs. benchmark y perspectivas.',
+    reto: 'Reducir de 4-6 horas a 20 minutos la generación de comentarios de cartera semanales para una base de 200+ clientes.',
+    objetivos: ['Generar datos de carteras con performance y composición', 'Calcular atribución de performance por activo y sector', 'Comparar vs. benchmark del cliente', 'Generar comentario narrativo personalizado con CORTEX.COMPLETE', 'Dashboard de informes generados con gestión de versiones'],
+    funcionalidades: ['LLM: Generación de comentarios con CORTEX.COMPLETE adaptados al perfil del cliente', 'Datos sintéticos: 200 carteras de clientes con 3 meses de histórico de performance', 'Atribución: Análisis de contribución por activo, sector, geografía y divisa', 'Dashboard Streamlit: Gestor de informes con previsualización y envío'],
+    datos: ['Carteras: Posiciones, pesos, performance diaria, benchmark y objetivo del cliente', 'Atribución: Contribución por activo, sector, efecto divisa, efecto selección', 'Perfil cliente: Conservador/Moderado/Dinámico, horizonte, objetivo, restricciones', 'Informe: Resumen ejecutivo + desglose de performance + perspectivas'],
+    estratificacion: ['Cartera con desviación significativa vs. benchmark: Incluir análisis especial', 'Cartera con pérdidas YTD: Incluir contexto de mercado y perspectivas', 'Cartera con performance excepcional: Destacar contribuidores y perspectivas', 'Informe estándar: Formato base con KPIs y comentario breve'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan carteras con histórico de performance', 'CORTEX.COMPLETE genera comentarios personalizados', 'El dashboard muestra informes listos para enviar']
+  },
+  UC12: {
+    title: 'Análisis de Sentimiento para Ideas de Inversión',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de análisis de sentimiento sobre noticias, earnings calls y redes sociales para generar señales de inversión usando CORTEX.SENTIMENT.',
+    foco: 'Trading y gestión de carteras — señales de sentimiento por activo derivadas de fuentes textuales para ideas de inversión.',
+    reto: 'Monitorizar automáticamente 10.000+ textos diarios para detectar cambios de sentimiento relevantes antes de que se reflejen en precios.',
+    objetivos: ['Generar textos de noticias, earnings calls y análisis sintéticos', 'Analizar sentimiento con CORTEX.SENTIMENT por activo', 'Agregar señales por activo, sector y geografía', 'Detectar cambios de tendencia en el sentimiento', 'Dashboard de heat-map de sentimiento con alertas'],
+    funcionalidades: ['NLP: CORTEX.SENTIMENT sobre textos por activo + CORTEX.COMPLETE para resumen', 'Datos sintéticos: 5.000 textos de 4 fuentes (noticias, earnings, analistas, social)', 'Señales: Score de sentimiento normalizado -1 a +1 por activo y fecha', 'Dashboard Streamlit: Heat-map de sentimiento, alertas de cambio, top ideas'],
+    datos: ['Textos: Noticias financieras, transcripciones de earnings calls, informes, tweets', 'Sentimiento: Score por texto + categoría (positivo/neutro/negativo)', 'Agregación: Media ponderada por fuente y relevancia por activo', 'Alertas: Cambios de sentimiento >0.3 en <48h como señal potencial'],
+    estratificacion: ['Sentimiento Muy Positivo (>0.7): Señal alcista, investigar posición larga', 'Sentimiento Positivo (0.3-0.7): Favorable, monitorizar para entrada', 'Sentimiento Neutro (-0.3 a 0.3): Sin señal clara', 'Sentimiento Negativo (<-0.3): Señal bajista, revisar posición'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan textos de múltiples fuentes por activo', 'CORTEX.SENTIMENT analiza cada texto', 'El dashboard muestra heat-map y alertas de cambio de tendencia']
+  },
+  UC13: {
+    title: 'Detección de Anomalías en Órdenes Pre-Ejecución',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de detección de órdenes anómalas usando SNOWFLAKE.ML.ANOMALY_DETECTION en el flujo pre-ejecución.',
+    foco: 'Trading — validación automática de órdenes de trading antes de su envío al mercado para prevenir errores y manipulación.',
+    reto: 'Detectar el 95% de las órdenes erróneas o sospechosas antes de la ejecución, con menos del 1% de falsos positivos.',
+    objetivos: ['Generar flujo histórico de órdenes con anomalías etiquetadas', 'Feature engineering de órdenes (precio, volumen, timing, contexto)', 'Entrenar ML.ANOMALY_DETECTION sobre flujo de órdenes', 'Calibrar umbrales para minimizar falsos positivos', 'Dashboard de alertas pre-ejecución'],
+    funcionalidades: ['ML: ML.ANOMALY_DETECTION para identificar órdenes fuera de rango', 'Datos sintéticos: 50.000 órdenes con 1% de anomalías etiquetadas (fat finger, wash trade, spoofing)', 'Features: precio vs. VWAP, volumen vs. ADV, timing, ratio vs. posición', 'Dashboard Streamlit: Cola de órdenes bloqueadas con tipo de anomalía y contexto'],
+    datos: ['Órdenes: Activo, dirección, volumen, precio límite, trader, timestamp', 'Contexto de mercado: VWAP, ADV, spread bid-ask, volatilidad', 'Posición actual: Exposición del trader en el activo', 'Anomalías: Fat finger (5%), Wash trade (2%), Spoofing (1%), Volumen excesivo (2%)'],
+    estratificacion: ['Anomalía Severa (score > 0.95): Bloquear orden y alertar compliance inmediatamente', 'Anomalía Moderada (0.80-0.95): Pedir confirmación al trader antes de ejecutar', 'Anomalía Leve (0.60-0.80): Warning al trader, ejecutar con registro', 'Normal (<0.60): Ejecutar sin intervención'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se genera flujo de órdenes con anomalías realistas', 'ML.ANOMALY_DETECTION entrena sobre el histórico', 'El dashboard valida órdenes en tiempo real']
+  },
+  UC14: {
+    title: 'Automatización KYC/AML con NLP e IA',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de automatización KYC con CORTEX.COMPLETE para extracción de documentos corporativos, identificación de UBOs y screening AML.',
+    foco: 'Compliance — automatización del proceso KYC de clientes institucionales para reducir tiempos de onboarding de semanas a horas.',
+    reto: 'Reducir el tiempo de KYC de 2-4 semanas a <8 horas, procesando el 80% de casos de forma automática con auditabilidad completa.',
+    objetivos: ['Generar documentos corporativos sintéticos (estatutos, poderes, estados financieros)', 'Extraer datos de identidad y estructura accionarial con CORTEX.COMPLETE', 'Identificar beneficiarios últimos (UBO) automáticamente', 'Realizar screening AML/PEP/sancionados', 'Dashboard de estado KYC con scoring de riesgo'],
+    funcionalidades: ['LLM: Extracción de entidades corporativas con CORTEX.COMPLETE', 'ML: Scoring de riesgo AML con ML.CLASSIFICATION', 'Datos sintéticos: 500 clientes institucionales con documentación completa', 'Dashboard Streamlit: Panel de estado KYC por cliente con scoring y alertas'],
+    datos: ['Documentos: Estatutos, poderes notariales, actas, estados financieros', 'UBOs: Árbol de propiedad hasta el 25% de participación directa o indirecta', 'Screening: Listas OFAC, ONU, EU sancionados, PEPs de 50 países', 'Scoring: Riesgo bajo/medio/alto basado en 15 factores de riesgo AML'],
+    estratificacion: ['Riesgo Bajo: KYC simplificado con verificación automática', 'Riesgo Medio: KYC estándar con revisión del analista AML', 'Riesgo Alto: KYC reforzado con due diligence mejorada', 'Hit en listas: Bloquear y escalar a MLRO inmediatamente'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan clientes con documentación corporativa completa', 'CORTEX.COMPLETE extrae datos y UBOs', 'El dashboard muestra estado de KYC y alertas AML']
+  },
+  UC15: {
+    title: 'Monitorización de Operaciones Sospechosas AMLD',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de detección de blanqueo de capitales usando SNOWFLAKE.ML.ANOMALY_DETECTION sobre patrones de operaciones en custodia y distribución.',
+    foco: 'Compliance AMLD — detección de patrones sospechosos: operaciones circulares, fragmentación de importes y concentración en jurisdicciones de riesgo.',
+    reto: 'Reducir los falsos positivos del 95% al 25% manteniendo el 99% de detección real, liberando al equipo compliance de revisiones innecesarias.',
+    objetivos: ['Generar datos de operaciones normales y sospechosas', 'Feature engineering de patrones AMLD (circulares, fragmentación, jurisdicción)', 'Entrenar ML.ANOMALY_DETECTION sobre flujo de operaciones', 'Construir grafo de redes de contrapartes', 'Dashboard de alertas AMLD con priorización'],
+    funcionalidades: ['ML: ML.ANOMALY_DETECTION con features de comportamiento AMLD', 'Datos sintéticos: 100.000 operaciones con 0.5% sospechosas etiquetadas', 'Grafo: Análisis de redes de contrapartes con detección de circularidad', 'Dashboard Streamlit: Alertas priorizadas con explicabilidad y evidencias'],
+    datos: ['Operaciones: Cuenta origen, cuenta destino, importe, fecha, tipo, jurisdicción', 'Features AMLD: Fragmentación (N ops < umbral en 24h), velocidad (tiempo entre entrada y salida)', 'Grafo: Contrapartes frecuentes, circularidad de flujos, jurisdicciones intermedias', 'Alertas: Score de sospecha + tipo de patrón + evidencias clave'],
+    estratificacion: ['Circular Confirmado (score > 0.95): Reportar STR inmediatamente al SEPBLAC', 'Muy Sospechoso (0.80-0.95): Investigación interna prioritaria', 'Moderadamente Sospechoso (0.60-0.80): Revisión en plazo estándar', 'Normal (<0.60): Archivar sin acción'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan operaciones con patrones AMLD reales', 'ML.ANOMALY_DETECTION detecta comportamientos atípicos', 'El dashboard prioriza alertas con evidencias explicables']
+  },
+  UC16: {
+    title: 'Clasificación MiFID II de Clientes y Productos',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de clasificación automática de adecuación cliente-producto según normativa MiFID II/PRIIPs usando ML.CLASSIFICATION.',
+    foco: 'Compliance MiFID II — automatización del test de adecuación e idoneidad entre perfil de cliente y características del producto de inversión.',
+    reto: 'Clasificar automáticamente el 100% de las recomendaciones con justificación regulatoria, eliminando el riesgo de distribución inadecuada.',
+    objetivos: ['Generar perfiles MiFID II de clientes con 8 criterios', 'Definir características de productos según PRIIPs', 'Entrenar ML.CLASSIFICATION para matching de adecuación', 'Generar justificación regulatoria con CORTEX.COMPLETE', 'Dashboard de adecuación con audit trail'],
+    funcionalidades: ['ML: Clasificación de adecuación con ML.CLASSIFICATION (8 criterios MiFID)', 'LLM: Generación de justificación con CORTEX.COMPLETE', 'Datos sintéticos: 2.000 pares cliente-producto con resolución conocida', 'Dashboard Streamlit: Panel de adecuación con decisión, justificación y audit trail'],
+    datos: ['Clientes: Perfil de riesgo (1-7), horizonte, conocimiento, experiencia, objetivo, situación financiera', 'Productos: SRRI (1-7), horizonte recomendado, complejidad, tipo de inversor objetivo', 'Matching: 8 criterios de adecuación MiFID II + resultado (Adecuado/No Adecuado/Advertencia)', 'Justificación: Texto regulatorio generado por CORTEX.COMPLETE con los criterios aplicados'],
+    estratificacion: ['Totalmente Adecuado (8/8 criterios OK): Distribuir libremente', 'Adecuado con Advertencia (6-7/8): Distribuir con aviso de riesgo específico', 'Parcialmente Inadecuado (4-5/8): Requerir reconocimiento explícito del cliente', 'Inadecuado (<4/8): No distribuir, documentar con razones'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan pares cliente-producto variados', 'ML clasifica la adecuación en 8 criterios', 'El dashboard genera justificación regulatoria y registra decisiones']
+  },
+  UC17: {
+    title: 'Revisión de Contratos de Custodia con LLM',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de análisis y revisión de contratos de Global Custody usando CORTEX.COMPLETE para identificar desviaciones y cláusulas de riesgo.',
+    foco: 'Legal y contratos — revisión automática de contratos ISDA, CSA y Custody Agreements para detectar desviaciones del clausulado estándar.',
+    reto: 'Reducir de 3-4 semanas a 2-3 días la revisión de contratos de custodia, aumentando la capacidad de negociación simultánea.',
+    objetivos: ['Generar contratos de custodia sintéticos con variaciones', 'Extraer cláusulas clave con CORTEX.COMPLETE', 'Comparar con clausulado estándar ISDA/GMSLA', 'Detectar cláusulas de riesgo operacional o legal', 'Dashboard de revisión contractual con puntos de negociación'],
+    funcionalidades: ['LLM: Extracción y análisis de cláusulas con CORTEX.COMPLETE', 'Datos sintéticos: 50 contratos de custodia con variaciones controladas vs. estándar', 'Comparación: Desviaciones identificadas por sección y tipo (favorable/desfavorable/neutral)', 'Dashboard Streamlit: Visor de contrato con desviaciones resaltadas y puntos de negociación'],
+    datos: ['Contratos: Texto de Custody Agreement, ISDA Master, CSA, GMSLA', 'Cláusulas: Colateral elegible, márgenes iniciales, eventos de incumplimiento, resolución', 'Desviaciones: Diferencias vs. cláusula estándar con clasificación de riesgo', 'Resumen: Top-5 puntos de negociación prioritarios con argumento'],
+    estratificacion: ['Cláusula de Riesgo Crítico: Escalar a dirección jurídica inmediatamente', 'Desviación Significativa: Negociar en próxima ronda con contraargumento preparado', 'Desviación Menor: Aceptar o negociar según contexto', 'Estándar: Sin acción requerida, documentar conformidad'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan contratos con variaciones vs. estándar ISDA', 'CORTEX.COMPLETE extrae y compara cláusulas', 'El dashboard muestra desviaciones y puntos de negociación']
+  },
+  UC18: {
+    title: 'Reporting Regulatorio Automático EMIR/SFTR/AIFMD',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de generación automática de reportes regulatorios EMIR, SFTR y AIFMD usando CORTEX.COMPLETE para transformar datos de posiciones en formatos XML/ISO.',
+    foco: 'Reporting regulatorio — generación automática de reportes a repositorios regulatorios europeos desde datos de posiciones y transacciones.',
+    reto: 'Automatizar el 95% del proceso de reporting regulatorio, reduciendo errores y el tiempo de generación de 3 días a 2 horas.',
+    objetivos: ['Generar datos de derivados, repos y alternativos sintéticos', 'Transformar a formato EMIR XML con CORTEX.COMPLETE', 'Generar reporte SFTR para operaciones de repo', 'Generar reporte AIFMD para fondos alternativos', 'Dashboard de estado de reporting con gestión de errores'],
+    funcionalidades: ['LLM: Transformación de datos a formatos XML regulatorios con CORTEX.COMPLETE', 'Datos sintéticos: 5.000 operaciones de derivados, 2.000 repos, 500 posiciones AIF', 'Validación: Completitud y consistencia de campos obligatorios por regulación', 'Dashboard Streamlit: Estado de reporting con errores, correcciones y confirmaciones'],
+    datos: ['Derivados: UTI, LEI contrapartes, tipo, notional, fechas, valoración para EMIR', 'Repos: Contraparte, colateral, importe, tipo (repo/reverse/SBL) para SFTR', 'Alternativos: VNI, apalancamiento, exposiciones, liquidez para AIFMD', 'Estado: Enviado/Aceptado/Rechazado/Corrección pendiente por repositorio'],
+    estratificacion: ['Reporte rechazado: Corregir y reenviar en <4h para cumplir deadline', 'Reporte con warnings: Revisar y confirmar si son aceptables', 'Reporte aceptado: Archivar confirmación y actualizar dashboard', 'Deadline en riesgo: Alertar y priorizar recursos'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan posiciones de derivados, repos y alternativos', 'CORTEX.COMPLETE transforma al formato XML regulatorio', 'El dashboard gestiona el estado de cada envío regulatorio']
+  },
+  UC19: {
+    title: 'Help Desk Inteligente para Back-Office con RAG',
+    contexto: 'Estos Cortex Code Prompts construyen un agente de help desk para back-office usando CORTEX SEARCH y CORTEX.COMPLETE para resolver consultas sobre liquidaciones, breaks e instrucciones.',
+    foco: 'Operaciones de back-office — asistente inteligente que resuelve automáticamente el 80% de las consultas operativas sin intervención de especialistas.',
+    reto: 'Resolver automáticamente 200-500 consultas diarias de back-office en segundos, liberando a especialistas para casos realmente complejos.',
+    objetivos: ['Crear base de conocimiento operativa (procedimientos, SWIFTs, incidencias)', 'Indexar con Cortex Search', 'Implementar pipeline RAG con CORTEX.COMPLETE', 'Desarrollar agente con escalada inteligente', 'Dashboard de métricas del help desk'],
+    funcionalidades: ['Cortex Search: Índice sobre procedimientos operativos, SWIFTs históricos e incidencias resueltas', 'LLM: CORTEX.COMPLETE para síntesis de respuestas contextualizadas', 'Datos sintéticos: 500 procedimientos, 10.000 SWIFTs históricos, 2.000 incidencias resueltas', 'Dashboard Streamlit: Métricas del help desk con tasa de resolución y feedback'],
+    datos: ['Procedimientos: Guías operativas de liquidación, custodia, mensajería, corporate actions', 'SWIFTs: Histórico de mensajes con resolución de incidencias anteriores', 'Consultas: Texto libre de la consulta + respuesta generada + rating de utilidad', 'Escaladas: Consultas derivadas a especialistas con contexto y motivo'],
+    estratificacion: ['Respuesta directa (confianza > 0.90): Responder automáticamente con referencia', 'Respuesta con incertidumbre (0.70-0.90): Responder con aviso de verificar', 'Consulta compleja (0.50-0.70): Respuesta parcial + escalada a especialista', 'Sin respuesta (<0.50): Escalar directamente con contexto completo'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se crea la base de conocimiento operativa', 'Cortex Search indexa todos los documentos', 'El agente responde consultas en lenguaje natural con referencias']
+  },
+  UC20: {
+    title: 'Predicción de Fallos de Liquidación con Feature Store y Model Registry',
+    contexto: 'Estos Cortex Code Prompts construyen el caso de uso más avanzado: Feature Store con Entity OPERACION_LIQUIDACION y 8 FeatureViews, más un modelo en Model Registry para predecir fallos de liquidación con 24h de antelación.',
+    foco: 'Operaciones de liquidación — predicción anticipada de failed trades para activar medidas preventivas y evitar penalizaciones CSDR.',
+    reto: 'Predecir el 85% de los fallos de liquidación con 24h de antelación, reduciendo penalizaciones CSDR un 70% y costes de buy-in un 50%.',
+    objetivos: ['Crear Feature Store con Entity OPERACION_LIQUIDACION y 8 FeatureViews', 'Entrenar y registrar settlement_failure_model v1 en Model Registry', 'Mejorar con más features y registrar v2', 'Activar medidas preventivas automáticas', 'Dashboard de gestión de fallos de liquidación'],
+    funcionalidades: ['Feature Store: Entity OPERACION_LIQUIDACION con 8 FeatureViews (contraparte, instrucción, valores, posición, mercado, broker, operación, scoring)', 'Model Registry: settlement_failure_model v1 y v2 con métricas precision/recall', 'ML: ML.CLASSIFICATION con target FALLO_LIQUIDACION VARCHAR', 'Dashboard Streamlit: Panel de riesgo de liquidación con acciones preventivas'],
+    datos: ['Operaciones: Trade details, contraparte, ISIN, importe, fecha liquidación, mercado', 'FeatureViews: Historial de fallos contraparte, posición short, instrucciones pendientes, liquidez del valor', 'Modelos: v1 (6 features, accuracy 78%), v2 (15 features, accuracy 85%)', 'Medidas: Securities lending activado, petición buy-in anticipada, alerta a contraparte'],
+    estratificacion: ['Fallo Muy Probable (>=80%): Activar securities lending inmediatamente', 'Fallo Probable (60-80%): Contactar contraparte para confirmar disponibilidad', 'Riesgo Moderado (40-60%): Monitorizar y preparar plan de contingencia', 'Probable OK (<40%): Sin acción, liquidación normal esperada'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Crear el Feature Store y las 8 FeatureViews antes de entrenar', 'Registrar ambas versiones en Model Registry con métricas', 'El dashboard activa medidas preventivas automáticamente']
+  }
+};
+
+function verGuia(ucId) {
+  const g = GUIAS[ucId];
+  if (!g) { alert('Guía no disponible aún para ' + ucId); return; }
+  const box = document.getElementById('guiaModalBox');
+  let h = `<button class="modal-close" onclick="cerrarModal('guiaModal')">&times;</button>`;
+  h += `<span class="guide-badge">${ucId}</span>`;
+  h += `<h2>${g.title}</h2>`;
+  h += `<p><strong>Caso de Uso: ${g.title}</strong></p>`;
+  h += `<h3>Contexto de Negocio</h3><p>${g.contexto}</p>`;
+  h += `<p><strong>Foco:</strong> ${g.foco}</p>`;
+  h += `<p><strong>Reto de negocio:</strong> ${g.reto}</p>`;
+  h += `<h3>Objetivos de Aprendizaje</h3><ul>${g.objetivos.map(o=>`<li>${o}</li>`).join('')}</ul>`;
+  h += `<h3>Funcionalidades</h3><ul>${g.funcionalidades.map(f=>`<li>${f}</li>`).join('')}</ul>`;
+  h += `<h3>Datos Generados</h3><ul>${g.datos.map(d=>`<li>${d}</li>`).join('')}</ul>`;
+  h += `<h3>Estratificación</h3><ul>${g.estratificacion.map(e=>`<li>${e}</li>`).join('')}</ul>`;
+  h += `<h3>Cómo Usar</h3><ul>${g.como_usar.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+  h += `<p class="guide-footer">Desarrollado con Snowflake Cortex AI/ML + Feature Store + Model Registry</p>`;
+  box.innerHTML = h;
+  document.getElementById('guiaModal').classList.add('active');
+}
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
+});
+function cerrarModal(id) { document.getElementById(id).classList.remove('active'); }
+
+const PROMPTS = {
+  UC01: {
+    title: "Reconciliación Automática de Posiciones con Feature Store",
+    intro: 'Abre Cortex Code en Snowsight y ejecuta estos prompts secuencialmente. Construirás un Feature Store de custodia con Entity CUENTA_CUSTODIA y entrenarás un modelo de detección de discrepancias T+1.',
+    steps: [
+      { title: "Configurar entorno", desc: "Crea la base de datos, esquema y warehouse para el proyecto.", prompt: "Crea una base de datos llamada CUSTODIA_RECON_DB con esquema PUBLIC y un warehouse COMPUTE_WH tamaño SMALL con auto-suspend de 60 segundos. Establece el contexto de sesión." },
+      { title: "Generar posiciones propias", desc: "Crea 5.000 posiciones de custodia sintéticas en 500 cuentas.", prompt: "Genera una tabla POSICIONES_PROPIAS con 5000 filas usando GENERATOR(ROWCOUNT => 5000). Columnas: cuenta_id (CUS001..CUS500), isin (ISIN00001..ISIN200), saldo_t0 FLOAT, saldo_t1 FLOAT (saldo_t0 + variación -5% a +5%), depositario (Euroclear 60%/Clearstream 40%), fecha DATE (últimos 30 días), tiene_movimiento BOOLEAN." },
+      { title: "Generar confirmaciones de depositarios", desc: "Simula confirmaciones de Euroclear y Clearstream con discrepancias.", prompt: "Genera tabla CONFIRMACIONES_DEPOSITARIOS con un registro por (cuenta_id, isin, fecha). Columnas: saldo_confirmado FLOAT (idéntico al saldo_t1 en 93% de casos; discrepancia aleatoria en 7%), depositario, hora_confirmacion, codigo_estado (OK/PDTE/DSCR), es_discrepancia BOOLEAN (TRUE si |saldo_t1 - saldo_confirmado| > 0.01). Asegura que es_discrepancia sea VARCHAR no FLOAT." },
+      { title: "Crear Feature Store de custodia", desc: "Inicializa el Feature Store con Entity CUENTA_CUSTODIA.", prompt: "Crea un Feature Store: CREATE FEATURE STORE CUSTODIA_FS. Luego crea la entidad: CREATE ENTITY CUENTA_CUSTODIA WITH PRIMARY KEY (cuenta_id). Crea los primeros dos FeatureViews: FV_POSICIONES (saldo_t0, saldo_t1, tiene_movimiento) y FV_CONFIRMACIONES (saldo_confirmado, codigo_estado, horas_hasta_confirmacion calculado)." },
+      { title: "Completar FeatureViews del Feature Store", desc: "Define las 4 FeatureViews restantes.", prompt: "Crea los siguientes FeatureViews en CUSTODIA_FS para la entidad CUENTA_CUSTODIA: FV_SWIFT (num_swift_pendientes, tipo_ultimo_swift, horas_desde_ultimo_swift), FV_HISTORICO (tasa_discrepancia_30d, num_breaks_mes, importe_medio_break), FV_RIESGO (depositario_encoded, es_valor_iliquido, es_mercado_emergente), FV_MERCADO (volatilidad_activo, spread_bid_ask, volumen_mercado)." },
+      { title: "Extraer dataset de entrenamiento", desc: "Genera el training dataset desde el Feature Store.", prompt: "Extrae el dataset de entrenamiento haciendo SELECT de todas las features del Feature Store CUSTODIA_FS para la entidad CUENTA_CUSTODIA, uniendo con la tabla CONFIRMACIONES_DEPOSITARIOS para obtener el target es_discrepancia. Crea tabla TRAINING_DATA con todas las features numéricas y target es_discrepancia como VARCHAR (valores: DISCREPANCIA / OK)." },
+      { title: "Entrenar ML.CLASSIFICATION", desc: "Entrena el clasificador de discrepancias con los datos del Feature Store.", prompt: "Divide TRAINING_DATA en ENTRENAMIENTO (80%) y TEST (20%) usando SAMPLE. Entrena SNOWFLAKE.ML.CLASSIFICATION llamado detector_discrepancias usando la tabla ENTRENAMIENTO, TARGET_COLNAME => 'es_discrepancia' y evaluate => TRUE." },
+      { title: "Evaluar modelo", desc: "Revisa métricas de evaluación y feature importance.", prompt: "Ejecuta SHOW_EVALUATION_METRICS, SHOW_CONFUSION_MATRIX y SHOW_FEATURE_IMPORTANCE del modelo detector_discrepancias. Muestra las 10 features más importantes y el accuracy, precision y recall por clase." },
+      { title: "Generar predicciones y alertas", desc: "Puntúa posiciones y genera alertas priorizadas.", prompt: "Crea tabla PREDICCIONES_RECON usando detector_discrepancias!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (es_discrepancia)) sobre la tabla TEST. Extrae probabilidad_discrepancia y clasifica: Break_Critico (>=90%), Break_Significativo (70-90%), Break_Menor (50-70%), OK (<50%). Muestra resumen por nivel y top-20 breaks por importe." },
+      { title: "Dashboard Streamlit de reconciliación", desc: "Crea panel de breaks en tiempo real con priorización.", prompt: "Crea dashboard Streamlit con: 4 KPIs (total posiciones, breaks detectados, tasa de reconciliación %, importe total en break), tabla de breaks priorizados por importe con filtro por depositario y nivel, gráfico de tendencia de tasa de breaks por fecha, botón de descarga CSV de breaks pendientes. Usa snowflake.connector.connect() para ejecución local del dashboard." }
+    ]
+  },
+  UC02: {
+    title: "Corporate Actions Intelligence con LLM",
+    intro: 'Construirás un pipeline de procesamiento automático de eventos corporativos usando CORTEX.COMPLETE para extraer datos estructurados de múltiples fuentes heterogéneas.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para procesamiento de eventos corporativos.", prompt: "Crea base de datos CORP_ACTIONS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar valores y cuentas", desc: "Catálogo base de valores y posiciones en custodia.", prompt: "Genera tabla VALORES con 200 registros: isin (ISIN00001..ISIN200), nombre_valor, tipo (Acción 60%/Bono 30%/ETF 10%), mercado (ES/DE/FR/GB/US), sector. Genera tabla POSICIONES_CUSTODIA: 500 cuentas × 50 valores (25.000 posiciones) con cuenta_id, isin, saldo_actual FLOAT." },
+      { title: "Generar eventos corporativos multi-fuente", desc: "Simula eventos de dividendo, split, canje, OPA y amortización.", prompt: "Genera tabla EVENTOS_CORPORATIVOS con 200 eventos. Columnas: evento_id, isin, tipo_evento (Dividendo 50%/Split 20%/Canje 15%/OPA 10%/Amortizacion 5%), fecha_ex DATE, fecha_pago DATE, ratio FLOAT, texto_bloomberg TEXT (descripción del evento en prosa), texto_swift TEXT (mensaje MT564 simulado), texto_pdf TEXT (extracto de circular del custodio). GENERATOR(ROWCOUNT => 200) con UNIFORM()." },
+      { title: "Extraer datos estructurados con CORTEX.COMPLETE", desc: "Procesa cada fuente textual para extraer campos clave.", prompt: "Para cada evento, usa CORTEX.COMPLETE con modelo 'snowflake-arctic' para extraer de texto_bloomberg: JSON con campos tipo_evento, isin, fecha_ex, fecha_pago, ratio, moneda, condiciones_especiales. Almacena en EVENTOS_BLOOMBERG_STRUCTURED. Repite para texto_swift (EVENTOS_SWIFT_STRUCTURED) y texto_pdf (EVENTOS_PDF_STRUCTURED)." },
+      { title: "Validar consistencia entre fuentes", desc: "Detecta discrepancias entre Bloomberg, SWIFT y PDF.", prompt: "Crea vista VALIDACION_CONSISTENCIA uniendo las 3 tablas estructuradas por evento_id. Calcula discrepancia_ratio (diferencia de ratio entre fuentes), discrepancia_fecha (diferencia de fecha_pago), tiene_discrepancia (TRUE si alguna diferencia > 0). Genera tabla EVENTOS_CON_DISCREPANCIA con los eventos problemáticos y qué campos discrepan." },
+      { title: "Calcular impacto por cuenta", desc: "Proyecta el efecto del evento en cada posición de custodia.", prompt: "Crea tabla IMPACTO_EVENTOS uniendo POSICIONES_CUSTODIA con EVENTOS_CORPORATIVOS para los valores en cartera. Calcula: efectivo_a_cobrar (saldo × ratio para dividendos), nuevas_acciones (saldo × (ratio-1) para splits), valor_canje (saldo × ratio × precio_nuevo para canjes). Suma impacto total por cuenta." },
+      { title: "Generar instrucciones de processing", desc: "Crea instrucciones automáticas de processing para cada cuenta afectada.", prompt: "Para eventos sin discrepancias, genera tabla INSTRUCCIONES_PROCESSING con: instruccion_id, evento_id, cuenta_id, tipo_instruccion (CREDITO_EFECTIVO/AJUSTE_POSICION/CANJE), importe_instruccion, estado (PENDIENTE), fecha_valor. Para eventos con discrepancias, genera registro en EVENTOS_REVISION_MANUAL." },
+      { title: "Dashboard de eventos corporativos", desc: "Panel de gestión de eventos pendientes con alertas.", prompt: "Crea dashboard Streamlit con: KPIs (eventos hoy, cuentas afectadas, importe total a procesar, eventos con discrepancias), tabla de eventos pendientes con filtro por tipo y fecha, alertas de eventos con fecha_ex < 48h, detalle de instrucciones por evento. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline de procesamiento automático", desc: "Task para procesar eventos nuevos diariamente.", prompt: "Crea un Task CORP_ACTIONS_PIPELINE que ejecute diariamente a las 7:00 AM: 1) Extrae datos estructurados de nuevos eventos con CORTEX.COMPLETE, 2) Valida consistencia, 3) Genera instrucciones de processing para eventos sin discrepancias, 4) Envía alerta por email para eventos con discrepancias. ALTER TASK CORP_ACTIONS_PIPELINE RESUME." }
+    ]
+  },
+  UC03: {
+    title: "Detección de Errores en Instrucciones SWIFT MT540/541",
+    intro: 'Construirás un sistema de validación pre-envío de instrucciones SWIFT usando ML.CLASSIFICATION entrenado sobre patrones históricos de instrucciones fallidas.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para validación de instrucciones SWIFT.", prompt: "Crea base de datos SWIFT_VALIDATION_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar instrucciones históricas", desc: "Crea 10.000 instrucciones SWIFT con tipos de error etiquetados.", prompt: "Genera tabla INSTRUCCIONES_HISTORICAS con 10000 registros usando GENERATOR(ROWCOUNT => 10000). Columnas: instruccion_id, tipo_mensaje (MT540 60%/MT541 30%/MT543 7%/MT544 3%), isin VARCHAR, cuenta_origen VARCHAR, cuenta_destino VARCHAR, bic_contraparte VARCHAR, importe FLOAT, fecha_valor DATE, es_error VARCHAR (ERROR 8%/OK 92%), tipo_error VARCHAR (ISIN_INVALIDO/CUENTA_INCORRECTA/IMPORTE_FUERA_RANGO/BIC_INVALIDO/FECHA_PASADA/NULL para OK)." },
+      { title: "Feature engineering de instrucciones", desc: "Construye features predictoras de errores.", prompt: "Crea tabla INSTRUCCIONES_FEATURES con: instruccion_id, tipo_mt_encoded (MT540=0/MT541=1/MT543=2/MT544=3) FLOAT, longitud_isin FLOAT, tiene_isin_valido (LEN=12 AND REGEXP_LIKE) FLOAT, longitud_bic FLOAT, tiene_bic_valido FLOAT, dias_hasta_valor FLOAT (diferencia vs. TODAY), importe_log FLOAT (LOG(importe+1)), es_cuenta_formato_correcto FLOAT, hora_envio FLOAT, dia_semana FLOAT, es_error VARCHAR como target." },
+      { title: "Entrenar clasificador de errores", desc: "ML.CLASSIFICATION para detectar instrucciones erróneas.", prompt: "Divide INSTRUCCIONES_FEATURES en SWIFT_TRAIN (80%) y SWIFT_TEST (20%). Entrena SNOWFLAKE.ML.CLASSIFICATION llamado detector_errores_swift usando SWIFT_TRAIN, TARGET_COLNAME => 'es_error', evaluate => TRUE." },
+      { title: "Evaluar modelo", desc: "Revisa métricas y feature importance.", prompt: "Ejecuta SHOW_EVALUATION_METRICS, SHOW_CONFUSION_MATRIX y SHOW_FEATURE_IMPORTANCE del modelo detector_errores_swift. Muestra el recall para la clase ERROR (objetivo: >95%) y los tipos de error más frecuentes en los falsos negativos." },
+      { title: "Puntuar instrucciones y clasificar", desc: "Genera predicciones con niveles de riesgo.", prompt: "Crea tabla VALIDACION_SWIFT usando detector_errores_swift!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (es_error)) sobre SWIFT_TEST. Clasifica: Error_Muy_Probable (>=80%): bloquear, Error_Posible (40-80%): warning, Probable_OK (<40%): enviar. Muestra distribución y top-20 instrucciones bloqueadas con feature importance individual." },
+      { title: "Dashboard de validación pre-envío", desc: "Cola de validación con alertas correctivas.", prompt: "Crea dashboard Streamlit con: KPIs (instrucciones procesadas, bloqueadas, con warning, OK), cola de instrucciones bloqueadas con tipo de error probable y sugerencia correctiva, tasa de error por tipo de mensaje y contraparte, gráfico temporal de errores detectados. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline de validación en tiempo real", desc: "Task para validar instrucciones continuas.", prompt: "Crea Task SWIFT_VALIDATION_TASK que cada 5 minutos: valide nuevas instrucciones SWIFT_NUEVAS con detector_errores_swift, mueva bloqueadas a SWIFT_BLOQUEADAS, mueva warnings a SWIFT_REVISAR, y apruebe OK para envío. ALTER TASK SWIFT_VALIDATION_TASK RESUME." },
+      { title: "Limpieza opcional", desc: "Elimina objetos al terminar.", prompt: "Genera los comandos DROP DATABASE IF EXISTS SWIFT_VALIDATION_DB y DROP WAREHOUSE IF EXISTS COMPUTE_WH comentados para limpieza opcional al finalizar el laboratorio." }
+    ]
+  },
+  UC04: {
+    title: "Clasificación y Enrutamiento de Mensajería ISO 20022",
+    intro: 'Construirás un pipeline NLP para clasificar y enrutar mensajes MT/MX usando CORTEX.COMPLETE, preparando la operativa para la migración ISO 20022.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para procesamiento de mensajería financiera.", prompt: "Crea base de datos MENSAJERIA_ISO20022_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar mensajes MT/MX sintéticos", desc: "Crea 2.000 mensajes financieros de 8 tipos.", prompt: "Genera tabla MENSAJES_FINANCIEROS con 2000 registros usando GENERATOR(ROWCOUNT => 2000). Columnas: mensaje_id, tipo_esperado (MT103 20%/MT202 15%/MT540 25%/MT548 15%/MT564 10%/MT900 8%/MT950 4%/MT999 3%), texto_mensaje TEXT (texto simulado de 100-300 palabras apropiado para cada tipo con referencias de cuenta IBAN, BIC, ISIN, importes y fechas ficticias), timestamp_recepcion." },
+      { title: "Clasificar mensajes con CORTEX.COMPLETE", desc: "Usa LLM para identificar el tipo de cada mensaje.", prompt: "Para cada mensaje, usa CORTEX.COMPLETE con modelo 'snowflake-arctic': extrae JSON con campos tipo_mensaje (MT103/MT202/MT540/MT548/MT564/MT900/MT950/MT999), confianza_clasificacion (0-1), sistema_destino (SWIFT/CORE_BANCARIO/CUSTODIA/TREASURY/RISK), prioridad (URGENTE/NORMAL/BATCH). Almacena en MENSAJES_CLASIFICADOS. Calcula accuracy vs. tipo_esperado." },
+      { title: "Extraer entidades clave", desc: "Extrae cuentas, importes y referencias de cada mensaje.", prompt: "Para cada mensaje clasificado, usa CORTEX.COMPLETE para extraer JSON con: cuentas_iban (array), bics_involucrados (array), importes (array de floats), isins (array si aplica), fecha_valor DATE, referencia_operacion, moneda. Almacena en ENTIDADES_MENSAJES. Calcula tasa de extracción exitosa por tipo de mensaje." },
+      { title: "Crear tabla de reglas de enrutamiento", desc: "Define los sistemas destino por tipo de mensaje.", prompt: "Crea tabla REGLAS_ENRUTAMIENTO con: tipo_mensaje, sistema_destino_primario, sistema_destino_secundario, prioridad (1-5), sla_procesamiento_min (SLA en minutos por tipo). Inserta las reglas para los 8 tipos de mensaje definiendo correctamente el sistema destino de cada uno." },
+      { title: "Aplicar enrutamiento automático", desc: "Genera la tabla de enrutamiento final.", prompt: "Crea tabla ENRUTAMIENTO_FINAL uniendo MENSAJES_CLASIFICADOS con REGLAS_ENRUTAMIENTO. Añade: timestamp_enrutamiento, sla_deadline (timestamp_recepcion + sla_procesamiento_min), en_plazo BOOLEAN, motivo_excepcion (si confianza_clasificacion < 0.80 o tipo no reconocido)." },
+      { title: "Dashboard operativo de mensajería", desc: "Panel de control con métricas de enrutamiento.", prompt: "Crea dashboard Streamlit con: KPIs (mensajes/hora, tasa de clasificación correcta %, en plazo SLA %, excepciones pendientes), distribución de mensajes por tipo y sistema destino, cola de mensajes en excepción, gráfico temporal de volumen por tipo. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Monitor de calidad de clasificación", desc: "Vista para supervisión continua del modelo.", prompt: "Crea vista CALIDAD_CLASIFICACION_DIARIA con: fecha, total_mensajes, tasa_confianza_media, pct_clasificados_correctamente (vs. tipo_esperado), pct_excepciones, tipos_con_mayor_error. Esto permite detectar degradación del modelo en producción." }
+    ]
+  },
+  UC05: {
+    title: "Motor de Recomendación de Fondos ESG",
+    intro: 'Construirás un motor de recomendación de fondos usando ML.CLASSIFICATION y EMBED_TEXT para matching personalizado en plataformas de distribución.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el motor de recomendación.", prompt: "Crea base de datos RECOMENDACION_FONDOS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM (para embeddings)." },
+      { title: "Generar catálogo de fondos", desc: "Crea 1.000 fondos con estrategias y características.", prompt: "Genera tabla CATALOGO_FONDOS con 1000 registros usando GENERATOR(ROWCOUNT => 1000). Columnas: isin (ESXXXX...), gestora VARCHAR, categoria (RentaFija 25%/RentaVariable 35%/Mixto 20%/Alternativo 10%/Monetario 10%), benchmark VARCHAR, srri FLOAT (1-7), ter_pct FLOAT (0.1-2.5), esg_score FLOAT (0-100, UNIFORM(0,100,RANDOM())), descripcion_estrategia TEXT (texto de 50-100 palabras describiendo estrategia, geografía y estilo)." },
+      { title: "Generar perfiles de distribuidores", desc: "Crea 200 distribuidores con preferencias y carteras.", prompt: "Genera tabla DISTRIBUIDORES con 200 registros: distribuidor_id, tipo (Banca_Privada 40%/EAF 30%/Agente 30%), perfil_cliente_predominante (Conservador 30%/Moderado 50%/Dinámico 20%), restriccion_esg_minimo FLOAT (0-60, algunos distribuidores exigen ESG mínimo), max_srri FLOAT (4-7 según perfil), preferencia_categoria VARCHAR, aum_total FLOAT. Genera tabla CARTERAS_ACTUALES: distribuidores × fondos con porcentaje de cartera." },
+      { title: "Vectorizar estrategias con EMBED_TEXT", desc: "Genera embeddings de estrategias de fondos.", prompt: "Crea tabla FONDOS_EMBEDDINGS como SELECT isin, descripcion_estrategia, SNOWFLAKE.CORTEX.EMBED_TEXT('e5-base-v2', descripcion_estrategia) AS embedding FROM CATALOGO_FONDOS. Verifica que el vector tiene 768 dimensiones." },
+      { title: "Calcular compatibilidad por distribuidor", desc: "Mide la similitud entre preferencias del distribuidor y cada fondo.", prompt: "Para cada par (distribuidor, fondo), calcula: compatibilidad_esg (esg_score >= restriccion_esg_minimo), compatibilidad_srri (srri <= max_srri), en_cartera_actual (si el fondo ya está en cartera del distribuidor). Crea tabla SCORES_COMPATIBILIDAD con un registro por par incluido distribuidor_id, isin, score_esg, score_srri, ya_en_cartera." },
+      { title: "Entrenar clasificador de recomendación", desc: "ML.CLASSIFICATION para predecir adopción de fondos.", prompt: "Genera target simulado: fondo_adoptado VARCHAR (ADOPTADO 15%/NO_ADOPTADO 85%) en SCORES_COMPATIBILIDAD. Añade features: ter_comparativo (vs. media categoría), esg_percentil, srri_encoded. Divide 80/20 y entrena SNOWFLAKE.ML.CLASSIFICATION \"recomendador_fondos\" con target fondo_adoptado y evaluate => TRUE." },
+      { title: "Generar recomendaciones top-10", desc: "Lista de fondos recomendados por distribuidor con justificación.", prompt: "Para cada distribuidor, usa recomendador_fondos!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (fondo_adoptado)) para puntuar todos los fondos compatibles (no en cartera, ESG OK, SRRI OK). Selecciona TOP 10 por probabilidad_ADOPTADO. Usa CORTEX.COMPLETE para generar una justificación de 2 frases por recomendación explicando el fit con el perfil del distribuidor." },
+      { title: "Dashboard de recomendaciones", desc: "Panel de recomendaciones personalizadas por distribuidor.", prompt: "Crea dashboard Streamlit con: selector de distribuidor, 4 KPIs (fondos en cartera, recomendaciones nuevas, ESG medio cartera, SRRI medio cartera), tabla top-10 recomendaciones con score, justificación y diferenciador vs. cartera actual, comparativa ESG antes/después de adoptar recomendaciones. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Monitorización de conversión", desc: "Task de seguimiento de recomendaciones adoptadas.", prompt: "Crea Task semanal RECOMENDACION_MONITOR que: actualice carteras actuales con nuevas posiciones, calcule tasa de adopción de recomendaciones, identifique recomendaciones ignoradas >4 semanas para revisar el modelo. ALTER TASK RECOMENDACION_MONITOR RESUME." }
+    ]
+  },
+  UC06: {
+    title: "Análisis de Documentos KID/KIID/Prospectus con LLM",
+    intro: 'Construirás un pipeline de extracción masiva de datos de documentos regulatorios de fondos usando CORTEX.COMPLETE para crear una base de datos estructurada de producto.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el repositorio de documentos de fondos.", prompt: "Crea base de datos DOCUMENTOS_FONDOS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM." },
+      { title: "Generar documentos KID/KIID sintéticos", desc: "Crea 300 documentos con estructura real de KID/KIID.", prompt: "Genera tabla DOCUMENTOS_KID con 300 registros usando GENERATOR(ROWCOUNT => 300). Columnas: doc_id, isin VARCHAR, tipo_doc (KID 50%/KIID 30%/Prospecto 20%), version INT (1 ó 2), texto_completo TEXT (texto de 300-500 palabras con secciones: Objetivo del fondo, Perfil del inversor, Indicador de riesgo SRRI [número 1-7], Comisiones [TER porcentaje], Horizonte de inversión [N años], Escenarios de rentabilidad, Advertencias específicas). GENERATOR con UNIFORM() para variar SRRI y TER." },
+      { title: "Extraer SRRI, costes y horizonte", desc: "Usa CORTEX.COMPLETE para extraer campos clave.", prompt: "Para cada documento, usa CORTEX.COMPLETE con 'snowflake-arctic' para extraer JSON con: srri INT (1-7), ter_pct FLOAT, horizonte_anios INT, objetivo_fondo TEXT (máx 50 palabras), perfil_inversor_texto TEXT. Almacena en CAMPOS_EXTRAIDOS_1. Calcula tasa de extracción exitosa (campo no NULL) por tipo_doc." },
+      { title: "Extraer estrategia, restricciones y advertencias", desc: "Completa la extracción con campos adicionales.", prompt: "Para cada documento, usa CORTEX.COMPLETE para extraer segundo bloque JSON: estrategia_inversion TEXT (máx 80 palabras), geografias_principales ARRAY, clases_activos ARRAY, restricciones_distribucion TEXT, advertencias_especiales TEXT (menciones de apalancamiento, derivados, illiquidez), tiene_garantia BOOLEAN. Almacena en CAMPOS_EXTRAIDOS_2." },
+      { title: "Crear base de datos estructurada de fondos", desc: "Consolida todos los campos extraídos.", prompt: "Crea tabla BBDD_FONDOS uniendo CAMPOS_EXTRAIDOS_1 y CAMPOS_EXTRAIDOS_2 con DOCUMENTOS_KID. Añade: score_completitud (porcentaje de campos no NULL), confianza_extraccion (media de confianzas), version_activa BOOLEAN (TRUE solo para versión más reciente por ISIN)." },
+      { title: "Detectar cambios entre versiones", desc: "Compara versión 1 y 2 del mismo fondo para alertar cambios.", prompt: "Para ISINs con version=2, usa CORTEX.COMPLETE para comparar la versión nueva vs. anterior: identifica qué campos cambiaron (SRRI, TER, estrategia), si el cambio es material (SRRI o TER cambió >10%), genera texto de resumen del cambio. Almacena en CAMBIOS_VERSIONES." },
+      { title: "Búsqueda semántica de fondos", desc: "Implementa búsqueda por criterios y texto libre.", prompt: "Crea vista BUSQUEDA_FONDOS que permita filtrar por: srri (rango), ter_pct (rango), horizonte_anios, geografias_principales LIKE, tiene_garantia, score_completitud > 80%. Crea índice Cortex Search sobre estrategia_inversion para búsqueda semántica." },
+      { title: "Dashboard de base de datos documental", desc: "Panel de consulta y gestión de documentos de fondos.", prompt: "Crea dashboard Streamlit con: KPIs (fondos en BBDD, completitud media %, fondos con cambios recientes, pendientes de revisión), filtros multi-criterio (SRRI, TER, horizonte, geografía), tabla de fondos con exportación CSV, detalle del fondo seleccionado con todos los campos extraídos. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline de actualización automática", desc: "Task para procesar nuevos documentos periódicamente.", prompt: "Crea Task DOCUMENTOS_UPDATE_TASK semanal que: detecte nuevos documentos en tabla DOCUMENTOS_NUEVOS, extraiga campos con CORTEX.COMPLETE, actualice BBDD_FONDOS, detecte cambios de versión y genere alertas para cambios materiales. ALTER TASK DOCUMENTOS_UPDATE_TASK RESUME." }
+    ]
+  },
+  UC07: {
+    title: "Detección de Fondos Duplicados y Similares",
+    intro: 'Construirás un sistema de clustering de fondos usando EMBED_TEXT y VECTOR_COSINE_SIMILARITY para identificar duplicados y racionalizar catálogos de distribución.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para análisis de duplicados en catálogo.", prompt: "Crea base de datos FONDOS_CLUSTERING_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM." },
+      { title: "Generar catálogo con redundancias controladas", desc: "Crea 1.000 fondos con duplicados y similares conocidos.", prompt: "Genera tabla CATALOGO_COMPLETO con 1000 fondos. Incluye grupos controlados: 50 parejas de fondos casi idénticos (mismo benchmark, estrategia similar, diferente gestora o TER), 30 grupos de 3-4 fondos muy similares (misma categoría Morningstar, estrategia regional parecida). Columnas: isin, gestora, benchmark, descripcion_estrategia TEXT (200 palabras), categoria_morningstar, ter_pct, srri, grupo_real INT (NULL si no es parte de grupo conocido)." },
+      { title: "Vectorizar estrategias con EMBED_TEXT", desc: "Genera embeddings para todo el catálogo.", prompt: "Crea tabla FONDOS_VECTORES como SELECT isin, gestora, benchmark, ter_pct, srri, SNOWFLAKE.CORTEX.EMBED_TEXT('e5-base-v2', descripcion_estrategia || ' ' || benchmark || ' ' || categoria_morningstar) AS embedding FROM CATALOGO_COMPLETO. El vector enriquecido captura más contexto." },
+      { title: "Calcular similitud coseno par a par", desc: "Compara todos los fondos entre sí (limitado a pares relevantes).", prompt: "Crea tabla SIMILITUD_PARES como: SELECT a.isin AS isin_a, b.isin AS isin_b, VECTOR_COSINE_SIMILARITY(a.embedding, b.embedding) AS similitud FROM FONDOS_VECTORES a JOIN FONDOS_VECTORES b ON a.isin < b.isin WHERE a.categoria_morningstar = b.categoria_morningstar. Filtra WHERE similitud > 0.70. Muestra distribución de similitudes." },
+      { title: "Identificar clusters de duplicados", desc: "Agrupa fondos con similitud superior a umbrales.", prompt: "Crea tabla CLUSTERS_FONDOS con: cluster_id, isin, tipo_similitud (DUPLICADO si sim>0.95/MUY_SIMILAR si 0.85-0.95/SIMILAR si 0.70-0.85), isin_referencia (fondo con menor TER del cluster), diferencia_ter (ter_pct - ter_ref), similitud_maxima. Muestra resumen: N duplicados exactos, N muy similares, N similares." },
+      { title: "Analizar solapamiento en catálogos de distribuidores", desc: "Cuantifica redundancia real en carteras de distribución.", prompt: "Usando datos de CARTERAS_ACTUALES (si disponibles, sino simula 100 carteras), calcula: pct_cartera_en_clusters (% de posiciones que tienen un fondo similar en cartera), ahorro_ter_potencial (si se sustituyen duplicados por el de menor TER del cluster), redundancia_score por distribuidor. Muestra top-10 distribuidores con mayor redundancia." },
+      { title: "Generar recomendaciones de racionalización", desc: "LLM genera justificación para cada consolidación sugerida.", prompt: "Para cada cluster con DUPLICADO o MUY_SIMILAR, usa CORTEX.COMPLETE para generar: texto_recomendacion (por qué consolidar, qué diferencias son materiales si las hay, cuál fondo conservar y por qué), impacto_estimado (ahorro TER anual estimado para los distribuidores que tienen ambos fondos). Almacena en RECOMENDACIONES_RACIONALIZACION." },
+      { title: "Dashboard de racionalización del catálogo", desc: "Panel de visualización de duplicados y recomendaciones.", prompt: "Crea dashboard Streamlit con: KPIs (fondos totales, clusters identificados, duplicados exactos, ahorro TER potencial medio), mapa de calor de similitud por categoría Morningstar, tabla de clusters con recomendación y botón para marcar como \"revisado\", distribución de similitudes con líneas de corte. Usa snowflake.connector.connect() para ejecución local del dashboard." }
+    ]
+  },
+  UC08: {
+    title: "Predicción de Flujos de Suscripción/Reembolso con Model Registry",
+    intro: 'Construirás un modelo de forecasting de flujos de fondos con ML.FORECAST y lo registrarás en Model Registry para gestión de versiones en producción.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para forecasting de flujos.", prompt: "Crea base de datos FLUJOS_FONDOS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar serie histórica de flujos", desc: "Crea 3 años de flujos semanales para 100 fondos.", prompt: "Genera tabla FLUJOS_HISTORICOS con 100 fondos × 156 semanas = 15.600 registros. Columnas: fondo_id, semana DATE, suscripciones FLOAT, reembolsos FLOAT, flujo_neto FLOAT (suscripciones-reembolsos), aum_inicio FLOAT. Usa GENERATOR con estacionalidad (enero y septiembre positivos, agosto y diciembre negativos), tendencia y ruido con UNIFORM()." },
+      { title: "Añadir factores externos", desc: "Enriquece con performance, mercado y estacionalidad.", prompt: "Genera tabla FACTORES_EXTERNOS con una fila por (fondo_id, semana): performance_1sem FLOAT, performance_1mes FLOAT, performance_ytd FLOAT, volatilidad_fondo FLOAT, retorno_benchmark FLOAT, indice_confianza_inversor FLOAT (simulado), mes INT, trimestre INT, semana_del_anio INT. JOIN con FLUJOS_HISTORICOS en DATASET_FORECAST." },
+      { title: "Entrenar ML.FORECAST v1", desc: "Modelo de forecasting con 6 features base.", prompt: "Entrena SNOWFLAKE.ML.FORECAST llamado flujos_fondos_v1 usando DATASET_FORECAST con: timestamp_colname => 'semana', target_colname => 'flujo_neto', series_colname => 'fondo_id'. Genera predicciones a 4 semanas vista. Calcula MAPE y RMSE vs. últimas 8 semanas reales." },
+      { title: "Registrar v1 en Model Registry", desc: "Versiona el modelo de forecasting en producción.", prompt: "Registra el modelo en Snowflake Model Registry: CREATE OR REPLACE MODEL REGISTRY.MODELS.FLUJOS_FONDOS_MODEL VERSION V1 FROM SNOWFLAKE.ML.FORECAST flujos_fondos_v1 COMMENT = 'Forecast flujos semanales por fondo - 6 features - MAPE X%'. Agrega métricas: ALTER MODEL FLUJOS_FONDOS_MODEL VERSION V1 SET METRICS = OBJECT_CONSTRUCT('mape', X, 'rmse', Y)." },
+      { title: "Mejorar modelo con más features", desc: "Entrena v2 con señales adicionales de sentimiento y competencia.", prompt: "Genera tabla FEATURES_ADICIONALES con: fondo_id, semana, sentimiento_gestora FLOAT (score noticias sobre la gestora), flows_categoria_promedio FLOAT (flujo medio de fondos de misma categoría), ratio_aum_categoria FLOAT, n_competidores_lanzados FLOAT. Entrena flujos_fondos_v2 con todas las features. Calcula MAPE y RMSE. Registra como VERSION V2." },
+      { title: "Comparar versiones en Model Registry", desc: "Evalúa qué versión es mejor para producción.", prompt: "Consulta Model Registry para comparar V1 vs V2: SHOW VERSIONS IN MODEL FLUJOS_FONDOS_MODEL. Muestra tabla comparativa de MAPE, RMSE y mejora relativa de V2 vs V1. Si V2 mejora >5% en MAPE, genera comando para promover V2 a producción: ALTER MODEL FLUJOS_FONDOS_MODEL SET DEFAULT_VERSION = V2." },
+      { title: "Dashboard de cash flow forecast", desc: "Panel de previsión de liquidez por fondo y plataforma.", prompt: "Crea dashboard Streamlit con: selector de fondo y horizonte (1-4 semanas), gráfico de forecast con intervalos de confianza al 80% y 95%, KPIs (flujo neto esperado próxima semana, AUM actual, ratio flujo/AUM), tabla de fondos con mayor riesgo de salida neta. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline de actualización semanal", desc: "Task para reentrenar y actualizar predicciones.", prompt: "Crea Task FLUJOS_WEEKLY_UPDATE que cada lunes: actualice FLUJOS_HISTORICOS con la semana real recién cerrada, genere nuevo forecast a 4 semanas con la versión en producción, calcule error de la predicción de la semana pasada, y alerte si el MAPE supera el umbral de calidad del modelo. ALTER TASK FLUJOS_WEEKLY_UPDATE RESUME." }
+    ]
+  },
+  UC09: {
+    title: "Automatización de Onboarding de Fondos",
+    intro: 'Construirás un pipeline de onboarding automatizado de fondos usando CORTEX.COMPLETE y AI_EXTRACT para procesar documentación legal y técnica de nuevos fondos.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el proceso de onboarding.", prompt: "Crea base de datos ONBOARDING_FONDOS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM." },
+      { title: "Generar paquetes de documentación", desc: "Crea documentación completa de 100 nuevos fondos.", prompt: "Genera tabla DOCUMENTACION_ONBOARDING con 100 fondos, un registro por tipo de documento (4 tipos × 100 fondos = 400 registros). Columnas: fondo_id, tipo_doc (PROSPECTO/KID/CONTRATO_DISTRIB/FICHA_PRODUCTO), texto_documento TEXT (250-400 palabras con datos realistas: ISIN ficticio, gestora, clases de participación, comisiones, cut-off, mercados elegibles, restricciones)." },
+      { title: "Extraer datos maestros con CORTEX.COMPLETE", desc: "Procesa prospectos para extraer datos básicos del fondo.", prompt: "Para documentos tipo PROSPECTO, usa CORTEX.COMPLETE con 'snowflake-arctic' para extraer JSON: isin, nombre_fondo, gestora, domicilio (IE/LU/ES/FR), fecha_constitucion, moneda_base, categoría_morningstar, benchmark, num_clases_participacion. Almacena en DATOS_MAESTROS. Calcula completitud por campo." },
+      { title: "Extraer clasificaciones regulatorias", desc: "Extrae información regulatoria de KID y Prospecto.", prompt: "Para documentos KID y PROSPECTO, extrae: srri INT, horizonte_inversion_anios INT, tipo_inversor_objetivo (Minorista/Profesional/Ambos), paises_distribucion ARRAY, restricciones_inversion TEXT, frecuencia_valoracion (Diaria/Semanal/Quincenal), plazo_liquidez_dias INT. Almacena en DATOS_REGULATORIOS." },
+      { title: "Extraer datos operativos del contrato", desc: "Procesa el contrato de distribución para datos operativos.", prompt: "Para documentos CONTRATO_DISTRIB, extrae: cut_off_hora TIME, settlement_dias INT (T+N), comision_distribucion_max FLOAT, rebate_gestora FLOAT, plataformas_autorizadas ARRAY, requerimientos_reporting TEXT, periodicidad_navs (Diaria/Semanal). Almacena en DATOS_OPERATIVOS." },
+      { title: "Generar checklist de completitud", desc: "Evalúa qué datos están disponibles para el alta.", prompt: "Crea tabla CHECKLIST_ONBOARDING uniendo todos los datos extraídos por fondo_id. Para cada uno de los 25 campos obligatorios, indica: campo, estado (OK/PENDIENTE/ERROR), fuente_documento, valor_extraído, bloqueante_para_alta BOOLEAN. Calcula score_completitud (% campos OK) y identifica bloqueantes." },
+      { title: "Generar instrucciones de onboarding", desc: "Crea el plan de acción para dar de alta cada fondo.", prompt: "Para fondos con score_completitud >= 90%, genera instrucciones de alta automática. Para fondos con 70-90%, usa CORTEX.COMPLETE para generar lista de campos pendientes con instrucción específica (\"Solicitar a gestora X el campo Y en documento Z\"). Para fondos <70%, genera email de rechazo temporal con lista completa de requerimientos." },
+      { title: "Dashboard de estado de onboarding", desc: "Panel de seguimiento del proceso por fondo.", prompt: "Crea dashboard Streamlit con: KPIs (fondos en proceso, listos para alta, bloqueados, tiempo medio onboarding), tabla de fondos con score de completitud y semáforo (verde/amarillo/rojo), detalle del checklist del fondo seleccionado, lista de campos pendientes con acción requerida. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline automatizado de onboarding", desc: "Task para procesar nuevos fondos automáticamente.", prompt: "Crea Task ONBOARDING_AUTO_TASK que cada hora: detecte nuevos fondos en DOCUMENTACION_NUEVOS, ejecute extracción de datos con CORTEX.COMPLETE, genere checklist, y mueva a FONDOS_LISTOS los que superen 90% completitud. ALTER TASK ONBOARDING_AUTO_TASK RESUME." }
+    ]
+  },
+  UC10: {
+    title: "Asistente de Mercados en Tiempo Real con RAG",
+    intro: 'Construirás un chatbot conversacional para gestores y traders usando CORTEX SEARCH y CORTEX.COMPLETE sobre posiciones, P&L y noticias en tiempo real.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el asistente de mercados.", prompt: "Crea base de datos ASISTENTE_MERCADOS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM." },
+      { title: "Generar datos de posiciones y P&L", desc: "Crea 10.000 posiciones en 50 carteras con P&L diario.", prompt: "Genera tabla POSICIONES_CARTERA con 10000 registros usando GENERATOR(ROWCOUNT => 10000). Columnas: cartera_id (CAR001..CAR050), isin VARCHAR, activo VARCHAR (nombre del activo), tipo (RentaVariable/RentaFija/Derivado/ETF), pais VARCHAR, sector VARCHAR, nominal FLOAT, precio_actual FLOAT, pnl_diario FLOAT, pnl_ytd FLOAT, exposicion_eur FLOAT, benchmark VARCHAR." },
+      { title: "Generar base de conocimiento de noticias", desc: "Crea 1.000 noticias financieras por activo y sector.", prompt: "Genera tabla NOTICIAS_MERCADO con 1000 registros: noticia_id, activo_relacionado VARCHAR, sector VARCHAR, fecha TIMESTAMP, titular VARCHAR, texto_noticia TEXT (150-200 palabras sobre eventos de mercado, BCE, resultados empresariales, datos macro), relevancia (Alta/Media/Baja), fuente (Bloomberg/Reuters/Expansion). Usa GENERATOR con UNIFORM()." },
+      { title: "Indexar base de conocimiento con Cortex Search", desc: "Crea índice de búsqueda semántica.", prompt: "Crea servicio Cortex Search: CREATE CORTEX SEARCH SERVICE ASISTENTE_MERCADOS_SEARCH ON NOTICIAS_MERCADO ATTRIBUTES texto_noticia, titular, activo_relacionado, sector WAREHOUSE = COMPUTE_WH TARGET_LAG = '1 hour'. Verifica que el índice incluye todas las noticias." },
+      { title: "Implementar pipeline RAG", desc: "Combina búsqueda semántica con síntesis LLM.", prompt: "Crea función RAG_QUERY(pregunta VARCHAR) que: 1) Busca en ASISTENTE_MERCADOS_SEARCH los 5 documentos más relevantes, 2) Consulta POSICIONES_CARTERA para datos estructurados relevantes a la pregunta, 3) Combina contexto y usa CORTEX.COMPLETE con 'snowflake-arctic' para generar respuesta fundamentada. Devuelve respuesta + fuentes citadas." },
+      { title: "Desarrollar chatbot conversacional", desc: "Implementa el asistente con historial de conversación.", prompt: "Crea tabla HISTORIAL_CONVERSACION con: conversacion_id, turno INT, pregunta TEXT, respuesta TEXT, fuentes_citadas ARRAY, timestamp, rating_utilidad INT (1-5, NULL si no calificado). Implementa función CHAT(conversacion_id, nueva_pregunta) que incluye el historial de los últimos 5 turnos en el contexto de CORTEX.COMPLETE." },
+      { title: "Añadir consultas sobre exposiciones", desc: "Specializa el asistente para preguntas sobre carteras.", prompt: "Enriquece RAG_QUERY para detectar preguntas sobre exposiciones (palabras clave: \"exposición\", \"posición\", \"cuánto tengo en\"): en ese caso, consulta directamente POSICIONES_CARTERA con SQL estructurado en lugar de búsqueda semántica. Genera respuesta con tabla de posiciones relevante + comentario de contexto de mercado." },
+      { title: "Dashboard conversacional", desc: "Interfaz de chat con historial y referencias.", prompt: "Crea dashboard Streamlit con: caja de texto para preguntas, área de respuesta con formato markdown, panel lateral de fuentes citadas, historial de conversación con rating por turno, métricas de uso (preguntas/día, rating medio, temas más consultados). Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Evaluación de calidad de respuestas", desc: "Sistema de monitorización de la calidad del asistente.", prompt: "Crea vista CALIDAD_ASISTENTE con: fecha, total_preguntas, rating_medio, pct_preguntas_5estrellas, temas_baja_calidad (categorías donde rating < 3), preguntas_sin_respuesta. Permite detectar áreas donde enriquecer la base de conocimiento." }
+    ]
+  },
+  UC11: {
+    title: "Generación Automática de Informes de Cartera",
+    intro: 'Construirás un pipeline de generación automática de informes de cartera personalizados para clientes de wealth management usando CORTEX.COMPLETE.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para generación de informes.", prompt: "Crea base de datos INFORMES_CARTERA_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar carteras de clientes wealth", desc: "Crea 200 carteras con composición y performance.", prompt: "Genera tabla CARTERAS_WEALTH con 200 × 20 posiciones = 4.000 registros usando GENERATOR. Columnas: cliente_id (CLI001..CLI200), activo, clase_activo (RentaVariable/RentaFija/Alternativos/Liquidez), peso_cartera FLOAT (suma=100% por cliente), rentabilidad_semana FLOAT, rentabilidad_mes FLOAT, rentabilidad_ytd FLOAT, contribucion_ytd FLOAT. Genera tabla PERFILES_CLIENTE: cliente_id, perfil_riesgo (Conservador/Moderado/Dinámico), objetivo (Capital/Renta/Mixto), benchmark VARCHAR." },
+      { title: "Calcular atribución de performance", desc: "Desglose de rentabilidad por activo y clase.", prompt: "Crea vista ATRIBUCION_PERFORMANCE con: cliente_id, clase_activo, contribucion_ytd (suma de contribucion_ytd por clase), peso_clase (suma de pesos), rentabilidad_clase (media ponderada), vs_benchmark_clase (diferencia con rentabilidad del benchmark de esa clase). Identifica el top-3 contribuidor y top-3 detractor por cliente." },
+      { title: "Comparar vs. benchmark del cliente", desc: "Calcula exceso de rentabilidad y tracking error.", prompt: "Genera tabla METRICAS_RENDIMIENTO con: cliente_id, rentabilidad_ytd_cartera FLOAT, rentabilidad_ytd_benchmark FLOAT (simulada), alfa_ytd FLOAT (diferencia), tracking_error FLOAT, sharpe_ratio FLOAT, max_drawdown FLOAT. Clasifica: Supera_Benchmark / En_Linea / Por_Debajo según alfa." },
+      { title: "Generar comentario personalizado", desc: "CORTEX.COMPLETE crea el texto del informe por cliente.", prompt: "Para cada cliente, usa CORTEX.COMPLETE con 'snowflake-arctic' y contexto de METRICAS_RENDIMIENTO + ATRIBUCION_PERFORMANCE + PERFILES_CLIENTE para generar: resumen_ejecutivo (3 frases sobre performance global y drivers), analisis_atribucion (qué activos contribuyeron positiva y negativamente), perspectivas (2 frases según perfil de riesgo del cliente). Almacena en COMENTARIOS_GENERADOS." },
+      { title: "Personalizar tono por perfil", desc: "Adapta el lenguaje al tipo de cliente.", prompt: "Para COMENTARIOS_GENERADOS, usa CORTEX.COMPLETE para ajustar el tono según el perfil del cliente: Conservador (lenguaje tranquilizador, énfasis en preservación capital y gestión del riesgo), Moderado (balance rendimiento-riesgo), Dinámico (énfasis en alfa y oportunidades). Genera versión final INFORME_PERSONALIZADO." },
+      { title: "Ensamblar informe completo", desc: "Genera el informe final en formato estructurado.", prompt: "Crea tabla INFORMES_FINALES con: cliente_id, fecha_informe, asunto_email TEXT, cuerpo_email TEXT (HTML con secciones: saludo personalizado + resumen ejecutivo + tabla de performance + análisis atribución + perspectivas), version INT, estado (BORRADOR/APROBADO/ENVIADO). Formatea con tablas HTML básicas para el desglose de performance." },
+      { title: "Dashboard de gestión de informes", desc: "Panel para revisar, aprobar y enviar informes.", prompt: "Crea dashboard Streamlit con: lista de clientes con estado del informe (color: rojo=sin generar, amarillo=borrador, verde=aprobado), previsualización del informe seleccionado, botones Aprobar/Rechazar/Regenerar, KPIs (informes generados, aprobados, enviados, tiempo medio generación). Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline semanal de informes", desc: "Task para generación automática semanal.", prompt: "Crea Task INFORMES_WEEKLY que cada lunes a las 8am: calcule atribución y métricas de la semana cerrada, genere comentarios con CORTEX.COMPLETE, cree informes BORRADOR para todos los clientes. ALTER TASK INFORMES_WEEKLY RESUME." }
+    ]
+  },
+  UC12: {
+    title: "Análisis de Sentimiento para Ideas de Inversión",
+    intro: 'Construirás un pipeline de análisis de sentimiento sobre noticias y earnings calls usando CORTEX.SENTIMENT para generar señales de inversión priorizadas.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para análisis de sentimiento de mercado.", prompt: "Crea base de datos SENTIMIENTO_MERCADO_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar corpus de textos financieros", desc: "Crea 5.000 textos de 4 fuentes por activo.", prompt: "Genera tabla CORPUS_TEXTOS con 5000 registros usando GENERATOR(ROWCOUNT => 5000). Columnas: texto_id, activo VARCHAR (50 activos distintos), fuente (Noticias 40%/Earnings_Call 25%/Informe_Analista 20%/Twitter_Fin 15%), fecha TIMESTAMP, texto TEXT (100-150 palabras por texto con tono variado: positivo sobre beneficios o negativo sobre riesgos), sentimiento_real FLOAT (-1 a 1 según el tono generado)." },
+      { title: "Analizar sentimiento con CORTEX.SENTIMENT", desc: "Aplica análisis de sentimiento a todo el corpus.", prompt: "Crea tabla SENTIMIENTO_TEXTOS como SELECT texto_id, activo, fuente, fecha, SNOWFLAKE.CORTEX.SENTIMENT(texto) AS score_sentimiento, CASE WHEN score > 0.3 THEN 'Positivo' WHEN score < -0.3 THEN 'Negativo' ELSE 'Neutro' END AS categoria FROM CORPUS_TEXTOS. Calcula correlación entre score_sentimiento y sentimiento_real para validar el modelo." },
+      { title: "Agregar señales por activo y día", desc: "Consolida el sentimiento diario por activo.", prompt: "Crea tabla SENTIMIENTO_DIARIO como: SELECT activo, DATE_TRUNC('day', fecha) AS fecha, AVG(score_sentimiento) AS score_medio, COUNT(*) AS num_textos, SUM(CASE WHEN fuente='Earnings_Call' THEN 1 ELSE 0 END) AS n_earnings, MAX(ABS(score_sentimiento)) AS score_maximo FROM SENTIMIENTO_TEXTOS GROUP BY 1, 2." },
+      { title: "Detectar cambios de tendencia", desc: "Identifica movimientos bruscos de sentimiento.", prompt: "Crea tabla CAMBIOS_SENTIMIENTO con: activo, fecha, score_actual, score_media_7d (media móvil 7 días), score_media_30d, cambio_vs_7d (score_actual - score_media_7d), es_cambio_significativo (ABS(cambio_vs_7d) > 0.3). Clasifica como: Giro_Alcista (cambio_vs_7d > 0.3), Giro_Bajista (<-0.3), Estable (resto)." },
+      { title: "Generar alertas de inversión", desc: "Prioriza las señales más relevantes.", prompt: "Crea tabla ALERTAS_INVERSION con: activo, fecha, tipo_alerta (GIRO_ALCISTA/GIRO_BAJISTA/SENTIMIENTO_EXTREMO), score_sentimiento, num_textos_hoy, fuente_dominante, resumen_evidencia (usa CORTEX.COMPLETE para generar 2 frases describiendo las noticias que causan el cambio), nivel_confianza (HIGH si n_textos > 5 y score > 0.6, MEDIUM si n_textos 3-5, LOW si <3)." },
+      { title: "Correlacionar con performance posterior", desc: "Valida predictividad del sentimiento.", prompt: "Genera tabla PERFORMANCE_ACTIVOS con rentabilidad real a 1, 5 y 10 días por activo y fecha (simulada). Crea tabla VALIDACION_PREDICTIVIDAD: para alertas con más de 10 días de historia, calcula correlación entre tipo_alerta y rentabilidad posterior. Muestra accuracy de señales alcistas y bajistas." },
+      { title: "Dashboard de heat-map de sentimiento", desc: "Visualización de sentimiento de mercado y alertas.", prompt: "Crea dashboard Streamlit con: heat-map de sentimiento por activo y fecha (rojo=negativo, verde=positivo), tabla de alertas activas hoy ordenada por confianza, evolución temporal del sentimiento del activo seleccionado con noticias, KPIs (señales activas, giros alcistas hoy, giros bajistas hoy, cobertura de activos). Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline de monitorización continua", desc: "Task para actualización cada hora.", prompt: "Crea Task SENTIMIENTO_MONITOR que cada hora: procese nuevos textos con CORTEX.SENTIMENT, actualice SENTIMIENTO_DIARIO, recalcule cambios de tendencia, genere nuevas alertas si hay cambios significativos. ALTER TASK SENTIMIENTO_MONITOR RESUME." }
+    ]
+  },
+  UC13: {
+    title: "Detección de Anomalías en Órdenes Pre-Ejecución",
+    intro: 'Construirás un sistema de detección de anomalías en órdenes de trading usando SNOWFLAKE.ML.ANOMALY_DETECTION para validar pre-ejecución con baja tasa de falsos positivos.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para validación pre-ejecución de órdenes.", prompt: "Crea base de datos ORDENES_ANOMALIAS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar flujo histórico de órdenes normales", desc: "Crea 49.000 órdenes normales con contexto de mercado.", prompt: "Genera tabla ORDENES_HISTORICAS_NORMALES con 49000 registros usando GENERATOR(ROWCOUNT => 49000). Columnas: orden_id, activo VARCHAR (100 activos), direccion (BUY 55%/SELL 45%), volumen FLOAT (UNIFORM(100, 50000, RANDOM())), precio_limite FLOAT, trader_id VARCHAR, timestamp TIMESTAMP, vwap_mercado FLOAT (precio_limite ± 2%), adv_mercado FLOAT (volumen diario promedio del activo), es_anomalia VARCHAR DEFAULT 'NORMAL'." },
+      { title: "Generar órdenes anómalas etiquetadas", desc: "Añade 500 órdenes de 5 tipos anómalos.", prompt: "Genera tabla ORDENES_ANOMALAS con 500 registros: 100 fat_finger (volumen 50× mayor al habitual del trader), 100 precio_extremo (precio_limite desviado >10% del VWAP), 100 wash_trade (buy y sell del mismo activo por mismo trader en <5 min), 100 spoofing (orden muy grande cancelada en <30 segundos), 100 horario_inusual (fuera de horario de mercado habitual del activo). Columna es_anomalia VARCHAR = 'ANOMALIA'." },
+      { title: "Feature engineering de órdenes", desc: "Construye features para detección de anomalías.", prompt: "Crea tabla ORDENES_FEATURES uniendo ambas tablas. Features FLOAT: ratio_volumen_adv (volumen/adv_mercado), desviacion_precio_vwap ((ABS(precio_limite-vwap_mercado)/vwap_mercado)), hora_orden FLOAT (0-23), dia_semana FLOAT, num_ordenes_trader_1h FLOAT, ratio_buy_sell_trader_24h FLOAT, volumen_vs_media_trader FLOAT, spread_bid_ask_normalizado FLOAT. Target: es_anomalia VARCHAR." },
+      { title: "Entrenar ML.ANOMALY_DETECTION", desc: "Modelo de detección de anomalías multidimensional.", prompt: "Divide ORDENES_FEATURES en 80/20. Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_ordenes_anomalas usando la partición de entrenamiento con columnas numéricas (excluye es_anomalia). Genera scores de anomalía sobre TEST y evalúa: qué porcentaje de ANOMALIA tiene score > 0.8, qué porcentaje de NORMAL tiene score > 0.8 (falsos positivos)." },
+      { title: "Evaluar y calibrar umbrales", desc: "Optimiza el umbral para minimizar falsos positivos.", prompt: "Para los scores del conjunto TEST, calcula la curva precision-recall para diferentes umbrales (0.5, 0.6, 0.7, 0.8, 0.9). Muestra tabla con: umbral, recall_anomalias, precision, falsos_positivos_pct. Selecciona el umbral que maximiza recall de ANOMALIA con falsos_positivos < 1%." },
+      { title: "Integrar en pipeline de validación", desc: "Puntúa órdenes nuevas y bloquea las anómalas.", prompt: "Crea función VALIDAR_ORDEN(orden_features) que: 1) Puntúa con detector_ordenes_anomalas, 2) Clasifica: Bloquear (>=0.95), Confirmar_Trader (0.80-0.95), Warning (0.60-0.80), OK (<0.60), 3) Registra en COLA_VALIDACION con motivo de bloqueo (feature que más contribuye). Simula 100 nuevas órdenes para demostración." },
+      { title: "Dashboard de alertas pre-ejecución", desc: "Cola de órdenes bloqueadas con contexto.", prompt: "Crea dashboard Streamlit con: KPIs (órdenes/hora, bloqueadas hoy, en confirmación, tasa de falsos positivos estimada), tabla de cola de validación con tipo de anomalía y feature principal, gráfico de distribución de scores por tipo de anomalía real, trend de anomalías detectadas por hora y activo. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Monitorización de rendimiento del modelo", desc: "Task de seguimiento de calidad del detector.", prompt: "Crea Task ANOMALIAS_MONITOR diario que: calcule recall real de órdenes confirmadas como anomalías por traders y compliance, actualice métricas del modelo, alerte si falsos positivos superan el 2% o recall de anomalías cae por debajo del 90%. ALTER TASK ANOMALIAS_MONITOR RESUME." }
+    ]
+  },
+  UC14: {
+    title: "Automatización KYC/AML con NLP e IA",
+    intro: 'Construirás un pipeline de automatización KYC con CORTEX.COMPLETE para extracción de documentos corporativos, identificación de UBOs y scoring AML.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el proceso KYC automatizado.", prompt: "Crea base de datos KYC_AML_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM." },
+      { title: "Generar base de clientes institucionales", desc: "Crea 500 clientes con documentación corporativa.", prompt: "Genera tabla CLIENTES_KYC con 500 registros usando GENERATOR(ROWCOUNT => 500). Columnas: cliente_id (CLI001..CLI500), nombre_empresa VARCHAR, pais_sede (ES 40%/LU 20%/IE 15%/GB 15%/KY 10%), tipo_entidad (Fondo_Inversion 40%/Banco 25%/Empresa 20%/Family_Office 15%), fecha_solicitud DATE, riesgo_esperado (Bajo 60%/Medio 30%/Alto 10%)." },
+      { title: "Generar documentación corporativa", desc: "Simula estatutos, poderes y actas para cada cliente.", prompt: "Genera tabla DOCUMENTOS_KYC con 500 × 3 tipos = 1.500 registros. Tipos: ESTATUTO (texto 300 palabras: objeto social, capital, accionistas principales con % participación), PODER_NOTARIAL (texto 200 palabras: apoderado, poderes otorgados, vigencia), ACTA_CONSEJO (texto 250 palabras: composición del consejo, decisiones recientes). Usa GENERATOR con UNIFORM() para variar el contenido." },
+      { title: "Extraer datos de identidad y accionariado", desc: "CORTEX.COMPLETE procesa cada tipo de documento.", prompt: "Para ESTATUTO: extrae JSON con razon_social, capital_social FLOAT, objeto_social TEXT, accionistas ARRAY de objetos {nombre, porcentaje FLOAT}. Para PODER_NOTARIAL: extrae apoderado, tipo_poder, vigencia_hasta DATE, limitaciones. Para ACTA_CONSEJO: extrae miembros_consejo ARRAY, ceo VARCHAR. Almacena en KYC_DATOS_EXTRAIDOS." },
+      { title: "Identificar beneficiarios últimos (UBO)", desc: "Construye árbol de propiedad hasta el 25% efectivo.", prompt: "Crea tabla UBO_ANALYSIS con: cliente_id, ubo_nombre VARCHAR, ubo_pais VARCHAR, porcentaje_directo FLOAT, porcentaje_efectivo FLOAT (considerando cadenas de holding), es_ubo_reportable (porcentaje_efectivo >= 25%), nivel_cadena INT. Para holdings con accionistas extranjeros, marca como requires_enhanced_dd = TRUE." },
+      { title: "Screening AML, PEP y sanciones", desc: "Verifica clientes y UBOs contra listas internacionales.", prompt: "Simula tabla LISTAS_SCREENING con 500 entradas (nombres ficticios de sancionados, PEPs y wanted). Para cada cliente y UBO, busca coincidencias por similitud de nombre (JAROWINKLER o LIKE). Genera tabla RESULTADO_SCREENING con: cliente_id, nombre_buscado, lista_hit (OFAC/ONU/EU/PEP/NULL), score_similitud FLOAT, requiere_revision BOOLEAN." },
+      { title: "Calcular scoring de riesgo AML", desc: "Combina factores de riesgo en un score global.", prompt: "Crea tabla SCORING_RIESGO_AML con 15 factores: pais_alto_riesgo FLOAT, estructura_opaca FLOAT, screening_hit FLOAT, tipo_entidad_riesgo FLOAT, volumen_transacciones_esperado FLOAT, etc. Entrena SNOWFLAKE.ML.CLASSIFICATION \"scoring_aml\" con target riesgo_esperado como VARCHAR (Bajo/Medio/Alto) y evaluate => TRUE. Genera score por cliente." },
+      { title: "Generar informe de due diligence", desc: "Produce informe estructurado por cliente.", prompt: "Para cada cliente, usa CORTEX.COMPLETE para generar: resumen_ejecutivo (3 frases sobre el cliente y hallazgos clave), hallazgos_principales ARRAY (lista de 3-5 hallazgos con nivel de riesgo), recomendacion (Aprobar_KYC_Simplificado/Aprobar_KYC_Estandar/Aprobar_KYC_Reforzado/Bloquear), justificacion TEXT. Almacena en INFORMES_DUE_DILIGENCE." },
+      { title: "Dashboard de estado KYC", desc: "Panel de gestión del proceso KYC por cliente.", prompt: "Crea dashboard Streamlit con: KPIs (clientes en proceso, aprobados hoy, bloqueados, tiempo medio KYC horas), tabla de clientes con estado, scoring y fecha límite, detalle del informe DD del cliente seleccionado, alertas de hits en listas de screening. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline de revisión periódica", desc: "Task para re-KYC anual y monitorización continua.", prompt: "Crea Task KYC_PERIODIC_REVIEW mensual que: identifique clientes con KYC > 12 meses sin revisar, ejecute screening actualizado contra listas de sanciones, alerte si score de riesgo cambia más de un nivel. ALTER TASK KYC_PERIODIC_REVIEW RESUME." }
+    ]
+  },
+  UC15: {
+    title: "Monitorización de Operaciones Sospechosas AMLD",
+    intro: 'Construirás un sistema anti-blanqueo usando ML.ANOMALY_DETECTION sobre patrones de operaciones para detectar actividad AMLD con 70% menos de falsos positivos.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para monitorización AMLD.", prompt: "Crea base de datos AMLD_MONITOR_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar operaciones normales y sospechosas", desc: "Crea 100.000 operaciones con 0.5% sospechosas.", prompt: "Genera tabla OPERACIONES_HISTORICAS con 100000 registros usando GENERATOR(ROWCOUNT => 100000). Columnas: op_id, cuenta_origen VARCHAR, cuenta_destino VARCHAR, importe FLOAT (UNIFORM(1000, 500000, RANDOM())), fecha TIMESTAMP, tipo_op (Transferencia/Suscripcion/Reembolso/Dividendo), jurisdiccion_origen (ES 60%/LU 20%/IE 10%/KY 5%/PA 5%), es_sospechosa VARCHAR (SOSPECHOSA 0.5%/NORMAL 99.5%)." },
+      { title: "Feature engineering de patrones AMLD", desc: "Construye variables que capturan comportamientos sospechosos.", prompt: "Crea tabla AMLD_FEATURES con: op_id, cuenta_origen, importe_normalizado FLOAT, num_ops_cuenta_24h FLOAT (fragmentación), suma_ops_24h FLOAT, pct_jurisdiccion_riesgo FLOAT (% de ops en KY/PA/CH), velocidad_entrada_salida_dias FLOAT (tiempo entre recibir fondos y retirarlos), es_importe_redondo FLOAT (ABS(importe % 1000) < 50), hora_operacion FLOAT, es_sospechosa VARCHAR." },
+      { title: "Entrenar ML.ANOMALY_DETECTION", desc: "Modelo de detección de comportamientos atípicos.", prompt: "Divide AMLD_FEATURES 80/20. Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_amld usando partición de entrenamiento con features numéricas. Evalúa sobre TEST: calcula recall de SOSPECHOSA vs. tasa de falsos positivos (alertas sobre operaciones NORMAL). Objetivo: recall > 80% con falsos positivos < 25%." },
+      { title: "Construir grafo de redes de contrapartes", desc: "Analiza circularidad y concentración de flujos.", prompt: "Crea tabla GRAFO_CONTRAPARTES: SELECT cuenta_origen, cuenta_destino, COUNT(*) AS num_ops, SUM(importe) AS importe_total FROM OPERACIONES_HISTORICAS GROUP BY 1, 2. Detecta circularidad: pares donde A→B y B→A con importe similar en <7 días. Calcula centralidad de cada cuenta (grado de conexiones). Marca cuentas hub (>20 contrapartes distintas) como alto_riesgo_red." },
+      { title: "Combinar score ML con análisis de red", desc: "Score final combinando detección ML y análisis de red.", prompt: "Crea tabla ALERTAS_AMLD_COMBINADAS con: op_id, score_ml (del detector_amld), score_red (1 si cuenta en alto_riesgo_red, 0.5 si circularidad detectada, 0 si normal), score_final (0.7 × score_ml + 0.3 × score_red), nivel_alerta (CRITICO >= 0.90 / ALTO 0.70-0.90 / MEDIO 0.50-0.70 / BAJO < 0.50)." },
+      { title: "Priorizar alertas con explicabilidad", desc: "Genera evidencias para cada alerta.", prompt: "Para alertas CRITICO y ALTO, usa CORTEX.COMPLETE para generar: evidencias TEXT (lista de 3 evidencias principales que disparan la alerta: fragmentación, circularidad, jurisdicción, velocidad, importe redondo), tipo_patron_sospechoso (Estructuracion/Blanqueo_Circular/Jurisdiccion_Riesgo/Velocidad_Inusual), accion_recomendada (Reportar_STR / Investigar / Monitorizar). Almacena en ALERTAS_PRIORIZADAS." },
+      { title: "Dashboard de compliance AMLD", desc: "Panel de alertas con evidencias y acciones.", prompt: "Crea dashboard Streamlit con: KPIs (operaciones procesadas hoy, alertas críticas, alertas altas, reducción vs sistema anterior), tabla de alertas priorizadas con evidencias, filtros por nivel y tipo de patrón, gráfico de distribución de scores, mapa de jurisdicciones de riesgo. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline de monitorización continua", desc: "Task para procesar operaciones en tiempo casi real.", prompt: "Crea Task AMLD_MONITOR que cada 30 minutos: procese nuevas operaciones con detector_amld, actualice scores de red, genere nuevas alertas para nivel CRITICO y ALTO, archive alertas resueltas. ALTER TASK AMLD_MONITOR RESUME." }
+    ]
+  },
+  UC16: {
+    title: "Clasificación MiFID II de Clientes y Productos",
+    intro: 'Construirás un sistema de clasificación automática de adecuación cliente-producto según MiFID II/PRIIPs usando ML.CLASSIFICATION con audit trail completo.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para clasificación MiFID II.", prompt: "Crea base de datos MIFID_CLASIFICACION_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar perfiles MiFID II de clientes", desc: "Crea 2.000 clientes con los 8 criterios MiFID.", prompt: "Genera tabla CLIENTES_MIFID con 2000 registros usando GENERATOR(ROWCOUNT => 2000). Columnas: cliente_id, perfil_riesgo INT (1-7), horizonte_inversion_anios INT (1-20), conocimiento_nivel (Basico/Medio/Avanzado/Profesional), experiencia_anios FLOAT, objetivo (Preservacion/Renta/Crecimiento/Especulacion), situacion_financiera (Bajo/Medio/Alto/MuyAlto), tolerancia_perdida_pct FLOAT (5-50%), tipo_cliente (Minorista/Profesional/Contraparte)." },
+      { title: "Generar catálogo de productos de inversión", desc: "Define 500 productos con sus características PRIIPs.", prompt: "Genera tabla PRODUCTOS_MIFID con 500 registros: producto_id, nombre, tipo (UCITS/AIF/Bono/Accion/Derivado/ETF/Estructura), srri INT (1-7), horizonte_recomendado_min INT, horizonte_recomendado_max INT, tipo_inversor_objetivo (Minorista/Profesional/Ambos), complejidad (No_Complejo/Complejo/MuyComplejo), estrategia_objetivo (Preservacion/Renta/Crecimiento/Especulacion/Cobertura), advertencias ARRAY." },
+      { title: "Generar pares cliente-producto con resultado", desc: "Crea el dataset de entrenamiento.", prompt: "Genera 10000 pares cliente-producto (CARTESIAN con SAMPLE). Para cada par, aplica las 8 reglas MiFID: perfil_ok (perfil_riesgo <= srri), horizonte_ok, conocimiento_ok, experiencia_ok, objetivo_ok, financiero_ok, perdida_ok, tipo_cliente_ok. Target adecuacion_final VARCHAR: ADECUADO si >= 7/8, ADVERTENCIA si 5-6/8, INADECUADO si < 5." },
+      { title: "Entrenar clasificador de adecuación", desc: "ML.CLASSIFICATION para matching automático.", prompt: "Crea DATASET_MIFID con features: los 8 criterios como FLOAT (0/1), srri_diferencia (srri - perfil_riesgo), horizonte_gap, complejidad_encoded, tipo_cliente_encoded. Target adecuacion_final VARCHAR. Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION \"clasificador_mifid\" con evaluate => TRUE. Muestra accuracy por clase." },
+      { title: "Generar justificación regulatoria", desc: "CORTEX.COMPLETE genera el texto de justificación.", prompt: "Para cada predicción, usa CORTEX.COMPLETE para generar: justificacion_regulatoria TEXT (2-3 frases: \"El producto X es [ADECUADO/NO ADECUADO] para el cliente Y porque: [criterios OK], sin embargo [criterios fallidos]\"), advertencias_especificas ARRAY (lista de advertencias a comunicar obligatoriamente según MiFID II). Almacena en DECISIONES_MIFID." },
+      { title: "Validar contra normativa", desc: "Verificación de coherencia regulatoria de las decisiones.", prompt: "Crea vista VALIDACION_NORMATIVA que verifica: nunca ADECUADO si criterio perfil_ok=0 (regla hard), nunca ADECUADO si tipo_cliente es Minorista y complejidad MuyComplejo sin conocimiento Avanzado, todas las decisiones tienen justificacion_regulatoria no nula. Muestra casos que violan reglas hard para corrección." },
+      { title: "Dashboard de adecuación con audit trail", desc: "Panel de clasificaciones con trazabilidad completa.", prompt: "Crea dashboard Streamlit con: selector de cliente y producto, visualización de los 8 criterios con semáforo, resultado de adecuación con justificación, registro de audit trail (fecha, clasificación, version_modelo, usuario), estadísticas de adecuación por tipo de producto y perfil de cliente. Usa snowflake.connector.connect() para ejecución local del dashboard." }
+    ]
+  },
+  UC17: {
+    title: "Revisión de Contratos de Custodia con LLM",
+    intro: 'Construirás un sistema de análisis y revisión de contratos de custodia y derivados usando CORTEX.COMPLETE para identificar desviaciones del clausulado estándar.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para análisis contractual.", prompt: "Crea base de datos CONTRATOS_CUSTODIA_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar biblioteca de contratos", desc: "Crea 50 contratos con variaciones controladas.", prompt: "Genera tabla CONTRATOS con 50 registros. Tipos: Custody_Agreement (20 contratos), ISDA_Master (15), CSA (10), GMSLA (5). Para cada uno: contrato_id, tipo, contraparte VARCHAR, texto_completo TEXT (400-600 palabras con cláusulas clave: colateral elegible, márgenes, eventos de incumplimiento, resolución anticipada, governing_law). Las variaciones incluyen: cláusulas favorables, desfavorables y neutras vs. la versión estándar de mercado." },
+      { title: "Extraer cláusulas clave", desc: "CORTEX.COMPLETE identifica y extrae las secciones críticas.", prompt: "Para cada contrato, usa CORTEX.COMPLETE para extraer JSON con: clausula_colateral (texto de la sección de colateral elegible), clausula_margen (porcentaje de margen inicial y variación), clausula_incumplimiento (eventos que constituyen default), clausula_resolucion (procedimiento de early termination), clausula_ley_aplicable, clausula_arbitraje. Almacena en CLAUSULAS_EXTRAIDAS." },
+      { title: "Comparar con clausulado estándar", desc: "Detecta desviaciones respecto al estándar ISDA/GMSLA.", prompt: "Crea tabla ESTANDARES_MERCADO con el texto estándar de referencia de cada tipo de cláusula por tipo de contrato. Para cada contrato, usa CORTEX.COMPLETE para comparar cada cláusula extraída con el estándar: ¿es favorable/desfavorable/neutral para nosotros? ¿qué diferencias específicas hay? Almacena en ANALISIS_DESVIACIONES." },
+      { title: "Detectar cláusulas de riesgo", desc: "Identifica automáticamente cláusulas problemáticas.", prompt: "Crea tabla CLAUSULAS_RIESGO con: contrato_id, tipo_riesgo (RIESGO_OPERACIONAL/RIESGO_LEGAL/RIESGO_REPUTACIONAL/CONDICION_INUSUAL), descripcion TEXT, nivel_riesgo (CRITICO/ALTO/MEDIO/BAJO), clausula_afectada VARCHAR. Usa CORTEX.COMPLETE para identificar: cross-default inusualmente amplio, colateral no estándar, plazo de resolución muy corto, jurisdicción problemática." },
+      { title: "Comparar versiones de contratos", desc: "Analiza cambios entre borradores de negociación.", prompt: "Para contratos con 2 versiones (simula 10 pares borrador_1/borrador_2), usa CORTEX.COMPLETE para: identificar qué cláusulas cambiaron, si el cambio es a favor o en contra, el impacto de la modificación. Genera tabla CAMBIOS_NEGOCIACION con historial de cambios por cláusula." },
+      { title: "Generar resumen ejecutivo para negociación", desc: "Produce el briefing de negociación para el equipo jurídico.", prompt: "Para cada contrato, usa CORTEX.COMPLETE para generar: resumen_ejecutivo TEXT (2 párrafos: resumen del contrato y principales hallazgos), top_5_puntos_negociacion ARRAY (puntos ordenados por importancia con argumento y posición recomendada), nivel_riesgo_global (BAJO/MEDIO/ALTO/MUY_ALTO), recomendacion (Firmar_como_está/Negociar/Rechazar). Almacena en BRIEFINGS_NEGOCIACION." },
+      { title: "Dashboard de revisión contractual", desc: "Panel de análisis con desviaciones y puntos de negociación.", prompt: "Crea dashboard Streamlit con: lista de contratos con nivel de riesgo global (semáforo), detalle del contrato seleccionado con cláusulas y desviaciones, tabla de puntos de negociación ordenada por prioridad, comparativa de versiones con cambios resaltados. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Base de conocimiento de clausulados", desc: "Repositorio consultable de cláusulas negociadas.", prompt: "Crea tabla BIBLIOTECA_CLAUSULAS con todas las cláusulas negociadas históricamente: texto de la cláusula, tipo, contraparte, resultado_negociacion (lo que conseguimos), lecciones_aprendidas. Crea índice Cortex Search para búsqueda semántica: \"¿cómo hemos negociado el colateral elegible con fondos luxemburgueses?\"" }
+    ]
+  },
+  UC18: {
+    title: "Reporting Regulatorio Automático EMIR/SFTR/AIFMD",
+    intro: 'Construirás un pipeline de generación automática de reportes regulatorios EMIR, SFTR y AIFMD usando CORTEX.COMPLETE para transformar posiciones en formatos XML/ISO.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para reporting regulatorio.", prompt: "Crea base de datos REPORTING_REGULATORIO_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar datos de derivados para EMIR", desc: "Simula posiciones de derivados OTC con campos EMIR.", prompt: "Genera tabla DERIVADOS_OTC con 5000 registros usando GENERATOR(ROWCOUNT => 5000). Columnas: uti VARCHAR (identificador único de trade), lei_entidad VARCHAR (nuestra LEI), lei_contraparte VARCHAR, tipo_derivado (IRS 40%/CDS 30%/FX_Forward 20%/Equity_Option 10%), nominal FLOAT, moneda VARCHAR, fecha_inicio DATE, fecha_vencimiento DATE, valor_mercado FLOAT, colateral_aportado FLOAT, reportado_emir BOOLEAN DEFAULT FALSE." },
+      { title: "Transformar a formato EMIR XML", desc: "Genera el XML de reporte EMIR por trade.", prompt: "Para cada derivado no reportado, usa CORTEX.COMPLETE para generar el XML de reporte EMIR según el esquema DTCC/Regis-TR: incluye campos obligatorios (UTI, LEI partes, tipo, nominal, fechas, valoración, colateral), validación de longitud y formato de cada campo. Almacena en REPORTES_EMIR con estado GENERADO." },
+      { title: "Generar datos de repos para SFTR", desc: "Simula operaciones de repo y securities lending para SFTR.", prompt: "Genera tabla REPOS_SFT con 2000 registros usando GENERATOR(ROWCOUNT => 2000): sft_id, tipo (Repo 50%/Reverse_Repo 30%/SBL 20%), contraparte_lei VARCHAR, isin_colateral VARCHAR, importe FLOAT, tasa_repo FLOAT, fecha_inicio DATE, fecha_vencimiento DATE, tipo_colateral (Bono_Soberano/Corporativo/Equity), haircut FLOAT. Genera también SFTR_CAMPOS_ADICIONALES con los 155 campos del estándar SFTR." },
+      { title: "Transformar a formato SFTR", desc: "Genera el reporte SFTR en formato ISO 20022.", prompt: "Para cada SFT, usa CORTEX.COMPLETE para generar el mensaje pacs.010 (formato SFTR ISO 20022) con los campos obligatorios del reporte: identificadores, contraparte, colateral, términos financieros, ciclo de vida. Valida que los 155 campos obligatorios estén presentes y en formato correcto. Almacena en REPORTES_SFTR." },
+      { title: "Generar reporte AIFMD", desc: "Produce el Annex IV de reporte AIFMD para fondos alternativos.", prompt: "Genera tabla FONDOS_AIF con 500 posiciones de 10 fondos alternativos: fondo_id, activo_tipo (RealEstate/PE/Hedge/Infrastructure), valor_neto FLOAT, apalancamiento_bruto FLOAT, apalancamiento_compromise FLOAT, liquidez_activo (Diaria/Semanal/Mensual/Iliquida), jurisdiccion_riesgo. Para cada fondo, usa CORTEX.COMPLETE para generar el Annex IV de AIFMD con las secciones: overview, inversiones, perfil de riesgo, financiación." },
+      { title: "Validar completitud y consistencia", desc: "Detecta errores antes del envío al repositorio.", prompt: "Crea función VALIDAR_REPORTE(tipo_reporte, reporte_id) que verifica: 1) Todos los campos obligatorios presentes y no NULL, 2) Formatos correctos (LEI 20 chars, UTI formato correcto, fechas ISO), 3) Consistencia interna (nominal positivo, fechas lógicas), 4) Cross-checks entre campos relacionados. Genera tabla ERRORES_VALIDACION con detalles de cada error." },
+      { title: "Gestionar correcciones y reenvíos", desc: "Pipeline de gestión del ciclo de vida del reporte.", prompt: "Crea tabla CICLO_VIDA_REPORTE con estados: GENERADO → VALIDADO → ENVIADO → ACEPTADO/RECHAZADO/CORRECCIÓN. Para rechazados, usa CORTEX.COMPLETE para interpretar el mensaje de error del repositorio y generar la corrección automática. Registra cada cambio con timestamp y usuario." },
+      { title: "Dashboard de estado de reporting", desc: "Panel de control de cumplimiento regulatorio.", prompt: "Crea dashboard Streamlit con: KPIs por regulación (EMIR/SFTR/AIFMD): reportes enviados, aceptados, con errores, pendientes, próximo deadline, tabla de reportes pendientes priorizados por deadline, detalle de errores con corrección sugerida, timeline de deadlines regulatorios del mes. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Pipeline automático con deadlines", desc: "Task para cumplimiento de plazos regulatorios.", prompt: "Crea Task REPORTING_DEADLINE_MONITOR que diariamente: identifique trades del día anterior pendientes de reporte EMIR (T+1), repos del día anterior pendientes de SFTR (T+1), genera reportes, valida y envía automáticamente los que no tengan errores. Alerta por email si hay reportes con errores o deadlines en riesgo. ALTER TASK REPORTING_DEADLINE_MONITOR RESUME." }
+    ]
+  },
+  UC19: {
+    title: "Help Desk Inteligente para Back-Office con RAG",
+    intro: 'Construirás un agente de help desk para back-office usando CORTEX SEARCH y CORTEX.COMPLETE para resolver consultas sobre liquidaciones, breaks e instrucciones en lenguaje natural.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el help desk inteligente.", prompt: "Crea base de datos HELPDESK_BACKOFFICE_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM." },
+      { title: "Crear base de conocimiento de procedimientos", desc: "Genera 500 procedimientos operativos detallados.", prompt: "Genera tabla PROCEDIMIENTOS_OPERATIVOS con 500 registros usando GENERATOR(ROWCOUNT => 500). Columnas: proc_id, categoria (Liquidacion 30%/Custodia 20%/SWIFT 20%/Corporate_Actions 15%/Compliance 15%), titulo TEXT, descripcion_problema TEXT (50 palabras), solucion_detallada TEXT (150 palabras con pasos numerados), palabras_clave ARRAY, tiempo_resolucion_min INT." },
+      { title: "Crear histórico de incidencias resueltas", desc: "Genera 2.000 casos de soporte con resolución.", prompt: "Genera tabla INCIDENCIAS_HISTORICAS con 2000 registros: incidencia_id, tipo_consulta TEXT (descripción del problema en 20-40 palabras), resolucion TEXT (solución dada en 80-100 palabras), estado (Resuelto 90%/Escalado 10%), tiempo_resolucion_min FLOAT, rating_usuario INT (3-5), fecha DATE (últimos 12 meses). Incluye patrones recurrentes: \"¿Por qué mi SWIFT MT548 muestra pending?\", \"Diferencia de posición con Euroclear\", etc." },
+      { title: "Indexar base de conocimiento con Cortex Search", desc: "Crea índice de búsqueda semántica sobre toda la base.", prompt: "Crea servicio Cortex Search: CREATE CORTEX SEARCH SERVICE HELPDESK_SEARCH ON (SELECT titulo || ' ' || descripcion_problema || ' ' || solucion_detallada AS contenido, proc_id, categoria FROM PROCEDIMIENTOS_OPERATIVOS UNION ALL SELECT tipo_consulta || ' ' || resolucion AS contenido, incidencia_id, tipo_consulta AS categoria FROM INCIDENCIAS_HISTORICAS) ATTRIBUTES contenido, categoria WAREHOUSE = COMPUTE_WH TARGET_LAG = '1 hour'." },
+      { title: "Implementar pipeline RAG del helpdesk", desc: "Combina búsqueda con síntesis LLM.", prompt: "Crea función HELPDESK_QUERY(consulta VARCHAR) que: 1) Busca top-5 resultados relevantes en HELPDESK_SEARCH, 2) Consulta POSICIONES actuales si la consulta contiene cuenta o ISIN, 3) Usa CORTEX.COMPLETE con 'snowflake-arctic' y el contexto recuperado para generar respuesta clara y accionable. Devuelve respuesta + fuentes + confianza (0-1)." },
+      { title: "Desarrollar agente con escalada inteligente", desc: "Implementa lógica de routing y escalada.", prompt: "Crea función AGENTE_HELPDESK(consulta, usuario_id) que: si confianza > 0.85 → responde automáticamente y registra en CONSULTAS_RESUELTAS_AUTO; si 0.60-0.85 → responde con \"revisar con especialista\" y registra en CONSULTAS_PARCIALES; si <0.60 → escala a especialista con contexto y registra en CONSULTAS_ESCALADAS. Genera tabla KPIS_HELPDESK diaria." },
+      { title: "Evaluar calidad de respuestas", desc: "Sistema de feedback y monitorización de calidad.", prompt: "Crea tabla FEEDBACK_RESPUESTAS con: consulta_id, rating (1-5), fue_util BOOLEAN, necesito_escalada BOOLEAN, comentario TEXT. Crea vista CALIDAD_HELPDESK con: tasa_resolucion_auto, rating_medio, pct_escaladas, top_temas_baja_calidad, tendencia_semanal. Calcula si la tasa de resolución automática supera el 80% objetivo." },
+      { title: "Dashboard de métricas del help desk", desc: "Panel de control para el supervisor de back-office.", prompt: "Crea dashboard Streamlit con: KPIs en tiempo real (consultas/hora, tasa resolución automática %, rating medio, cola de escaladas), tabla de consultas escaladas con contexto y prioridad, top-10 consultas recurrentes, tendencia temporal de volumen y calidad, widget de prueba del asistente. Usa snowflake.connector.connect() para ejecución local del dashboard." },
+      { title: "Actualizar base de conocimiento automáticamente", desc: "Task para enriquecer el conocimiento con casos resueltos.", prompt: "Crea Task HELPDESK_KNOWLEDGE_UPDATE semanal que: extrae consultas escaladas con rating >= 4 de las últimas 2 semanas, usa CORTEX.COMPLETE para convertirlas en nuevos procedimientos, añade a PROCEDIMIENTOS_OPERATIVOS, actualiza índice Cortex Search. ALTER TASK HELPDESK_KNOWLEDGE_UPDATE RESUME." }
+    ]
+  },
+  UC20: {
+    title: "Predicción de Fallos de Liquidación con Feature Store y Model Registry",
+    intro: 'El caso de uso más avanzado: Feature Store con Entity OPERACION_LIQUIDACION y 8 FeatureViews más Model Registry para predecir fallos de liquidación con 24h de antelación.',
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el sistema de predicción de fallos.", prompt: "Crea base de datos SETTLEMENT_PREDICTION_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño MEDIUM. Este es el caso de uso más completo: combina Feature Store + Model Registry para máxima reutilización y control de versiones." },
+      { title: "Generar histórico de liquidaciones", desc: "Crea 100.000 operaciones con fallos etiquetados.", prompt: "Genera tabla OPERACIONES_LIQUIDACION_HIST con 100000 registros usando GENERATOR(ROWCOUNT => 100000). Columnas: op_id, isin VARCHAR, contraparte_id VARCHAR, importe FLOAT (UNIFORM(10000, 5000000, RANDOM())), fecha_trade DATE, fecha_liquidacion DATE (fecha_trade + 2), mercado (Euronext/LSE/Xetra/BME), broker_origen VARCHAR, tipo_op (Buy 55%/Sell 45%), fallo_liquidacion VARCHAR (FALLO 2.5%/OK 97.5%), motivo_fallo VARCHAR (NULL para OK, POSICION_SHORT/SIN_VALORES/INSTRUCCION_ERRONEA/CONTRAPARTE_FALLO para FALLO)." },
+      { title: "Crear Feature Store con Entity OPERACION_LIQUIDACION", desc: "Inicializa el Feature Store y la entidad principal.", prompt: "Crea Feature Store: CREATE FEATURE STORE SETTLEMENT_FS. Crea entidad: CREATE ENTITY OPERACION_LIQUIDACION WITH PRIMARY KEY (op_id). Crea los primeros 2 FeatureViews: FV_CONTRAPARTE (tasa_fallo_contraparte_30d FLOAT, num_fallos_contraparte_ytd FLOAT, score_credito_contraparte FLOAT) y FV_INSTRUCCION (instruccion_validada FLOAT, horas_hasta_liquidacion FLOAT, swift_confirmado FLOAT)." },
+      { title: "Crear FeatureViews 3-5", desc: "Define las siguientes 3 FeatureViews del Feature Store.", prompt: "Crea en SETTLEMENT_FS para la entidad OPERACION_LIQUIDACION: FV_VALORES (disponibilidad_valores_pct FLOAT, es_posicion_short FLOAT, tasa_prestamo_valores FLOAT, volumen_vs_liquidez_mercado FLOAT), FV_POSICION (saldo_disponible_cuenta FLOAT, bloqueos_pendientes FLOAT, ratio_cobertura FLOAT, num_ops_mismo_isin_dia FLOAT), FV_MERCADO (spread_bid_ask FLOAT, volumen_mercado_anormal FLOAT, es_dia_high_volume FLOAT)." },
+      { title: "Crear FeatureViews 6-8", desc: "Completa las últimas 3 FeatureViews del Feature Store.", prompt: "Crea en SETTLEMENT_FS para OPERACION_LIQUIDACION: FV_BROKER (tasa_fallo_broker_30d FLOAT, num_correcciones_instrucciones FLOAT, tiempo_medio_confirmacion_min FLOAT), FV_OPERACION (importe_normalizado FLOAT, importe_vs_media_contraparte FLOAT, tipo_op_encoded FLOAT, mercado_encoded FLOAT, hora_trade FLOAT, dia_semana FLOAT), FV_SCORING_HISTORICO (score_riesgo_pre_v1 FLOAT, fue_fallo_historico FLOAT). Total: 8 FeatureViews, 30+ features." },
+      { title: "Entrenar y registrar settlement_failure_model v1", desc: "Crea el primer modelo de predicción de fallos.", prompt: "Extrae dataset de entrenamiento del Feature Store SETTLEMENT_FS para OPERACION_LIQUIDACION (JOIN con OPERACIONES_LIQUIDACION_HIST). Crea tabla TRAINING_v1 con 15 features de los primeros 6 FeatureViews + target fallo_liquidacion VARCHAR. Divide 80/20. Entrena SNOWFLAKE.ML.CLASSIFICATION \"settlement_v1\" con evaluate => TRUE. Registra: CREATE MODEL REGISTRY.MODELS.SETTLEMENT_FAILURE_MODEL VERSION V1 FROM settlement_v1 con métricas precision, recall." },
+      { title: "Desplegar versión v2 con todas las features", desc: "Mejora el modelo usando los 8 FeatureViews completos.", prompt: "Extrae TRAINING_v2 con todas las features de los 8 FeatureViews. Entrena settlement_v2 con evaluate => TRUE. Compara métricas V1 vs V2: si recall de FALLO mejora > 5%, registra V2 como versión mejorada. Registra: CREATE MODEL REGISTRY.MODELS.SETTLEMENT_FAILURE_MODEL VERSION V2 FROM settlement_v2. Si V2 es mejor: ALTER MODEL SETTLEMENT_FAILURE_MODEL SET DEFAULT_VERSION = V2." },
+      { title: "Generar predicciones y activar medidas preventivas", desc: "Pipeline de predicción con acciones automáticas.", prompt: "Crea función EVALUAR_RIESGO_LIQUIDACION(op_id) que: 1) Extrae features del Feature Store, 2) Puntúa con SETTLEMENT_FAILURE_MODEL!PREDICT usando OBJECT_CONSTRUCT(* EXCLUDE (fallo_liquidacion)), 3) Clasifica: Fallo_Muy_Probable (>=80%), Fallo_Probable (60-80%), Riesgo_Moderado (40-60%), Probable_OK (<40%). Para >=60%: inserta en MEDIDAS_PREVENTIVAS (activar securities lending, contactar contraparte, alerta a gestor de liquidación)." },
+      { title: "Comparar versiones en Model Registry", desc: "Evalúa métricas de V1 vs V2 para decisión de producción.", prompt: "Consulta SHOW VERSIONS IN MODEL SETTLEMENT_FAILURE_MODEL. Crea tabla comparativa: recall_FALLO (objetivo >85%), precision_FALLO, falsos_positivos_pct, MAPE reducción vs baseline. Muestra el impacto económico estimado de V2 vs V1: si recall mejora 5%, ¿cuántas penalizaciones CSDR adicionales se evitan asumiendo 10K operaciones diarias a 100bps?" },
+      { title: "Dashboard de gestión de fallos de liquidación", desc: "Panel operativo para el equipo de liquidación.", prompt: "Crea dashboard Streamlit con: KPIs (operaciones hoy, alto riesgo de fallo, en medidas preventivas, fallos evitados mes, penalizaciones evitadas €), tabla de operaciones de riesgo con nivel y acción preventiva activada, distribución de riesgo por mercado y contraparte, comparativa de performance de V1 vs V2 del modelo. Usa snowflake.connector.connect() para ejecución local del dashboard." }
+    ]
+  }
+};
+
+function verPrompts(ucId) {
+  const data = PROMPTS[ucId];
+  if (!data) { alert('Prompts no disponibles aún para ' + ucId); return; }
+  const box = document.getElementById('promptsModalBox');
+  let html = `<button class="modal-close" onclick="cerrarModal('promptsModal')">&times;</button>`;
+  html += `<span class="guide-badge">${ucId}</span>`;
+  html += `<h2>${data.title} — Cortex Code Prompts</h2>`;
+  html += `<p class="prompt-intro">${data.intro}</p>`;
+  data.steps.forEach((s, i) => {
+    const escaped = s.prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    html += `<div class="prompt-step">`;
+    html += `<div class="prompt-step-header"><span class="prompt-step-num">${i+1}</span><span class="prompt-step-title">${s.title}</span></div>`;
+    html += `<div class="prompt-step-desc">${s.desc}</div>`;
+    html += `<div class="prompt-code" id="prompt_${ucId}_${i}"><button class="copy-btn" onclick="copiarPrompt('prompt_${ucId}_${i}')">Copiar</button>${escaped}</div>`;
+    html += `</div>`;
+  });
+  html += `<p class="guide-footer">Ejecuta cada prompt en Cortex Code (Snowsight) de forma secuencial</p>`;
+  box.innerHTML = html;
+  document.getElementById('promptsModal').classList.add('active');
+}
+
+function copiarPrompt(id) {
+  const el = document.getElementById(id);
+  const btn = el.querySelector('.copy-btn');
+  const text = el.textContent.replace('Copiar', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '¡Copiado!';
+    setTimeout(() => btn.textContent = 'Copiar', 1500);
+  });
+}
+</script>
+
+<div class="modal-overlay" id="guiaModal">
+  <div class="modal-box" id="guiaModalBox"></div>
+</div>
+
+<div class="modal-overlay" id="promptsModal">
+  <div class="modal-box" id="promptsModalBox" style="max-width:780px;"></div>
+</div>
+</body>
+</html>

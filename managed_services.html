@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>Snowflake — Soluciones IA/ML para Managed Services</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+    }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #003545, #11567F);
+      color: #fff;
+      padding: 32px 48px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .hero-left { flex: 1; }
+
+    .logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-snowflake {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .stats-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 28px;
+      text-align: center;
+      color: #1a1a1a;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .stats-box .stat-number {
+      font-size: 40px;
+      font-weight: 700;
+      color: #2E7D32;
+      line-height: 1;
+    }
+
+    .stats-box .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .stats-box .stat-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+
+    .stats-box .stat-time-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .stats-divider {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 10px 0;
+    }
+
+    /* ── SECTION INTRO ───────────────────────────────────── */
+    .intro {
+      background: #fff;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .intro h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #11567F;
+      margin-bottom: 14px;
+    }
+
+    .intro p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── FILTERS ─────────────────────────────────────────── */
+    .filters-bar {
+      background: #fff;
+      padding: 20px 48px 0;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filters-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 80px;
+      border: 1.5px solid #ccc;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: #29B5E8; color: #29B5E8; }
+
+    .filter-btn.active {
+      background: #29B5E8;
+      border-color: #29B5E8;
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #ccc;
+      border-radius: 80px;
+      padding: 7px 14px;
+      gap: 8px;
+      min-width: 200px;
+      background: #fff;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #444;
+      width: 100%;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #aaa; }
+
+    /* ── RESULTS COUNT ────────────────────────────────────── */
+    .results-count {
+      padding: 14px 48px 8px;
+      font-size: 13px;
+      color: #666;
+      background: #f5f5f5;
+    }
+
+    /* ── CARDS GRID ──────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      padding: 16px 48px 48px;
+      background: #f5f5f5;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e2e2e2;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-badges { display: flex; gap: 6px; align-items: center; }
+
+    .badge-id {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-cat {
+      background: #E0F4FD;
+      color: #11567F;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .badge-cat.laboral    { background: #FFF3E8; color: #C45B00; }
+    .badge-cat.seguridad  { background: #E8EAF6; color: #283593; }
+    .badge-cat.cit        { background: #FFF8E1; color: #E65100; }
+    .badge-cat.limpieza   { background: #E0F2F1; color: #00695C; }
+    .badge-cat.clientes   { background: #F3E5F5; color: #6A1B9A; }
+    .badge-cat.esg        { background: #E8F5E9; color: #2E7D32; }
+
+    .card-time {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      padding: 0 18px 12px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #11567F;
+      line-height: 1.3;
+    }
+
+    .pain-point {
+      margin: 0 18px 14px;
+      background: #F0F7FA;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pain-point-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #D45B90;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .pain-point p {
+      font-size: 13px;
+      color: #2a2a2a;
+      line-height: 1.55;
+    }
+
+    .card-desc {
+      padding: 0 18px 14px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-features {
+      padding: 0 18px 16px;
+      list-style: none;
+    }
+
+    .card-features li {
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-features li::before {
+      content: '✓';
+      color: #29B5E8;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .card-actions {
+      padding: 14px 18px 18px;
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      background: #29B5E8;
+      color: #fff;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover { background: #11567F; }
+
+    .btn-tertiary {
+      flex: 1;
+      padding: 10px;
+      background: #003545;
+      color: #29B5E8;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-tertiary:hover { background: #11567F; }
+
+    .card-actions { flex-wrap: wrap; }
+
+    .prompt-step { margin-bottom: 18px; }
+    .prompt-step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prompt-step-num { background: #003545; color: #29B5E8; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .prompt-step-title { font-size: 13px; font-weight: 600; color: #333; }
+    .prompt-step-desc { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+    .prompt-code { position: relative; background: #003545; color: #e0e0e0; border-radius: 8px; padding: 12px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .prompt-code .copy-btn { position: absolute; top: 6px; right: 8px; background: rgba(255,255,255,0.1); border: none; color: #aaa; font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
+    .prompt-code .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .prompt-code .kw { color: #29B5E8; }
+    .modal-box .prompt-intro { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 92%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #D45B90; }
+    .modal-box h2 { color: #11567F; font-size: 20px; margin-bottom: 6px; }
+    .modal-box h3 { font-size: 15px; color: #333; margin: 18px 0 8px; }
+    .modal-box p, .modal-box li { font-size: 13px; line-height: 1.7; color: #444; }
+    .modal-box ul { padding-left: 20px; margin: 6px 0; }
+    .modal-box .guide-badge { display: inline-block; background: #E0F4FD; color: #11567F; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; margin-bottom: 10px; }
+    .modal-box .guide-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #eee; font-size: 12px; color: #888; }
+
+    @media (max-width: 700px) {
+      .hero { flex-direction: column; padding: 24px 20px; }
+      .cards-grid { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .filters-bar { padding: 16px 16px 0; }
+      .results-count { padding: 12px 16px 6px; }
+    }
+    </style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<header class="hero" style="background:linear-gradient(135deg,#2E7D32,#1B5E20);">
+  <div class="hero-left">
+    <div class="logos">
+    </div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
+    <p class="hero-eyebrow">Managed Services × Snowflake</p>
+    <h1 class="hero-title">Soluciones IA/ML para Managed Services</h1>
+    <p class="hero-subtitle">Guías y Prompts de Cortex Code listos para desplegar en empresas de seguridad, vigilancia, limpieza y servicios auxiliares</p>
+    <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
+  </div>
+
+  <div class="stats-box">
+    <div class="stat-number">20</div>
+    <div class="stat-label">Casos de Uso</div>
+    <hr class="stats-divider"/>
+    <div class="stat-time">8-15 min</div>
+    <div class="stat-time-label">Tiempo de Configuración</div>
+  </div>
+</header>
+
+<!-- ── INTRO ──────────────────────────────────────────────── -->
+<section class="intro">
+  <h2>Transforma tus Operaciones de Managed Services con IA</h2>
+  <p>Cada solución incluye Cortex Code Prompts con datos sintéticos, guías paso a paso e implementaciones SQL-first con Cortex AI/ML. Cubre optimización de fuerza laboral con Feature Store, scoring de riesgo de instalaciones con Model Registry, clasificación de alarmas, predicción de churn de contratos, análisis de sentimiento de clientes y reporting ESG automatizado. Todo el procesamiento permanece dentro de Snowflake, sin dependencias externas.</p>
+</section>
+
+<!-- ── FILTERS ───────────────────────────────────────────── -->
+<div class="filters-bar">
+  <div class="filters-left" id="filterBtns">
+    <button class="filter-btn active" data-filter="all">Todos (20)</button>
+    <button class="filter-btn" data-filter="laboral">Fuerza Laboral (4)</button>
+    <button class="filter-btn" data-filter="seguridad">Seguridad y Vigilancia (4)</button>
+    <button class="filter-btn" data-filter="cit">Seguridad Bancaria CIT (3)</button>
+    <button class="filter-btn" data-filter="limpieza">Limpieza y Auxiliares (3)</button>
+    <button class="filter-btn" data-filter="clientes">Clientes y SLA (4)</button>
+    <button class="filter-btn" data-filter="esg">Sostenibilidad ESG (2)</button>
+  </div>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
+      <circle cx="9" cy="9" r="7"/><line x1="15" y1="15" x2="19" y2="19"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Buscar casos de uso…" />
+  </div>
+</div>
+
+<!-- ── RESULTS COUNT ─────────────────────────────────────── -->
+<div class="results-count" id="resultsCount">Mostrando 20 de 20 casos de uso</div>
+
+<!-- ── CARDS ─────────────────────────────────────────────── -->
+<main class="cards-grid" id="cardsGrid"></main>
+
+<script>
+const USE_CASES = [
+  {
+    id:"UC01", cat:"laboral", catLabel:"Fuerza Laboral", time:"14 min",
+    title:"Predicción de Absentismo con Feature Store",
+    pain:"El absentismo imprevisto en el sector de servicios genera costes de sustitución de última hora que pueden suponer el 15-20% de la masa salarial. Sin previsión anticipada, es imposible planificar coberturas de forma eficiente.",
+    desc:"Feature Store centralizado con Entity EMPLEADO_360 y 6 FeatureViews que agrega historial de ausencias, datos contractuales, condiciones meteorológicas y de turno. SNOWFLAKE.ML.CLASSIFICATION predice el riesgo de absentismo 48 horas antes, permitiendo planificar sustituciones con antelación y reducir costes de cobertura un 35%.",
+    features:["Feature Store: Entity EMPLEADO_360 con 6 FeatureViews de absentismo","ML.CLASSIFICATION para predicción de ausencia 48h antes","Segmentación por tipo de contrato, turno y zona geográfica","Dashboard de gestión proactiva de coberturas"]
+  },
+  {
+    id:"UC02", cat:"laboral", catLabel:"Fuerza Laboral", time:"13 min",
+    title:"Optimización Inteligente de Turnos y Rutas",
+    pain:"La asignación manual de turnos y rutas genera un 20-25% de kilómetros improductivos y horas extra evitables. Los coordinadores dedican 3-4 horas diarias a cuadrar servicios sin herramientas de optimización.",
+    desc:"Motor de optimización con SNOWFLAKE.ML.CLASSIFICATION sobre datos de empleados, contratos de servicio, localizaciones y preferencias. Genera la asignación óptima de turnos minimizando desplazamientos, respetando convenios y maximizando cobertura por zona, reduciendo costes logísticos un 20%.",
+    features:["ML.CLASSIFICATION para asignación óptima empleado-servicio-zona","Optimización de rutas multi-servicio por jornada","Respeto automático de convenio colectivo y descansos","Dashboard de productividad y eficiencia de asignación"]
+  },
+  {
+    id:"UC03", cat:"laboral", catLabel:"Fuerza Laboral", time:"12 min",
+    title:"Detección Temprana de Riesgo de Rotación",
+    pain:"La rotación en el sector de servicios supera el 30% anual, con un coste de selección y formación de 2.000-5.000€ por empleado. Las señales de desvinculación aparecen semanas antes de la baja voluntaria pero no se detectan.",
+    desc:"Modelo de clasificación ML sobre señales de comportamiento laboral: variaciones en puntualidad, solicitudes de cambio de turno, rendimiento, ausencias y encuestas de clima. Identifica empleados con alta probabilidad de baja voluntaria con 4-6 semanas de antelación para activar medidas de retención.",
+    features:["ML.CLASSIFICATION con 15+ señales de desvinculación temprana","Segmentación por antigüedad, perfil y contrato","Alertas automáticas a RRHH con plan de retención sugerido","Dashboard de riesgo de rotación por zona y servicio"]
+  },
+  {
+    id:"UC04", cat:"laboral", catLabel:"Fuerza Laboral", time:"11 min",
+    title:"Análisis de Brechas de Formación con LLM",
+    pain:"Los equipos de RRHH analizan manualmente cientos de evaluaciones de desempeño, certificados de formación y requerimientos normativos (PRL, habilitaciones de seguridad). El 15% del personal opera con certificaciones caducadas sin que nadie lo detecte.",
+    desc:"Pipeline con CORTEX.COMPLETE que analiza evaluaciones de desempeño, historial de formación y requerimientos legales por puesto para identificar brechas de competencias, generar planes de formación personalizados y alertar sobre certificaciones próximas a caducar.",
+    features:["CORTEX.COMPLETE para análisis de evaluaciones de desempeño","Detección automática de certificaciones próximas a caducar","Generación de planes de formación personalizados por empleado","Dashboard de compliance normativo y formación por contrato"]
+  },
+  {
+    id:"UC05", cat:"seguridad", catLabel:"Seguridad y Vigilancia", time:"14 min",
+    title:"Scoring de Riesgo por Instalación con Model Registry",
+    pain:"Los gestores de seguridad asignan recursos de vigilancia de forma uniforme sin considerar el riesgo diferencial de cada instalación. El 80% de los incidentes se concentra en el 20% de las ubicaciones, pero no existe una forma de predecirlo.",
+    desc:"Modelo de scoring de riesgo por instalación registrado en Model Registry con versionado y A/B testing. Combina histórico de incidentes, características de la instalación, datos externos de criminalidad y condiciones ambientales para predecir la probabilidad de incidente y priorizar la asignación de recursos.",
+    features:["Model Registry: incident_risk_model v1/v2 con métricas comparadas","ML.CLASSIFICATION con 20+ variables de riesgo por instalación","Integración de datos externos de criminalidad y climatología","Dashboard de mapa de calor de riesgo para gestores"]
+  },
+  {
+    id:"UC06", cat:"seguridad", catLabel:"Seguridad y Vigilancia", time:"12 min",
+    title:"Clasificación Automática de Alarmas con IA",
+    pain:"El 90-95% de las alarmas recibidas en los CRA son falsas. El coste de despachar personal a cada alarma sin filtrado previo es enorme y desvía recursos de incidentes reales, comprometiendo los SLA de respuesta.",
+    desc:"SNOWFLAKE.ML.CLASSIFICATION sobre características de la alarma (tipo, hora, histórico de falsas alarmas de esa instalación, condiciones ambientales) para clasificar automáticamente si es real o falsa antes de despachar personal. Reduce falsas alarmas en un 70% y mejora tiempos de respuesta real.",
+    features:["ML.CLASSIFICATION para clasificación alarma real/falsa","Análisis de histórico de falsas alarmas por instalación y hora","Reducción de despachos innecesarios en un 70%","Integración con sistema CRA para escalado automático"]
+  },
+  {
+    id:"UC07", cat:"seguridad", catLabel:"Seguridad y Vigilancia", time:"13 min",
+    title:"Optimización de Rutas de Patrullaje con IoT",
+    pain:"Las rutas de ronda fijas son predecibles y dejan ventanas de tiempo sin cobertura. Los vigilantes recorren rutas estándar independientemente del nivel de actividad real en cada zona de la instalación.",
+    desc:"Motor de optimización de rutas de patrullaje usando datos de sensores IoT (movimiento, apertura de puertas, CCTV) y ML para identificar zonas de mayor actividad y adaptar las rutas de ronda en tiempo real, maximizando la cobertura efectiva con el mismo número de efectivos.",
+    features:["ML.ANOMALY_DETECTION sobre datos de sensores IoT en tiempo real","Generación de rutas de patrullaje adaptativas por turno","Identificación de zonas de alto riesgo basada en patrones históricos","Dashboard operativo de cobertura y actividad por instalación"]
+  },
+  {
+    id:"UC08", cat:"seguridad", catLabel:"Seguridad y Vigilancia", time:"15 min",
+    title:"Detección de Comportamientos Anómalos con IA",
+    pain:"La revisión manual de horas de grabación de CCTV para detectar comportamientos sospechosos es ineficiente y reactiva. Los incidentes se detectan horas después de ocurrir, cuando ya es demasiado tarde para actuar.",
+    desc:"Pipeline de detección de anomalías usando ML.ANOMALY_DETECTION sobre metadatos de eventos de CCTV (movimiento, permanencia, zonas restringidas, horarios inhabituales) para generar alertas en tiempo real sobre comportamientos que se desvían de los patrones normales por instalación.",
+    features:["ML.ANOMALY_DETECTION sobre metadatos de eventos CCTV","Definición de patrones normales por instalación, zona y horario","Alertas en tiempo real con nivel de confianza y evidencia","Reducción de tiempo de detección de incidentes de horas a segundos"]
+  },
+  {
+    id:"UC09", cat:"cit", catLabel:"Seguridad Bancaria CIT", time:"13 min",
+    title:"Optimización de Rutas de Transporte de Efectivo",
+    pain:"Las rutas de transporte de caudales (CIT) se planifican manualmente y no se optimizan en función de tráfico, riesgo de zona, volumen de efectivo o restricciones operativas. El sobrecoste logístico puede ser del 15-20% por ineficiencias.",
+    desc:"Motor de optimización de rutas CIT con ML sobre datos históricos de entregas, condiciones de tráfico en tiempo real, niveles de riesgo de zona y volúmenes de efectivo. Genera el plan de rutas óptimo minimizando tiempo de exposición, costes logísticos y riesgo operacional.",
+    features:["ML.CLASSIFICATION para scoring de riesgo por ruta y zona horaria","Optimización multi-restricción (tiempo, riesgo, volumen, ATMs)","Integración con datos de tráfico y alertas de seguridad en tiempo real","Dashboard de planificación y monitorización de rutas CIT"]
+  },
+  {
+    id:"UC10", cat:"cit", catLabel:"Seguridad Bancaria CIT", time:"14 min",
+    title:"Predicción de Demanda de Efectivo en Cajeros",
+    pain:"El 8-12% de los cajeros automáticos quedan sin efectivo antes de la reposición planificada, generando insatisfacción en clientes bancarios y urgencias costosas. El sobre-llenado inmoviliza capital innecesariamente.",
+    desc:"SNOWFLAKE.ML.FORECAST para predecir la demanda de efectivo por cajero combinando histórico de transacciones, estacionalidad, eventos locales y datos demográficos de la zona. Optimiza el calendario de reposiciones reduciendo tanto el agotamiento como el sobrestock.",
+    features:["ML.FORECAST para predicción de demanda por cajero y período","Factores: historico, estacionalidad, eventos, comercio, demografía","Optimización del calendario de reposiciones por ruta CIT","Reducción del 80% en cajeros sin efectivo y 25% en costes de reposición"]
+  },
+  {
+    id:"UC11", cat:"cit", catLabel:"Seguridad Bancaria CIT", time:"12 min",
+    title:"Detección de Anomalías en Custodia de Valores",
+    pain:"Las irregularidades en el manejo de efectivo y valores —diferencias de arqueo, movimientos inusuales, accesos no autorizados— son difíciles de detectar con controles manuales hasta que el daño es considerable.",
+    desc:"ML.ANOMALY_DETECTION sobre flujos de efectivo, registros de acceso a cámaras acorazadas y tiempos de procesamiento para detectar desviaciones del comportamiento estándar que podrían indicar irregularidades, errores o actividad fraudulenta en instalaciones de custodia.",
+    features:["ML.ANOMALY_DETECTION para detección de irregularidades en custodia","Análisis de patrones en arqueos, accesos y tiempos de proceso","Alertas automáticas con nivel de riesgo y evidencias para auditoría","Integración con controles internos y sistemas de compliance"]
+  },
+  {
+    id:"UC12", cat:"limpieza", catLabel:"Limpieza y Auxiliares", time:"12 min",
+    title:"Limpieza Inteligente bajo Demanda con IoT",
+    pain:"Los servicios de limpieza se prestan según horarios fijos sin considerar la ocupación real de las instalaciones. Se limpian salas vacías mientras espacios muy transitados esperan turno, generando ineficiencia y reclamaciones.",
+    desc:"Pipeline IoT con sensores de ocupación + ML para activar servicios de limpieza únicamente cuando la ocupación real de cada zona supera umbrales definidos. Reduce el consumo de productos en un 25%, las horas de servicio en un 30% y las reclamaciones por falta de limpieza.",
+    features:["ML.ANOMALY_DETECTION sobre datos de sensores de ocupación IoT","Activación automática de servicios según ocupación real y umbral","Reducción del 30% en horas de servicio y 25% en consumo de productos","Dashboard de ocupación y eficiencia de servicio por zona e instalación"]
+  },
+  {
+    id:"UC13", cat:"limpieza", catLabel:"Limpieza y Auxiliares", time:"11 min",
+    title:"Control de Calidad Automatizado con Visión IA",
+    pain:"La supervisión de calidad de limpieza se basa en inspecciones manuales aleatorias que cubren menos del 5% de los servicios. Las penalizaciones por incumplimiento de SLA llegan cuando ya se han acumulado deficiencias.",
+    desc:"Pipeline de control de calidad con CORTEX.COMPLETE sobre informes fotográficos del servicio: evalúa automáticamente estándares de limpieza, detecta deficiencias, clasifica su gravedad y genera informes de auditoría. Escala alertas al supervisor cuando detecta incumplimientos de SLA.",
+    features:["CORTEX.COMPLETE para evaluación automática de calidad de limpieza","Clasificación de deficiencias por gravedad con evidencia fotográfica","Generación automática de informes de auditoría y no-conformidades","Alertas proactivas antes de que el cliente detecte el incumplimiento"]
+  },
+  {
+    id:"UC14", cat:"limpieza", catLabel:"Limpieza y Auxiliares", time:"13 min",
+    title:"Gestión Predictiva de Consumibles con Model Registry",
+    pain:"La gestión de stock de consumibles (productos de limpieza, equipos de protección, materiales) se basa en pedidos manuales periódicos. Las roturas de stock paralizan servicios; el sobrestock inmoviliza capital y genera caducidades.",
+    desc:"SNOWFLAKE.ML.FORECAST registrado en Model Registry para predecir el consumo de consumibles por contrato y almacén. Combina histórico de consumo, superficie contratada, tipo de instalación y variaciones estacionales para generar órdenes de compra automáticas optimizadas.",
+    features:["ML.FORECAST + Model Registry: consumibles_model con versionado","Predicción de consumo por contrato, producto y período","Generación automática de órdenes de compra optimizadas","Reducción del 90% en roturas de stock y 20% en sobrecompra"]
+  },
+  {
+    id:"UC15", cat:"clientes", catLabel:"Clientes y SLA", time:"12 min",
+    title:"SLA en Tiempo Real con Alertas Automáticas",
+    pain:"Las penalizaciones por incumplimiento de SLA se descubren al final del período contractual, cuando ya es imposible remediarlas. El equipo de operaciones no tiene visibilidad en tiempo real del riesgo de incumplimiento por contrato.",
+    desc:"Dashboard de cumplimiento de SLA en tiempo real con ML.ANOMALY_DETECTION sobre datos operativos de cada contrato. Genera alertas automáticas cuando detecta riesgo de incumplimiento antes de que ocurra, calculando el tiempo restante y los recursos necesarios para cumplir el SLA.",
+    features:["ML.ANOMALY_DETECTION para detección proactiva de riesgo de SLA","Alertas automáticas con tiempo de respuesta y recursos necesarios","Vista consolidada de cumplimiento por contrato, zona y servicio","Proyección de penalizaciones económicas por incumplimiento"]
+  },
+  {
+    id:"UC16", cat:"clientes", catLabel:"Clientes y SLA", time:"11 min",
+    title:"Análisis de Sentimiento de Clientes con LLM",
+    pain:"El 70% de los clientes que no renuevan un contrato no habían presentado reclamaciones formales previas. Las señales de insatisfacción latente —en emails, tickets y conversaciones— no se detectan hasta que ya es tarde.",
+    desc:"Pipeline NLP con CORTEX.SENTIMENT sobre tickets de soporte, emails de clientes, respuestas a encuestas y notas de reuniones para detectar insatisfacción latente por contrato. Genera alertas de riesgo de churn con 60-90 días de antelación para activar medidas de retención.",
+    features:["CORTEX.SENTIMENT sobre emails, tickets, encuestas y notas de reunión","Detección de insatisfacción latente 60-90 días antes del churn","Generación de resumen ejecutivo de issues por contrato con CORTEX.COMPLETE","Dashboard de NPS predictivo y alertas de retención por gestor de cuenta"]
+  },
+  {
+    id:"UC17", cat:"clientes", catLabel:"Clientes y SLA", time:"14 min",
+    title:"Churn Prediction de Contratos con Model Registry",
+    pain:"La tasa de no renovación de contratos en el sector es del 15-20% anual. Sin un modelo predictivo, los equipos comerciales solo actúan cuando el cliente ya ha decidido no renovar, siendo demasiado tarde para retenerlo.",
+    desc:"Modelo de predicción de churn de contratos registrado en Model Registry con A/B testing entre versiones. Analiza historial de incidencias, cumplimiento de SLA, interacciones del equipo de cuenta, uso de servicios y señales de insatisfacción para predecir la probabilidad de no renovación con 90 días de antelación.",
+    features:["Model Registry: contract_churn_model v1/v2 con métricas precision/recall","ML.CLASSIFICATION con 20+ variables de riesgo de churn por contrato","Priorización automática de cartera para el equipo de cuenta","Dashboard de retención con scoring y plan de acción sugerido"]
+  },
+  {
+    id:"UC18", cat:"clientes", catLabel:"Clientes y SLA", time:"12 min",
+    title:"Copiloto de Ventas con IA Generativa",
+    pain:"Los comerciales dedican 40% del tiempo a tareas administrativas: elaborar propuestas, calcular precios, buscar casos de éxito similares y redactar correos. Esto reduce el tiempo efectivo de venta y aumenta los ciclos de cierre.",
+    desc:"Asistente comercial con CORTEX.COMPLETE y RAG sobre base de conocimiento de contratos, servicios y casos de éxito. Genera automáticamente borradores de propuestas personalizadas, calcula pricing basado en el perfil del cliente y sugiere argumentarios según el tipo de cliente y servicio.",
+    features:["RAG con CORTEX SEARCH sobre contratos, servicios y casos de éxito","CORTEX.COMPLETE para generación de propuestas personalizadas","Cálculo automático de pricing basado en perfil y histórico similar","Reducción del 60% en tiempo de elaboración de propuestas comerciales"]
+  },
+  {
+    id:"UC19", cat:"esg", catLabel:"Sostenibilidad ESG", time:"13 min",
+    title:"Huella de Carbono Operativa para Reporting ESG",
+    pain:"Los clientes corporativos exigen reportes de huella de carbono de sus proveedores de servicios. La recogida y cálculo manual de datos de flota, energía y residuos ocupa semanas y genera inconsistencias que comprometen la credibilidad.",
+    desc:"Pipeline de ingesta automática de datos de flota (combustible, rutas), energía (consumo en instalaciones) y residuos (productos de limpieza, reciclaje) con CORTEX.COMPLETE para calcular la huella de carbono operativa por contrato y generar reportes ESG estandarizados (GHG Protocol, ISO 14064) de forma automática.",
+    features:["Ingesta automática de datos de flota, energía y residuos","CORTEX.COMPLETE para cálculo y validación de emisiones GHG","Generación automática de reportes ESG por cliente/contrato","Dashboard de KPIs de sostenibilidad con benchmarking sectorial"]
+  },
+  {
+    id:"UC20", cat:"esg", catLabel:"Sostenibilidad ESG", time:"11 min",
+    title:"Optimización Energética en Instalaciones Gestionadas",
+    pain:"Las empresas de facility services gestionan la energía de miles de instalaciones con controles manuales y sin visibilidad centralizada. El gasto energético representa el 20-30% de los costes operativos sin optimización activa.",
+    desc:"ML.ANOMALY_DETECTION sobre datos de consumo energético (climatización, iluminación, equipos) por instalación para detectar desviaciones del patrón óptimo y activar medidas correctoras automáticas. Reduce el consumo energético un 15-25% y genera ahorros directos en contratos de facility management.",
+    features:["ML.ANOMALY_DETECTION sobre datos de sensores de consumo energético","Detección de desviaciones y activación automática de medidas correctoras","Reducción del 15-25% en consumo energético por instalación gestionada","Dashboard ESG de consumo y ahorro por cliente/contrato/instalación"]
+  }
+];
+
+const TOTAL = 20;
+
+function renderCards(list) {
+  const grid = document.getElementById('cardsGrid');
+  const count = document.getElementById('resultsCount');
+  grid.innerHTML = '';
+  count.textContent = `Mostrando ${list.length} de ${TOTAL} casos de uso`;
+  list.forEach(uc => {
+    const catClass = { 'Fuerza Laboral':'laboral', 'Seguridad y Vigilancia':'seguridad', 'Seguridad Bancaria CIT':'cit', 'Limpieza y Auxiliares':'limpieza', 'Clientes y SLA':'clientes', 'Sostenibilidad ESG':'esg' }[uc.catLabel] || '';
+    grid.innerHTML += `
+      <article class="card">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge-id">${uc.id}</span>
+            <span class="badge-cat ${catClass}">${uc.catLabel}</span>
+          </div>
+          <span class="card-time">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2">
+              <circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/>
+            </svg>
+            ${uc.time}
+          </span>
+        </div>
+        <h3 class="card-title">${uc.title}</h3>
+        <div class="pain-point">
+          <div class="pain-point-label">Problema</div>
+          <p>${uc.pain}</p>
+        </div>
+        <p class="card-desc">${uc.desc}</p>
+        <ul class="card-features">
+          ${uc.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+        <div class="card-actions">
+          <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
+          <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
+        </div>
+      </article>`;
+  });
+}
+
+let activeFilter = 'all';
+let searchTerm = '';
+
+function applyFilters() {
+  let result = USE_CASES;
+  if (activeFilter !== 'all') result = result.filter(u => u.cat === activeFilter);
+  if (searchTerm) result = result.filter(u =>
+    u.title.toLowerCase().includes(searchTerm) ||
+    u.desc.toLowerCase().includes(searchTerm) ||
+    u.pain.toLowerCase().includes(searchTerm)
+  );
+  renderCards(result);
+}
+
+document.getElementById('filterBtns').addEventListener('click', e => {
+  if (!e.target.matches('.filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeFilter = e.target.dataset.filter;
+  applyFilters();
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+
+renderCards(USE_CASES);
+
+
+const GUIAS = {
+  UC01: {
+    title: 'Predicción de Absentismo con Feature Store',
+    contexto: 'Estos Cortex Code Prompts construyen un Feature Store centralizado de empleados con Entity EMPLEADO_360 y 6 FeatureViews para predecir absentismo con ML.CLASSIFICATION con 48h de antelación.',
+    foco: 'Gestión de fuerza laboral — predicción de ausencias en empresas de servicios de seguridad, limpieza y vigilancia para planificar coberturas proactivamente.',
+    reto: 'Predecir el riesgo de absentismo 48 horas antes con suficiente antelación para planificar sustituciones, reduciendo costes de cobertura de última hora un 35%.',
+    objetivos: ['Crear Feature Store con Entity EMPLEADO_360 y 6 FeatureViews de absentismo', 'Integrar datos de RRHH, turno, contrato y condiciones externas', 'Entrenar ML.CLASSIFICATION para predicción de ausencia', 'Evaluar el modelo y generar alertas automáticas de cobertura', 'Construir dashboard de gestión proactiva de coberturas'],
+    funcionalidades: ['Feature Store: Entity EMPLEADO_360 con FeatureViews de ausencias, turno, contrato, zona, clima y rendimiento', 'ML: Clasificación binaria AUSENCIA/PRESENTE entrenada sobre el Feature Store', 'Datos sintéticos: 5.000 empleados con 24 meses de histórico de asistencia', 'Dashboard Streamlit: Panel de coberturas en riesgo priorizadas por turno y zona'],
+    datos: ['Empleados: tipo_contrato, antigüedad, turno, zona, cliente, categoria_profesional', 'Asistencia: registro diario de presencia/ausencia de 24 meses', 'Contexto: temperatura, día_semana, festividad, proximidad_vacaciones', 'Feature Store: 40+ features por empleado en 6 FeatureViews'],
+    estratificacion: ['Riesgo Alto (>=75%): Buscar sustituto inmediatamente, 48h de antelación', 'Riesgo Medio (50-75%): Identificar posibles sustitutos, preparar plan B', 'Riesgo Bajo (<50%): Sin acción, monitorizar el día anterior', 'Ausencia Confirmada: Activar protocolo de sustitución urgente'],
+    como_usar: ['Ejecutar prompts secuencialmente en Cortex Code', 'Crear el Feature Store y las 6 FeatureViews antes de entrenar', 'El modelo se entrena en 45-90 segundos sobre el Feature Store', 'El dashboard muestra empleados en riesgo para cada turno']
+  },
+  UC02: {
+    title: 'Optimización Inteligente de Turnos y Rutas',
+    contexto: 'Estos Cortex Code Prompts construyen un motor de optimización de asignación de turnos y rutas para reducir kilómetros improductivos y horas extra en empresas de servicios.',
+    foco: 'Coordinación operativa — asignación óptima de empleados a servicios minimizando desplazamientos y costes, respetando convenios colectivos.',
+    reto: 'Reducir un 20% los costes logísticos de desplazamiento y eliminar horas extra evitables mediante asignación inteligente empleado-servicio-zona.',
+    objetivos: ['Generar datos de empleados, servicios y localizaciones sintéticos', 'Calcular matrix de distancias y compatibilidades', 'Entrenar ML.CLASSIFICATION para scoring de asignación óptima', 'Generar agenda optimizada diaria', 'Dashboard de productividad y eficiencia de asignación'],
+    funcionalidades: ['ML: Scoring de compatibilidad empleado-servicio con ML.CLASSIFICATION', 'Datos sintéticos: 500 empleados, 200 ubicaciones de servicio, 30 días de turnos', 'Optimización: Minimización de distancia total + respeto de restricciones de convenio', 'Dashboard Streamlit: Agenda optimizada por zona con KPIs de eficiencia'],
+    datos: ['Empleados: zona_residencia, habilidades, certificaciones, preferencias, restricciones', 'Servicios: ubicación, requerimientos, horas contratadas, tipo de servicio', 'Histórico: asignaciones anteriores, satisfacción del cliente, incidencias', 'KPIs: km_por_servicio, horas_extra_semana, tasa_cobertura_completa'],
+    estratificacion: ['Asignación Óptima (score > 0.85): Confirmar automáticamente en agenda', 'Asignación Viable (0.65-0.85): Confirmar con validación del coordinador', 'Asignación Subóptima (0.45-0.65): Buscar alternativa o justificar excepción', 'Sin Empleado Disponible: Activar protocolo de externa o horas extra'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan empleados y servicios con localización realista', 'El modelo calcula compatibilidades y genera agenda óptima', 'El dashboard muestra la agenda con métricas de eficiencia']
+  },
+  UC03: {
+    title: 'Detección Temprana de Riesgo de Rotación',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de detección de señales de desvinculación usando ML.CLASSIFICATION para predecir bajas voluntarias con 4-6 semanas de antelación.',
+    foco: 'Retención de talento — identificación temprana de empleados con alta probabilidad de baja voluntaria para activar medidas de retención.',
+    reto: 'Detectar el 80% de las bajas voluntarias con 4-6 semanas de antelación, reduciendo costes de reposición y contratación un 40%.',
+    objetivos: ['Generar datos de empleados con señales de comportamiento laboral', 'Construir 15+ features predictoras de rotación', 'Entrenar ML.CLASSIFICATION para predicción de baja voluntaria', 'Generar alertas con plan de retención sugerido', 'Dashboard de riesgo de rotación por zona y servicio'],
+    funcionalidades: ['ML: ML.CLASSIFICATION sobre señales de desvinculación (puntualidad, cambios de turno, absentismo, rendimiento)', 'Datos sintéticos: 2.000 empleados con 18 meses de señales y 30% que causaron baja', 'Alertas: Score de riesgo + causa principal + acción recomendada', 'Dashboard Streamlit: Top empleados en riesgo con plan de retención'],
+    datos: ['Señales de comportamiento: variación_puntualidad, cambios_turno_solicitados, absentismo_tendencia, rendimiento_mensual', 'Perfil: antigüedad, salario_vs_mercado, tipo_contrato, supervisora_satisfaccion', 'Histórico: empleados que causaron baja en el pasado y sus señales previas', 'Alertas: nivel_riesgo + causa_principal + accion_retencion_sugerida'],
+    estratificacion: ['Riesgo Crítico (>=80%): Entrevista de retención urgente con responsable de zona', 'Riesgo Alto (60-80%): Revisión de condiciones y oferta de mejora', 'Riesgo Medio (40-60%): Seguimiento mensual y encuesta de clima', 'Riesgo Bajo (<40%): Sin acción especial, programa de fidelización'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan 2.000 empleados con señales históricas realistas', 'El modelo aprende patrones de desvinculación', 'El dashboard prioriza empleados en riesgo para RRHH']
+  },
+  UC04: {
+    title: 'Análisis de Brechas de Formación con LLM',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de análisis de brechas de formación usando CORTEX.COMPLETE para revisar evaluaciones, certificaciones y requerimientos normativos.',
+    foco: 'Compliance y desarrollo — detección automática de brechas de formación y generación de planes personalizados de desarrollo profesional.',
+    reto: 'Garantizar el 100% de compliance normativo en certificaciones vigentes y reducir el tiempo de gestión de formación de RRHH un 60%.',
+    objetivos: ['Generar datos de empleados, certificaciones y requerimientos normativos', 'Detectar certificaciones caducadas o próximas a caducar', 'Identificar brechas de competencias por puesto y cliente', 'Generar planes de formación personalizados con LLM', 'Dashboard de compliance formativo por contrato y zona'],
+    funcionalidades: ['LLM: CORTEX.COMPLETE para análisis de evaluaciones y generación de planes', 'Datos sintéticos: 1.000 empleados con 20 tipos de certificación y requerimientos', 'Alertas: certificaciones caducadas o en riesgo en 30/60/90 días', 'Dashboard Streamlit: Vista de compliance formativo por empleado y contrato'],
+    datos: ['Empleados: historial de formación, certificaciones activas, fechas de caducidad', 'Requerimientos: certificaciones obligatorias por tipo de puesto y cliente', 'Evaluaciones: resultados de desempeño trimestral por competencia', 'Planes: formación recomendada, prioridad, coste y proveedor'],
+    estratificacion: ['Certificación Caducada: Bloquear servicio hasta renovación urgente', 'Caduca en 30 días: Inscribir en próxima convocatoria automáticamente', 'Brecha de Competencia: Incluir en plan de formación trimestral', 'Al día: Sin acción, próxima revisión en 90 días'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan empleados con perfiles de formación variados', 'CORTEX.COMPLETE analiza brechas y genera planes personalizados', 'El dashboard muestra compliance y alertas por contrato']
+  },
+  UC05: {
+    title: 'Scoring de Riesgo por Instalación con Model Registry',
+    contexto: 'Estos Cortex Code Prompts construyen un modelo de scoring de riesgo de incidente por instalación registrado en Model Registry para versionado y A/B testing en producción.',
+    foco: 'Gestión de recursos de seguridad — asignación basada en datos de vigilantes según el riesgo real de cada instalación.',
+    reto: 'Reducir el 30% de incidentes en instalaciones de alto riesgo mediante asignación proactiva de recursos basada en scoring predictivo.',
+    objetivos: ['Generar datos de instalaciones con historial de incidentes', 'Entrenar modelo de scoring de riesgo v1', 'Registrar en Model Registry y crear versión v2 mejorada', 'Comparar versiones y promover la mejor a producción', 'Dashboard de mapa de calor de riesgo para gestores'],
+    funcionalidades: ['Model Registry: incident_risk_model v1 y v2 con métricas comparadas', 'ML: ML.CLASSIFICATION con 20+ variables de riesgo por instalación', 'Datos sintéticos: 1.000 instalaciones con 3 años de histórico de incidentes', 'Dashboard Streamlit: Mapa de calor de riesgo con asignación de recursos'],
+    datos: ['Instalaciones: tipo, sector_cliente, superficie, horario, accesos, entorno_urbano', 'Historial: incidentes_12m, falsas_alarmas_ratio, tiempo_respuesta_promedio', 'Externos: índice_criminalidad_zona, nivel_conflictividad_laboral_cliente', 'Modelo v1: 10 features / Modelo v2: 20 features + datos externos'],
+    estratificacion: ['Riesgo Muy Alto (>=0.85): Vigilante permanente + ronda supervisor semanal', 'Riesgo Alto (0.65-0.85): Turno completo + verificación remota 24h', 'Riesgo Medio (0.40-0.65): Turno parcial + alarma monitorizada', 'Riesgo Bajo (<0.40): Solo alarma + respuesta bajo demanda'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se entrena v1 y v2 con diferentes sets de features', 'Model Registry compara versiones con métricas de negocio', 'El dashboard muestra el mapa de riesgo con recomendaciones de asignación']
+  },
+  UC06: {
+    title: 'Clasificación Automática de Alarmas con IA',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de clasificación automática de alarmas usando ML.CLASSIFICATION para reducir falsas alarmas y mejorar tiempos de respuesta en CRA.',
+    foco: 'Operaciones de CRA — clasificación automática de alarmas antes del despacho de personal para optimizar recursos y SLA de respuesta.',
+    reto: 'Clasificar correctamente el 95% de las alarmas antes del despacho, reduciendo falsas activaciones en un 70% y mejorando tiempos de respuesta real.',
+    objetivos: ['Generar histórico de alarmas con etiquetas real/falsa', 'Construir features de contexto de alarma', 'Entrenar ML.CLASSIFICATION para clasificación', 'Integrar validación pre-despacho en pipeline CRA', 'Dashboard de operaciones CRA con métricas de eficiencia'],
+    funcionalidades: ['ML: ML.CLASSIFICATION sobre características contextuales de cada alarma', 'Datos sintéticos: 50.000 alarmas con 93% falsas y 7% reales, etiquetadas', 'Features: tipo_alarma, hora, día_semana, historial_falsas_alarmas_instalacion, clima', 'Dashboard Streamlit: Cola de alarmas con scoring y priorización automática'],
+    datos: ['Alarmas: tipo (movimiento/apertura/pánico/técnica), instalación, hora, duración', 'Historial: tasa de falsas alarmas por instalación, zona y tipo en 12 meses', 'Contexto: temperatura, viento, festivos, eventos especiales en zona', 'Resultado: real_confirmado (0/1) tras verificación posterior'],
+    estratificacion: ['Alarma Real Probable (>=90%): Despacho inmediato de recurso más cercano', 'Verificar Primero (60-90%): Llamada a instalación antes de despacho', 'Probablemente Falsa (30-60%): Verificación remota por vídeo', 'Falsa Confirmada (<30%): Registrar como falsa alarma, notificar cliente'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan 50.000 alarmas con contexto realista', 'El modelo aprende qué factores predicen alarmas reales', 'El dashboard prioriza cola de alarmas en tiempo real']
+  },
+  UC07: {
+    title: 'Optimización de Rutas de Patrullaje con IoT',
+    contexto: 'Estos Cortex Code Prompts construyen un motor de optimización de rutas de ronda usando ML.ANOMALY_DETECTION sobre datos IoT para maximizar la cobertura efectiva.',
+    foco: 'Operaciones de vigilancia — rutas de patrullaje adaptativas basadas en datos de sensores IoT para maximizar la disuasión y la cobertura con el mismo personal.',
+    reto: 'Aumentar la cobertura efectiva de vigilancia un 40% sin incrementar el número de efectivos mediante rutas inteligentes adaptadas a la actividad real.',
+    objetivos: ['Generar datos de sensores IoT de instalaciones (movimiento, accesos, cámaras)', 'Detectar patrones de actividad anómala por zona y horario', 'Calcular rutas de patrullaje óptimas basadas en riesgo', 'Generar instrucciones de ronda en tiempo real', 'Dashboard de cobertura y actividad por instalación'],
+    funcionalidades: ['ML.ANOMALY_DETECTION sobre datos de sensores IoT por zona y horario', 'Generación de rutas adaptativas según nivel de actividad detectada', 'Datos sintéticos: 200 instalaciones con 50 zonas, 3 meses de datos IoT', 'Dashboard Streamlit: Mapa de instalación con zonas activas y ruta sugerida'],
+    datos: ['Sensores: eventos_movimiento, aperturas_acceso, alertas_camara por zona y hora', 'Rondas históricas: ruta_seguida, tiempo_por_zona, incidencias_detectadas', 'Instalación: plano_zonas, puntos_criticos, horario_actividad_esperada', 'Salida: ruta_optima_siguiente_ronda, tiempo_estimado, prioridad_por_zona'],
+    estratificacion: ['Actividad Anómala Alta: Priorizar zona en próxima ronda, alertar supervisor', 'Actividad Moderada: Incluir zona con tiempo extra en la ronda', 'Actividad Normal: Ruta estándar según protocolo', 'Zona Inactiva: Reducir frecuencia y reasignar tiempo a zonas activas'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se simulan datos IoT con patrones de actividad diurnos y nocturnos', 'ML detecta anomalías y genera mapa de riesgo por zona', 'El dashboard proporciona instrucciones de ronda en tiempo real']
+  },
+  UC08: {
+    title: 'Detección de Comportamientos Anómalos con IA',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de detección de anomalías sobre metadatos de sistemas CCTV usando ML.ANOMALY_DETECTION para alertas en tiempo real.',
+    foco: 'Seguridad activa — detección automatizada de comportamientos fuera de patrón en instalaciones vigiladas para alertas proactivas.',
+    reto: 'Detectar el 90% de los incidentes relevantes en tiempo real (vs. revisión post-facto) sin incrementar la carga de trabajo de los operadores.',
+    objetivos: ['Generar metadatos de eventos CCTV sintéticos con comportamientos normales y anómalos', 'Entrenar ML.ANOMALY_DETECTION para detectar desviaciones del patrón', 'Calibrar umbrales por instalación y horario', 'Implementar alertas en tiempo real con clasificación de severidad', 'Dashboard operativo de alertas con evidencias'],
+    funcionalidades: ['ML.ANOMALY_DETECTION sobre metadatos de eventos (no sobre imagen directamente)', 'Datos sintéticos: 100.000 eventos de 50 instalaciones, 2% anomalías etiquetadas', 'Features: permanencia_zona_restringida_min, hora, frecuencia_pasos, velocidad_movimiento', 'Dashboard Streamlit: Feed de alertas priorizadas con contexto y nivel de confianza'],
+    datos: ['Eventos CCTV: zona, timestamp, duración_permanencia, tipo_movimiento, conteo_personas', 'Patrones normales: definidos por instalación, zona, día_semana y rango_horario', 'Anomalías etiquetadas: intrusión_zona_restringida, permanencia_excesiva, movimiento_irregular', 'Alertas: score_anomalia, tipo_probable, zona, evidencias_contexto'],
+    estratificacion: ['Anomalía Severa (score > 0.95): Alerta inmediata al centro de control', 'Anomalía Alta (0.80-0.95): Alerta al vigilante en turno para verificación', 'Anomalía Moderada (0.60-0.80): Registro y seguimiento continuado', 'Normal (<0.60): Sin acción, registro en log'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan eventos CCTV con patrones normales y anomalías', 'ML.ANOMALY_DETECTION aprende los patrones de cada instalación', 'El dashboard muestra alertas en tiempo real con evidencias']
+  },
+  UC09: {
+    title: 'Optimización de Rutas de Transporte de Efectivo',
+    contexto: 'Estos Cortex Code Prompts construyen un motor de optimización de rutas CIT usando ML sobre datos históricos, condiciones de tráfico y scoring de riesgo por zona.',
+    foco: 'Operaciones CIT — planificación óptima de rutas de transporte de caudales minimizando tiempo de exposición, coste logístico y riesgo operacional.',
+    reto: 'Reducir el 15-20% los costes logísticos CIT y minimizar el tiempo de exposición de los vehículos con efectivo mediante rutas optimizadas.',
+    objetivos: ['Generar datos de rutas históricas CIT con tiempos y costes', 'Construir scoring de riesgo por ruta y franja horaria', 'Optimizar rutas con ML.CLASSIFICATION', 'Generar el plan de rutas óptimo diario', 'Dashboard de planificación y monitorización CIT'],
+    funcionalidades: ['ML.CLASSIFICATION para scoring de riesgo por ruta, zona y hora', 'Datos sintéticos: 100 vehículos CIT, 500 puntos de entrega, 12 meses de histórico', 'Optimización: Minimización de tiempo_exposición × volumen_efectivo × riesgo_zona', 'Dashboard Streamlit: Panel de planificación de rutas con indicadores de riesgo'],
+    datos: ['Rutas: puntos_entrega, secuencia, tiempos_reales, incidentes_historicos', 'Riesgo: índice_riesgo_zona, historial_intentos_robo, nivel_alerta_policial', 'Operativo: volumen_efectivo_por_parada, tipo_vehículo, dotación', 'KPIs: tiempo_exposición_total, coste_km, ratio_entregas_incidente'],
+    estratificacion: ['Riesgo Muy Alto (score > 0.80): Escolta policial obligatoria', 'Riesgo Alto (0.60-0.80): Vehículo blindado reforzado, evitar horas punta', 'Riesgo Medio (0.40-0.60): Protocolo estándar reforzado', 'Riesgo Bajo (<0.40): Protocolo estándar'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan rutas con perfiles de riesgo variados', 'ML calcula el scoring de riesgo y optimiza rutas', 'El dashboard muestra el plan de rutas con indicadores de seguridad']
+  },
+  UC10: {
+    title: 'Predicción de Demanda de Efectivo en Cajeros',
+    contexto: 'Estos Cortex Code Prompts construyen un modelo de forecasting de demanda de efectivo en cajeros con ML.FORECAST para optimizar el calendario de reposiciones CIT.',
+    foco: 'Operaciones bancarias — predicción de demanda de efectivo por cajero para planificar reposiciones y eliminar desabastecimientos.',
+    reto: 'Reducir el 80% en cajeros sin efectivo y el 25% en costes de reposición mediante forecasting preciso de la demanda.',
+    objetivos: ['Generar series históricas de demanda de efectivo por cajero', 'Añadir factores externos (estacionalidad, eventos, demografía)', 'Entrenar ML.FORECAST para predicción diaria de demanda', 'Generar calendario óptimo de reposiciones', 'Dashboard de cash management y KPIs CIT'],
+    funcionalidades: ['ML.FORECAST para predicción de demanda diaria por cajero (en euros)', 'Datos sintéticos: 500 cajeros con 2 años de histórico de transacciones y saldos', 'Factores: estacionalidad, día_semana, proximidad_pagas, eventos_locales, turismo', 'Dashboard Streamlit: Calendario de reposiciones con alertas de agotamiento'],
+    datos: ['Cajeros: ubicación, tipo_zona (comercial/residencial/turístico), capacidad', 'Histórico: demanda_diaria, nivel_saldo, fecha_ultima_reposicion en 2 años', 'Factores externos: festivos, pagas, periodos_vacacional, eventos', 'Forecast: demanda_proximos_7d, fecha_reposicion_optima, cantidad_recomendada'],
+    estratificacion: ['Agotamiento en < 2 días: Reposición urgente, ajustar ruta CIT hoy', 'Agotamiento en 2-4 días: Incluir en próxima ruta planificada', 'Stock suficiente 4-7 días: Sin acción, confirmar en próxima planificación', 'Sobrestock: Reducir cantidad en siguiente reposición'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se genera histórico de 2 años con estacionalidad y eventos', 'ML.FORECAST predice demanda diaria por cajero', 'El dashboard genera el calendario óptimo de reposiciones']
+  },
+  UC11: {
+    title: 'Detección de Anomalías en Custodia de Valores',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de detección de irregularidades en operaciones de custodia de valores usando ML.ANOMALY_DETECTION sobre flujos y accesos.',
+    foco: 'Seguridad interna CIT — detección de desviaciones del comportamiento estándar en arqueos, accesos y procesamiento de efectivo.',
+    reto: 'Detectar el 95% de las irregularidades antes de que escalen, con menos del 2% de falsos positivos para no generar carga operativa innecesaria.',
+    objetivos: ['Generar datos de operaciones de custodia con irregularidades etiquetadas', 'Construir features de comportamiento operativo', 'Entrenar ML.ANOMALY_DETECTION', 'Implementar alertas para auditoría', 'Dashboard de control interno con evidencias'],
+    funcionalidades: ['ML.ANOMALY_DETECTION sobre flujos de efectivo, accesos y tiempos', 'Datos sintéticos: 100.000 operaciones de custodia con 0.5% irregularidades', 'Features: diferencia_arqueo, tiempo_procesamiento, num_accesos_fuera_horario, operaciones_por_turno', 'Dashboard Streamlit: Panel de auditoría con alertas priorizadas y evidencias'],
+    datos: ['Operaciones: tipo (ingreso/retirada/arqueo/transferencia), importe, operario, turno', 'Accesos: registro_entrada_camara_acorazada, hora, combinación, personal_autorizado', 'Tiempos: duracion_procesamiento vs tiempo_estándar por tipo de operación', 'Irregularidades: diferencia_arqueo, acceso_no_autorizado, procesamiento_atípico'],
+    estratificacion: ['Irregularidad Crítica (score > 0.95): Bloqueo inmediato y auditoría urgente', 'Irregularidad Alta (0.80-0.95): Revisión por supervisor antes de cerrar turno', 'Desviación Moderada (0.60-0.80): Documentar y revisar en auditoría mensual', 'Normal (<0.60): Sin acción, registro en log de auditoría'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan operaciones con irregularidades realistas', 'ML.ANOMALY_DETECTION detecta desviaciones del comportamiento normal', 'El dashboard proporciona evidencias para auditoría interna']
+  },
+  UC12: {
+    title: 'Limpieza Inteligente bajo Demanda con IoT',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de activación de servicios de limpieza basado en ocupación real usando sensores IoT y ML.ANOMALY_DETECTION.',
+    foco: 'Eficiencia en servicios de limpieza — activación de servicios de limpieza según ocupación real de las instalaciones para eliminar servicios innecesarios.',
+    reto: 'Reducir el 30% en horas de servicio y el 25% en consumo de productos manteniendo o mejorando los estándares de calidad.',
+    objetivos: ['Simular datos de sensores de ocupación IoT por zona e instalación', 'Detectar patrones de ocupación y definir umbrales de activación', 'Generar órdenes de servicio de limpieza bajo demanda', 'Calcular ahorro vs servicio programado fijo', 'Dashboard de ocupación y eficiencia operativa'],
+    funcionalidades: ['ML.ANOMALY_DETECTION sobre ocupación para detectar necesidad de limpieza', 'Datos sintéticos: 100 instalaciones con 50 zonas, 3 meses de datos de ocupación', 'Umbrales configurables por tipo de zona (baños, salas, pasillos, comedores)', 'Dashboard Streamlit: Vista de ocupación en tiempo real con órdenes de servicio'],
+    datos: ['Sensores: aforo_zona, eventos_uso (baño_utilizado), tiempo_sin_limpiar, turno', 'Umbrales: aforo_activacion_limpieza por tipo_zona, tiempo_max_sin_servicio', 'Servicios: historico_ordenes_generadas, tiempo_servicio, coste_por_zona', 'Ahorro: comparativa_horas_fijo vs horas_demanda, reduccion_consumo_productos'],
+    estratificacion: ['Activación Inmediata: Aforo supera umbral y han pasado N horas desde último servicio', 'Activación Programada: Pendiente de llevar a próxima ronda de limpieza', 'Sin Necesidad: Ocupación baja y tiempo sin limpiar dentro de límite', 'Alerta de Calidad: Tiempo máximo sin limpieza superado independientemente del aforo'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se simulan 3 meses de datos de ocupación por zona', 'ML define los patrones normales y detecta necesidad de servicio', 'El dashboard genera órdenes de limpieza en tiempo real']
+  },
+  UC13: {
+    title: 'Control de Calidad Automatizado con Visión IA',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de control de calidad de limpieza usando CORTEX.COMPLETE para evaluar informes fotográficos y detectar incumplimientos de SLA.',
+    foco: 'Calidad de servicio — supervisión automatizada de estándares de limpieza mediante análisis de imágenes para reducir reclamaciones y penalizaciones.',
+    reto: 'Aumentar la cobertura de supervisión del 5% al 80% de los servicios sin incrementar personal de supervisión, reduciendo penalizaciones por SLA un 60%.',
+    objetivos: ['Generar datos de informes de servicio con notas de calidad', 'Analizar calidad con CORTEX.COMPLETE sobre textos de informe', 'Clasificar nivel de cumplimiento por zona y tipo de servicio', 'Generar informes de no-conformidad automáticamente', 'Dashboard de calidad con KPIs por contrato'],
+    funcionalidades: ['LLM: CORTEX.COMPLETE para evaluación de calidad sobre informe textual del servicio', 'Datos sintéticos: 5.000 servicios con notas descriptivas de resultado', 'Clasificación: Conforme / No_Conforme_Leve / No_Conforme_Grave por zona', 'Dashboard Streamlit: Panel de calidad con semáforo por contrato y zona'],
+    datos: ['Servicios: fecha, zona, operario, notas_servicio (texto), tiempo_empleado', 'Estándares: criterios_calidad por tipo_zona (baños, oficinas, zonas_comunes)', 'Calificación: CONFORME / NO_CONFORME con tipo de deficiencia', 'KPIs: tasa_conformidad_por_contrato, deficiencias_recurrentes, tiempo_resolucion'],
+    estratificacion: ['No Conforme Grave: Reapertura del servicio y comunicación al cliente', 'No Conforme Leve: Corrección en siguiente servicio sin comunicación', 'Conforme con observaciones: Registrar para seguimiento', 'Plenamente Conforme: Registrar como evidencia de calidad para contrato'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan 5.000 servicios con notas descriptivas variadas', 'CORTEX.COMPLETE evalúa calidad de cada informe', 'El dashboard muestra el semáforo de calidad por contrato en tiempo real']
+  },
+  UC14: {
+    title: 'Gestión Predictiva de Consumibles con Model Registry',
+    contexto: 'Estos Cortex Code Prompts construyen un modelo de forecasting de consumibles registrado en Model Registry para generar órdenes de compra automáticas optimizadas.',
+    foco: 'Gestión de materiales — predicción de consumo de consumibles de limpieza por contrato para eliminar roturas de stock y sobrecompra.',
+    reto: 'Eliminar el 90% de las roturas de stock y reducir el sobrestock un 20% mediante forecasting preciso del consumo de consumibles por contrato.',
+    objetivos: ['Generar histórico de consumo de consumibles por contrato y almacén', 'Entrenar ML.FORECAST para predicción semanal de consumo', 'Registrar en Model Registry con versionado', 'Generar órdenes de compra automáticas optimizadas', 'Dashboard de gestión de stock y alertas de reposición'],
+    funcionalidades: ['ML.FORECAST + Model Registry: consumibles_model v1 y v2', 'Datos sintéticos: 50 contratos, 30 tipos de consumible, 2 años de histórico', 'Factores: superficie_contratada, tipo_instalacion, estacionalidad, actividad_cliente', 'Dashboard Streamlit: Estado de stock con alertas y órdenes de compra sugeridas'],
+    datos: ['Consumo: producto, cantidad_usada, contrato, semana, supervisor', 'Contratos: superficie_m2, tipo_instalacion, frecuencia_servicio, nro_empleados_cliente', 'Stock: nivel_actual, punto_reposicion, tiempo_entrega_proveedor, precio_unitario', 'Modelo v1: 5 features / v2: 12 features + estacionalidad + actividad_cliente'],
+    estratificacion: ['Stock Crítico (< punto_reposicion): Pedido urgente hoy', 'Stock Bajo (< 2× consumo_semana): Incluir en pedido regular de esta semana', 'Stock Suficiente (2-6× consumo): Sin acción, revisar en próxima planificación', 'Sobrestock (> 8× consumo): Reducir o cancelar próximo pedido'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se genera histórico de 2 años de consumo con estacionalidad', 'ML.FORECAST predice consumo semanal por producto y contrato', 'Model Registry versiona los modelos y el dashboard gestiona las órdenes']
+  },
+  UC15: {
+    title: 'SLA en Tiempo Real con Alertas Automáticas',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de monitorización de SLA en tiempo real usando ML.ANOMALY_DETECTION para detectar riesgo de incumplimiento antes de que ocurra.',
+    foco: 'Gestión de contratos — visibilidad en tiempo real del cumplimiento de SLA por contrato para activar medidas correctoras proactivas.',
+    reto: 'Eliminar el 80% de las penalizaciones por incumplimiento de SLA mediante detección proactiva 24-48h antes del incumplimiento.',
+    objetivos: ['Generar datos operativos de contratos con KPIs de SLA', 'Detectar desviaciones del patrón normal de cumplimiento', 'Generar alertas de riesgo con tiempo disponible y recursos necesarios', 'Calcular penalizaciones económicas proyectadas', 'Dashboard de SLA en tiempo real por contrato y servicio'],
+    funcionalidades: ['ML.ANOMALY_DETECTION sobre KPIs operativos de SLA por contrato', 'Datos sintéticos: 200 contratos con 6 meses de datos operativos diarios', 'Features: tasa_cobertura_hoy, tiempo_respuesta_alarma, servicios_realizados_vs_planificados', 'Dashboard Streamlit: Semáforo de SLA por contrato con penalización proyectada'],
+    datos: ['KPIs operativos: cobertura_real_pct, tiempo_respuesta_minutos, servicios_completados_ratio', 'Contrato: sla_cobertura_pct, sla_tiempo_respuesta_max, penalizacion_por_incumplimiento', 'Alertas: riesgo_nivel (ROJO/AMARILLO/VERDE), tiempo_hasta_incumplimiento, penalizacion_estimada', 'Histórico: cumplimiento_sla_mensual por contrato e incumplimientos pasados'],
+    estratificacion: ['ROJO (incumplimiento en < 4h): Acción correctora inmediata, informar al cliente', 'NARANJA (incumplimiento en 4-24h): Reasignar recursos para cubrir el gap', 'AMARILLO (incumplimiento en 1-3 días): Monitorizar y preparar contingencia', 'VERDE: SLA en cumplimiento, sin acción necesaria'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan 200 contratos con datos operativos y parámetros SLA', 'ML detecta desviaciones del patrón normal de cumplimiento', 'El dashboard muestra semáforo de SLA con penalización proyectada']
+  },
+  UC16: {
+    title: 'Análisis de Sentimiento de Clientes con LLM',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de análisis de sentimiento sobre comunicaciones de clientes usando CORTEX.SENTIMENT para detectar insatisfacción latente.',
+    foco: 'Gestión de clientes — detección temprana de insatisfacción en tickets, emails y encuestas para activar retención 60-90 días antes de la no renovación.',
+    reto: 'Detectar el 75% de los clientes con riesgo de no renovación 60-90 días antes mediante análisis automatizado de sentimiento en comunicaciones.',
+    objetivos: ['Generar corpus de comunicaciones de clientes con sentimiento variado', 'Analizar sentimiento con CORTEX.SENTIMENT', 'Agregar señales por contrato y período', 'Detectar tendencias de deterioro', 'Dashboard de NPS predictivo con alertas de retención'],
+    funcionalidades: ['NLP: CORTEX.SENTIMENT sobre tickets + emails + encuestas + notas de reunión', 'LLM: CORTEX.COMPLETE para resumir issues principales por contrato', 'Datos sintéticos: 10.000 comunicaciones de 300 contratos en 12 meses', 'Dashboard Streamlit: Mapa de calor de sentimiento con alertas de churn'],
+    datos: ['Comunicaciones: canal (ticket/email/encuesta/llamada), texto, fecha, contrato, gestor', 'Sentimiento: score CORTEX.SENTIMENT por comunicación (-1 a 1)', 'Tendencia: evolución_sentimiento_30d, evolución_sentimiento_90d por contrato', 'Alertas: contratos con tendencia_negativa_significativa y probabilidad_churn'],
+    estratificacion: ['Sentimiento Muy Negativo (<-0.5) y tendencia bajista: Reunión urgente con cliente', 'Sentimiento Negativo (-0.5 a -0.2): Plan de mejora y seguimiento semanal', 'Sentimiento Neutro Bajista (-0.2 a 0): Revisión mensual proactiva', 'Sentimiento Positivo (>0): Identificar para testimonial y caso de éxito'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan comunicaciones con sentimientos variados y tendencias', 'CORTEX.SENTIMENT analiza cada comunicación', 'El dashboard muestra el mapa de calor de sentimiento por contrato']
+  },
+  UC17: {
+    title: 'Churn Prediction de Contratos con Model Registry',
+    contexto: 'Estos Cortex Code Prompts construyen un modelo de predicción de no renovación de contratos registrado en Model Registry con A/B testing entre versiones para maximizar la retención.',
+    foco: 'Retención de clientes — predicción de la probabilidad de no renovación con 90 días de antelación para priorizar acciones del equipo de cuenta.',
+    reto: 'Reducir la tasa de no renovación del 15-20% al 10% mediante predicción temprana y acciones de retención dirigidas.',
+    objetivos: ['Generar datos históricos de contratos con variables de riesgo de churn', 'Entrenar contract_churn_model v1', 'Registrar en Model Registry y desplegar v2 con más features', 'Comparar versiones y promover la mejor', 'Dashboard de retención con scoring y priorización'],
+    funcionalidades: ['Model Registry: contract_churn_model v1 y v2 con métricas precision/recall', 'ML: ML.CLASSIFICATION con 20+ variables de riesgo de churn por contrato', 'Datos sintéticos: 1.000 contratos con 3 años de histórico y target renovado/no_renovado', 'Dashboard Streamlit: Cartera priorizada por riesgo con plan de retención por contrato'],
+    datos: ['Contratos: cumplimiento_sla_avg, incidencias_abiertas, sentimiento_cliente_score, antiguedad', 'Interacciones: frecuencia_contacto_gestor, num_reuniones, respuesta_encuestas', 'Renovación: historial_renovaciones_previas, incremento_precio_aplicado, competencia_detectada', 'Modelo v1: 10 features / v2: 20+ features incluyendo sentimiento y SLA'],
+    estratificacion: ['Riesgo Crítico (>=85%): Visita urgente del director de operaciones + oferta especial', 'Riesgo Alto (65-85%): Reunión de seguimiento con gestor senior + análisis de valor', 'Riesgo Medio (40-65%): Check-in mensual reforzado y encuesta de satisfacción', 'Riesgo Bajo (<40%): Gestión estándar con seguimiento trimestral'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan contratos con señales de riesgo variadas', 'Model Registry versiona y compara v1 y v2', 'El dashboard prioriza cartera por riesgo para el equipo de cuenta']
+  },
+  UC18: {
+    title: 'Copiloto de Ventas con IA Generativa',
+    contexto: 'Estos Cortex Code Prompts construyen un copiloto comercial usando CORTEX.COMPLETE y RAG sobre base de conocimiento de contratos, servicios y casos de éxito para acelerar ciclos de venta.',
+    foco: 'Aceleración comercial — asistente de IA que genera propuestas personalizadas, calcula pricing y prepara argumentarios para el equipo de ventas.',
+    reto: 'Reducir el 60% del tiempo de elaboración de propuestas y acortar el ciclo de venta un 30% mediante automatización de tareas comerciales con IA.',
+    objetivos: ['Crear base de conocimiento de contratos, servicios y casos de éxito', 'Indexar con Cortex Search para búsqueda semántica', 'Implementar RAG con CORTEX.COMPLETE para generación de propuestas', 'Calcular pricing basado en perfil del cliente y histórico', 'Dashboard comercial con propuestas y pipeline'],
+    funcionalidades: ['CORTEX SEARCH sobre base de contratos, tarifas y casos de éxito', 'LLM: CORTEX.COMPLETE para generación de propuestas personalizadas', 'Datos sintéticos: 500 contratos, 50 tipos de servicio, 200 casos de éxito', 'Dashboard Streamlit: Generador de propuestas con previsualización y envío'],
+    datos: ['Base de conocimiento: contratos_tipo, tarifas_por_servicio, casos_exito_sector', 'Perfil prospecto: tipo_empresa, sector, numero_empleados, instalaciones, servicios_actuales', 'Pricing: tarifa_base_m2, ajustes_por_sector, volumen, permanencia, servicios_adicionales', 'Propuesta: resumen_ejecutivo + servicios + pricing + casos_exito_similares + CTA'],
+    estratificacion: ['Propuesta Automática: Perfil estándar, servicio en catálogo, pricing claro', 'Propuesta con Revisión: Perfil especial o volumen elevado, revisar con director', 'Presupuesto Personalizado: Requerimientos fuera de catálogo, cotizar manualmente', 'Lead No Cualificado: No cumple criterios mínimos, derivar a canal adecuado'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se crea la base de conocimiento con contratos y casos de éxito', 'Cortex Search indexa todo el contenido', 'El copiloto genera propuestas personalizadas en minutos']
+  },
+  UC19: {
+    title: 'Huella de Carbono Operativa para Reporting ESG',
+    contexto: 'Estos Cortex Code Prompts construyen un pipeline de cálculo automático de huella de carbono operativa para reporting ESG a clientes y auditorías usando CORTEX.COMPLETE.',
+    foco: 'Sostenibilidad corporativa — cálculo automatizado de emisiones GHG de flota, energía y residuos para cumplir exigencias de transparencia ESG de clientes.',
+    reto: 'Automatizar el reporting ESG reduciéndolo de semanas a horas, con trazabilidad y metodología estándar (GHG Protocol, Scope 1-2-3).',
+    objetivos: ['Generar datos de flota, energía y residuos sintéticos por contrato', 'Calcular emisiones por Scope (1, 2, 3) con factores de emisión', 'Validar metodología con CORTEX.COMPLETE', 'Generar informe ESG estandarizado por cliente', 'Dashboard de KPIs de sostenibilidad con benchmarking'],
+    funcionalidades: ['LLM: CORTEX.COMPLETE para validación de metodología y generación del informe', 'Datos sintéticos: 100 contratos con 12 meses de datos de flota, energía y residuos', 'Cálculo: Emissions = activity_data × emission_factor (GHG Protocol)', 'Dashboard Streamlit: KPIs ESG por contrato con comparativa sectorial'],
+    datos: ['Flota: km_recorridos, tipo_combustible, consumo_litros, tipo_vehiculo por contrato', 'Energía: consumo_kwh_sede + consumo_kwh_instalaciones_gestionadas', 'Residuos: toneladas_residuos_generados, ratio_reciclaje, proveedores_homologados', 'Informe: Scope1_tn_CO2e, Scope2_tn_CO2e, Scope3_tn_CO2e, huella_total, intensidad_por_m2'],
+    estratificacion: ['Emisiones por encima de benchmark sectorial: Plan de reducción requerido', 'Emisiones en media sectorial: Acciones de mejora identificadas', 'Emisiones por debajo de benchmark: Certificar y comunicar como ventaja competitiva', 'Sin datos suficientes: Solicitar datos adicionales a proveedor'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan 12 meses de datos operativos de sostenibilidad', 'Se calculan emisiones GHG por scope y contrato', 'CORTEX.COMPLETE genera el informe ESG estandarizado por cliente']
+  },
+  UC20: {
+    title: 'Optimización Energética en Instalaciones Gestionadas',
+    contexto: 'Estos Cortex Code Prompts construyen un sistema de optimización energética usando ML.ANOMALY_DETECTION sobre datos de sensores para reducir el consumo en instalaciones gestionadas.',
+    foco: 'Eficiencia energética — detección de desviaciones del consumo óptimo en instalaciones gestionadas para activar medidas correctoras automáticas.',
+    reto: 'Reducir el consumo energético un 15-25% en instalaciones gestionadas mediante detección y corrección proactiva de ineficiencias energéticas.',
+    objetivos: ['Generar datos de consumo energético por instalación, zona y sistema', 'Detectar patrones de consumo anómalo con ML.ANOMALY_DETECTION', 'Identificar fuentes de ineficiencia por tipo de sistema', 'Recomendar medidas correctoras automáticas', 'Dashboard ESG de ahorro energético por cliente y contrato'],
+    funcionalidades: ['ML.ANOMALY_DETECTION sobre consumo energético por zona, sistema y horario', 'Datos sintéticos: 200 instalaciones con 12 meses de datos de sensores (15 min)', 'Detección: consumo_climatizacion, iluminacion, equipos_auxiliares vs patrón_óptimo', 'Dashboard Streamlit: Ahorro potencial por instalación con medidas correctoras'],
+    datos: ['Consumo: kwh_climatizacion, kwh_iluminacion, kwh_otros por zona, instalacion y hora', 'Patrones: consumo_optimo_horario definido por tipo_instalacion y ocupacion_esperada', 'Anomalías: desviacion_pct sobre consumo_optimo, fuente_probable, impacto_economico', 'Ahorro: kwh_ahorrados, CO2_evitado, ahorro_economico por instalacion y mes'],
+    estratificacion: ['Desviación Crítica (>40% sobre óptimo): Alerta inmediata, revisar sistema en 24h', 'Desviación Alta (20-40%): Programar revisión técnica en próxima visita', 'Desviación Moderada (10-20%): Ajuste de parámetros de control (temperatura, timer)', 'Dentro del rango óptimo (<10%): Sin acción, registro en dashboard ESG'],
+    como_usar: ['Ejecutar prompts secuencialmente', 'Se generan 12 meses de datos de sensores con ineficiencias controladas', 'ML.ANOMALY_DETECTION identifica desviaciones del patrón óptimo', 'El dashboard muestra el ahorro potencial y medidas correctoras por instalación']
+  }
+};
+
+function verGuia(ucId) {
+  const g = GUIAS[ucId];
+  if (!g) { alert('Guía no disponible aún para ' + ucId); return; }
+  const box = document.getElementById('guiaModalBox');
+  let h = `<button class="modal-close" onclick="cerrarModal('guiaModal')">&times;</button>`;
+  h += `<span class="guide-badge">${ucId}</span>`;
+  h += `<h2>${g.title}</h2>`;
+  h += `<p><strong>Caso de Uso: ${g.title}</strong></p>`;
+  h += `<h3>Contexto de Negocio</h3><p>${g.contexto}</p>`;
+  h += `<p><strong>Foco:</strong> ${g.foco}</p>`;
+  h += `<p><strong>Reto de negocio:</strong> ${g.reto}</p>`;
+  h += `<h3>Objetivos de Aprendizaje</h3><ul>${g.objetivos.map(o=>`<li>${o}</li>`).join('')}</ul>`;
+  h += `<h3>Funcionalidades</h3><ul>${g.funcionalidades.map(f=>`<li>${f}</li>`).join('')}</ul>`;
+  h += `<h3>Datos Generados</h3><ul>${g.datos.map(d=>`<li>${d}</li>`).join('')}</ul>`;
+  h += `<h3>Estratificación</h3><ul>${g.estratificacion.map(e=>`<li>${e}</li>`).join('')}</ul>`;
+  h += `<h3>Cómo Usar</h3><ul>${g.como_usar.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+  h += `<p class="guide-footer">Desarrollado con Snowflake Cortex AI/ML + Feature Store + Model Registry</p>`;
+  box.innerHTML = h;
+  document.getElementById('guiaModal').classList.add('active');
+}
+
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
+});
+function cerrarModal(id) { document.getElementById(id).classList.remove('active'); }
+
+const PROMPTS = {
+  UC01: {
+    title: "Predicción de Absentismo con Feature Store",
+    intro: "Abre Cortex Code en Snowsight y ejecuta estos prompts secuencialmente. Construirás un Feature Store de empleados con Entity EMPLEADO_360 y entrenarás un modelo de predicción de absentismo con 48h de antelación.",
+    steps: [
+      { title: "Configurar entorno", desc: "Crea la base de datos, esquema y warehouse para el proyecto.", prompt: "Crea una base de datos llamada ABSENTISMO_DB con esquema PUBLIC y un warehouse COMPUTE_WH tamaño SMALL con auto-suspend de 60 segundos. Establece el contexto de sesión." },
+      { title: "Generar tabla de empleados", desc: "Crea 5.000 empleados sintéticos con perfil laboral.", prompt: "Genera una tabla EMPLEADOS con 5000 filas usando GENERATOR(ROWCOUNT => 5000). Columnas: empleado_id (EMP0001..EMP5000), tipo_contrato (Fijo 60%/Temporal 25%/ETT 15%), categoria (Vigilante/Limpieza/Aux_CIT), zona VARCHAR, antiguedad_meses FLOAT (UNIFORM(1,120,RANDOM())), turno (Mañana/Tarde/Noche), supervisor_id VARCHAR." },
+      { title: "Generar histórico de asistencia", desc: "Crea 24 meses de registros diarios de asistencia.", prompt: "Genera tabla ASISTENCIA_HISTORICA con 24 meses × 5000 empleados (sample de 500 empleados × 720 días = 360000 registros). Columnas: empleado_id, fecha DATE, presente VARCHAR (PRESENTE 88% / AUSENTE 12%), motivo_ausencia (ENFERMEDAD 60%/PERSONAL 20%/INJUSTIFICADA 10%/VACACIONES 10% si ausente), temperatura_dia FLOAT (UNIFORM(5,35,RANDOM())), es_festivo BOOLEAN." },
+      { title: "Crear Feature Store EMPLEADO_360", desc: "Inicializa el Feature Store y la entidad principal.", prompt: "Crea un Feature Store: CREATE FEATURE STORE EMPLEADOS_FS. Crea la entidad: CREATE ENTITY EMPLEADO_360 WITH PRIMARY KEY (empleado_id). Crea FeatureViews FV_AUSENCIAS (tasa_ausencia_30d, tasa_ausencia_90d, num_ausencias_injustificadas_60d, ausencias_lunes_viernes_ratio) y FV_TURNO (cambios_turno_solicitados_mes, turno_actual_encoded, dias_turno_noche_consecutivos)." },
+      { title: "Completar FeatureViews del Feature Store", desc: "Define las 4 FeatureViews restantes.", prompt: "Crea en EMPLEADOS_FS para EMPLEADO_360: FV_CONTRATO (antiguedad_meses, tipo_contrato_encoded, meses_hasta_fin_contrato), FV_RENDIMIENTO (incidencias_reportadas_90d, evaluacion_ultima, num_cambios_supervisor), FV_CONTEXTO (temperatura_media_7d, es_periodo_vacacional, semana_del_mes, dias_hasta_festivo), FV_ZONA (tasa_ausencia_media_zona, ratio_personal_zona, distancia_domicilio_estimada)." },
+      { title: "Extraer training dataset del Feature Store", desc: "Genera el dataset de entrenamiento desde el Feature Store.", prompt: "Extrae el dataset de entrenamiento SELECT de todas las features del Feature Store EMPLEADOS_FS para EMPLEADO_360, uniendo con ASISTENCIA_HISTORICA para el target. Crea TRAINING_DATA con todas las features numéricas y target ausente_manana VARCHAR (AUSENTE/PRESENTE basado en si hay ausencia el día siguiente). Divide en TRAIN_SET (80%) y TEST_SET (20%) con SAMPLE." },
+      { title: "Entrenar ML.CLASSIFICATION", desc: "Entrena el clasificador de absentismo sobre el Feature Store.", prompt: "Entrena SNOWFLAKE.ML.CLASSIFICATION llamado modelo_absentismo usando TRAIN_SET, TARGET_COLNAME => 'ausente_manana', evaluate => TRUE. El target ausente_manana debe ser de tipo VARCHAR con valores AUSENTE y PRESENTE." },
+      { title: "Evaluar modelo", desc: "Revisa métricas y feature importance del modelo.", prompt: "Ejecuta SHOW_EVALUATION_METRICS, SHOW_CONFUSION_MATRIX y SHOW_FEATURE_IMPORTANCE del modelo modelo_absentismo. Muestra recall para la clase AUSENTE (objetivo >75%) y las 10 features más predictoras. Interpreta qué factores explican mejor el absentismo." },
+      { title: "Generar predicciones y alertas de cobertura", desc: "Puntúa empleados y genera alertas de cobertura para mañana.", prompt: "Crea tabla PREDICCIONES_ABSENTISMO usando modelo_absentismo!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (ausente_manana)) sobre TEST_SET. Extrae prob_AUSENTE y clasifica: Riesgo_Alto (>=75%), Riesgo_Medio (50-75%), Riesgo_Bajo (<50%). Muestra empleados en Riesgo_Alto agrupados por turno y zona para planificación de coberturas." },
+      { title: "Dashboard Streamlit de coberturas", desc: "Crea panel de gestión proactiva de ausencias por turno.", prompt: "Crea dashboard Streamlit con: 4 KPIs (empleados en riesgo mañana, cobertura comprometida por zona, tasa absentismo hoy, ahorro estimado vs sustitución urgente), tabla de empleados en riesgo alto por turno/zona con columna de acción sugerida, gráfico de tendencia de absentismo por zona, botón descarga CSV. Usa snowflake.connector.connect() para ejecución local." }
+    ]
+  },
+  UC02: {
+    title: "Optimización Inteligente de Turnos y Rutas",
+    intro: "Construirás un motor de optimización de asignación de turnos y rutas para reducir kilómetros improductivos y horas extra en empresas de servicios.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para optimización de turnos.", prompt: "Crea base de datos TURNOS_OPTIMIZACION_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar empleados con perfil de movilidad", desc: "500 empleados con datos de competencias y localización.", prompt: "Genera tabla EMPLEADOS_TURNO con 500 registros usando GENERATOR(ROWCOUNT => 500). Columnas: empleado_id, zona_residencia VARCHAR (Zona_N 8 zonas), habilidades ARRAY (Vigilancia/Limpieza/CIT/Recepcion), certificaciones ARRAY, disponibilidad_turno (Mañana/Tarde/Noche/Flexible), horas_contratadas_semana INT (20/30/40), km_max_desplazamiento FLOAT (UNIFORM(5,30,RANDOM())), coste_hora FLOAT." },
+      { title: "Generar servicios y clientes", desc: "200 ubicaciones de servicio con requerimientos.", prompt: "Genera tabla SERVICIOS_CONTRATO con 200 registros: servicio_id, cliente_id, zona VARCHAR, latitud FLOAT, longitud FLOAT, tipo_servicio (Vigilancia/Limpieza/CIT/Recepcion), horas_requeridas_dia FLOAT, turno_requerido VARCHAR, certificacion_obligatoria VARCHAR, nivel_prioridad (Alta/Media/Baja). Genera tabla ASIGNACIONES_HISTORICAS con 30 días × 200 servicios = 6000 asignaciones históricas." },
+      { title: "Calcular compatibilidad empleado-servicio", desc: "Matrix de compatibilidad para el scoring ML.", prompt: "Crea tabla COMPATIBILIDAD_PARES con todos los pares empleado × servicio donde: tipo_servicio ESTÁ en habilidades del empleado, zona_residencia compatible con zona_servicio, turno_requerido compatible con disponibilidad, certificacion_obligatoria en certificaciones. Añade features: distancia_km (HAVERSINE simulada), coste_desplazamiento, competencia_match_score. Target: asignado_exitoso VARCHAR (EXITOSO/NO_EXITOSO) basado en histórico." },
+      { title: "Entrenar modelo de asignación óptima", desc: "ML.CLASSIFICATION para scoring de compatibilidad.", prompt: "Divide COMPATIBILIDAD_PARES en 80/20. Entrena SNOWFLAKE.ML.CLASSIFICATION llamado optimizador_asignacion usando los pares de entrenamiento, TARGET_COLNAME => 'asignado_exitoso', evaluate => TRUE. El target asignado_exitoso debe ser VARCHAR con valores EXITOSO y NO_EXITOSO." },
+      { title: "Generar agenda optimizada del día", desc: "Aplica el modelo para generar asignaciones óptimas.", prompt: "Para el día de mañana, usa optimizador_asignacion!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (asignado_exitoso)) sobre todos los pares candidatos. Selecciona para cada servicio el empleado con mayor prob_EXITOSO que no tenga otro servicio asignado en el mismo turno. Almacena en AGENDA_OPTIMA. Calcula: km_totales_agenda, coste_total, cobertura_pct, horas_extra_evitadas." },
+      { title: "Analizar eficiencia vs agenda manual", desc: "Comparar agenda optimizada vs asignación histórica.", prompt: "Compara AGENDA_OPTIMA con ASIGNACIONES_HISTORICAS (último día disponible): diferencia en km_totales, horas_extra, cobertura_pct, coste_total. Calcula el ahorro potencial diario y anualizado. Muestra servicios sin cubrir y sugiere alternativas." },
+      { title: "Dashboard de agenda y eficiencia", desc: "Panel de coordinación operativa con agenda optimizada.", prompt: "Crea dashboard Streamlit con: KPIs (servicios asignados, km ahorrados vs ayer, horas extra evitadas, coste estimado), mapa de asignaciones por zona (tabla en lugar de mapa geográfico), tabla de agenda del día con empleado-servicio-horario, servicios sin cubrir con empleados disponibles alternativos. Usa snowflake.connector.connect() para ejecución local." }
+    ]
+  },
+  UC03: {
+    title: "Detección Temprana de Riesgo de Rotación",
+    intro: "Construirás un sistema de detección de señales de desvinculación usando ML.CLASSIFICATION para predecir bajas voluntarias con 4-6 semanas de antelación.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para análisis de rotación.", prompt: "Crea base de datos ROTACION_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar empleados con historial laboral", desc: "2.000 empleados con señales de desvinculación.", prompt: "Genera tabla EMPLEADOS_ROTACION con 2000 registros usando GENERATOR(ROWCOUNT => 2000). Columnas: empleado_id, tipo_contrato (Fijo/Temporal/ETT), antiguedad_meses FLOAT, categoria VARCHAR, zona VARCHAR, salario_mensual FLOAT (UNIFORM(1100,2000,RANDOM())), fecha_ultima_evaluacion DATE, puntuacion_evaluacion FLOAT (UNIFORM(1,5,RANDOM())), ha_causado_baja VARCHAR (SI 30%/NO 70%)." },
+      { title: "Generar señales de comportamiento laboral", desc: "15+ indicadores de desvinculación por empleado.", prompt: "Genera tabla SEÑALES_ROTACION con un registro por empleado: empleado_id, variacion_puntualidad_pct FLOAT (alta en pre-baja), cambios_turno_solicitados_3m INT, ausencias_injustificadas_3m INT, rendimiento_tendencia FLOAT (-1 a 1), quejas_formalizadas INT, encuesta_satisfaccion_score FLOAT (baja en pre-baja), dias_desde_ultima_solicitud_vacaciones INT, num_bajas_medicas_cortas_3m INT, ratio_horas_extra_rechazadas FLOAT. Los empleados que causan baja tienen peores indicadores con ruido UNIFORM()." },
+      { title: "Construir features predictoras de rotación", desc: "Combinar señales en tabla de features para ML.", prompt: "Crea tabla FEATURES_ROTACION uniendo EMPLEADOS_ROTACION y SEÑALES_ROTACION. Añade features derivadas: antiguedad_encoded FLOAT, contrato_temporal FLOAT (1 si temporal/ETT), salario_vs_media_zona FLOAT (salario/media_zona - 1), dias_sin_formacion FLOAT. Target: ha_causado_baja VARCHAR." },
+      { title: "Entrenar modelo de rotación", desc: "ML.CLASSIFICATION para predicción de baja voluntaria.", prompt: "Divide FEATURES_ROTACION en 80/20 con SAMPLE. Entrena SNOWFLAKE.ML.CLASSIFICATION llamado modelo_rotacion usando train set, TARGET_COLNAME => 'ha_causado_baja', evaluate => TRUE. ha_causado_baja debe ser VARCHAR con valores SI y NO." },
+      { title: "Evaluar y validar el modelo", desc: "Métricas y feature importance del predictor de rotación.", prompt: "Ejecuta SHOW_EVALUATION_METRICS, SHOW_CONFUSION_MATRIX y SHOW_FEATURE_IMPORTANCE del modelo modelo_rotacion. Muestra el recall para clase SI (objetivo > 70%) y el top-5 de señales más predictoras. Crea vista EMPLEADOS_RIESGO_ALTO con empleados activos que tienen probabilidad de baja > 70% con sus señales principales." },
+      { title: "Generar alertas con plan de retención", desc: "Combinar scoring con planes de acción sugeridos.", prompt: "Para empleados activos (ha_causado_baja = NO), usa modelo_rotacion!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (ha_causado_baja)). Clasifica: Riesgo_Critico (>=80%), Riesgo_Alto (60-80%), Riesgo_Medio (40-60%), Riesgo_Bajo (<40%). Usa CORTEX.COMPLETE para generar para cada empleado en Riesgo_Critico una acción de retención específica (1 frase) basada en su señal principal." },
+      { title: "Dashboard de RRHH para retención", desc: "Panel de gestión de riesgo de rotación por zona.", prompt: "Crea dashboard Streamlit con: KPIs (empleados en riesgo crítico, coste estimado de reposición en riesgo, distribución por zona, tiempo medio para actuar), tabla de empleados en riesgo con señales y acción sugerida, distribución de riesgo por zona/categoría, gráfico de tendencia histórica de rotación. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Task de actualización semanal", desc: "Automatizar el scoring de rotación cada semana.", prompt: "Crea Task ROTACION_SEMANAL que cada lunes actualice SEÑALES_ROTACION con las últimas señales, repuntúe todos los empleados activos con modelo_rotacion, actualice la tabla ALERTAS_ROTACION y envíe resumen a RRHH si hay nuevos empleados en Riesgo_Critico. ALTER TASK ROTACION_SEMANAL RESUME." }
+    ]
+  },
+  UC04: {
+    title: "Análisis de Brechas de Formación con LLM",
+    intro: "Construirás un sistema de análisis automático de brechas de formación usando CORTEX.COMPLETE para detectar certificaciones caducadas y generar planes personalizados.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para gestión de formación.", prompt: "Crea base de datos FORMACION_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar catálogo de formación y requerimientos", desc: "Tipos de certificación y requerimientos por puesto.", prompt: "Genera tabla TIPOS_CERTIFICACION con 20 registros: cert_id, nombre (Lic_Armas/PRL_Basico/PRL_Esp/DPVS/Recepcion/Primeros_Auxilios/etc.), categoria_puesto VARCHAR, duracion_horas INT, renovacion_meses INT (12/24/36/48), coste_euros FLOAT, proveedor_preferente VARCHAR. Genera tabla REQUERIMIENTOS_PUESTO: puesto_cliente → lista de certificaciones obligatorias y opcionales." },
+      { title: "Generar empleados con historial de formación", desc: "1.000 empleados con certificaciones activas y caducadas.", prompt: "Genera tabla EMPLEADOS_FORMACION con 1000 registros: empleado_id, nombre VARCHAR, puesto VARCHAR, cliente_asignado VARCHAR, zona VARCHAR. Genera tabla CERTIFICACIONES_EMPLEADO: empleado_id × cert_id con fecha_obtencion, fecha_caducidad, estado (ACTIVA/CADUCADA/PROXIMA_CADUCAR en 90d). Incluye empleados con combinaciones variadas de certificaciones completas, parciales y caducadas." },
+      { title: "Detectar certificaciones caducadas y en riesgo", desc: "Identificar brechas críticas de compliance.", prompt: "Crea vista BRECHAS_COMPLIANCE con: empleado_id, puesto, cliente, cert_id, nombre_cert, estado, dias_hasta_caducidad (negativo si ya caducada), es_obligatoria, bloquea_servicio (TRUE si obligatoria y caducada). Crea tabla ALERTAS_FORMACION con nivel (CRITICO/URGENTE/PREVENTIVO) según días_hasta_caducidad y tipo." },
+      { title: "Identificar brechas de competencia por evaluación", desc: "Cruzar evaluaciones con requerimientos de puesto.", prompt: "Genera tabla EVALUACIONES_DESEMPEÑO con empleado_id, competencia VARCHAR, puntuacion FLOAT (1-5), fecha_evaluacion. Crea vista BRECHAS_COMPETENCIA uniendo con REQUERIMIENTOS_PUESTO para identificar competencias con puntuacion < 3 en habilidades requeridas por el puesto del cliente asignado." },
+      { title: "Generar planes de formación con CORTEX.COMPLETE", desc: "LLM crea planes personalizados de desarrollo.", prompt: "Para cada empleado con brechas (ALERTAS_FORMACION o BRECHAS_COMPETENCIA), usa CORTEX.COMPLETE con modelo 'snowflake-arctic' para generar un plan de formación personalizado: certificaciones_urgentes (lista priorizada), formacion_desarrollo (para mejorar competencias), prioridad_global (ALTA/MEDIA/BAJA), coste_estimado_total FLOAT, tiempo_estimado_horas INT. Almacena en PLANES_FORMACION." },
+      { title: "Dashboard de compliance formativo", desc: "Panel de gestión de formación por contrato y zona.", prompt: "Crea dashboard Streamlit con: KPIs (empleados con certificación caducada, empleados que caducan en 30d, coste total formación pendiente, % compliance por zona), tabla de alertas críticas con acción requerida, vista de planes de formación por empleado, calendario de vencimientos próximos. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Task de monitorización mensual", desc: "Automatizar la revisión mensual de compliance formativo.", prompt: "Crea Task FORMACION_MONITOR mensual que: actualice estados de certificaciones según fechas, genere nuevas alertas para próximas caducidades, calcule KPIs de compliance por zona y contrato, y envíe resumen a responsables de RRHH. ALTER TASK FORMACION_MONITOR RESUME." }
+    ]
+  },
+  UC05: {
+    title: "Scoring de Riesgo por Instalación con Model Registry",
+    intro: "Construirás un modelo de scoring de riesgo de incidente por instalación registrado en Model Registry con A/B testing entre versiones para optimizar la asignación de recursos.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para scoring de riesgo de instalaciones.", prompt: "Crea base de datos RIESGO_INSTALACIONES_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar datos de instalaciones", desc: "1.000 instalaciones con perfil de riesgo y histórico.", prompt: "Genera tabla INSTALACIONES con 1000 registros usando GENERATOR(ROWCOUNT => 1000). Columnas: instalacion_id, tipo (Oficina 30%/Industrial 20%/Comercio 25%/Residencial 15%/CIT 10%), sector_cliente VARCHAR, superficie_m2 FLOAT, num_accesos INT, horario (24h/Diurno/Nocturno), entorno (Urbano/Periurbano/Industrial), antiguedad_contrato_meses INT, num_vigilantes_actuales INT." },
+      { title: "Generar histórico de incidentes", desc: "3 años de incidentes etiquetados por instalación.", prompt: "Genera tabla INCIDENTES_HISTORICOS con 3 años × 1000 instalaciones. Por cada instalación-año: num_incidentes_reales INT (Poisson lambda=2 para alto riesgo, 0.3 para bajo), num_falsas_alarmas INT, tiempo_respuesta_medio_min FLOAT, tipo_incidente_principal VARCHAR, coste_incidente_total FLOAT, ha_tenido_incidente_grave VARCHAR (SI/NO). Usa UNIFORM() y distribuciones realistas." },
+      { title: "Entrenar incident_risk_model v1", desc: "Primera versión con 10 features básicas.", prompt: "Crea FEATURES_RIESGO_V1 con: tipo_encoded, entorno_encoded, superficie_log, num_accesos, horario_encoded, incidentes_12m, falsas_alarmas_ratio, antiguedad_contrato, num_vigilantes_actuales, coste_incidente_hist_total. Target: ha_tenido_incidente_grave VARCHAR. Divide 80/20, entrena SNOWFLAKE.ML.CLASSIFICATION 'incident_risk_v1' con evaluate => TRUE." },
+      { title: "Registrar v1 en Model Registry", desc: "Versionar el primer modelo en producción.", prompt: "Registra en Snowflake Model Registry: CREATE OR REPLACE MODEL REGISTRY.MODELS.INCIDENT_RISK_MODEL VERSION V1 FROM SNOWFLAKE.ML.CLASSIFICATION incident_risk_v1 COMMENT = 'Scoring de riesgo de incidente por instalación - 10 features'. Añade métricas: ALTER MODEL INCIDENT_RISK_MODEL VERSION V1 SET METRICS = OBJECT_CONSTRUCT de las métricas de evaluate." },
+      { title: "Entrenar y registrar v2 con más features", desc: "Versión mejorada con datos externos e índice de criminalidad.", prompt: "Añade a FEATURES_RIESGO_V2: indice_criminalidad_zona FLOAT (UNIFORM(1,10,RANDOM())), nivel_conflictividad_laboral FLOAT, incidentes_zona_12m INT, variacion_incidentes_vs_año_anterior FLOAT, ratio_personal_por_m2 FLOAT, score_tecnico_sistema_alarma FLOAT, proximidad_comisaria_km FLOAT, turno_con_mas_incidentes_encoded FLOAT. Entrena incident_risk_v2 con evaluate => TRUE. Registra como VERSION V2." },
+      { title: "Comparar versiones y promover la mejor", desc: "A/B testing entre v1 y v2 en Model Registry.", prompt: "Consulta SHOW VERSIONS IN MODEL INCIDENT_RISK_MODEL. Compara métricas V1 vs V2: precision, recall, accuracy para clase SI. Si V2 mejora precision > 5%, ejecuta ALTER MODEL INCIDENT_RISK_MODEL SET DEFAULT_VERSION = V2. Calcula el impacto en negocio: vigilantes mejor asignados × coste_hora × horas_año." },
+      { title: "Generar mapa de calor de riesgo", desc: "Scoring actual de todas las instalaciones en producción.", prompt: "Para todas las instalaciones activas, usa INCIDENT_RISK_MODEL!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (ha_tenido_incidente_grave)) con la versión en producción. Crea tabla RISK_SCORING con prob_SI_incidente, nivel_riesgo (MuyAlto/Alto/Medio/Bajo), nivel_vigilancia_actual, gap_vigilancia (diferencia entre vigilancia recomendada y actual), ahorro_potencial si se optimiza." },
+      { title: "Dashboard de gestión de riesgo", desc: "Panel para gestores con mapa de calor de riesgo.", prompt: "Crea dashboard Streamlit con: KPIs (instalaciones muy alto riesgo, instalaciones sub-vigiladas, coste de incidentes evitables, versión del modelo en producción), tabla de instalaciones por nivel de riesgo con recomendación de vigilancia, comparativa v1 vs v2 en métricas, distribución de riesgo por tipo y sector. Usa snowflake.connector.connect() para ejecución local." }
+    ]
+  },
+  UC06: {
+    title: "Clasificación Automática de Alarmas con IA",
+    intro: "Construirás un sistema de clasificación automática de alarmas usando ML.CLASSIFICATION para reducir falsas alarmas un 70% en operaciones de CRA.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el sistema de clasificación de alarmas.", prompt: "Crea base de datos CLASIFICACION_ALARMAS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar histórico de alarmas", desc: "50.000 alarmas etiquetadas como reales o falsas.", prompt: "Genera tabla ALARMAS_HISTORICAS con 50000 registros usando GENERATOR(ROWCOUNT => 50000). Columnas: alarma_id, instalacion_id VARCHAR, tipo_alarma (Movimiento 40%/Apertura 30%/Panico 5%/Tecnica 15%/Perimetro 10%), hora INT (0-23), dia_semana INT (0-6), duracion_seg FLOAT (UNIFORM(1,120,RANDOM())), temperatura FLOAT, viento_kmh FLOAT, historial_falsas_ratio FLOAT (por instalación, UNIFORM(0,0.98,RANDOM())), es_festivo BOOLEAN, resultado VARCHAR (FALSA 93% / REAL 7%)." },
+      { title: "Feature engineering de alarmas", desc: "Construye variables predictoras de alarma real.", prompt: "Crea tabla ALARMAS_FEATURES con: alarma_id, tipo_alarma_encoded FLOAT, hora FLOAT, dia_semana FLOAT, es_fin_semana FLOAT, es_horario_nocturno (22-6h) FLOAT, duracion_seg FLOAT, temperatura_extrema FLOAT (>35 o <-5), viento_fuerte FLOAT (>50kmh), historial_falsas_ratio FLOAT, es_festivo FLOAT, mes FLOAT, zona_riesgo_instalacion FLOAT. Target: resultado VARCHAR (FALSA/REAL)." },
+      { title: "Entrenar clasificador de alarmas", desc: "ML.CLASSIFICATION para clasificación alarma real/falsa.", prompt: "Divide ALARMAS_FEATURES en ALARMAS_TRAIN (80%) y ALARMAS_TEST (20%) con SAMPLE. Entrena SNOWFLAKE.ML.CLASSIFICATION llamado clasificador_alarmas usando ALARMAS_TRAIN, TARGET_COLNAME => 'resultado', evaluate => TRUE. resultado debe ser VARCHAR con valores REAL y FALSA." },
+      { title: "Evaluar recall de alarmas reales", desc: "Verificar que el recall de REAL supera el 95%.", prompt: "Ejecuta SHOW_EVALUATION_METRICS y SHOW_CONFUSION_MATRIX del modelo clasificador_alarmas. Muestra recall de clase REAL (crítico: no queremos perder alarmas reales), precision de clase REAL, y falsos_positivos (alarmas REAL clasificadas como FALSA). Muestra feature_importance para entender qué factores predicen mejor la alarma real." },
+      { title: "Puntuar alarmas y clasificar por acción", desc: "Genera predicciones con nivel de acción requerida.", prompt: "Puntúa ALARMAS_TEST con clasificador_alarmas!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (resultado)). Clasifica por acción: Despacho_Inmediato (prob_REAL >= 0.90), Verificar_Primero (0.60-0.90), Probablemente_Falsa (0.30-0.60), Falsa_Confirmada (<0.30). Muestra distribución de acciones y comparativa con acciones reales históricas." },
+      { title: "Dashboard de operaciones CRA", desc: "Cola de alarmas priorizadas para operadores del CRA.", prompt: "Crea dashboard Streamlit con: KPIs (alarmas en cola, despacho inmediato pendiente, falsas evitadas hoy, tasa de acierto %), tabla de cola de alarmas ordenada por probabilidad_REAL con tipo de acción sugerida, gráfico de distribución por hora y tipo, evolución de falsas alarmas evitadas por semana. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Pipeline de clasificación en tiempo real", desc: "Task para procesar alarmas entrantes automáticamente.", prompt: "Crea Task ALARMAS_PIPELINE que cada 1 minuto: clasifique nuevas alarmas en ALARMAS_ENTRANTES con clasificador_alarmas, mande automáticamente las Falsa_Confirmada a archivo, enrute Despacho_Inmediato al sistema de despacho, y alerte al operador para Verificar_Primero. ALTER TASK ALARMAS_PIPELINE RESUME." }
+    ]
+  },
+  UC07: {
+    title: "Optimización de Rutas de Patrullaje con IoT",
+    intro: "Construirás un motor de optimización de rutas de ronda usando ML.ANOMALY_DETECTION sobre datos IoT para adaptar los patrullajes al riesgo real de cada zona.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para optimización de patrullaje IoT.", prompt: "Crea base de datos PATRULLAJE_IOT_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar instalación con zonas y sensores", desc: "Simula 50 zonas con datos de sensores IoT.", prompt: "Genera tabla ZONAS_INSTALACION con 50 zonas: zona_id, nombre VARCHAR, tipo_zona (Entrada/Almacen/Oficina/Produccion/Aparcamiento/Perimetro), area_m2 FLOAT, num_sensores_movimiento INT, num_camaras INT, es_zona_critica BOOLEAN. Genera tabla SENSORES_IOT con 500 sensores: sensor_id, zona_id, tipo (movimiento/apertura/camara), estado (activo/inactivo)." },
+      { title: "Generar histórico de eventos IoT", desc: "3 meses de eventos por zona y horario.", prompt: "Genera tabla EVENTOS_IOT con 3 meses de datos. Para cada zona × 24 horas × 90 días: num_eventos_movimiento INT (Poisson lambda=2 en zonas normales, lambda=10 en horas pico), num_aperturas INT, duracion_promedio_evento_seg FLOAT, hora INT, dia_semana INT, es_festivo BOOLEAN. Usa GENERATOR(ROWCOUNT => 108000) con UNIFORM() para variar por zona y horario." },
+      { title: "Detectar patrones anómalos con ML.ANOMALY_DETECTION", desc: "Entrenar el detector sobre el patrón normal de cada zona.", prompt: "Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_actividad_iot usando EVENTOS_IOT para las primeras 8 semanas (datos de entrenamiento). Configura la detección sobre las columnas num_eventos_movimiento, num_aperturas, duracion_promedio_evento_seg agrupando por zona_id y hora." },
+      { title: "Calcular nivel de actividad por zona y turno", desc: "Genera mapa de riesgo actual basado en actividad detectada.", prompt: "Aplica detector_actividad_iot sobre las últimas 2 semanas. Crea tabla ACTIVIDAD_ZONAS con: zona_id, hora, actividad_actual, score_anomalia, es_anomalia BOOLEAN, nivel_actividad (ALTO/NORMAL/BAJO según percentiles). Calcula para cada zona la distribución de anomalías por turno (Mañana/Tarde/Noche) y día de semana." },
+      { title: "Generar rutas de patrullaje adaptativas", desc: "Construye la ruta óptima basada en mapa de riesgo.", prompt: "Para el próximo turno, crea tabla RUTA_OPTIMA_PATRULLAJE con: secuencia de zonas ordenada por: 1) zonas con anomalías activas primero, 2) zonas críticas con alta actividad histórica, 3) resto de zonas. Calcula tiempo_recomendado_por_zona (mayor para zonas de alto riesgo), total_tiempo_ronda_estimado, cobertura_critica_pct. Genera instrucciones texto para cada zona." },
+      { title: "Dashboard de cobertura IoT", desc: "Panel operativo de patrullaje con datos en tiempo real.", prompt: "Crea dashboard Streamlit con: KPIs (zonas activas ahora, anomalías detectadas turno actual, cobertura crítica %, próxima zona a patrullar), tabla de zonas con nivel de actividad y tiempo desde última ronda, ruta sugerida para siguiente patrullaje, gráfico de actividad por hora. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Actualización en tiempo real", desc: "Task para recalcular rutas cada 30 minutos.", prompt: "Crea Task PATRULLAJE_UPDATE que cada 30 minutos: ingeste nuevos eventos IoT, aplique detector_actividad_iot, recalcule el mapa de riesgo y genere nueva RUTA_OPTIMA_PATRULLAJE actualizada. Notifique al vigilante si hay cambio significativo en la ruta recomendada. ALTER TASK PATRULLAJE_UPDATE RESUME." }
+    ]
+  },
+  UC08: {
+    title: "Detección de Comportamientos Anómalos con IA",
+    intro: "Construirás un pipeline de detección de anomalías sobre metadatos de eventos CCTV usando ML.ANOMALY_DETECTION para alertas en tiempo real sin procesar imágenes directamente.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para análisis de comportamientos.", prompt: "Crea base de datos COMPORTAMIENTOS_ANOMALOS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar metadatos de eventos CCTV", desc: "100.000 eventos de 50 instalaciones con anomalías.", prompt: "Genera tabla EVENTOS_CCTV con 100000 registros usando GENERATOR(ROWCOUNT => 100000). Columnas: evento_id, instalacion_id VARCHAR, zona_id VARCHAR, timestamp TIMESTAMP, permanencia_minutos FLOAT (UNIFORM(0.5,60,RANDOM())), num_personas INT, hora INT, dia_semana INT, es_zona_restringida BOOLEAN, velocidad_movimiento FLOAT (UNIFORM(0.5,5,RANDOM())), es_anomalia VARCHAR (ANOMALIA 2%/NORMAL 98%)." },
+      { title: "Feature engineering de eventos CCTV", desc: "Construye features de contexto para la detección.", prompt: "Crea tabla CCTV_FEATURES con: evento_id, instalacion_id, permanencia_minutos FLOAT, num_personas FLOAT, hora_encoded FLOAT, dia_semana FLOAT, es_zona_restringida FLOAT, velocidad_movimiento FLOAT, es_horario_laboral FLOAT (8-18h días laborables), permanencia_vs_media_zona FLOAT (ratio sobre promedio de esa zona), num_personas_vs_aforo_normal FLOAT. Target: es_anomalia VARCHAR." },
+      { title: "Entrenar ML.ANOMALY_DETECTION", desc: "Modelo de detección de comportamientos anómalos.", prompt: "Divide CCTV_FEATURES en 80% entrenamiento y 20% test. Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_comportamientos sobre los datos de entrenamiento usando las columnas numéricas (excluyendo es_anomalia y evento_id). Evalúa el modelo sobre el conjunto de test midiendo cuántos eventos etiquetados como ANOMALIA reciben score alto." },
+      { title: "Calibrar umbrales y evaluar", desc: "Optimizar umbral para minimizar falsas alertas.", prompt: "Sobre el conjunto de test, aplica detector_comportamientos para obtener scores de anomalía. Evalúa diferentes umbrales (0.6, 0.7, 0.8, 0.9): calcula recall de ANOMALIA, falsos_positivos_pct, alertas_por_hora. Selecciona el umbral que maximiza recall con menos del 5% de falsos positivos. Muestra la distribución de scores por clase." },
+      { title: "Implementar alertas en tiempo real", desc: "Generar alertas clasificadas por severidad.", prompt: "Aplica detector_comportamientos sobre los últimos 1000 eventos. Crea tabla ALERTAS_COMPORTAMIENTO con: evento_id, instalacion_id, zona_id, timestamp, score_anomalia, nivel_alerta (SEVERO>=0.95/ALTO 0.80-0.95/MODERADO 0.60-0.80/NORMAL<0.60), tipo_anomalia_probable (basado en las features más altas), accion_recomendada. Muestra top-20 alertas ordenadas por score." },
+      { title: "Dashboard de alertas en tiempo real", desc: "Feed de alertas operativas para el centro de control.", prompt: "Crea dashboard Streamlit con: KPIs (alertas activas por nivel de severidad, instalaciones con actividad anómala, tiempo medio de respuesta, eventos procesados por hora), feed de alertas en tiempo real con filtro por nivel e instalación, detalle de la alerta seleccionada con contexto y evidencias, gráfico temporal de anomalías por hora. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Task de procesamiento continuo", desc: "Automatizar la detección de comportamientos cada 5 minutos.", prompt: "Crea Task DETECCION_CONTINUA que cada 5 minutos: ingeste nuevos eventos CCTV de EVENTOS_NUEVOS, aplique detector_comportamientos, genere alertas para scores > umbral, enrute alertas SEVERAS al supervisor de turno de forma inmediata, archive eventos NORMAL en log histórico. ALTER TASK DETECCION_CONTINUA RESUME." }
+    ]
+  },
+  UC09: {
+    title: "Optimización de Rutas de Transporte de Efectivo",
+    intro: "Construirás un motor de optimización de rutas CIT usando ML sobre historial de entregas, condiciones de tráfico y scoring de riesgo para reducir costes logísticos y riesgo.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para optimización de rutas CIT.", prompt: "Crea base de datos RUTAS_CIT_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar datos de puntos de entrega y vehículos", desc: "Red de puntos CIT con características operativas.", prompt: "Genera tabla PUNTOS_ENTREGA_CIT con 500 registros: punto_id, tipo (ATM/Sucursal_Bancaria/Comercio_Grande/Supermercado), zona VARCHAR, volumen_medio_efectivo_k FLOAT (UNIFORM(5,500,RANDOM())), prioridad (Alta/Media/Baja), ventana_horaria_inicio INT, ventana_horaria_fin INT. Genera tabla VEHICULOS_CIT con 100 vehículos: capacidad_k FLOAT, tipo (Blindado_Ligero/Blindado_Pesado), base_zona VARCHAR." },
+      { title: "Generar histórico de rutas y riesgo", desc: "12 meses de rutas con incidentes y costes.", prompt: "Genera tabla RUTAS_HISTORICAS con 100 vehiculos × 250 días = 25000 rutas. Por ruta: vehiculo_id, fecha DATE, puntos_visitados INT, km_recorridos FLOAT, tiempo_total_min FLOAT, volumen_total_k FLOAT, coste_combustible FLOAT, incidente_ocurrido VARCHAR (SI 0.5%/NO 99.5%), zona_incidente VARCHAR, hora_inicio INT. Genera tabla RIESGO_ZONA con score_riesgo por zona y franja_horaria." },
+      { title: "Construir scoring de riesgo por ruta", desc: "Features de riesgo para cada ruta posible.", prompt: "Crea tabla SCORING_RUTAS con: ruta_id, zona_inicio, zona_fin, hora_inicio, dia_semana, volumen_efectivo_k, num_paradas, km_totales, riesgo_zona_origen FLOAT, riesgo_zona_destino FLOAT, riesgo_horario FLOAT (mayor de noche), historial_incidentes_ruta FLOAT, nivel_trafico_estimado FLOAT. Target: incidente_ocurrido VARCHAR." },
+      { title: "Entrenar modelo de riesgo CIT", desc: "ML.CLASSIFICATION para scoring de riesgo por ruta.", prompt: "Divide SCORING_RUTAS en 80/20. Entrena SNOWFLAKE.ML.CLASSIFICATION llamado modelo_riesgo_cit usando el conjunto de entrenamiento, TARGET_COLNAME => 'incidente_ocurrido', evaluate => TRUE. incidente_ocurrido debe ser VARCHAR con valores SI y NO." },
+      { title: "Optimizar plan de rutas diario", desc: "Genera el plan de rutas óptimo para mañana.", prompt: "Para cada vehículo y conjunto de puntos a visitar mañana, puntúa variantes de ruta con modelo_riesgo_cit!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (incidente_ocurrido)). Selecciona la ruta con menor combinación de riesgo × volumen × tiempo. Almacena en PLAN_RUTAS_OPTIMO con: vehiculo, puntos_ordenados, hora_inicio_optima, riesgo_total, km_totales, dotacion_requerida." },
+      { title: "Calcular ahorro vs plan manual", desc: "Comparar plan optimizado con histórico manual.", prompt: "Compara PLAN_RUTAS_OPTIMO con RUTAS_HISTORICAS (semana equivalente del año pasado): diferencia en km_totales, tiempo_exposicion_h, coste_combustible, score_riesgo_medio. Calcula ahorro semanal y anualizado. Muestra las 5 rutas de mayor riesgo evitado con la optimización." },
+      { title: "Dashboard de planificación CIT", desc: "Panel de gestión de rutas con indicadores de riesgo.", prompt: "Crea dashboard Streamlit con: KPIs (vehículos en ruta, volumen total en tránsito, score_riesgo_medio hoy, ahorro vs ayer), tabla del plan de rutas del día con nivel de riesgo y dotación requerida, distribución de riesgo por zona horaria, indicadores de cumplimiento de ventanas horarias. Usa snowflake.connector.connect() para ejecución local." }
+    ]
+  },
+  UC10: {
+    title: "Predicción de Demanda de Efectivo en Cajeros",
+    intro: "Construirás un modelo de forecasting de demanda de efectivo por cajero con ML.FORECAST para optimizar el calendario de reposiciones CIT.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para forecasting de cajeros.", prompt: "Crea base de datos DEMANDA_CAJEROS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar red de cajeros con características", desc: "500 cajeros con datos demográficos de zona.", prompt: "Genera tabla CAJEROS con 500 registros: cajero_id (ATM_001..ATM_500), tipo_zona (Comercial 30%/Residencial 35%/Turístico 15%/Industrial 10%/Transporte 10%), banco VARCHAR, capacidad_euros FLOAT (UNIFORM(50000,200000,RANDOM())), punto_reposicion_euros FLOAT, vecindario_renta FLOAT (UNIFORM(15000,80000,RANDOM())), distancia_comercio_m FLOAT." },
+      { title: "Generar histórico de demanda", desc: "2 años de demanda diaria con estacionalidad.", prompt: "Genera tabla DEMANDA_DIARIA con 500 cajeros × 730 días = 365000 registros usando GENERATOR(ROWCOUNT => 365000). Columnas: cajero_id, fecha DATE, demanda_euros FLOAT (con estacionalidad: mayor en fin de mes, Navidad, verano para turísticos; UNIFORM con factor por tipo_zona), nivel_saldo_inicio FLOAT, fecha_reposicion BOOLEAN, importe_reposicion FLOAT." },
+      { title: "Añadir factores externos al dataset", desc: "Enriquecer con estacionalidad y eventos.", prompt: "Crea tabla FACTORES_EXTERNOS con cajero_id × fecha: dia_semana INT, semana_del_mes INT, mes INT, es_fin_mes BOOLEAN, es_festivo BOOLEAN, es_periodo_vacacional BOOLEAN, temperatura FLOAT, es_semana_paga BOOLEAN (cada 2 semanas). JOIN con DEMANDA_DIARIA para crear DATASET_FORECAST completo." },
+      { title: "Entrenar ML.FORECAST por cajero", desc: "Modelo de series temporales para predicción de demanda.", prompt: "Entrena SNOWFLAKE.ML.FORECAST llamado forecast_cajeros usando DATASET_FORECAST con: timestamp_colname => 'fecha', target_colname => 'demanda_euros', series_colname => 'cajero_id'. Genera predicciones a 7 días vista. Calcula MAPE y error de predicción sobre las últimas 2 semanas del histórico." },
+      { title: "Generar calendario óptimo de reposiciones", desc: "Optimiza el scheduling de visitas CIT por cajero.", prompt: "Para cada cajero, usando el forecast de demanda de los próximos 7 días, calcula: dias_hasta_agotamiento (nivel_saldo_actual / demanda_diaria_forecast_media), fecha_reposicion_optima (cuando llegue al punto_reposicion), importe_optimo_reposicion (cubrir X días de demanda). Almacena en CALENDARIO_REPOSICIONES. Optimiza agrupando cajeros cercanos en la misma ruta CIT." },
+      { title: "Dashboard de cash management", desc: "Panel de gestión de reposiciones CIT.", prompt: "Crea dashboard Streamlit con: KPIs (cajeros en riesgo de agotamiento en 48h, reposiciones planificadas esta semana, importe total en circulación, MAPE del modelo), tabla de cajeros por urgencia de reposición con fecha óptima e importe, calendario semanal de rutas de reposición agrupadas, gráfico de demanda vs forecast para cajero seleccionado. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Pipeline semanal de actualización", desc: "Task para actualizar forecasts semanalmente.", prompt: "Crea Task FORECAST_CAJEROS_WEEKLY que cada lunes: actualice DEMANDA_DIARIA con los datos reales de la semana anterior, regenere forecast para los próximos 7 días, actualice CALENDARIO_REPOSICIONES y alerte al planificador CIT sobre cajeros en riesgo de agotamiento antes del próximo ciclo. ALTER TASK FORECAST_CAJEROS_WEEKLY RESUME." }
+    ]
+  },
+  UC11: {
+    title: "Detección de Anomalías en Custodia de Valores",
+    intro: "Construirás un sistema de detección de irregularidades en operaciones de custodia de valores usando ML.ANOMALY_DETECTION sobre flujos de efectivo y registros de acceso.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para auditoría de custodia.", prompt: "Crea base de datos CUSTODIA_VALORES_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar operaciones de custodia", desc: "100.000 operaciones con irregularidades etiquetadas.", prompt: "Genera tabla OPERACIONES_CUSTODIA con 100000 registros usando GENERATOR(ROWCOUNT => 100000). Columnas: operacion_id, tipo (Ingreso 35%/Retirada 30%/Arqueo 20%/Transferencia 15%), importe FLOAT (UNIFORM(1000,500000,RANDOM())), operario_id VARCHAR, turno VARCHAR, diferencia_arqueo FLOAT (0 en 99.5%, alta en irregularidades), duracion_proceso_min FLOAT, es_irregularidad VARCHAR (IRREGULARIDAD 0.5%/NORMAL 99.5%)." },
+      { title: "Generar registros de acceso a cámara acorazada", desc: "Histórico de accesos con patrones sospechosos.", prompt: "Genera tabla ACCESOS_CAMARA con 50000 registros: acceso_id, operario_id, fecha TIMESTAMP, duracion_min FLOAT, num_personas INT, es_horario_autorizado BOOLEAN, combinacion_valida BOOLEAN, acceso_fuera_operacion BOOLEAN (acceso sin operación justificada). Los accesos irregulares tienen duraciones atípicas y ocurren fuera de horario." },
+      { title: "Feature engineering para detección de anomalías", desc: "Construye variables de comportamiento operativo.", prompt: "Crea tabla CUSTODIA_FEATURES con: operacion_id, tipo_encoded FLOAT, importe_log FLOAT, importe_vs_media_operario FLOAT, diferencia_arqueo_abs FLOAT, duracion_vs_estandar FLOAT (ratio sobre tiempo estándar por tipo), hora FLOAT, es_fin_turno FLOAT, num_ops_turno_operario FLOAT, accesos_fuera_horario_turno FLOAT, ops_sin_testigo FLOAT. Target: es_irregularidad VARCHAR." },
+      { title: "Entrenar ML.ANOMALY_DETECTION", desc: "Detector de comportamientos irregulares en custodia.", prompt: "Divide CUSTODIA_FEATURES en 80% entrenamiento (excluye es_irregularidad) y 20% test. Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_custodia sobre el conjunto de entrenamiento con las columnas numéricas. Evalúa: sobre el test, ¿qué porcentaje de IRREGULARIDAD tiene score > 0.80? ¿Cuál es la tasa de falsos positivos?" },
+      { title: "Calibrar y validar el sistema", desc: "Optimizar umbrales para auditoría interna.", prompt: "Sobre el conjunto de test, evalúa diferentes umbrales del detector_custodia: 0.70, 0.80, 0.90. Para cada umbral calcula: recall_IRREGULARIDAD, falsos_positivos_pct, alertas_por_dia. Selecciona el umbral que maximiza recall con falsos_positivos < 2%. Muestra las 10 operaciones más sospechosas con sus evidencias." },
+      { title: "Generar alertas para auditoría", desc: "Produce el informe de anomalías con evidencias.", prompt: "Para todas las operaciones de la última semana, aplica detector_custodia. Crea tabla ALERTAS_CUSTODIA con: operacion_id, operario_id, tipo, importe, score_anomalia, nivel (CRITICO/ALTO/MODERADO), evidencias (usa CORTEX.COMPLETE para generar 1 frase describiendo la anomalía detectada), accion_requerida. Ordena por score descendente." },
+      { title: "Dashboard de auditoría interna", desc: "Panel de control interno con alertas de irregularidades.", prompt: "Crea dashboard Streamlit con: KPIs (operaciones procesadas semana, alertas críticas, importe total en alerta, tasa de irregularidades detectadas), tabla de alertas con evidencias y estado de investigación, distribución de anomalías por tipo de operación y turno, tendencia temporal de scores. Usa snowflake.connector.connect() para ejecución local." }
+    ]
+  },
+  UC12: {
+    title: "Limpieza Inteligente bajo Demanda con IoT",
+    intro: "Construirás un sistema de activación de servicios de limpieza basado en ocupación real de sensores IoT, eliminando servicios innecesarios y reduciendo costes un 30%.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para limpieza bajo demanda.", prompt: "Crea base de datos LIMPIEZA_DEMANDA_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar instalación con zonas y sensores", desc: "100 instalaciones con 50 zonas cada una.", prompt: "Genera tabla ZONAS_LIMPIEZA con 5000 registros (100 instalaciones × 50 zonas). Columnas: zona_id, instalacion_id, tipo_zona (Aseo 20%/Oficina 25%/Sala_Reunion 15%/Comedor 10%/Pasillo 15%/Zona_Comun 15%), aforo_maximo INT, umbral_activacion_pct FLOAT (UNIFORM(0.3,0.8,RANDOM())), tiempo_maximo_sin_servicio_h INT." },
+      { title: "Simular datos de ocupación IoT", desc: "3 meses de lecturas de sensores de ocupación por zona.", prompt: "Genera tabla OCUPACION_IOT con 3 meses × 5000 zonas × 24 horas = 10.8M registros (sample de 100K). Columnas: zona_id, hora DATE+HOUR, aforo_actual INT, temperatura FLOAT, humedad FLOAT, eventos_uso INT (número de veces usado baño/cocina, accesos). Usa GENERATOR con patrones realistas: más actividad de 8-18h en días laborables." },
+      { title: "Detectar necesidad de servicio con ML.ANOMALY_DETECTION", desc: "Identifica cuando la ocupación supera umbrales.", prompt: "Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_necesidad_limpieza sobre OCUPACION_IOT de las primeras 8 semanas (patrón de ocupación normal). Aplica sobre las últimas 4 semanas. Crea tabla NECESIDAD_LIMPIEZA: zona_id, hora, aforo_actual, score_necesidad_limpieza, supera_umbral BOOLEAN, horas_desde_ultimo_servicio FLOAT, activar_servicio BOOLEAN." },
+      { title: "Generar órdenes de servicio bajo demanda", desc: "Crea órdenes de trabajo cuando se activa el umbral.", prompt: "Para zonas donde activar_servicio = TRUE, crea tabla ORDENES_SERVICIO con: orden_id, zona_id, instalacion_id, tipo_zona, hora_activacion, urgencia (URGENTE si supera tiempo_maximo/NORMAL si supera umbral_ocupacion), operario_asignado VARCHAR, tiempo_estimado_min INT, estado (PENDIENTE). Calcula: ordenes_generadas vs ordenes_servicio_fijo_tradicional." },
+      { title: "Calcular ahorro vs servicio programado", desc: "Comparar modelo bajo demanda vs horario fijo.", prompt: "Simula el servicio programado tradicional (cada N horas independientemente de ocupación) para las mismas 4 semanas. Compara con ORDENES_SERVICIO: diferencia en horas_servicio_total, coste_estimado (horas × coste_hora), servicios_innecesarios_evitados, servicios_adicionales_realizados (zonas que en horario fijo no se hubieran limpiado a tiempo). Muestra ahorro porcentual." },
+      { title: "Dashboard de ocupación y eficiencia", desc: "Panel de gestión de limpieza bajo demanda.", prompt: "Crea dashboard Streamlit con: KPIs (zonas activas ahora, órdenes de servicio pendientes, ahorro estimado vs modelo tradicional esta semana, consumo de productos ahorrado), tabla de zonas con estado (rojo=servicio urgente, amarillo=próximo, verde=OK), gráfico de ocupación por hora y tipo de zona, distribución de órdenes por instalación. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Pipeline de activación en tiempo real", desc: "Task para evaluar necesidad de limpieza cada hora.", prompt: "Crea Task LIMPIEZA_DEMANDA_TASK que cada hora: ingeste nuevos datos IoT de OCUPACION_NUEVA, aplique detector_necesidad_limpieza, genere órdenes de servicio para zonas que superen umbral, actualice estado de órdenes completadas, calcule KPIs de eficiencia del turno. ALTER TASK LIMPIEZA_DEMANDA_TASK RESUME." }
+    ]
+  },
+  UC13: {
+    title: "Control de Calidad Automatizado con Visión IA",
+    intro: "Construirás un sistema de control de calidad de limpieza usando CORTEX.COMPLETE para evaluar informes de servicio y detectar incumplimientos de SLA automáticamente.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para control de calidad.", prompt: "Crea base de datos CALIDAD_LIMPIEZA_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar estándares de calidad por tipo de zona", desc: "Criterios de evaluación por zona e instalación.", prompt: "Genera tabla CRITERIOS_CALIDAD con 20 registros (5 tipos de zona × 4 criterios): zona_tipo VARCHAR, criterio VARCHAR (Superficies_limpias/Ausencia_olores/Suelos_secos/Equipamiento_ordenado), peso_sla FLOAT, descripcion_conforme TEXT, descripcion_no_conforme TEXT. Genera tabla CONTRATOS_LIMPIEZA con 50 contratos: penalizacion_diaria_euros FLOAT, min_conformidad_pct FLOAT." },
+      { title: "Generar informes de servicio sintéticos", desc: "5.000 servicios con notas descriptivas de resultado.", prompt: "Genera tabla INFORMES_SERVICIO con 5000 registros usando GENERATOR(ROWCOUNT => 5000). Columnas: informe_id, servicio_id, contrato_id, zona_tipo VARCHAR, operario_id VARCHAR, fecha DATE, duracion_real_min FLOAT, notas_servicio TEXT (texto de 30-80 palabras describiendo el resultado: 85% conformes, 10% leves, 5% graves. Las no conformes mencionan suciedad residual, olor, equipamiento desordenado, tiempo insuficiente)." },
+      { title: "Evaluar calidad con CORTEX.COMPLETE", desc: "LLM clasifica calidad de cada informe de servicio.", prompt: "Para cada informe, usa CORTEX.COMPLETE con modelo 'snowflake-arctic' para evaluar las notas_servicio y generar JSON con: calificacion VARCHAR (CONFORME/NO_CONFORME_LEVE/NO_CONFORME_GRAVE), deficiencias_detectadas ARRAY, nivel_confianza FLOAT, accion_requerida TEXT. Almacena en CALIFICACIONES_SERVICIO. Calcula tasa de conformidad por contrato y zona." },
+      { title: "Detectar incumplimientos de SLA", desc: "Cruza calificaciones con parámetros de contrato.", prompt: "Crea tabla INCUMPLIMIENTOS_SLA con: contrato_id, periodo (semana), num_servicios, tasa_conformidad_real FLOAT, min_conformidad_contrato FLOAT, en_incumplimiento BOOLEAN, penalizacion_estimada_euros FLOAT, dias_consecutivos_incumplimiento INT. Identifica contratos en riesgo de penalización acumulada." },
+      { title: "Analizar patrones de deficiencias recurrentes", desc: "Identifica causas raíz de no conformidades.", prompt: "Agrupa CALIFICACIONES_SERVICIO por contrato_id, zona_tipo, operario_id. Calcula: tasa_no_conformidad, deficiencia_mas_frecuente, coste_penalizacion_acumulado. Usa CORTEX.COMPLETE para generar para los 10 contratos con mayor tasa de incumplimiento un análisis de causa raíz (2 frases) basado en las deficiencias más frecuentes." },
+      { title: "Generar informes de no-conformidad", desc: "Produce documentación formal de incumplimientos.", prompt: "Para cada servicio NO_CONFORME_GRAVE, usa CORTEX.COMPLETE para generar: informe_no_conformidad TEXT (texto formal de 100 palabras: descripción, evidencias, impacto en SLA, acción correctiva requerida y plazo), urgencia (INMEDIATA/24H/48H) según gravedad. Almacena en INFORMES_NO_CONFORMIDAD listos para envío al cliente." },
+      { title: "Dashboard de calidad por contrato", desc: "Panel de semáforo de calidad en tiempo real.", prompt: "Crea dashboard Streamlit con: KPIs (servicios evaluados hoy, tasa global de conformidad %, contratos en riesgo de penalización, ahorro en reclamaciones), semáforo de calidad por contrato (verde/amarillo/rojo), detalle de incumplimientos del contrato seleccionado, tendencia de calidad por operario. Usa snowflake.connector.connect() para ejecución local." }
+    ]
+  },
+  UC14: {
+    title: "Gestión Predictiva de Consumibles con Model Registry",
+    intro: "Construirás un modelo de forecasting de consumibles registrado en Model Registry para generar órdenes de compra automáticas y eliminar roturas de stock.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para gestión de consumibles.", prompt: "Crea base de datos CONSUMIBLES_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar catálogo de consumibles y contratos", desc: "30 tipos de consumible y 50 contratos de servicio.", prompt: "Genera tabla CONSUMIBLES con 30 registros: consumible_id, nombre VARCHAR, unidad VARCHAR, precio_unitario FLOAT, tiempo_entrega_dias INT, stock_actual_unidades FLOAT, punto_reposicion FLOAT. Genera tabla CONTRATOS_LIMPIEZA_CONSUMIBLES con 50 contratos: contrato_id, superficie_m2 FLOAT (UNIFORM(500,50000,RANDOM())), tipo_instalacion VARCHAR, frecuencia_servicio_semana INT, empleados_cliente INT." },
+      { title: "Generar histórico de consumo", desc: "2 años de consumo semanal por contrato y consumible.", prompt: "Genera tabla CONSUMO_HISTORICO con 50 contratos × 30 consumibles × 104 semanas = 156000 registros usando GENERATOR con SAMPLE. Columnas: contrato_id, consumible_id, semana DATE, unidades_consumidas FLOAT (proporcional a superficie_m2 × frecuencia_servicio con estacionalidad verano/navidad y UNIFORM()). Incluye 5% de semanas con consumo anómalo alto." },
+      { title: "Entrenar ML.FORECAST para consumibles", desc: "Modelo v1 de predicción de consumo semanal.", prompt: "Crea tabla DATASET_CONSUMIBLES con features: consumible_id, contrato_id, semana, superficie_m2, tipo_instalacion_encoded, frecuencia_servicio, semana_del_año, mes, es_verano, unidades_consumidas (target). Entrena SNOWFLAKE.ML.FORECAST llamado forecast_consumibles_v1 usando timestamp_colname => 'semana', target_colname => 'unidades_consumidas', series_colname => 'contrato_id'. Calcula MAPE." },
+      { title: "Registrar v1 en Model Registry", desc: "Versionar el modelo de forecasting de consumibles.", prompt: "Registra en Model Registry: CREATE OR REPLACE MODEL REGISTRY.MODELS.CONSUMIBLES_MODEL VERSION V1 FROM SNOWFLAKE.ML.FORECAST forecast_consumibles_v1 COMMENT = 'Forecast consumo consumibles por contrato - MAPE X%. Añade métricas de MAPE y RMSE por tipo de consumible. Este modelo optimiza las órdenes de compra semanales." },
+      { title: "Entrenar y registrar v2 con más features", desc: "Versión mejorada con datos de actividad del cliente.", prompt: "Añade a DATASET_CONSUMIBLES_V2: empleados_cliente (proxy de uso), indice_actividad_contrato (ratio servicios_realizados / servicios_planificados), tipo_consumible_categoria, interaccion_superficie_frecuencia. Entrena forecast_consumibles_v2, calcula MAPE mejorado. Registra como VERSION V2 en Model Registry. Compara métricas." },
+      { title: "Generar órdenes de compra automáticas", desc: "Calcula pedidos optimizados basados en forecast.", prompt: "Para las próximas 4 semanas, genera forecast con CONSUMIBLES_MODEL (versión en producción). Calcula para cada consumible: consumo_estimado_4sem, stock_necesario (consumo + stock_seguridad_1sem), pedido_sugerido (MAX(0, stock_necesario - stock_actual)), fecha_pedido_optima (considerando tiempo_entrega_dias). Almacena en ORDENES_COMPRA_SUGERIDAS con importe total." },
+      { title: "Dashboard de gestión de stock", desc: "Panel de compras con alertas de reposición.", prompt: "Crea dashboard Streamlit con: KPIs (consumibles con stock crítico, importe total en órdenes sugeridas, ahorro vs compra reactiva estimado, versión del modelo activa), semáforo de stock por consumible (rojo<punto_reposicion/amarillo/verde), tabla de órdenes sugeridas con botón aprobar, comparativa v1 vs v2 del modelo. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Pipeline de actualización semanal de compras", desc: "Task para generar órdenes de compra automáticamente.", prompt: "Crea Task COMPRAS_SEMANALES que cada lunes: actualice consumo real de la semana anterior, regenere forecast con CONSUMIBLES_MODEL, calcule nuevas órdenes de compra, envíe para aprobación las órdenes que superen umbral de importe, auto-apruebe órdenes de reposición urgente por stock crítico. ALTER TASK COMPRAS_SEMANALES RESUME." }
+    ]
+  },
+  UC15: {
+    title: "SLA en Tiempo Real con Alertas Automáticas",
+    intro: "Construirás un sistema de monitorización de SLA en tiempo real usando ML.ANOMALY_DETECTION para detectar riesgo de incumplimiento con 24-48h de antelación.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para monitorización de SLA.", prompt: "Crea base de datos SLA_MONITOR_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar contratos con parámetros SLA", desc: "200 contratos con KPIs y penalizaciones.", prompt: "Genera tabla CONTRATOS_SLA con 200 registros: contrato_id, cliente VARCHAR, tipo_servicio VARCHAR, zona VARCHAR, gestor_cuenta VARCHAR, sla_cobertura_min_pct FLOAT (UNIFORM(90,99,RANDOM())), sla_tiempo_respuesta_max_min INT, sla_calidad_min_pct FLOAT, penalizacion_diaria_euros FLOAT (UNIFORM(100,5000,RANDOM())), valor_contrato_anual FLOAT." },
+      { title: "Generar datos operativos diarios por contrato", desc: "6 meses de KPIs operativos de cumplimiento de SLA.", prompt: "Genera tabla KPIS_OPERATIVOS con 200 contratos × 180 días = 36000 registros. Columnas: contrato_id, fecha DATE, cobertura_real_pct FLOAT (media 94%, con variaciones y periodos de incumplimiento), tiempo_respuesta_medio_min FLOAT, servicios_planificados INT, servicios_realizados INT, calidad_promedio_pct FLOAT, en_sla_violation VARCHAR (SI/NO basado en KPIs vs umbrales contrato)." },
+      { title: "Detectar patrones de riesgo con ML.ANOMALY_DETECTION", desc: "Entrenar detector sobre patrones normales de SLA.", prompt: "Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_sla_riesgo sobre KPIS_OPERATIVOS de los primeros 4 meses (datos normales). Aplica sobre el mes 5 y 6 (que incluyen algunos periodos de incumplimiento). Calcula: qué porcentaje de días de incumplimiento tienen score alto (recall), y cuántos días de alerta se generan antes del incumplimiento real (antelación)." },
+      { title: "Construir sistema de alertas tempranas", desc: "Genera alertas con tiempo estimado hasta incumplimiento.", prompt: "Crea tabla ALERTAS_SLA con: contrato_id, fecha, score_riesgo, nivel_alerta (ROJO>=0.85/NARANJA 0.65-0.85/AMARILLO 0.45-0.65/VERDE<0.45), kpi_en_riesgo (cobertura/tiempo_respuesta/calidad), desviacion_actual_pct, dias_estimados_hasta_incumplimiento, penalizacion_en_riesgo_euros, accion_recomendada. Calcula valor económico de penalizaciones en riesgo total." },
+      { title: "Proyectar impacto económico de incumplimientos", desc: "Calcular penalizaciones estimadas por contrato.", prompt: "Para contratos con alerta ROJO y NARANJA, calcula: penalizacion_estimada = penalizacion_diaria × dias_hasta_fin_periodo × (1 - prob_corrección). Crea tabla IMPACTO_ECONOMICO con contrato_id, penalizacion_proyectada, margen_contrato, ratio_penalizacion_margen. Identifica contratos donde la penalización proyectada supera el 20% del margen." },
+      { title: "Dashboard de SLA en tiempo real", desc: "Panel de semáforo de contratos por riesgo de SLA.", prompt: "Crea dashboard Streamlit con: KPIs (contratos en alerta roja, penalizaciones en riesgo total €, contratos en incumplimiento activo, mejora vs semana anterior), semáforo de contratos (verde/amarillo/naranja/rojo), detalle del contrato seleccionado con KPIs y evolución, ranking de gestores de cuenta por contratos en riesgo. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Task de monitorización continua de SLA", desc: "Actualizar dashboard y alertas cada hora.", prompt: "Crea Task SLA_MONITOR_TASK que cada hora: ingeste KPIs operativos actualizados, aplique detector_sla_riesgo, actualice ALERTAS_SLA, notifique a gestor de cuenta si contrato pasa a ROJO, genere resumen de situación SLA para dirección de operaciones al cierre del día. ALTER TASK SLA_MONITOR_TASK RESUME." }
+    ]
+  },
+  UC16: {
+    title: "Análisis de Sentimiento de Clientes con LLM",
+    intro: "Construirás un pipeline de análisis de sentimiento sobre comunicaciones de clientes usando CORTEX.SENTIMENT para detectar insatisfacción latente antes de la no renovación.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para análisis de sentimiento de clientes.", prompt: "Crea base de datos SENTIMIENTO_CLIENTES_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar corpus de comunicaciones de clientes", desc: "10.000 comunicaciones de 300 contratos.", prompt: "Genera tabla COMUNICACIONES_CLIENTES con 10000 registros usando GENERATOR(ROWCOUNT => 10000). Columnas: comunicacion_id, contrato_id VARCHAR, canal (Email 30%/Ticket 35%/Encuesta 20%/Nota_Reunion 15%), fecha DATE (últimos 12 meses), texto TEXT (60-150 palabras con sentimiento variado: positivos en contratos satisfechos, negativos en los que no renuevan), renovado_contrato VARCHAR (SI 83%/NO 17%)." },
+      { title: "Analizar sentimiento con CORTEX.SENTIMENT", desc: "Aplica análisis de sentimiento a todo el corpus.", prompt: "Crea tabla SENTIMIENTO_COMUNICACIONES como SELECT comunicacion_id, contrato_id, canal, fecha, SNOWFLAKE.CORTEX.SENTIMENT(texto) AS score_sentimiento FROM COMUNICACIONES_CLIENTES. Añade: categoria_sentimiento (POSITIVO > 0.3, NEUTRO entre -0.3 y 0.3, NEGATIVO < -0.3). Calcula correlación entre score_sentimiento y renovado_contrato." },
+      { title: "Agregar señales de sentimiento por contrato", desc: "Consolida sentimiento mensual por contrato.", prompt: "Crea tabla SENTIMIENTO_MENSUAL con: contrato_id, año_mes DATE, score_medio FLOAT, num_comunicaciones INT, pct_negativas FLOAT, tendencia_vs_mes_anterior FLOAT. Identifica contratos con: tendencia_negativa_3m (media últimos 3 meses < -0.2), deterioro_rapido (caída > 0.3 en 30 días), pct_negativas_alto (> 40%)." },
+      { title: "Detectar contratos en riesgo de churn por sentimiento", desc: "Combina múltiples señales para scoring de riesgo.", prompt: "Crea tabla RIESGO_SENTIMIENTO con: contrato_id, score_sentimiento_actual, tendencia_3m, pct_negativas_30d, num_quejas_formales_90d, score_riesgo_churn_sentimiento (combinación ponderada). Clasifica: RIESGO_ALTO (score > 0.7), RIESGO_MEDIO (0.4-0.7), BAJO (<0.4). Calcula: días desde última comunicación positiva." },
+      { title: "Generar resúmenes de issues por contrato con LLM", desc: "CORTEX.COMPLETE extrae los principales problemas.", prompt: "Para contratos con RIESGO_ALTO, usa CORTEX.COMPLETE para analizar las últimas 10 comunicaciones y generar: issues_principales (3 bullet points de los problemas mencionados con más frecuencia), urgencia_intervencion (INMEDIATA/ESTA_SEMANA/ESTE_MES), mensaje_clave_cliente (1 frase que resume su queja principal). Almacena en RESUMEN_ISSUES_CONTRATO." },
+      { title: "Dashboard de NPS predictivo y retención", desc: "Panel de sentimiento de clientes con alertas.", prompt: "Crea dashboard Streamlit con: KPIs (contratos en riesgo alto, NPS predictivo agregado, comunicaciones negativas esta semana, contratos con mejora detectada), mapa de calor de sentimiento por contrato y gestor, detalle del contrato con historial de sentimiento y issues principales, acciones de retención sugeridas. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Pipeline de análisis semanal de sentimiento", desc: "Task para procesar nuevas comunicaciones semanalmente.", prompt: "Crea Task SENTIMIENTO_SEMANAL que cada viernes: ingeste nuevas comunicaciones de la semana, aplique CORTEX.SENTIMENT, actualice SENTIMIENTO_MENSUAL y RIESGO_SENTIMIENTO, genere RESUMEN_ISSUES_CONTRATO para contratos con deterioro detectado, envíe alertas a gestores de cuenta de contratos que pasaron a RIESGO_ALTO. ALTER TASK SENTIMIENTO_SEMANAL RESUME." }
+    ]
+  },
+  UC17: {
+    title: "Churn Prediction de Contratos con Model Registry",
+    intro: "Construirás un modelo de predicción de no renovación con Model Registry y A/B testing entre versiones para maximizar la retención de contratos de servicios.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para predicción de churn de contratos.", prompt: "Crea base de datos CHURN_CONTRATOS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar historial de contratos con variables de riesgo", desc: "1.000 contratos con 3 años de historial.", prompt: "Genera tabla CONTRATOS_HISTORICO con 1000 registros: contrato_id, cliente_id VARCHAR, tipo_servicio VARCHAR, zona VARCHAR, valor_anual FLOAT (UNIFORM(20000,500000,RANDOM())), antiguedad_meses INT, incremento_precio_ultimo_pct FLOAT, num_incidencias_abiertas INT, cumplimiento_sla_avg_pct FLOAT, num_reuniones_12m INT, num_reclamaciones_12m INT, competencia_detectada BOOLEAN, renovado VARCHAR (SI 82%/NO 18%)." },
+      { title: "Enriquecer con señales de sentimiento y SLA", desc: "Añadir features de sentimiento y cumplimiento.", prompt: "Une CONTRATOS_HISTORICO con datos de sentimiento y SLA calculados previamente (o simula): score_sentimiento_avg FLOAT, tendencia_sentimiento_3m FLOAT, dias_sla_violation_12m INT, gestor_rotado_veces INT, meses_desde_visita_director INT, ratio_servicios_completados FLOAT. Crea FEATURES_CHURN con todas las variables + target renovado VARCHAR." },
+      { title: "Entrenar contract_churn_model v1", desc: "Primera versión con 10 features básicas.", prompt: "Crea FEATURES_CHURN_V1 con 10 features: tipo_servicio_encoded, antiguedad_meses, valor_anual, incremento_precio_pct, num_incidencias, cumplimiento_sla_avg, num_reclamaciones, competencia_detected, num_reuniones, dias_sla_violation. Divide 80/20. Entrena SNOWFLAKE.ML.CLASSIFICATION 'churn_model_v1' con TARGET_COLNAME => 'renovado', evaluate => TRUE. renovado debe ser VARCHAR con valores SI y NO." },
+      { title: "Registrar v1 en Model Registry", desc: "Versionar el modelo de churn en producción.", prompt: "Registra en Model Registry: CREATE OR REPLACE MODEL REGISTRY.MODELS.CONTRACT_CHURN_MODEL VERSION V1 FROM SNOWFLAKE.ML.CLASSIFICATION churn_model_v1 COMMENT = 'Predicción churn contratos v1 - 10 features'. Añade métricas de recall para clase NO y precision. Añade etiqueta de versión de entrenamiento con la fecha." },
+      { title: "Entrenar y registrar v2 con señales de sentimiento", desc: "Versión mejorada con 20+ features incluyendo LLM.", prompt: "Crea FEATURES_CHURN_V2 añadiendo a v1: score_sentimiento_avg, tendencia_sentimiento_3m, gestor_rotado_veces, meses_desde_visita_director, ratio_servicios_completados, valor_contrato_vs_mercado, num_competidores_zona, margen_estimado_contrato. Entrena churn_model_v2 con evaluate => TRUE. Registra como VERSION V2. Compara recall(NO) de v1 vs v2." },
+      { title: "Comparar y promover mejor versión", desc: "A/B testing y decisión de producción.", prompt: "SHOW VERSIONS IN MODEL CONTRACT_CHURN_MODEL. Compara V1 vs V2: recall_NO (queremos maximizar detección de no renovaciones), precision_NO, F1. Si V2 mejora recall_NO > 5%, ejecuta ALTER MODEL CONTRACT_CHURN_MODEL SET DEFAULT_VERSION = V2. Calcula impacto económico: (mejora_recall × num_contratos × valor_medio_contrato × tasa_salvada_retención)." },
+      { title: "Puntuar cartera activa y priorizar retención", desc: "Genera el ranking de contratos en riesgo.", prompt: "Para todos los contratos activos, usa CONTRACT_CHURN_MODEL!PREDICT con OBJECT_CONSTRUCT(* EXCLUDE (renovado)). Clasifica: Riesgo_Critico (prob_NO >= 0.85), Riesgo_Alto (0.65-0.85), Riesgo_Medio (0.40-0.65), Bajo (<0.40). Genera tabla RANKING_RETENCION con contrato, riesgo, valor_en_riesgo, features_mas_influyentes, accion_sugerida." },
+      { title: "Dashboard de retención de cartera", desc: "Panel de gestión de retención para equipo de cuenta.", prompt: "Crea dashboard Streamlit con: KPIs (contratos en riesgo crítico, valor_contratos_en_riesgo €, tasa churn proyectada, mejor versión del modelo), tabla de cartera priorizada por riesgo con valor y acción sugerida, comparativa rendimiento v1 vs v2, pipeline de retención por gestor de cuenta. Usa snowflake.connector.connect() para ejecución local." }
+    ]
+  },
+  UC18: {
+    title: "Copiloto de Ventas con IA Generativa",
+    intro: "Construirás un copiloto comercial usando CORTEX.COMPLETE y RAG sobre base de conocimiento de contratos y casos de éxito para generar propuestas personalizadas en minutos.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para el copiloto de ventas.", prompt: "Crea base de datos COPILOTO_VENTAS_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Crear base de conocimiento comercial", desc: "Contratos, servicios, tarifas y casos de éxito.", prompt: "Genera tabla CATALOGO_SERVICIOS con 50 registros: servicio_id, nombre VARCHAR, descripcion TEXT (100 palabras), sector_target VARCHAR, precio_m2_hora FLOAT, precio_persona_hora FLOAT, equipamiento_incluido TEXT, diferenciadores TEXT. Genera tabla CASOS_EXITO con 200 registros: sector, tipo_servicio, descripcion_cliente TEXT (80 palabras sobre el problema resuelto y resultados obtenidos), roi_logrado TEXT." },
+      { title: "Crear base de tarifas y pricing", desc: "Lógica de pricing por perfil de cliente.", prompt: "Genera tabla TARIFAS_PRICING con reglas por tipo de cliente: tipo_empresa (Pyme/Corporate/Institucional), sector VARCHAR, volumen_m2 VARCHAR (Pequeño<1000/Medio 1000-10000/Grande>10000), tipo_servicio VARCHAR, tarifa_base FLOAT, descuento_volumen_pct FLOAT, descuento_permanencia_pct FLOAT, margen_objetivo_pct FLOAT. Genera también tabla PLANTILLAS_PROPUESTA con 5 tipos de propuesta estándar por sector." },
+      { title: "Indexar base de conocimiento con Cortex Search", desc: "Crea índice de búsqueda semántica.", prompt: "Crea servicio Cortex Search sobre el contenido comercial: CREATE CORTEX SEARCH SERVICE COPILOTO_SEARCH ON (SELECT descripcion || ' ' || diferenciadores AS contenido, servicio_id, sector_target FROM CATALOGO_SERVICIOS UNION ALL SELECT descripcion_cliente || ' ' || roi_logrado AS contenido, sector, tipo_servicio FROM CASOS_EXITO) ATTRIBUTES contenido, sector_target WAREHOUSE = COMPUTE_WH TARGET_LAG = '1 day'." },
+      { title: "Implementar motor de pricing automático", desc: "Calcula precio personalizado según perfil del cliente.", prompt: "Crea función CALCULAR_PRICING(tipo_empresa, sector, volumen_m2, tipo_servicio, meses_permanencia) que busca en TARIFAS_PRICING la tarifa aplicable, aplica descuentos por volumen y permanencia, calcula precio_ofertado y margen_estimado. Valida que el margen sea >= margen_objetivo_pct. Devuelve: precio_unitario, precio_total_mes, precio_anual, margen_pct." },
+      { title: "Generar propuesta personalizada con CORTEX.COMPLETE", desc: "LLM crea la propuesta adaptada al cliente.", prompt: "Para un prospecto tipo (tipo_empresa, sector, descripcion_necesidad TEXT), usa CORTEX SEARCH para recuperar 3 casos de éxito del mismo sector y CORTEX.COMPLETE para generar: resumen_ejecutivo (1 párrafo), propuesta_valor_personalizada (3 beneficios específicos para este cliente), servicios_recomendados (lista con descripción), pricing_desglosado (tabla), casos_exito_relevantes (2 referencias). Almacena en PROPUESTAS_GENERADAS." },
+      { title: "Simular pipeline de propuestas", desc: "Genera propuestas para 50 prospectos tipos.", prompt: "Genera tabla PROSPECTOS_DEMO con 50 perfiles variados (tipo_empresa, sector, descripcion_necesidad simulada). Para cada uno, ejecuta el flujo completo: calcular_pricing + recuperar casos_exito + generar propuesta con CORTEX.COMPLETE. Almacena en PROPUESTAS_BATCH. Calcula tiempo medio de generación y compara con 4h de elaboración manual." },
+      { title: "Dashboard del copiloto comercial", desc: "Interfaz de generación de propuestas para el equipo de ventas.", prompt: "Crea dashboard Streamlit con: formulario de prospecto (tipo, sector, volumen, servicios), botón generar propuesta, área de visualización de la propuesta generada con formato profesional, sección de casos de éxito relevantes, pricing calculado automáticamente, historial de propuestas generadas con estado. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Métricas del copiloto", desc: "Evalúa el impacto del copiloto en el ciclo de ventas.", prompt: "Crea vista METRICAS_COPILOTO con: propuestas_generadas_semana, tiempo_medio_generacion_min, tasa_aceptacion_prospecto (simula 35% para propuestas copiloto vs 25% manual), valor_pipeline_generado, ahorro_horas_comercial_semana. Calcula ROI del copiloto vs elaboración manual." }
+    ]
+  },
+  UC19: {
+    title: "Huella de Carbono Operativa para Reporting ESG",
+    intro: "Construirás un pipeline de cálculo automático de huella de carbono operativa usando CORTEX.COMPLETE para generar reportes ESG estandarizados por cliente y contrato.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para reporting ESG.", prompt: "Crea base de datos HUELLA_CARBONO_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar factores de emisión y metodología", desc: "Factores GHG Protocol por tipo de actividad.", prompt: "Crea tabla FACTORES_EMISION con: fuente VARCHAR, tipo_scope INT (1/2/3), factor_kgCO2e_por_unidad FLOAT, unidad VARCHAR, descripcion TEXT. Inserta factores para: gasolina (Scope 1: 2.31 kgCO2/litro), diesel (2.68), electricidad_spain (Scope 2: 0.25 kgCO2/kwh), productos_limpieza_quimicos (Scope 3: 5 kgCO2/kg), residuos_organicos (0.8), reciclaje (-0.3)." },
+      { title: "Generar datos operativos de flota", desc: "12 meses de consumo de flota por contrato.", prompt: "Genera tabla DATOS_FLOTA con 100 contratos × 12 meses = 1200 registros. Columnas: contrato_id, mes DATE, km_recorridos FLOAT (UNIFORM(500,20000,RANDOM())), litros_consumidos FLOAT (km/7 para diesel), tipo_combustible (Diesel 70%/Gasolina 20%/Electrico 10%), num_vehiculos INT, porcentaje_electrico FLOAT." },
+      { title: "Generar datos de energía y residuos", desc: "Consumos energéticos y generación de residuos.", prompt: "Genera tabla DATOS_ENERGIA con 100 contratos × 12 meses: contrato_id, mes, kwh_sede FLOAT (UNIFORM(200,5000,RANDOM())), kwh_instalaciones_gestionadas FLOAT, proveedor_energia (Convencional 60%/Renovable 40%). Genera tabla DATOS_RESIDUOS: contrato_id, mes, kg_productos_quimicos FLOAT, kg_residuos_organicos FLOAT, kg_residuos_reciclados FLOAT, kg_residuos_no_reciclados FLOAT." },
+      { title: "Calcular emisiones GHG por scope y contrato", desc: "Pipeline de cálculo de huella de carbono.", prompt: "Crea tabla EMISIONES_CALCULADAS con: contrato_id, mes, scope1_tn_CO2e (flota_diesel + flota_gasolina), scope2_tn_CO2e (electricidad × factor_emision_kwh × (1-pct_renovable)), scope3_tn_CO2e (productos_quimicos + residuos - reciclaje × factor_evitado), huella_total_tn_CO2e (suma scopes), intensidad_kgCO2_por_m2 (huella_total / superficie_contratada)." },
+      { title: "Calcular benchmarks y objetivos de reducción", desc: "Comparar emisiones con media sectorial.", prompt: "Crea tabla BENCHMARK_SECTORIAL con media de intensidad_kgCO2_por_m2 por tipo_servicio. Para cada contrato calcula: vs_benchmark_pct (diferencia con la media), tendencia_12m (evolución), objetivo_reduccion_2030_pct (30% de reducción como estándar ESG), reduccion_real_vs_año_anterior_pct. Clasifica: LIDER (<benchmark -20%), EN_MEDIA, POR_DEBAJO (>benchmark +20%)." },
+      { title: "Generar informe ESG con CORTEX.COMPLETE", desc: "LLM produce el informe ESG estandarizado por cliente.", prompt: "Para cada contrato, usa CORTEX.COMPLETE para generar el informe ESG anual: resumen_ejecutivo (3 frases sobre los resultados de sostenibilidad), desglose_por_scope TEXT (explicación de cada scope en lenguaje no técnico), comparativa_sectorial TEXT (cómo se posiciona el cliente), plan_accion_reduccion (3 acciones concretas para reducir emisiones), certificacion_aplicable (si cumple criterios para ISO 14001/EMAS/SBTi). Almacena en INFORMES_ESG." },
+      { title: "Dashboard ESG de sostenibilidad", desc: "Panel de KPIs de sostenibilidad por cliente.", prompt: "Crea dashboard Streamlit con: KPIs (huella_total tn CO2e, intensidad media kgCO2/m2, contratos con huella reducida vs año anterior, % flota eléctrica), tabla de contratos por nivel ESG (líder/media/por_debajo), detalle por contrato con desglose por scope y tendencia, descarga del informe ESG en formato texto. Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Task de actualización mensual ESG", desc: "Automatizar el cálculo y reporting ESG mensual.", prompt: "Crea Task ESG_MENSUAL que el primer día de cada mes: ingeste datos de flota, energía y residuos del mes anterior, calcule emisiones actualizadas, actualice benchmarks, genere informes ESG para contratos que los soliciten. Alerte a coordinador ESG si algún contrato supera el 10% de aumento mensual en emisiones. ALTER TASK ESG_MENSUAL RESUME." }
+    ]
+  },
+  UC20: {
+    title: "Optimización Energética en Instalaciones Gestionadas",
+    intro: "Construirás un sistema de optimización energética usando ML.ANOMALY_DETECTION sobre datos de sensores para detectar ineficiencias y reducir el consumo un 15-25%.",
+    steps: [
+      { title: "Configurar entorno", desc: "Base de datos para optimización energética.", prompt: "Crea base de datos ENERGIA_INSTALACIONES_DB con esquema PUBLIC y warehouse COMPUTE_WH tamaño SMALL." },
+      { title: "Generar red de instalaciones con sensores", desc: "200 instalaciones con perfil de consumo energético.", prompt: "Genera tabla INSTALACIONES_ENERGIA con 200 registros: instalacion_id, tipo (Oficina 40%/Industrial 25%/Comercio 20%/Residencial 15%), superficie_m2 FLOAT (UNIFORM(500,50000,RANDOM())), contrato_id VARCHAR, num_sensores_clima INT, num_sensores_luz INT, tiene_bms BOOLEAN (Building Management System), consumo_referencia_kwh_dia FLOAT (proporcional a superficie)." },
+      { title: "Simular datos de consumo energético", desc: "12 meses de lecturas de sensores cada 15 minutos.", prompt: "Genera tabla CONSUMO_ENERGETICO con 200 instalaciones × 35040 lecturas_15min (sample de 500K). Columnas: instalacion_id, timestamp TIMESTAMP, kwh_climatizacion FLOAT, kwh_iluminacion FLOAT, kwh_otros FLOAT, temperatura_exterior FLOAT, ocupacion_pct FLOAT (UNIFORM(0,1,RANDOM()) con patrón horario). El consumo incluye 20% de lecturas anómalas (equipos dejados encendidos, desajustes de climatización)." },
+      { title: "Calcular perfil de consumo óptimo", desc: "Define el baseline de consumo eficiente por instalación.", prompt: "Crea tabla PERFIL_OPTIMO con: instalacion_id, hora INT, dia_semana INT, ocupacion_pct_esperada FLOAT, kwh_optimo_climatizacion FLOAT (calculado por regresión sobre horas con ocupación real), kwh_optimo_iluminacion FLOAT, kwh_optimo_otros FLOAT, kwh_total_optimo FLOAT. El óptimo se calcula sobre el percentil 25 de consumo histórico en condiciones similares de ocupación y temperatura." },
+      { title: "Detectar anomalías de consumo con ML.ANOMALY_DETECTION", desc: "Identifica desviaciones del perfil óptimo.", prompt: "Entrena SNOWFLAKE.ML.ANOMALY_DETECTION llamado detector_eficiencia_energetica sobre CONSUMO_ENERGETICO de los primeros 6 meses (excluyendo las anomalías conocidas). Aplica sobre los últimos 6 meses. Crea tabla DESVIACIONES_ENERGETICAS con: instalacion_id, timestamp, kwh_total_real, kwh_total_optimo, desviacion_pct, score_anomalia, fuente_probable (climatizacion/iluminacion/otros según qué subsistema tiene mayor desviación)." },
+      { title: "Calcular ahorro potencial por instalación", desc: "Cuantifica el impacto económico de las ineficiencias.", prompt: "Agrega DESVIACIONES_ENERGETICAS por instalacion_id y mes. Calcula: kwh_exceso_mes (suma de desviaciones positivas), coste_exceso_euros (kwh_exceso × 0.15€/kwh), CO2_exceso_kg (kwh_exceso × 0.25), potencial_ahorro_anual_euros (coste_exceso × 12), roi_medidas_correctoras (si coste_medida = 1000€, ROI en meses). Ordena por potencial_ahorro_anual desc." },
+      { title: "Generar recomendaciones de medidas correctoras", desc: "Clasifica y prioriza acciones de mejora.", prompt: "Para instalaciones con desviacion_media_pct > 15%, usa CORTEX.COMPLETE para generar: causa_probable TEXT (análisis de la fuente de ineficiencia basado en el patrón de desviación), medidas_correctoras ARRAY (3 acciones concretas con coste y ahorro estimado), urgencia (INMEDIATA/PROXIMA_VISITA/PLANIFICADA), tipo_accion (Ajuste_Parametros/Reparacion/Sustitución_Equipo). Almacena en RECOMENDACIONES_ENERGIA." },
+      { title: "Dashboard ESG de eficiencia energética", desc: "Panel de ahorro energético por cliente y contrato.", prompt: "Crea dashboard Streamlit con: KPIs (instalaciones monitorizadas, ahorro potencial total €/año, CO2 ahorrado tn/año, instalaciones con desviación crítica), tabla de instalaciones por ahorro potencial con medida recomendada, gráfico de consumo real vs óptimo del mes actual, distribución de ineficiencias por tipo (climatización/iluminación/otros). Usa snowflake.connector.connect() para ejecución local." },
+      { title: "Pipeline de monitorización energética continua", desc: "Task para actualizar detección de ineficiencias.", prompt: "Crea Task ENERGIA_MONITOR que cada hora: ingeste nuevas lecturas de sensores, aplique detector_eficiencia_energetica, actualice DESVIACIONES_ENERGETICAS, alerte al responsable de la instalación si desviacion_pct > 40% durante más de 2 horas (posible avería o equipo dejado encendido), actualice KPIs del dashboard ESG. ALTER TASK ENERGIA_MONITOR RESUME." }
+    ]
+  }
+};
+
+function verPrompts(ucId) {
+  const data = PROMPTS[ucId];
+  if (!data) { alert('Prompts no disponibles aún para ' + ucId); return; }
+  const box = document.getElementById('promptsModalBox');
+  let html = `<button class="modal-close" onclick="cerrarModal('promptsModal')">&times;</button>`;
+  html += `<span class="guide-badge">${ucId}</span>`;
+  html += `<h2>${data.title} — Cortex Code Prompts</h2>`;
+  html += `<p class="prompt-intro">${data.intro}</p>`;
+  data.steps.forEach((s, i) => {
+    const escaped = s.prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    html += `<div class="prompt-step">`;
+    html += `<div class="prompt-step-header"><span class="prompt-step-num">${i+1}</span><span class="prompt-step-title">${s.title}</span></div>`;
+    html += `<div class="prompt-step-desc">${s.desc}</div>`;
+    html += `<div class="prompt-code" id="prompt_${ucId}_${i}"><button class="copy-btn" onclick="copiarPrompt('prompt_${ucId}_${i}')">Copiar</button>${escaped}</div>`;
+    html += `</div>`;
+  });
+  html += `<p class="guide-footer">Ejecuta cada prompt en Cortex Code (Snowsight) de forma secuencial</p>`;
+  box.innerHTML = html;
+  document.getElementById('promptsModal').classList.add('active');
+}
+
+function copiarPrompt(id) {
+  const el = document.getElementById(id);
+  const btn = el.querySelector('.copy-btn');
+  const text = el.textContent.replace('Copiar', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '¡Copiado!';
+    setTimeout(() => btn.textContent = 'Copiar', 1500);
+  });
+}
+</script>
+
+<div class="modal-overlay" id="guiaModal">
+  <div class="modal-box" id="guiaModalBox"></div>
+</div>
+
+<div class="modal-overlay" id="promptsModal">
+  <div class="modal-box" id="promptsModalBox" style="max-width:780px;"></div>
+</div>
+</body>
+</html>

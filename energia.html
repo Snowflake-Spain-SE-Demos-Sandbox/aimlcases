@@ -93,7 +93,7 @@
 <body>
 <header class="hero">
   <div class="hero-left">
-    <div class="logos"><div class="logo-snowflake"><img src="bug-white.png" alt="Snowflake" width="32" height="32" /> Snowflake</div></div>
+    <div class="logos"></div>
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al &Iacute;ndice de Industrias</a>
     <p class="hero-eyebrow">Sector Energ&iacute;a y Utilities &times; Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para Energ&iacute;a y Utilities</h1>
@@ -1317,7 +1317,7 @@ const PROMPTS = {
       {
         "title": "Crear tabla de puntos de suministro",
         "desc": "Generar datos sintéticos de puntos de suministro con zonas de distribución, tipo de cliente y potencia contratada.",
-        "prompt": "Crea la tabla PUNTOS_SUMINISTRO con campos: punto_id, zona_distribucion (5 zonas: Norte, Sur, Este, Oeste, Centro), tipo_cliente (Residencial, Comercial, Industrial), potencia_contratada_kw, municipio, codigo_postal, tiene_autoconsumo BOOLEAN, tiene_ev BOOLEAN, tiene_bomba_calor BOOLEAN. Genera 50,000 registros sintéticos con distribución realista: 70% residencial, 20% comercial, 10% industrial. El 15% tiene autoconsumo, 8% tiene EV, 5% tiene bomba de calor."
+        "prompt": "Crea la tabla PUNTOS_SUMINISTRO con campos: punto_id, zona_distribucion (5 zonas: Norte, Sur, Este, Oeste, Centro), tipo_cliente (Residencial, Comercial, Industrial), potencia_contratada_kw, municipio, codigo_postal, tiene_autoconsumo BOOLEAN, tiene_ev BOOLEAN, tiene_bomba_calor BOOLEAN. Genera 50,000 registros sintéticos con distribución realista: 70% residencial, 20% comercial, 10% industrial. El 15% tiene autoconsumo, 8% tiene EV, 5% tiene bomba de calor. Usa SQL GENERATOR(ROWCOUNT => 50000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear historial de demanda horaria",
@@ -1332,7 +1332,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de forecast de demanda",
         "desc": "Construir modelo de predicción de demanda con ML.FORECAST integrando variables exógenas.",
-        "prompt": "Usa SNOWFLAKE.ML.FORECAST para entrenar un modelo de predicción de demanda eléctrica. La serie temporal es demanda_mwh agrupada por zona_distribucion, con timestamp fecha_hora. Incluye como variables exógenas: temperatura_c, precio_mercado_eur_mwh, es_festivo, dia_semana, hora, penetracion_ev_pct. Entrena con datos 2022-2023 y valida con 2024. Genera predicciones a 24h, 72h y 168h vista."
+        "prompt": "Usa SNOWFLAKE.ML.FORECAST para entrenar un modelo de predicción de demanda eléctrica. La serie temporal es demanda_mwh agrupada por zona_distribucion, con timestamp fecha_hora. Incluye como variables exógenas: temperatura_c, precio_mercado_eur_mwh, es_festivo, dia_semana, hora, penetracion_ev_pct. Entrena con datos 2022-2023 y valida con 2024. Genera predicciones a 24h, 72h y 168h vista. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Evaluar accuracy del modelo",
@@ -1352,7 +1352,7 @@ const PROMPTS = {
       {
         "title": "Crear dashboard de planificación",
         "desc": "Construir un dashboard Streamlit que muestre predicciones, accuracy y plan de compras.",
-        "prompt": "Genera el código para un dashboard Streamlit de planificación de demanda con:\n1. Selector de zona y horizonte temporal\n2. Gráfico de demanda real vs predicha con intervalos de confianza\n3. Métricas de accuracy: MAPE, RMSE por zona\n4. Plan de compras para mercado OMIE del día siguiente\n5. Alertas de desvío >5% respecto a predicción\n6. Tabla de variables exógenas que más influyen en cada zona"
+        "prompt": "Genera el código para un dashboard Streamlit de planificación de demanda con:\n1. Selector de zona y horizonte temporal\n2. Gráfico de demanda real vs predicha con intervalos de confianza\n3. Métricas de accuracy: MAPE, RMSE por zona\n4. Plan de compras para mercado OMIE del día siguiente\n5. Alertas de desvío >5% respecto a predicción\n6. Tabla de variables exógenas que más influyen en cada zona. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Automatización y limpieza",
@@ -1388,7 +1388,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de forecast solar",
         "desc": "Construir modelo ML.FORECAST de generación solar por planta.",
-        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir producción solar por planta. Serie temporal: produccion_mwh agrupada por planta_id con timestamp fecha_hora. Variables exógenas: irradiancia_ghi_wm2, nubosidad_pct, temperatura_ambiente_c. Entrena con 2023 y valida con 2024. Genera predicciones a 6h, 24h y 48h con intervalos de confianza al 95%."
+        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir producción solar por planta. Serie temporal: produccion_mwh agrupada por planta_id con timestamp fecha_hora. Variables exógenas: irradiancia_ghi_wm2, nubosidad_pct, temperatura_ambiente_c. Entrena con 2023 y valida con 2024. Genera predicciones a 6h, 24h y 48h con intervalos de confianza al 95%. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Evaluar accuracy y generar métricas",
@@ -1403,7 +1403,7 @@ const PROMPTS = {
       {
         "title": "Crear dashboard de gestión solar",
         "desc": "Dashboard Streamlit de monitorización de generación y ofertas.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de plantas solares con producción actual vs prevista\n2. Gráfico de generación real vs forecast con bandas de confianza\n3. Tabla de ofertas para mercado diario e intradiario\n4. Métricas de accuracy por planta (MAPE, sesgo)\n5. Alertas de desvío >10% y plantas con baja disponibilidad\n6. Resumen de ingresos estimados por planta y portfolio"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de plantas solares con producción actual vs prevista\n2. Gráfico de generación real vs forecast con bandas de confianza\n3. Tabla de ofertas para mercado diario e intradiario\n4. Métricas de accuracy por planta (MAPE, sesgo)\n5. Alertas de desvío >10% y plantas con baja disponibilidad\n6. Resumen de ingresos estimados por planta y portfolio. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de actualización y limpieza",
@@ -1439,7 +1439,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de forecast eólico",
         "desc": "Modelo ML.FORECAST con ensemble de previsiones meteorológicas.",
-        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir producción eólica por parque. Serie temporal: produccion_mwh agrupada por parque_id. Variables exógenas: velocidad_viento_ms (promedio de modelos NWP), direccion_viento_grados, rafaga_max_ms, temperatura_c. Entrena con 2023 y valida con 2024. Genera predicciones a 6h, 24h, 48h y 168h."
+        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir producción eólica por parque. Serie temporal: produccion_mwh agrupada por parque_id. Variables exógenas: velocidad_viento_ms (promedio de modelos NWP), direccion_viento_grados, rafaga_max_ms, temperatura_c. Entrena con 2023 y valida con 2024. Genera predicciones a 6h, 24h, 48h y 168h. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Registrar modelo en Model Registry",
@@ -1459,7 +1459,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de gestión eólica",
         "desc": "Streamlit de monitorización de generación eólica.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de parques con producción actual y prevista (% de nominal)\n2. Gráfico de generación real vs forecast con bandas de confianza\n3. Rosa de vientos por parque con frecuencia y producción\n4. Métricas de accuracy del Model Registry: MAPE por parque y horizonte\n5. Tabla de ofertas para trading desk\n6. Comparativa de versiones del modelo en Model Registry"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de parques con producción actual y prevista (% de nominal)\n2. Gráfico de generación real vs forecast con bandas de confianza\n3. Rosa de vientos por parque con frecuencia y producción\n4. Métricas de accuracy del Model Registry: MAPE por parque y horizonte\n5. Tabla de ofertas para trading desk\n6. Comparativa de versiones del modelo en Model Registry. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Automatización y limpieza",
@@ -1495,7 +1495,7 @@ const PROMPTS = {
       {
         "title": "Predecir precios y optimizar estrategia",
         "desc": "Forecast de precios para optimización de ciclos de carga/descarga.",
-        "prompt": "Usa ML.FORECAST para predecir precios de mercado a 24h y 48h vista. Luego implementa lógica de optimización que para cada hora determine: accion (cargar, descargar, esperar, regulación), potencia_kw, ingresos_estimados_eur, degradacion_estimada_ciclos. Restricciones: SoC entre 10-90%, potencia máxima, eficiencia de ciclo. Comparar estrategias: arbitraje puro, peak_shaving, regulación."
+        "prompt": "Usa ML.FORECAST para predecir precios de mercado a 24h y 48h vista. Luego implementa lógica de optimización que para cada hora determine: accion (cargar, descargar, esperar, regulación), potencia_kw, ingresos_estimados_eur, degradacion_estimada_ciclos. Restricciones: SoC entre 10-90%, potencia máxima, eficiencia de ciclo. Comparar estrategias: arbitraje puro, peak_shaving, regulación. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Modelo de degradación de batería",
@@ -1510,7 +1510,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de gestión BESS",
         "desc": "Streamlit de monitorización de baterías y optimización.",
-        "prompt": "Genera código Streamlit con:\n1. Estado de cada BESS: SoC, SoH, temperatura, potencia\n2. Gráfico de precios previstos vs reales con señales de arbitraje\n3. Comparativa de ROI por estrategia y por instalación\n4. Proyección de vida útil y degradación\n5. Plan operativo para las próximas 24h\n6. Métricas financieras: ingresos acumulados, coste de degradación"
+        "prompt": "Genera código Streamlit con:\n1. Estado de cada BESS: SoC, SoH, temperatura, potencia\n2. Gráfico de precios previstos vs reales con señales de arbitraje\n3. Comparativa de ROI por estrategia y por instalación\n4. Proyección de vida útil y degradación\n5. Plan operativo para las próximas 24h\n6. Métricas financieras: ingresos acumulados, coste de degradación. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Automatización y limpieza",
@@ -1531,7 +1531,7 @@ const PROMPTS = {
       {
         "title": "Crear topología de red",
         "desc": "Generar estructura de red: subestaciones, transformadores, líneas.",
-        "prompt": "Crea la tabla TOPOLOGIA_RED con: elemento_id, tipo (Subestacion, Linea_MT, Centro_Transformacion, Linea_BT), capacidad_kva FLOAT, longitud_km FLOAT, antiguedad_anos INT, zona, num_clientes_alimentados INT, impedancia_ohm FLOAT, elemento_padre_id (jerarquía de red). Genera 200 CTs con 5 subestaciones padre. Cada CT alimenta 50-500 clientes."
+        "prompt": "Crea la tabla TOPOLOGIA_RED con: elemento_id, tipo (Subestacion, Linea_MT, Centro_Transformacion, Linea_BT), capacidad_kva FLOAT, longitud_km FLOAT, antiguedad_anos INT, zona, num_clientes_alimentados INT, impedancia_ohm FLOAT, elemento_padre_id (jerarquía de red). Genera 200 CTs con 5 subestaciones padre. Cada CT alimenta 50-500 clientes. Usa SQL GENERATOR(ROWCOUNT => 500) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear balance de energía por CT",
@@ -1541,7 +1541,7 @@ const PROMPTS = {
       {
         "title": "Cargar consumos de clientes",
         "desc": "Datos de consumo de smart meters por cliente.",
-        "prompt": "Crea la tabla CONSUMO_CLIENTES con: cliente_id, ct_id, fecha DATE, consumo_kwh FLOAT, potencia_max_kw FLOAT, tarifa VARCHAR, tipo_vivienda VARCHAR, factor_carga FLOAT, variabilidad_consumo FLOAT, consumo_vs_estimado_ratio FLOAT. Genera datos diarios para 10,000 clientes. El 3% tiene patrones de fraude: consumo artificialmente bajo, variabilidad anormal, desconexión periódica del contador."
+        "prompt": "Crea la tabla CONSUMO_CLIENTES con: cliente_id, ct_id, fecha DATE, consumo_kwh FLOAT, potencia_max_kw FLOAT, tarifa VARCHAR, tipo_vivienda VARCHAR, factor_carga FLOAT, variabilidad_consumo FLOAT, consumo_vs_estimado_ratio FLOAT. Genera datos diarios para 10,000 clientes. El 3% tiene patrones de fraude: consumo artificialmente bajo, variabilidad anormal, desconexión periódica del contador. Usa SQL GENERATOR(ROWCOUNT => 10000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Calcular features de detección",
@@ -1551,7 +1551,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de detección",
         "desc": "Modelo ML.CLASSIFICATION para clasificar clientes y CTs con pérdidas anómalas.",
-        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar puntos de suministro como: normal, sospechoso_leve, sospechoso_alto, fraude_probable. Variables: todas las features de FEATURES_PERDIDAS. Divide datos 70/30 train/test. Evalúa con precision, recall, F1 por clase. Optimiza para maximizar recall de fraude_probable manteniendo precision >60%."
+        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar puntos de suministro como: normal, sospechoso_leve, sospechoso_alto, fraude_probable. Variables: todas las features de FEATURES_PERDIDAS. Divide datos 70/30 train/test. Evalúa con precision, recall, F1 por clase. Optimiza para maximizar recall de fraude_probable manteniendo precision >60%. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Priorizar inspecciones",
@@ -1561,7 +1561,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de gestión de pérdidas",
         "desc": "Streamlit de monitorización y gestión de inspecciones.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de CTs coloreados por ratio de pérdidas\n2. Balance de energía: inyectada vs medida vs pérdidas por zona\n3. Lista de inspecciones priorizadas con scoring y ROI esperado\n4. Perfil de cliente sospechoso: consumo, comparativa, alertas\n5. Métricas de campañas de inspección: tasa de éxito, fraude recuperado\n6. Tendencia de pérdidas mensuales y efecto de las acciones"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de CTs coloreados por ratio de pérdidas\n2. Balance de energía: inyectada vs medida vs pérdidas por zona\n3. Lista de inspecciones priorizadas con scoring y ROI esperado\n4. Perfil de cliente sospechoso: consumo, comparativa, alertas\n5. Métricas de campañas de inspección: tasa de éxito, fraude recuperado\n6. Tendencia de pérdidas mensuales y efecto de las acciones. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Automatización y limpieza",
@@ -1592,7 +1592,7 @@ const PROMPTS = {
       {
         "title": "Predecir congestiones",
         "desc": "Modelo ML.FORECAST de carga y tensión por nodo.",
-        "prompt": "Usa ML.FORECAST para predecir carga_kva y tension_pu por nodo a 4h, 12h y 24h vista. Variables exógenas: generacion_local_kw (prevista), consumo_ev_kw (previsto), temperatura_ambiente, hora, dia_semana. Identifica nodos donde la predicción supere 80% de capacidad nominal (alerta), 90% (alarma), 100% (emergencia). También detectar tensiones fuera de rango ±5%."
+        "prompt": "Usa ML.FORECAST para predecir carga_kva y tension_pu por nodo a 4h, 12h y 24h vista. Variables exógenas: generacion_local_kw (prevista), consumo_ev_kw (previsto), temperatura_ambiente, hora, dia_semana. Identifica nodos donde la predicción supere 80% de capacidad nominal (alerta), 90% (alarma), 100% (emergencia). También detectar tensiones fuera de rango ±5%. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Recomendar acciones de flexibilidad",
@@ -1607,7 +1607,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de gestión de congestiones",
         "desc": "Streamlit de monitorización y gestión de red.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de red con nodos coloreados por nivel de carga (verde/amarillo/rojo)\n2. Predicción de congestiones para próximas 24h\n3. Lista de acciones de flexibilidad recomendadas con coste y efecto\n4. Simulación de escenarios de crecimiento GD/EV\n5. Métricas: horas de congestión evitadas, coste de flexibilidad, refuerzos diferidos\n6. Ranking de nodos críticos para inversión"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de red con nodos coloreados por nivel de carga (verde/amarillo/rojo)\n2. Predicción de congestiones para próximas 24h\n3. Lista de acciones de flexibilidad recomendadas con coste y efecto\n4. Simulación de escenarios de crecimiento GD/EV\n5. Métricas: horas de congestión evitadas, coste de flexibilidad, refuerzos diferidos\n6. Ranking de nodos críticos para inversión. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de gestión y limpieza",
@@ -1648,7 +1648,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de predicción de fallos",
         "desc": "ML.CLASSIFICATION para detectar degradación y predecir fallos.",
-        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar el estado de cada turbina: normal, atencion (degradación leve), alerta (fallo probable <4 semanas), critico (fallo inminente <1 semana). Variables: todas las features predictivas. Entrena con datos etiquetados usando historial de averías. Evalúa con precision, recall, F1. El modelo debe detectar >80% de fallos mayores con precisión >70%."
+        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar el estado de cada turbina: normal, atencion (degradación leve), alerta (fallo probable <4 semanas), critico (fallo inminente <1 semana). Variables: todas las features predictivas. Entrena con datos etiquetados usando historial de averías. Evalúa con precision, recall, F1. El modelo debe detectar >80% de fallos mayores con precisión >70%. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Priorizar intervenciones",
@@ -1658,7 +1658,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de salud de flota",
         "desc": "Streamlit de monitorización de turbinas y mantenimiento.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de parques con turbinas coloreadas por estado (verde/amarillo/rojo)\n2. Panel de señales SCADA en tiempo real por turbina seleccionada\n3. Tendencias de degradación: temperatura, vibración, eficiencia\n4. Plan de mantenimiento priorizado con ventanas óptimas\n5. Métricas de flota: disponibilidad, fallos detectados, falsos positivos\n6. ROI del mantenimiento predictivo vs calendario"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de parques con turbinas coloreadas por estado (verde/amarillo/rojo)\n2. Panel de señales SCADA en tiempo real por turbina seleccionada\n3. Tendencias de degradación: temperatura, vibración, eficiencia\n4. Plan de mantenimiento priorizado con ventanas óptimas\n5. Métricas de flota: disponibilidad, fallos detectados, falsos positivos\n6. ROI del mantenimiento predictivo vs calendario. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de predicción y limpieza",
@@ -1679,7 +1679,7 @@ const PROMPTS = {
       {
         "title": "Crear datos fuente de clientes",
         "desc": "Generar datos de las 5 fuentes que alimentan el Feature Store.",
-        "prompt": "Crea 5 tablas fuente:\n1. RAW_SMART_METERS: cliente_id, fecha_hora, consumo_kwh, potencia_kw, tension_v, calidad_senal (30M lecturas/día → generar 1 año para 10,000 clientes)\n2. RAW_BILLING: cliente_id, fecha_factura, importe_eur, consumo_facturado_kwh, tarifa, potencia_contratada, estado_pago, dias_mora\n3. RAW_CRM: cliente_id, segmento, canal_preferido, nps_score, num_contactos, ultima_interaccion, campanas_respondidas\n4. RAW_GENERACION: cliente_id, tipo_instalacion (solar, solar+bateria), potencia_pico_kw, produccion_kwh, excedentes_kwh, autoconsumo_pct\n5. RAW_DIGITAL: cliente_id, fecha, sesiones_app, sesiones_web, uso_chatbot, notificaciones_leidas, valoracion_app"
+        "prompt": "Crea 5 tablas fuente:\n1. RAW_SMART_METERS: cliente_id, fecha_hora, consumo_kwh, potencia_kw, tension_v, calidad_senal (30M lecturas/día → generar 1 año para 10,000 clientes)\n2. RAW_BILLING: cliente_id, fecha_factura, importe_eur, consumo_facturado_kwh, tarifa, potencia_contratada, estado_pago, dias_mora\n3. RAW_CRM: cliente_id, segmento, canal_preferido, nps_score, num_contactos, ultima_interaccion, campanas_respondidas\n4. RAW_GENERACION: cliente_id, tipo_instalacion (solar, solar+bateria), potencia_pico_kw, produccion_kwh, excedentes_kwh, autoconsumo_pct\n5. RAW_DIGITAL: cliente_id, fecha, sesiones_app, sesiones_web, uso_chatbot, notificaciones_leidas, valoracion_app. Usa SQL GENERATOR(ROWCOUNT => 10000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear Entity del Feature Store",
@@ -1714,7 +1714,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de Feature Store",
         "desc": "Streamlit de monitorización del Feature Store.",
-        "prompt": "Genera código Streamlit con:\n1. Resumen del Feature Store: 5 FeatureViews, features totales, último refresh\n2. Buscador de cliente con perfil 360 completo\n3. Distribución de segmentos de clientes\n4. Métricas de calidad de features: completitud, freshness, drift\n5. Uso de features por caso de uso downstream\n6. Top features más consultadas y tendencias"
+        "prompt": "Genera código Streamlit con:\n1. Resumen del Feature Store: 5 FeatureViews, features totales, último refresh\n2. Buscador de cliente con perfil 360 completo\n3. Distribución de segmentos de clientes\n4. Métricas de calidad de features: completitud, freshness, drift\n5. Uso de features por caso de uso downstream\n6. Top features más consultadas y tendencias. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de mantenimiento",
@@ -1735,7 +1735,7 @@ const PROMPTS = {
       {
         "title": "Preparar datos de clientes",
         "desc": "Consolidar datos de consumo, facturación y perfil.",
-        "prompt": "Crea la tabla CLIENTES_PERFIL con: cliente_id, tipo_vivienda (piso, casa, adosado), superficie_m2 INT, zona_climatica (A-E), num_habitantes INT, tiene_ac BOOLEAN, tiene_calefaccion_electrica BOOLEAN, tiene_autoconsumo BOOLEAN, tarifa_actual, potencia_contratada_kw, consumo_anual_kwh FLOAT, gasto_anual_eur FLOAT, canal_preferido, nps_score. Genera 20,000 clientes con distribuciones realistas para España."
+        "prompt": "Crea la tabla CLIENTES_PERFIL con: cliente_id, tipo_vivienda (piso, casa, adosado), superficie_m2 INT, zona_climatica (A-E), num_habitantes INT, tiene_ac BOOLEAN, tiene_calefaccion_electrica BOOLEAN, tiene_autoconsumo BOOLEAN, tarifa_actual, potencia_contratada_kw, consumo_anual_kwh FLOAT, gasto_anual_eur FLOAT, canal_preferido, nps_score. Genera 20,000 clientes con distribuciones realistas para España. Usa SQL GENERATOR(ROWCOUNT => 20000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Calcular features de consumo",
@@ -1745,7 +1745,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de segmentación",
         "desc": "ML.CLASSIFICATION para identificar segmentos de clientes.",
-        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar clientes en segmentos:\n- Eficiente: consumo bajo, stand-by bajo, buen ratio punta/valle\n- Potencial_Alto: consumo alto con oportunidad de ahorro >30%\n- Prosumer_Potencial: perfil ideal para autoconsumo\n- Digital_Engaged: alto engagement, receptivo a campañas digitales\n- Vulnerable: posible pobreza energética, necesita protección\nVariables: todas las features de consumo + perfil demográfico. Evalúa con métricas de clasificación."
+        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar clientes en segmentos:\n- Eficiente: consumo bajo, stand-by bajo, buen ratio punta/valle\n- Potencial_Alto: consumo alto con oportunidad de ahorro >30%\n- Prosumer_Potencial: perfil ideal para autoconsumo\n- Digital_Engaged: alto engagement, receptivo a campañas digitales\n- Vulnerable: posible pobreza energética, necesita protección\nVariables: todas las features de consumo + perfil demográfico. Evalúa con métricas de clasificación. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Generar recomendaciones por segmento",
@@ -1760,7 +1760,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de segmentación",
         "desc": "Streamlit de gestión de programas de eficiencia.",
-        "prompt": "Genera código Streamlit con:\n1. Distribución de clientes por segmento (pie chart)\n2. Perfil detallado por segmento: consumo medio, potencial ahorro, demografía\n3. Buscador de cliente con recomendaciones personalizadas\n4. ROI de programas de eficiencia por segmento y acción\n5. Mapa de calor de potencial de ahorro por zona geográfica\n6. Métricas de campañas: enviadas, convertidas, ahorro real conseguido"
+        "prompt": "Genera código Streamlit con:\n1. Distribución de clientes por segmento (pie chart)\n2. Perfil detallado por segmento: consumo medio, potencial ahorro, demografía\n3. Buscador de cliente con recomendaciones personalizadas\n4. ROI de programas de eficiencia por segmento y acción\n5. Mapa de calor de potencial de ahorro por zona geográfica\n6. Métricas de campañas: enviadas, convertidas, ahorro real conseguido. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",
@@ -1811,7 +1811,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de trading",
         "desc": "Streamlit de trading desk para portfolio renovable.",
-        "prompt": "Genera código Streamlit con:\n1. Resumen de portfolio: potencia por tecnología, mapa de plantas\n2. Predicción de generación por hora y tecnología con bandas\n3. Ofertas para mercado diario: volumen, precio, ingreso estimado\n4. Estado de PPAs: cumplimiento, exposición, alertas\n5. Backtesting de estrategias con comparativa de P&L\n6. Métricas: ingreso neto, desvíos, Sharpe ratio, coste de oportunidad"
+        "prompt": "Genera código Streamlit con:\n1. Resumen de portfolio: potencia por tecnología, mapa de plantas\n2. Predicción de generación por hora y tecnología con bandas\n3. Ofertas para mercado diario: volumen, precio, ingreso estimado\n4. Estado de PPAs: cumplimiento, exposición, alertas\n5. Backtesting de estrategias con comparativa de P&L\n6. Métricas: ingreso neto, desvíos, Sharpe ratio, coste de oportunidad. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de trading y limpieza",

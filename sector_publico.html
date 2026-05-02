@@ -93,7 +93,7 @@
 <body>
 <header class="hero">
   <div class="hero-left">
-    <div class="logos"><div class="logo-snowflake"><img src="bug-white.png" alt="Snowflake" width="32" height="32" /> Snowflake</div></div>
+    <div class="logos"></div>
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al &Iacute;ndice de Industrias</a>
     <p class="hero-eyebrow">Sector P&uacute;blico &times; Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para el Sector P&uacute;blico</h1>
@@ -1337,7 +1337,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de detección de fraude",
         "desc": "ML.CLASSIFICATION para scoring de riesgo.",
-        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar solicitudes como: limpia, sospecha_baja, sospecha_media, sospecha_alta. Variables: todas las features de FEATURES_FRAUDE_SUBVENCIONES. Entrena con datos etiquetados de los últimos 5 años (fraudes confirmados). Evalúa con precision, recall, F1. Objetivo: recall >70% para sospecha_alta con precision >60%."
+        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para clasificar solicitudes como: limpia, sospecha_baja, sospecha_media, sospecha_alta. Variables: todas las features de FEATURES_FRAUDE_SUBVENCIONES. Entrena con datos etiquetados de los últimos 5 años (fraudes confirmados). Evalúa con precision, recall, F1. Objetivo: recall >70% para sospecha_alta con precision >60%. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Registrar modelo en Model Registry",
@@ -1352,7 +1352,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de control de subvenciones",
         "desc": "Streamlit de monitorización de fraude.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de sospecha por CCAA y tipo de subvención\n2. Lista de investigaciones priorizadas con scoring y ROI\n3. Grafo de red de beneficiarios vinculados para caso seleccionado\n4. Métricas del modelo: precision, recall, F1 por versión de Registry\n5. Tendencia de fraude detectado por año y tipo\n6. Resumen financiero: importe en riesgo, recuperado, coste de control"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de sospecha por CCAA y tipo de subvención\n2. Lista de investigaciones priorizadas con scoring y ROI\n3. Grafo de red de beneficiarios vinculados para caso seleccionado\n4. Métricas del modelo: precision, recall, F1 por versión de Registry\n5. Tendencia de fraude detectado por año y tipo\n6. Resumen financiero: importe en riesgo, recuperado, coste de control. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de reentrenamiento",
@@ -1373,7 +1373,7 @@ const PROMPTS = {
       {
         "title": "Crear base de conocimiento",
         "desc": "Generar corpus de normativa, procedimientos y FAQ.",
-        "prompt": "Crea la tabla CONOCIMIENTO_PUBLICO con: doc_id, categoria (Tramites, Normativa, FAQ, Requisitos, Plazos, Ayudas), titulo, contenido TEXT, idioma (es, ca, eu, gl, va), administracion (Estatal, Autonomica, Municipal), fecha_actualizacion DATE, vigente BOOLEAN. Genera 500 documentos cubriendo: trámites más frecuentes (empadronamiento, DNI, licencias), normativa clave, FAQ por administración, requisitos de ayudas y subvenciones."
+        "prompt": "Crea la tabla CONOCIMIENTO_PUBLICO con: doc_id, categoria (Tramites, Normativa, FAQ, Requisitos, Plazos, Ayudas), titulo, contenido TEXT, idioma (es, ca, eu, gl, va), administracion (Estatal, Autonomica, Municipal), fecha_actualizacion DATE, vigente BOOLEAN. Genera 500 documentos cubriendo: trámites más frecuentes (empadronamiento, DNI, licencias), normativa clave, FAQ por administración, requisitos de ayudas y subvenciones. Usa SQL GENERATOR(ROWCOUNT => 500) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Indexar con Cortex Search",
@@ -1398,7 +1398,7 @@ const PROMPTS = {
       {
         "title": "Dashboard del chatbot",
         "desc": "Streamlit de operación.",
-        "prompt": "Genera código Streamlit con:\n1. Demo de chat multilingüe con perfil de ciudadano\n2. Métricas: resolución, satisfacción, escalados por idioma\n3. Consultas más frecuentes y no resueltas\n4. Comparativa coste: chatbot vs presencial\n5. Base de conocimiento: búsqueda y gestión\n6. Tendencias por canal y tipo de consulta"
+        "prompt": "Genera código Streamlit con:\n1. Demo de chat multilingüe con perfil de ciudadano\n2. Métricas: resolución, satisfacción, escalados por idioma\n3. Consultas más frecuentes y no resueltas\n4. Comparativa coste: chatbot vs presencial\n5. Base de conocimiento: búsqueda y gestión\n6. Tendencias por canal y tipo de consulta. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",
@@ -1434,7 +1434,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de forecast",
         "desc": "ML.FORECAST de demanda por tipo de servicio.",
-        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir solicitudes por municipio y tipo_servicio. Serie temporal: solicitudes_mes con timestamp fecha_mes. Variables exógenas: tasa_desempleo, renta_media, envejecimiento. Entrena con 4 años y valida con el 5º. Genera predicciones a 1, 3 y 6 meses."
+        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir solicitudes por municipio y tipo_servicio. Serie temporal: solicitudes_mes con timestamp fecha_mes. Variables exógenas: tasa_desempleo, renta_media, envejecimiento. Entrena con 4 años y valida con el 5º. Genera predicciones a 1, 3 y 6 meses. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Registrar en Model Registry",
@@ -1449,7 +1449,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de planificación",
         "desc": "Streamlit de gestión de servicios sociales.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de municipios con demanda prevista vs capacidad\n2. Predicción por tipo de servicio con bandas de confianza\n3. Plan de recursos: necesidades vs disponibles\n4. Accuracy del modelo: MAPE por municipio y servicio\n5. Alertas de incremento de demanda >20% previsto\n6. Comparativa de versiones en Model Registry"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de municipios con demanda prevista vs capacidad\n2. Predicción por tipo de servicio con bandas de confianza\n3. Plan de recursos: necesidades vs disponibles\n4. Accuracy del modelo: MAPE por municipio y servicio\n5. Alertas de incremento de demanda >20% previsto\n6. Comparativa de versiones en Model Registry. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de actualización",
@@ -1495,7 +1495,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de expedientes",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Feed de expedientes nuevos con clasificación automática\n2. Sugerencia de resolución para expediente seleccionado\n3. Métricas: accuracy, reasignaciones, tiempo resolución\n4. Búsqueda de precedentes similares\n5. Tendencia de expedientes por tipo y materia\n6. Backlog por unidad tramitadora y prioridad"
+        "prompt": "Genera código Streamlit con:\n1. Feed de expedientes nuevos con clasificación automática\n2. Sugerencia de resolución para expediente seleccionado\n3. Métricas: accuracy, reasignaciones, tiempo resolución\n4. Búsqueda de precedentes similares\n5. Tendencia de expedientes por tipo y materia\n6. Backlog por unidad tramitadora y prioridad. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",
@@ -1521,7 +1521,7 @@ const PROMPTS = {
       {
         "title": "Crear datos de ejecución",
         "desc": "Licitaciones, contratos y pagos.",
-        "prompt": "Crea la tabla EJECUCION_FONDOS con: asignacion_id, fecha DATE, fase (Licitacion, Adjudicacion, Contrato, Pago, Justificacion), importe_eur FLOAT, beneficiario, estado (En_Plazo, Riesgo, Retraso, Critico), dias_retraso INT, observaciones TEXT. Genera 50,000 registros de ejecución para 3 años. El 25% tiene retrasos de diversa severidad."
+        "prompt": "Crea la tabla EJECUCION_FONDOS con: asignacion_id, fecha DATE, fase (Licitacion, Adjudicacion, Contrato, Pago, Justificacion), importe_eur FLOAT, beneficiario, estado (En_Plazo, Riesgo, Retraso, Critico), dias_retraso INT, observaciones TEXT. Genera 50,000 registros de ejecución para 3 años. El 25% tiene retrasos de diversa severidad. Usa SQL GENERATOR(ROWCOUNT => 50000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear hitos y seguimiento",
@@ -1531,7 +1531,7 @@ const PROMPTS = {
       {
         "title": "Detectar anomalías de ejecución",
         "desc": "ML para identificar retrasos y riesgos.",
-        "prompt": "Crea vista ALERTAS_EJECUCION que use ML.FORECAST para predecir ritmo de ejecución y ML.CLASSIFICATION para detectar anomalías:\n- Retrasos: ejecución <60% a 80% del plazo\n- Concentración: >50% de pagos en último trimestre\n- Inconsistencias: importes de contrato vs asignación >10%\n- Hitos: cumplimiento <80% a 6 meses de deadline\nAsigna severidad: crítico, alto, medio, bajo."
+        "prompt": "Crea vista ALERTAS_EJECUCION que use ML.FORECAST para predecir ritmo de ejecución y ML.CLASSIFICATION para detectar anomalías:\n- Retrasos: ejecución <60% a 80% del plazo\n- Concentración: >50% de pagos en último trimestre\n- Inconsistencias: importes de contrato vs asignación >10%\n- Hitos: cumplimiento <80% a 6 meses de deadline\nAsigna severidad: crítico, alto, medio, bajo. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Generar informes de cumplimiento",
@@ -1541,7 +1541,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de fondos",
         "desc": "Streamlit de control de fondos europeos.",
-        "prompt": "Genera código Streamlit con:\n1. Resumen por componente: asignación, ejecución, hitos\n2. Semáforo de hitos: cumplido/en progreso/retrasado/no iniciado\n3. Alertas de anomalías priorizadas por severidad\n4. Trazabilidad: drill-down de asignación a pago final\n5. Predicción de ritmo de ejecución vs objetivo\n6. Generador de informes para la Comisión Europea"
+        "prompt": "Genera código Streamlit con:\n1. Resumen por componente: asignación, ejecución, hitos\n2. Semáforo de hitos: cumplido/en progreso/retrasado/no iniciado\n3. Alertas de anomalías priorizadas por severidad\n4. Trazabilidad: drill-down de asignación a pago final\n5. Predicción de ritmo de ejecución vs objetivo\n6. Generador de informes para la Comisión Europea. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",
@@ -1572,7 +1572,7 @@ const PROMPTS = {
       {
         "title": "Predecir congestión",
         "desc": "ML.FORECAST de tráfico por zona y hora.",
-        "prompt": "Usa ML.FORECAST para predecir vehiculos_hora por tramo a 30min, 1h y 4h vista. Variables exógenas: hora, dia_semana, lluvia BOOLEAN, evento_cercano BOOLEAN, obras BOOLEAN. Crea vista PREDICCION_TRAFICO con: tramo_id, hora, vehiculos_previstos, nivel_servicio_previsto, confianza. Identifica tramos que pasarán a nivel E o F."
+        "prompt": "Usa ML.FORECAST para predecir vehiculos_hora por tramo a 30min, 1h y 4h vista. Variables exógenas: hora, dia_semana, lluvia BOOLEAN, evento_cercano BOOLEAN, obras BOOLEAN. Crea vista PREDICCION_TRAFICO con: tramo_id, hora, vehiculos_previstos, nivel_servicio_previsto, confianza. Identifica tramos que pasarán a nivel E o F. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Optimizar semáforos",
@@ -1587,7 +1587,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de movilidad",
         "desc": "Streamlit de centro de control.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de tráfico en tiempo real con nivel de servicio por tramo\n2. Predicción de congestión próximas 4h\n3. Panel de optimización semafórica por corredor\n4. Alternativas de transporte para corredores congestionados\n5. Métricas: tiempo medio desplazamiento, uso TP, emisiones\n6. Histórico de impacto de optimizaciones aplicadas"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de tráfico en tiempo real con nivel de servicio por tramo\n2. Predicción de congestión próximas 4h\n3. Panel de optimización semafórica por corredor\n4. Alternativas de transporte para corredores congestionados\n5. Métricas: tiempo medio desplazamiento, uso TP, emisiones\n6. Histórico de impacto de optimizaciones aplicadas. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",
@@ -1618,7 +1618,7 @@ const PROMPTS = {
       {
         "title": "Definir grupos de control",
         "desc": "Matching de municipios tratados y control.",
-        "prompt": "Crea la vista MATCHING_MUNICIPIOS que para cada política identifique:\n- Municipios tratados: que recibieron la intervención\n- Municipios control: similares en indicadores pre-intervención pero no tratados\n- Variables de matching: población, renta, empleo, sector productivo, zona\nUsa ML.CLASSIFICATION para calcular propensity score y seleccionar controles óptimos."
+        "prompt": "Crea la vista MATCHING_MUNICIPIOS que para cada política identifique:\n- Municipios tratados: que recibieron la intervención\n- Municipios control: similares en indicadores pre-intervención pero no tratados\n- Variables de matching: población, renta, empleo, sector productivo, zona\nUsa ML.CLASSIFICATION para calcular propensity score y seleccionar controles óptimos. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Calcular impacto diferencial",
@@ -1633,7 +1633,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de evaluación",
         "desc": "Streamlit de evidencia para decisores.",
-        "prompt": "Genera código Streamlit con:\n1. Catálogo de políticas evaluadas con impacto resumido\n2. Comparativa pre/post tratamiento vs control por indicador\n3. Mapa de impacto diferencial por territorio\n4. Ranking de políticas por coste-efectividad\n5. Generador de informes de evaluación\n6. Recomendaciones para planificación presupuestaria"
+        "prompt": "Genera código Streamlit con:\n1. Catálogo de políticas evaluadas con impacto resumido\n2. Comparativa pre/post tratamiento vs control por indicador\n3. Mapa de impacto diferencial por territorio\n4. Ranking de políticas por coste-efectividad\n5. Generador de informes de evaluación\n6. Recomendaciones para planificación presupuestaria. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",
@@ -1684,7 +1684,7 @@ const PROMPTS = {
       {
         "title": "Dashboard del Feature Store",
         "desc": "Streamlit de monitorización.",
-        "prompt": "Genera código Streamlit con:\n1. Resumen: 5 FeatureViews, features totales, último refresh\n2. Buscador de ciudadano con perfil (con enmascaramiento RGPD)\n3. Distribución de perfiles por zona y segmento\n4. Métricas de calidad: completitud, freshness, drift\n5. Audit log de accesos al Feature Store\n6. Cumplimiento RGPD: finalidad, minimización, consentimiento"
+        "prompt": "Genera código Streamlit con:\n1. Resumen: 5 FeatureViews, features totales, último refresh\n2. Buscador de ciudadano con perfil (con enmascaramiento RGPD)\n3. Distribución de perfiles por zona y segmento\n4. Métricas de calidad: completitud, freshness, drift\n5. Audit log de accesos al Feature Store\n6. Cumplimiento RGPD: finalidad, minimización, consentimiento. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de mantenimiento",
@@ -1720,7 +1720,7 @@ const PROMPTS = {
       {
         "title": "Predecir licitaciones desiertas",
         "desc": "ML.CLASSIFICATION para riesgo de desierto.",
-        "prompt": "Usa ML.CLASSIFICATION para predecir resultado: adjudicada vs desierta. Variables: todas las features. Evalúa precision, recall, F1. Para licitaciones con riesgo_desierto >60% genera recomendaciones: ampliar plazo, reducir requisitos solvencia, dividir en lotes, ajustar precio."
+        "prompt": "Usa ML.CLASSIFICATION para predecir resultado: adjudicada vs desierta. Variables: todas las features. Evalúa precision, recall, F1. Para licitaciones con riesgo_desierto >60% genera recomendaciones: ampliar plazo, reducir requisitos solvencia, dividir en lotes, ajustar precio. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Estimar precios de referencia",
@@ -1735,7 +1735,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de contratación",
         "desc": "Streamlit de inteligencia.",
-        "prompt": "Genera código Streamlit con:\n1. Predicción de riesgo de desierto para licitaciones activas\n2. Recomendaciones de mejora: lotes, precios, plazos\n3. Benchmarking de precios por CPV y territorio\n4. Métricas: tasa de desierto, competencia media, ahorro estimado\n5. Análisis de concentración por sector\n6. Comparativa PYME vs gran empresa por tipo de contrato"
+        "prompt": "Genera código Streamlit con:\n1. Predicción de riesgo de desierto para licitaciones activas\n2. Recomendaciones de mejora: lotes, precios, plazos\n3. Benchmarking de precios por CPV y territorio\n4. Métricas: tasa de desierto, competencia media, ahorro estimado\n5. Análisis de concentración por sector\n6. Comparativa PYME vs gran empresa por tipo de contrato. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",
@@ -1771,7 +1771,7 @@ const PROMPTS = {
       {
         "title": "Detectar anomalías",
         "desc": "ML.CLASSIFICATION para consumos anómalos.",
-        "prompt": "Usa ML.CLASSIFICATION para clasificar periodos como: normal, anomalia_leve, anomalia_grave. Variables: todas las features. Tipos de anomalía: consumo excesivo, consumo fuera de horario, climatización sin ocupación, incremento gradual sin explicación. Evalúa precision y recall."
+        "prompt": "Usa ML.CLASSIFICATION para clasificar periodos como: normal, anomalia_leve, anomalia_grave. Variables: todas las features. Tipos de anomalía: consumo excesivo, consumo fuera de horario, climatización sin ocupación, incremento gradual sin explicación. Evalúa precision y recall. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Generar recomendaciones",
@@ -1781,7 +1781,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de eficiencia",
         "desc": "Streamlit de gestión energética.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de edificios coloreados por eficiencia vs benchmark\n2. Consumo real vs baseline con anomalías marcadas\n3. Ranking de edificios por potencial de ahorro\n4. Recomendaciones priorizadas por ROI\n5. Métricas: anomalías detectadas, ahorro conseguido, emisiones evitadas\n6. Comparativa entre edificios del mismo tipo"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de edificios coloreados por eficiencia vs benchmark\n2. Consumo real vs baseline con anomalías marcadas\n3. Ranking de edificios por potencial de ahorro\n4. Recomendaciones priorizadas por ROI\n5. Métricas: anomalías detectadas, ahorro conseguido, emisiones evitadas\n6. Comparativa entre edificios del mismo tipo. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline y limpieza",

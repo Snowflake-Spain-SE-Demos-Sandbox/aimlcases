@@ -93,7 +93,7 @@
 <body>
 <header class="hero">
   <div class="hero-left">
-    <div class="logos"><div class="logo-snowflake"><img src="bug-white.png" alt="Snowflake" width="32" height="32" /> Snowflake</div></div>
+    <div class="logos"></div>
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al &Iacute;ndice de Industrias</a>
     <p class="hero-eyebrow">Educaci&oacute;n y Universidades &times; Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para Educaci&oacute;n y Universidades</h1>
@@ -1300,7 +1300,7 @@ const PROMPTS = {
       {
         "title": "Crear expediente académico",
         "desc": "Generar datos sintéticos de estudiantes.",
-        "prompt": "Crea la tabla EXPEDIENTE_ACADEMICO con: student_id, grado VARCHAR, facultad, curso_actual INT, fecha_ingreso DATE, nota_acceso FLOAT, rama_bachillerato (Ciencias, Tecnologia, Sociales, Humanidades, Artes), creditos_matriculados_total INT, creditos_aprobados_total INT, nota_media_expediente FLOAT, convocatorias_agotadas INT, cambio_grado BOOLEAN, estado (Activo, Abandono, Graduado, Baja_Temporal). Genera 60,000 estudiantes de 8 cohortes. El 21% abandona, con pico en primer curso (15%)."
+        "prompt": "Crea la tabla EXPEDIENTE_ACADEMICO con: student_id, grado VARCHAR, facultad, curso_actual INT, fecha_ingreso DATE, nota_acceso FLOAT, rama_bachillerato (Ciencias, Tecnologia, Sociales, Humanidades, Artes), creditos_matriculados_total INT, creditos_aprobados_total INT, nota_media_expediente FLOAT, convocatorias_agotadas INT, cambio_grado BOOLEAN, estado (Activo, Abandono, Graduado, Baja_Temporal). Genera 60,000 estudiantes de 8 cohortes. El 21% abandona, con pico en primer curso (15%). Usa SQL GENERATOR(ROWCOUNT => 60000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear actividad LMS",
@@ -1320,7 +1320,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de abandono",
         "desc": "ML.CLASSIFICATION para scoring de riesgo.",
-        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para predecir abandono: si/no. Variables: todas las features de FEATURES_ABANDONO. Entrena con 6 cohortes y valida con las 2 últimas. Evalúa AUC, precision, recall. Objetivo: AUC >0.78, recall >0.70 para capturar la mayoría de abandonos."
+        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para predecir abandono: si/no. Variables: todas las features de FEATURES_ABANDONO. Entrena con 6 cohortes y valida con las 2 últimas. Evalúa AUC, precision, recall. Objetivo: AUC >0.78, recall >0.70 para capturar la mayoría de abandonos. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Registrar en Model Registry",
@@ -1335,7 +1335,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de retención",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Lista de estudiantes en riesgo con scoring y factores\n2. Tendencia de abandono por grado, curso y cohorte\n3. Métricas del modelo: AUC, precision, recall por versión Registry\n4. Efectividad de intervenciones: retención post-intervención\n5. Comparativa entre facultades y programas\n6. Perfil tipo del estudiante en riesgo"
+        "prompt": "Genera código Streamlit con:\n1. Lista de estudiantes en riesgo con scoring y factores\n2. Tendencia de abandono por grado, curso y cohorte\n3. Métricas del modelo: AUC, precision, recall por versión Registry\n4. Efectividad de intervenciones: retención post-intervención\n5. Comparativa entre facultades y programas\n6. Perfil tipo del estudiante en riesgo. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de reentrenamiento",
@@ -1356,7 +1356,7 @@ const PROMPTS = {
       {
         "title": "Crear base de conocimiento",
         "desc": "Corpus de normativa y procedimientos.",
-        "prompt": "Crea la tabla CONOCIMIENTO_UNIVERSITARIO con: doc_id, categoria (Normativa_Academica, Matricula, Becas, Convalidaciones, Movilidad, Practicas, TFG_TFM, Servicios, Calendario), titulo, contenido TEXT, grado_aplica VARCHAR, vigente_desde DATE, vigente BOOLEAN. Genera 500 documentos cubriendo: reglamento de evaluación, normativa de permanencia, guía de matrícula, FAQ becas MEC, procedimientos de convalidación, normativa TFG/TFM, movilidad Erasmus."
+        "prompt": "Crea la tabla CONOCIMIENTO_UNIVERSITARIO con: doc_id, categoria (Normativa_Academica, Matricula, Becas, Convalidaciones, Movilidad, Practicas, TFG_TFM, Servicios, Calendario), titulo, contenido TEXT, grado_aplica VARCHAR, vigente_desde DATE, vigente BOOLEAN. Genera 500 documentos cubriendo: reglamento de evaluación, normativa de permanencia, guía de matrícula, FAQ becas MEC, procedimientos de convalidación, normativa TFG/TFM, movilidad Erasmus. Usa SQL GENERATOR(ROWCOUNT => 500) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Indexar con Cortex Search",
@@ -1386,7 +1386,7 @@ const PROMPTS = {
       {
         "title": "Dashboard del chatbot",
         "desc": "Streamlit de operación.",
-        "prompt": "Genera código Streamlit con:\n1. Demo de chat con perfil de estudiante\n2. Métricas: resolución, satisfacción, escalados por tipo\n3. Base de conocimiento: búsqueda y gestión\n4. Top consultas frecuentes y gaps\n5. Comparativa coste: chatbot vs presencial\n6. Picos de demanda: matrícula, exámenes, becas"
+        "prompt": "Genera código Streamlit con:\n1. Demo de chat con perfil de estudiante\n2. Métricas: resolución, satisfacción, escalados por tipo\n3. Base de conocimiento: búsqueda y gestión\n4. Top consultas frecuentes y gaps\n5. Comparativa coste: chatbot vs presencial\n6. Picos de demanda: matrícula, exámenes, becas. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de mantenimiento",
@@ -1422,7 +1422,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de matriculación",
         "desc": "ML.CLASSIFICATION para probabilidad.",
-        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para predecir matriculado: si/no. Variables: todas las features. Entrena con 3 ciclos y valida con el 4º. Evalúa AUC, precision, recall. Objetivo: AUC >0.75 para priorización efectiva del equipo comercial."
+        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para predecir matriculado: si/no. Variables: todas las features. Entrena con 3 ciclos y valida con el 4º. Evalúa AUC, precision, recall. Objetivo: AUC >0.75 para priorización efectiva del equipo comercial. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Registrar en Model Registry",
@@ -1437,7 +1437,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de admisiones",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Funnel de admisiones con scoring ML\n2. Predicción de matrículas por programa y campaña\n3. Métricas del modelo por versión de Registry\n4. ROI por canal de captación\n5. Simulador: impacto de becas en conversión\n6. Comparativa ciclos de admisión"
+        "prompt": "Genera código Streamlit con:\n1. Funnel de admisiones con scoring ML\n2. Predicción de matrículas por programa y campaña\n3. Métricas del modelo por versión de Registry\n4. ROI por canal de captación\n5. Simulador: impacto de becas en conversión\n6. Comparativa ciclos de admisión. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de scoring",
@@ -1458,7 +1458,7 @@ const PROMPTS = {
       {
         "title": "Crear datos de actividad LMS",
         "desc": "Interacciones detalladas por recurso.",
-        "prompt": "Crea la tabla ACTIVIDAD_LMS_DETALLE con: student_id, asignatura_id, recurso_id, tipo_recurso (Video, Documento, Test, Ejercicio, Foro, Tarea), fecha_hora TIMESTAMP, duracion_min FLOAT, completado BOOLEAN, intentos INT, resultado FLOAT, dispositivo. Genera 2,000,000 interacciones para 5,000 estudiantes × 6 asignaturas × 1 semestre. Patrones: estudiantes exitosos acceden 4-5 días/semana; en riesgo <2 días/semana."
+        "prompt": "Crea la tabla ACTIVIDAD_LMS_DETALLE con: student_id, asignatura_id, recurso_id, tipo_recurso (Video, Documento, Test, Ejercicio, Foro, Tarea), fecha_hora TIMESTAMP, duracion_min FLOAT, completado BOOLEAN, intentos INT, resultado FLOAT, dispositivo. Genera 2,000,000 interacciones para 5,000 estudiantes × 6 asignaturas × 1 semestre. Patrones: estudiantes exitosos acceden 4-5 días/semana; en riesgo <2 días/semana. Usa SQL GENERATOR(ROWCOUNT => 5000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear evaluaciones parciales",
@@ -1473,7 +1473,7 @@ const PROMPTS = {
       {
         "title": "Detectar riesgo académico",
         "desc": "ML.CLASSIFICATION por asignatura.",
-        "prompt": "Usa ML.CLASSIFICATION para predecir riesgo de suspenso por asignatura: aprobará, en_riesgo, suspenso_probable. Variables: features de aprendizaje en semana 3-5. Evalúa accuracy y recall. El modelo debe capturar >70% de futuros suspensos en semana 5."
+        "prompt": "Usa ML.CLASSIFICATION para predecir riesgo de suspenso por asignatura: aprobará, en_riesgo, suspenso_probable. Variables: features de aprendizaje en semana 3-5. Evalúa accuracy y recall. El modelo debe capturar >70% de futuros suspensos en semana 5. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Generar recomendaciones personalizadas",
@@ -1483,7 +1483,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de learning analytics",
         "desc": "Streamlit para profesores y estudiantes.",
-        "prompt": "Genera código Streamlit con:\n1. Vista profesor: clase con semáforo de riesgo por estudiante\n2. Vista estudiante: mi progreso, recomendaciones, plan de estudio\n3. Engagement por recurso: qué materiales funcionan mejor\n4. Alertas tempranas: estudiantes que cambian de nivel\n5. Comparativa: antes/después de recomendaciones\n6. Heatmap de actividad de la clase"
+        "prompt": "Genera código Streamlit con:\n1. Vista profesor: clase con semáforo de riesgo por estudiante\n2. Vista estudiante: mi progreso, recomendaciones, plan de estudio\n3. Engagement por recurso: qué materiales funcionan mejor\n4. Alertas tempranas: estudiantes que cambian de nivel\n5. Comparativa: antes/después de recomendaciones\n6. Heatmap de actividad de la clase. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de alertas",
@@ -1519,7 +1519,7 @@ const PROMPTS = {
       {
         "title": "Predecir demanda por franja",
         "desc": "ML.FORECAST de ocupación.",
-        "prompt": "Usa ML.FORECAST para predecir demanda de espacios por tipo, campus y franja. Variables: dia_semana, mes, periodo_exámenes, eventos. Identifica franjas infrautilizadas y saturadas. Generar mapa de calor de demanda por campus, día y hora."
+        "prompt": "Usa ML.FORECAST para predecir demanda de espacios por tipo, campus y franja. Variables: dia_semana, mes, periodo_exámenes, eventos. Identifica franjas infrautilizadas y saturadas. Generar mapa de calor de demanda por campus, día y hora. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Optimizar asignación",
@@ -1529,7 +1529,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de espacios",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de ocupación en tiempo real por campus y edificio\n2. Predicción de demanda por franja con heatmap\n3. Horario óptimo generado vs manual: comparativa\n4. Métricas: utilización, conflictos, desplazamientos\n5. Buscador de aulas libres por requisitos\n6. Simulador: impacto de añadir/quitar espacios"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de ocupación en tiempo real por campus y edificio\n2. Predicción de demanda por franja con heatmap\n3. Horario óptimo generado vs manual: comparativa\n4. Métricas: utilización, conflictos, desplazamientos\n5. Buscador de aulas libres por requisitos\n6. Simulador: impacto de añadir/quitar espacios. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de optimización",
@@ -1575,7 +1575,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de inteligencia científica",
         "desc": "Streamlit de investigación.",
-        "prompt": "Genera código Streamlit con:\n1. Mapa de producción por departamento y área\n2. Tendencias temáticas con gráfico temporal\n3. Redes de colaboración interactivas\n4. Búsqueda semántica en repositorio\n5. Ranking de investigadores con benchmarking\n6. Áreas emergentes y recomendaciones de inversión"
+        "prompt": "Genera código Streamlit con:\n1. Mapa de producción por departamento y área\n2. Tendencias temáticas con gráfico temporal\n3. Redes de colaboración interactivas\n4. Búsqueda semántica en repositorio\n5. Ranking de investigadores con benchmarking\n6. Áreas emergentes y recomendaciones de inversión. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de actualización",
@@ -1621,7 +1621,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de calidad",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Ranking de satisfacción por asignatura y profesor\n2. Análisis temático: mejores prácticas y áreas de mejora\n3. Correlación satisfacción-rendimiento\n4. Alertas de calidad activas\n5. Tendencia por semestre y departamento\n6. Comparativa entre titulaciones"
+        "prompt": "Genera código Streamlit con:\n1. Ranking de satisfacción por asignatura y profesor\n2. Análisis temático: mejores prácticas y áreas de mejora\n3. Correlación satisfacción-rendimiento\n4. Alertas de calidad activas\n5. Tendencia por semestre y departamento\n6. Comparativa entre titulaciones. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de análisis",
@@ -1642,7 +1642,7 @@ const PROMPTS = {
       {
         "title": "Crear datos fuente",
         "desc": "5 sistemas fuente principales.",
-        "prompt": "Crea 5 tablas fuente:\n1. RAW_DEMOGRAPHICS: student_id, fecha_nacimiento, genero, nacionalidad, provincia_residencia, codigo_postal, tipo_acceso (Selectividad, FP, Mayores_25, Internacional)\n2. RAW_ACADEMIC: student_id, grado, curso, creditos_matriculados INT, creditos_aprobados INT, nota_media FLOAT, convocatorias_extra INT, estado_matricula\n3. RAW_ENGAGEMENT: student_id, semestre, accesos_lms INT, tiempo_lms_min INT, biblioteca_prestamos INT, deportes_inscrito BOOLEAN, asociaciones INT, eventos_asistidos INT\n4. RAW_FINANCIAL: student_id, semestre, beca_tipo, beca_importe FLOAT, deuda_pendiente FLOAT, pago_fraccionado BOOLEAN, situacion_economica\n5. RAW_CAREER: student_id, practicas_realizadas INT, empresa_practicas VARCHAR, orientacion_sesiones INT, cv_actualizado BOOLEAN, competencias_certificadas INT\nGenera datos para 40,000 estudiantes."
+        "prompt": "Crea 5 tablas fuente:\n1. RAW_DEMOGRAPHICS: student_id, fecha_nacimiento, genero, nacionalidad, provincia_residencia, codigo_postal, tipo_acceso (Selectividad, FP, Mayores_25, Internacional)\n2. RAW_ACADEMIC: student_id, grado, curso, creditos_matriculados INT, creditos_aprobados INT, nota_media FLOAT, convocatorias_extra INT, estado_matricula\n3. RAW_ENGAGEMENT: student_id, semestre, accesos_lms INT, tiempo_lms_min INT, biblioteca_prestamos INT, deportes_inscrito BOOLEAN, asociaciones INT, eventos_asistidos INT\n4. RAW_FINANCIAL: student_id, semestre, beca_tipo, beca_importe FLOAT, deuda_pendiente FLOAT, pago_fraccionado BOOLEAN, situacion_economica\n5. RAW_CAREER: student_id, practicas_realizadas INT, empresa_practicas VARCHAR, orientacion_sesiones INT, cv_actualizado BOOLEAN, competencias_certificadas INT\nGenera datos para 40,000 estudiantes. Usa SQL GENERATOR(ROWCOUNT => 40000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear Entity",
@@ -1672,7 +1672,7 @@ const PROMPTS = {
       {
         "title": "Dashboard del Feature Store",
         "desc": "Streamlit de monitorización.",
-        "prompt": "Genera código Streamlit con:\n1. Resumen: 5 FeatureViews, features totales, último refresh\n2. Buscador de estudiante con perfil 360 (con enmascaramiento RGPD)\n3. Distribución de perfiles por riesgo y engagement\n4. Métricas de calidad: completitud, freshness, drift\n5. Audit log de accesos\n6. Cumplimiento RGPD: finalidad, minimización, accesos"
+        "prompt": "Genera código Streamlit con:\n1. Resumen: 5 FeatureViews, features totales, último refresh\n2. Buscador de estudiante con perfil 360 (con enmascaramiento RGPD)\n3. Distribución de perfiles por riesgo y engagement\n4. Métricas de calidad: completitud, freshness, drift\n5. Audit log de accesos\n6. Cumplimiento RGPD: finalidad, minimización, accesos. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de mantenimiento",
@@ -1698,7 +1698,7 @@ const PROMPTS = {
       {
         "title": "Crear segmentos",
         "desc": "Microsegmentación por comportamiento.",
-        "prompt": "Usa ML.CLASSIFICATION para crear segmentos de leads: explorador (mucha web, no contacta), decidido (pocas interacciones, alta conversión), comparador (descarga de varias universidades), recomendado (viene de prescriptor), professional (busca máster/executive). Para cada segmento: tasa de conversión, canal preferido, mensaje que convierte."
+        "prompt": "Usa ML.CLASSIFICATION para crear segmentos de leads: explorador (mucha web, no contacta), decidido (pocas interacciones, alta conversión), comparador (descarga de varias universidades), recomendado (viene de prescriptor), professional (busca máster/executive). Para cada segmento: tasa de conversión, canal preferido, mensaje que convierte. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Generar mensajes personalizados",
@@ -1718,7 +1718,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de marketing",
         "desc": "Streamlit de campañas.",
-        "prompt": "Genera código Streamlit con:\n1. Segmentos de leads con perfil y tasa de conversión\n2. Scoring de leads activos con acciones recomendadas\n3. ROI por canal, programa y segmento\n4. Generador de mensajes personalizados con LLM\n5. Funnel de conversión por segmento\n6. Presupuesto óptimo por canal"
+        "prompt": "Genera código Streamlit con:\n1. Segmentos de leads con perfil y tasa de conversión\n2. Scoring de leads activos con acciones recomendadas\n3. ROI por canal, programa y segmento\n4. Generador de mensajes personalizados con LLM\n5. Funnel de conversión por segmento\n6. Presupuesto óptimo por canal. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de captación",
@@ -1739,7 +1739,7 @@ const PROMPTS = {
       {
         "title": "Crear corpus de entregas",
         "desc": "Historial de trabajos de estudiantes.",
-        "prompt": "Crea la tabla ENTREGAS_ACADEMICAS con: entrega_id, student_id, asignatura_id, tipo (Ensayo, Trabajo, Codigo, Presentacion, TFG), fecha_entrega TIMESTAMP, texto TEXT, longitud_palabras INT, tiempo_edicion_min INT, metadata_documento TEXT. Genera 100,000 entregas de 5,000 estudiantes × 2 cursos. El 8% tiene indicios de fraude (plagio, IA, suplantación)."
+        "prompt": "Crea la tabla ENTREGAS_ACADEMICAS con: entrega_id, student_id, asignatura_id, tipo (Ensayo, Trabajo, Codigo, Presentacion, TFG), fecha_entrega TIMESTAMP, texto TEXT, longitud_palabras INT, tiempo_edicion_min INT, metadata_documento TEXT. Genera 100,000 entregas de 5,000 estudiantes × 2 cursos. El 8% tiene indicios de fraude (plagio, IA, suplantación). Usa SQL GENERATOR(ROWCOUNT => 5000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear baseline estilométrico",
@@ -1759,12 +1759,12 @@ const PROMPTS = {
       {
         "title": "Detectar suplantación en exámenes",
         "desc": "Patrones de comportamiento.",
-        "prompt": "Crea tabla ACTIVIDAD_EXAMEN_ONLINE con: student_id, examen_id, hora_inicio, hora_fin, cambios_ventana INT, IP_address, navegador, tiempo_respuesta_por_pregunta TEXT. Usa ML.CLASSIFICATION para detectar suplantación: cambio de patrón de respuesta, IP inusual, tiempos atípicos vs perfil habitual."
+        "prompt": "Crea tabla ACTIVIDAD_EXAMEN_ONLINE con: student_id, examen_id, hora_inicio, hora_fin, cambios_ventana INT, IP_address, navegador, tiempo_respuesta_por_pregunta TEXT. Usa ML.CLASSIFICATION para detectar suplantación: cambio de patrón de respuesta, IP inusual, tiempos atípicos vs perfil habitual. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Dashboard de integridad",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Alertas de fraude con evidencia detallada\n2. Análisis estilométrico: perfil del estudiante vs entrega\n3. Detección de IA con probabilidad y fragmentos\n4. Similitud semántica con entregas previas\n5. Métricas: detecciones, falsos positivos, tendencia\n6. Estadísticas por asignatura y tipo de evaluación"
+        "prompt": "Genera código Streamlit con:\n1. Alertas de fraude con evidencia detallada\n2. Análisis estilométrico: perfil del estudiante vs entrega\n3. Detección de IA con probabilidad y fragmentos\n4. Similitud semántica con entregas previas\n5. Métricas: detecciones, falsos positivos, tendencia\n6. Estadísticas por asignatura y tipo de evaluación. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de detección",

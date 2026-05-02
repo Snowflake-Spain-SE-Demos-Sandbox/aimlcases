@@ -93,7 +93,7 @@
 <body>
 <header class="hero">
   <div class="hero-left">
-    <div class="logos"><div class="logo-snowflake"><img src="bug-white.png" alt="Snowflake" width="32" height="32" /> Snowflake</div></div>
+    <div class="logos"></div>
     <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al &Iacute;ndice de Industrias</a>
     <p class="hero-eyebrow">Salud y Hospitales &times; Snowflake</p>
     <h1 class="hero-title">Soluciones IA/ML para Salud y Hospitales</h1>
@@ -1322,7 +1322,7 @@ const PROMPTS = {
       {
         "title": "Crear datos de comorbilidades",
         "desc": "Historial de patologías crónicas del paciente.",
-        "prompt": "Crea la tabla COMORBILIDADES_PACIENTE con: patient_id, cie10_codigo, cie10_descripcion, tipo_comorbilidad (Diabetes, EPOC, ICC, IRC, HTA, Demencia, Cancer, Hepatopatia, VIH), fecha_diagnostico DATE, activa BOOLEAN, severidad (Leve, Moderada, Grave). Genera comorbilidades para los 50,000 pacientes. Los pacientes con Charlson >3 tienen 2.5x más readmisiones."
+        "prompt": "Crea la tabla COMORBILIDADES_PACIENTE con: patient_id, cie10_codigo, cie10_descripcion, tipo_comorbilidad (Diabetes, EPOC, ICC, IRC, HTA, Demencia, Cancer, Hepatopatia, VIH), fecha_diagnostico DATE, activa BOOLEAN, severidad (Leve, Moderada, Grave). Genera comorbilidades para los 50,000 pacientes. Los pacientes con Charlson >3 tienen 2.5x más readmisiones. Usa SQL GENERATOR(ROWCOUNT => 50000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear datos del alta",
@@ -1337,7 +1337,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de readmisión",
         "desc": "ML.CLASSIFICATION para scoring de riesgo.",
-        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para predecir readmision_30d: si/no. Variables: todas las features de FEATURES_READMISION. Entrena con 4 años y valida con el 5º. Evalúa AUC, precision, recall. Objetivo: AUC >0.75, recall >0.65 para intervención eficiente."
+        "prompt": "Usa SNOWFLAKE.ML.CLASSIFICATION para predecir readmision_30d: si/no. Variables: todas las features de FEATURES_READMISION. Entrena con 4 años y valida con el 5º. Evalúa AUC, precision, recall. Objetivo: AUC >0.75, recall >0.65 para intervención eficiente. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Registrar en Model Registry",
@@ -1352,7 +1352,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de readmisiones",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Lista de pacientes al alta con scoring de riesgo\n2. Factores de riesgo modificables para intervención\n3. Métricas del modelo: AUC, precision, recall por versión de Registry\n4. Tendencia de readmisiones por servicio y mes\n5. Impacto de intervenciones: readmisiones evitadas\n6. Comparativa de versiones del modelo en Registry"
+        "prompt": "Genera código Streamlit con:\n1. Lista de pacientes al alta con scoring de riesgo\n2. Factores de riesgo modificables para intervención\n3. Métricas del modelo: AUC, precision, recall por versión de Registry\n4. Tendencia de readmisiones por servicio y mes\n5. Impacto de intervenciones: readmisiones evitadas\n6. Comparativa de versiones del modelo en Registry. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de reentrenamiento",
@@ -1373,7 +1373,7 @@ const PROMPTS = {
       {
         "title": "Crear base de conocimiento",
         "desc": "Generar corpus de protocolos, preparaciones y FAQ.",
-        "prompt": "Crea la tabla CONOCIMIENTO_HOSPITALARIO con: doc_id, categoria (Preparacion_Prueba, FAQ_Servicio, Informacion_General, Citas, Urgencias, Farmacia), titulo, contenido TEXT, servicio VARCHAR, fecha_actualizacion DATE, vigente BOOLEAN. Genera 400 documentos cubriendo: preparación de pruebas (ayuno, contraste, medicación), FAQ por servicio, información de horarios, parking, acompañamiento, resultados."
+        "prompt": "Crea la tabla CONOCIMIENTO_HOSPITALARIO con: doc_id, categoria (Preparacion_Prueba, FAQ_Servicio, Informacion_General, Citas, Urgencias, Farmacia), titulo, contenido TEXT, servicio VARCHAR, fecha_actualizacion DATE, vigente BOOLEAN. Genera 400 documentos cubriendo: preparación de pruebas (ayuno, contraste, medicación), FAQ por servicio, información de horarios, parking, acompañamiento, resultados. Usa SQL GENERATOR(ROWCOUNT => 400) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Indexar con Cortex Search",
@@ -1403,7 +1403,7 @@ const PROMPTS = {
       {
         "title": "Dashboard del chatbot",
         "desc": "Streamlit de operación.",
-        "prompt": "Genera código Streamlit con:\n1. Demo de chat con perfil de paciente y citas\n2. Métricas: resolución, satisfacción, escalados\n3. Base de conocimiento: búsqueda y gestión\n4. Top consultas frecuentes y no resueltas\n5. Comparativa coste: chatbot vs call center\n6. Gestión de citas integrada"
+        "prompt": "Genera código Streamlit con:\n1. Demo de chat con perfil de paciente y citas\n2. Métricas: resolución, satisfacción, escalados\n3. Base de conocimiento: búsqueda y gestión\n4. Top consultas frecuentes y no resueltas\n5. Comparativa coste: chatbot vs call center\n6. Gestión de citas integrada. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de mantenimiento",
@@ -1439,7 +1439,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de forecast",
         "desc": "ML.FORECAST por servicio.",
-        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir urgencias_atendidas e ingresos_urgentes por servicio. Serie temporal con timestamp fecha. Variables exógenas: tasa_gripe, temperatura_max, es_festivo, es_vacaciones. Entrena con 3 años y valida con el 4º. Genera predicciones a 1, 7 y 28 días."
+        "prompt": "Usa SNOWFLAKE.ML.FORECAST para predecir urgencias_atendidas e ingresos_urgentes por servicio. Serie temporal con timestamp fecha. Variables exógenas: tasa_gripe, temperatura_max, es_festivo, es_vacaciones. Entrena con 3 años y valida con el 4º. Genera predicciones a 1, 7 y 28 días. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Registrar en Model Registry",
@@ -1454,7 +1454,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de planificación",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Predicción de demanda por servicio con bandas de confianza\n2. Plan de recursos: necesidades vs disponibles con alertas\n3. Impacto de variables exógenas: gripe, calor, festivos\n4. Accuracy del modelo: MAPE por servicio y horizonte\n5. Simulador: ¿qué pasa si hay brote de gripe severo?\n6. Comparativa de versiones en Model Registry"
+        "prompt": "Genera código Streamlit con:\n1. Predicción de demanda por servicio con bandas de confianza\n2. Plan de recursos: necesidades vs disponibles con alertas\n3. Impacto de variables exógenas: gripe, calor, festivos\n4. Accuracy del modelo: MAPE por servicio y horizonte\n5. Simulador: ¿qué pasa si hay brote de gripe severo?\n6. Comparativa de versiones en Model Registry. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de actualización",
@@ -1475,7 +1475,7 @@ const PROMPTS = {
       {
         "title": "Crear registro de crónicos",
         "desc": "Generar datos de pacientes con patologías crónicas.",
-        "prompt": "Crea la tabla REGISTRO_CRONICOS con: patient_id, patologia_principal (Diabetes_T2, EPOC, ICC, IRC, HTA, Pluripatologico), patologias_secundarias TEXT, indice_charlson INT, fecha_diagnostico DATE, tratamiento_actual TEXT, centro_salud VARCHAR, medico_referencia. Genera 30,000 pacientes crónicos."
+        "prompt": "Crea la tabla REGISTRO_CRONICOS con: patient_id, patologia_principal (Diabetes_T2, EPOC, ICC, IRC, HTA, Pluripatologico), patologias_secundarias TEXT, indice_charlson INT, fecha_diagnostico DATE, tratamiento_actual TEXT, centro_salud VARCHAR, medico_referencia. Genera 30,000 pacientes crónicos. Usa SQL GENERATOR(ROWCOUNT => 30000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear datos clínicos de seguimiento",
@@ -1490,7 +1490,7 @@ const PROMPTS = {
       {
         "title": "Estratificar con ML.CLASSIFICATION",
         "desc": "Clasificar en niveles de riesgo.",
-        "prompt": "Usa ML.CLASSIFICATION para estratificar: alto_riesgo, riesgo_moderado, estable, controlado. Variables: todas las features. Evalúa accuracy, recall por categoría. Los pacientes de alto riesgo deben tener >70% de captura de descompensaciones futuras."
+        "prompt": "Usa ML.CLASSIFICATION para estratificar: alto_riesgo, riesgo_moderado, estable, controlado. Variables: todas las features. Evalúa accuracy, recall por categoría. Los pacientes de alto riesgo deben tener >70% de captura de descompensaciones futuras. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Generar plan de seguimiento",
@@ -1500,7 +1500,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de crónicos",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Pirámide de estratificación: distribución de pacientes por nivel\n2. Ficha de paciente con trayectoria de indicadores\n3. Plan de seguimiento personalizado\n4. Alertas: pacientes que cambian de nivel de riesgo\n5. Métricas: ingresos evitados, adherencia, descompensaciones\n6. Mapa de crónicos por centro de salud"
+        "prompt": "Genera código Streamlit con:\n1. Pirámide de estratificación: distribución de pacientes por nivel\n2. Ficha de paciente con trayectoria de indicadores\n3. Plan de seguimiento personalizado\n4. Alertas: pacientes que cambian de nivel de riesgo\n5. Métricas: ingresos evitados, adherencia, descompensaciones\n6. Mapa de crónicos por centro de salud. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de seguimiento",
@@ -1521,7 +1521,7 @@ const PROMPTS = {
       {
         "title": "Crear inventario de equipos",
         "desc": "Catálogo de equipamiento médico.",
-        "prompt": "Crea la tabla EQUIPOS_MEDICOS con: equipo_id, tipo (TAC, Resonancia, RX, Ecografo, Laboratorio_Analizador, Monitor_UCI, Ventilador, Electrobisturi), marca, modelo, servicio, ubicacion, fecha_instalacion DATE, vida_util_anos INT, criticidad (Vital, Alta, Media, Baja), contrato_mantenimiento BOOLEAN, coste_equipo_eur FLOAT. Genera 500 equipos."
+        "prompt": "Crea la tabla EQUIPOS_MEDICOS con: equipo_id, tipo (TAC, Resonancia, RX, Ecografo, Laboratorio_Analizador, Monitor_UCI, Ventilador, Electrobisturi), marca, modelo, servicio, ubicacion, fecha_instalacion DATE, vida_util_anos INT, criticidad (Vital, Alta, Media, Baja), contrato_mantenimiento BOOLEAN, coste_equipo_eur FLOAT. Genera 500 equipos. Usa SQL GENERATOR(ROWCOUNT => 500) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Cargar datos de uso y sensores",
@@ -1531,7 +1531,7 @@ const PROMPTS = {
       {
         "title": "Crear historial de mantenimiento",
         "desc": "Registro de intervenciones y averías.",
-        "prompt": "Crea la tabla HISTORIAL_MANTENIMIENTO con: equipo_id, fecha DATE, tipo (Preventivo, Correctivo_Urgente, Correctivo_Programado, Calibracion), descripcion TEXT, pieza_sustituida, coste_eur FLOAT, tiempo_inactivo_horas FLOAT, pruebas_canceladas INT, derivaciones_generadas INT. Genera 5,000 registros de mantenimiento. Las averías urgentes cuestan 40% más y cancelan 3-10 pruebas."
+        "prompt": "Crea la tabla HISTORIAL_MANTENIMIENTO con: equipo_id, fecha DATE, tipo (Preventivo, Correctivo_Urgente, Correctivo_Programado, Calibracion), descripcion TEXT, pieza_sustituida, coste_eur FLOAT, tiempo_inactivo_horas FLOAT, pruebas_canceladas INT, derivaciones_generadas INT. Genera 5,000 registros de mantenimiento. Las averías urgentes cuestan 40% más y cancelan 3-10 pruebas. Usa SQL GENERATOR(ROWCOUNT => 5000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Calcular features predictivas",
@@ -1541,12 +1541,12 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo predictivo",
         "desc": "ML.CLASSIFICATION para riesgo de avería.",
-        "prompt": "Usa ML.CLASSIFICATION para clasificar estado: optimo, atencion_requerida, riesgo_averia, critico. Variables: todas las features. Evalúa precision y recall. Para equipos en riesgo_averia/critico, estimar: probabilidad_averia_30d, tipo_fallo_probable, impacto_cancelaciones."
+        "prompt": "Usa ML.CLASSIFICATION para clasificar estado: optimo, atencion_requerida, riesgo_averia, critico. Variables: todas las features. Evalúa precision y recall. Para equipos en riesgo_averia/critico, estimar: probabilidad_averia_30d, tipo_fallo_probable, impacto_cancelaciones. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Dashboard de equipamiento",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Panel de equipos con semáforo de estado\n2. Predicción de avería por equipo con timeline\n3. Plan de mantenimiento preventivo priorizado\n4. Impacto de averías: cancelaciones, derivaciones, coste\n5. Métricas: predicciones acertadas, ahorro, disponibilidad\n6. Análisis de ciclo de vida y reposición"
+        "prompt": "Genera código Streamlit con:\n1. Panel de equipos con semáforo de estado\n2. Predicción de avería por equipo con timeline\n3. Plan de mantenimiento preventivo priorizado\n4. Impacto de averías: cancelaciones, derivaciones, coste\n5. Métricas: predicciones acertadas, ahorro, disponibilidad\n6. Análisis de ciclo de vida y reposición. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de monitorización",
@@ -1567,7 +1567,7 @@ const PROMPTS = {
       {
         "title": "Crear corpus de historiales",
         "desc": "Generar informes clínicos sintéticos.",
-        "prompt": "Crea la tabla HISTORIALES_CLINICOS con: documento_id, patient_id, tipo_documento (Informe_Alta, Nota_Evolucion, Interconsulta, Informe_Prueba), servicio, fecha DATE, texto TEXT, medico_hash. Genera 50,000 documentos con texto clínico realista en español: abreviaturas (Tto, Dx, Rx, Hx), terminología médica, negaciones ('no fiebre'), y estructura típica (MC, AP, EA, EF, Juicio Clínico, Plan)."
+        "prompt": "Crea la tabla HISTORIALES_CLINICOS con: documento_id, patient_id, tipo_documento (Informe_Alta, Nota_Evolucion, Interconsulta, Informe_Prueba), servicio, fecha DATE, texto TEXT, medico_hash. Genera 50,000 documentos con texto clínico realista en español: abreviaturas (Tto, Dx, Rx, Hx), terminología médica, negaciones (. Usa SQL GENERATOR(ROWCOUNT => 50000) con UNIFORM() para distribuciones numéricas.'no fiebre'), y estructura típica (MC, AP, EA, EF, Juicio Clínico, Plan)."
       },
       {
         "title": "Extraer entidades clínicas",
@@ -1592,7 +1592,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de inteligencia clínica",
         "desc": "Streamlit de NLP clínico.",
-        "prompt": "Genera código Streamlit con:\n1. Visor de historial con entidades extraídas resaltadas\n2. Búsqueda semántica en historiales\n3. Codificación CIE-10 automática con revisión\n4. Alertas de interacciones farmacológicas\n5. Estadísticas: diagnósticos frecuentes, medicación, procedimientos\n6. Métricas de extracción: precision, recall, F1"
+        "prompt": "Genera código Streamlit con:\n1. Visor de historial con entidades extraídas resaltadas\n2. Búsqueda semántica en historiales\n3. Codificación CIE-10 automática con revisión\n4. Alertas de interacciones farmacológicas\n5. Estadísticas: diagnósticos frecuentes, medicación, procedimientos\n6. Métricas de extracción: precision, recall, F1. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de procesamiento",
@@ -1638,7 +1638,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de experiencia",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Resumen de satisfacción por servicio con semáforo\n2. Análisis temático: principales quejas y elogios\n3. Alertas de calidad activas con recomendaciones\n4. Tendencia de sentimiento por servicio y mes\n5. Correlación satisfacción - indicadores clínicos\n6. Comparativa entre servicios y periodos"
+        "prompt": "Genera código Streamlit con:\n1. Resumen de satisfacción por servicio con semáforo\n2. Análisis temático: principales quejas y elogios\n3. Alertas de calidad activas con recomendaciones\n4. Tendencia de sentimiento por servicio y mes\n5. Correlación satisfacción - indicadores clínicos\n6. Comparativa entre servicios y periodos. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de análisis",
@@ -1659,7 +1659,7 @@ const PROMPTS = {
       {
         "title": "Crear datos fuente",
         "desc": "Generar datos de las 5 fuentes clínicas principales.",
-        "prompt": "Crea 5 tablas fuente:\n1. RAW_DEMOGRAPHICS: patient_id, fecha_nacimiento, genero, codigo_postal, telefono_hash, centro_salud, medico_familia\n2. RAW_CLINICAL_HISTORY: patient_id, diagnosticos_activos_json, indice_charlson INT, alergias_json, grupo_sanguineo, antecedentes_quirurgicos\n3. RAW_MEDICATIONS: patient_id, medicacion_activa_json, num_farmacos INT, adherencia_pct FLOAT, interacciones_detectadas INT, ultima_revision_fecha DATE\n4. RAW_LAB_RESULTS: patient_id, fecha DATE, hemoglobina FLOAT, glucosa FLOAT, creatinina FLOAT, colesterol FLOAT, hba1c FLOAT, leucocitos FLOAT, pcr FLOAT\n5. RAW_ACTIVITY: patient_id, ingresos_12m INT, urgencias_12m INT, consultas_12m INT, intervenciones_12m INT, ultima_visita_fecha DATE\nGenera datos para 80,000 pacientes."
+        "prompt": "Crea 5 tablas fuente:\n1. RAW_DEMOGRAPHICS: patient_id, fecha_nacimiento, genero, codigo_postal, telefono_hash, centro_salud, medico_familia\n2. RAW_CLINICAL_HISTORY: patient_id, diagnosticos_activos_json, indice_charlson INT, alergias_json, grupo_sanguineo, antecedentes_quirurgicos\n3. RAW_MEDICATIONS: patient_id, medicacion_activa_json, num_farmacos INT, adherencia_pct FLOAT, interacciones_detectadas INT, ultima_revision_fecha DATE\n4. RAW_LAB_RESULTS: patient_id, fecha DATE, hemoglobina FLOAT, glucosa FLOAT, creatinina FLOAT, colesterol FLOAT, hba1c FLOAT, leucocitos FLOAT, pcr FLOAT\n5. RAW_ACTIVITY: patient_id, ingresos_12m INT, urgencias_12m INT, consultas_12m INT, intervenciones_12m INT, ultima_visita_fecha DATE\nGenera datos para 80,000 pacientes. Usa SQL GENERATOR(ROWCOUNT => 80000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Crear Entity del Feature Store",
@@ -1689,7 +1689,7 @@ const PROMPTS = {
       {
         "title": "Dashboard del Feature Store",
         "desc": "Streamlit de monitorización.",
-        "prompt": "Genera código Streamlit con:\n1. Resumen: 5 FeatureViews, features totales, último refresh\n2. Buscador de paciente con perfil 360 (con enmascaramiento RGPD)\n3. Distribución de perfiles clínicos y de riesgo\n4. Métricas de calidad: completitud, freshness, drift\n5. Audit log de accesos al Feature Store\n6. Cumplimiento RGPD: finalidad, minimización, consentimiento"
+        "prompt": "Genera código Streamlit con:\n1. Resumen: 5 FeatureViews, features totales, último refresh\n2. Buscador de paciente con perfil 360 (con enmascaramiento RGPD)\n3. Distribución de perfiles clínicos y de riesgo\n4. Métricas de calidad: completitud, freshness, drift\n5. Audit log de accesos al Feature Store\n6. Cumplimiento RGPD: finalidad, minimización, consentimiento. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de mantenimiento",
@@ -1715,17 +1715,17 @@ const PROMPTS = {
       {
         "title": "Crear datos de recursos",
         "desc": "Quirófanos, personal e instrumental.",
-        "prompt": "Crea las tablas:\n1. QUIROFANOS con: quirofano_id, tipo (General, Cardiaco, Oftalmologico, Ambulatorio), equipamiento TEXT, horario_disponible, coste_hora_eur FLOAT\n2. LISTA_ESPERA_QUIRURGICA con: patient_id, procedimiento, especialidad, prioridad (Urgente, Preferente, Normal), fecha_inclusion DATE, dias_espera INT, asa_score, necesita_uci BOOLEAN, instrumental_especial BOOLEAN\nGenera 10 quirófanos y 3,000 pacientes en lista de espera."
+        "prompt": "Crea las tablas:\n1. QUIROFANOS con: quirofano_id, tipo (General, Cardiaco, Oftalmologico, Ambulatorio), equipamiento TEXT, horario_disponible, coste_hora_eur FLOAT\n2. LISTA_ESPERA_QUIRURGICA con: patient_id, procedimiento, especialidad, prioridad (Urgente, Preferente, Normal), fecha_inclusion DATE, dias_espera INT, asa_score, necesita_uci BOOLEAN, instrumental_especial BOOLEAN\nGenera 10 quirófanos y 3,000 pacientes en lista de espera. Usa SQL GENERATOR(ROWCOUNT => 3000) con UNIFORM() para distribuciones numéricas."
       },
       {
         "title": "Predecir duración quirúrgica",
         "desc": "ML.FORECAST por tipo de cirugía.",
-        "prompt": "Usa ML.FORECAST para predecir duracion_real_min por: procedimiento, especialidad, asa_score, cirujano, edad, comorbilidades. Crea vista PREDICCION_DURACION: intervencion_id, duracion_estimada_ml_min, intervalo_confianza_min, factores_que_alargan. Evalúa MAE por especialidad. Objetivo: error <15%."
+        "prompt": "Usa ML.FORECAST para predecir duracion_real_min por: procedimiento, especialidad, asa_score, cirujano, edad, comorbilidades. Crea vista PREDICCION_DURACION: intervencion_id, duracion_estimada_ml_min, intervalo_confianza_min, factores_que_alargan. Evalúa MAE por especialidad. Objetivo: error <15%. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Predecir riesgo de cancelación",
         "desc": "ML.CLASSIFICATION para cancelaciones.",
-        "prompt": "Usa ML.CLASSIFICATION para predecir cancelacion: si/no. Variables: asa_score, edad, comorbilidades, anticoagulación, necesita_uci, dia_semana, distancia_domicilio, citas_previas_canceladas. Para alto riesgo: generar acciones preventivas (confirmar teléfono, asegurar cama UCI, protocolo anticoagulación)."
+        "prompt": "Usa ML.CLASSIFICATION para predecir cancelacion: si/no. Variables: asa_score, edad, comorbilidades, anticoagulación, necesita_uci, dia_semana, distancia_domicilio, citas_previas_canceladas. Para alto riesgo: generar acciones preventivas (confirmar teléfono, asegurar cama UCI, protocolo anticoagulación). Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Optimizar programación semanal",
@@ -1735,7 +1735,7 @@ const PROMPTS = {
       {
         "title": "Dashboard quirúrgico",
         "desc": "Streamlit de gestión.",
-        "prompt": "Genera código Streamlit con:\n1. Programa quirúrgico semanal con estimaciones ML\n2. Riesgo de cancelación por intervención con acciones preventivas\n3. Utilización de quirófanos: real vs óptimo\n4. Lista de espera: prioridad, días espera, programación estimada\n5. Métricas: utilización, cancelaciones, precisión de duración\n6. Simulador: impacto de añadir/quitar un quirófano"
+        "prompt": "Genera código Streamlit con:\n1. Programa quirúrgico semanal con estimaciones ML\n2. Riesgo de cancelación por intervención con acciones preventivas\n3. Utilización de quirófanos: real vs óptimo\n4. Lista de espera: prioridad, días espera, programación estimada\n5. Métricas: utilización, cancelaciones, precisión de duración\n6. Simulador: impacto de añadir/quitar un quirófano. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de optimización",
@@ -1771,7 +1771,7 @@ const PROMPTS = {
       {
         "title": "Entrenar modelo de detección",
         "desc": "ML.CLASSIFICATION para anomalías.",
-        "prompt": "Usa ML.CLASSIFICATION para clasificar: normal, anomalia_leve, anomalia_moderada, anomalia_grave. Variables: todas las features. Evalúa precision y recall. Para anomalías graves: generar perfil detallado con tipo de irregularidad y importe estimado."
+        "prompt": "Usa ML.CLASSIFICATION para clasificar: normal, anomalia_leve, anomalia_moderada, anomalia_grave. Variables: todas las features. Evalúa precision y recall. Para anomalías graves: generar perfil detallado con tipo de irregularidad y importe estimado. Usa evaluate => TRUE para generar métricas de evaluación."
       },
       {
         "title": "Generar alertas de auditoría",
@@ -1781,7 +1781,7 @@ const PROMPTS = {
       {
         "title": "Dashboard de control",
         "desc": "Streamlit de auditoría.",
-        "prompt": "Genera código Streamlit con:\n1. Alertas priorizadas con detalle de anomalía\n2. Benchmarking: servicio vs nacional por GRD\n3. Perfiles de codificación por servicio y profesional\n4. Métricas: anomalías detectadas, importe recuperable, tendencia\n5. Análisis por pagador: SNS, mutuas, aseguradoras\n6. Evolución de peso medio de GRD por servicio"
+        "prompt": "Genera código Streamlit con:\n1. Alertas priorizadas con detalle de anomalía\n2. Benchmarking: servicio vs nacional por GRD\n3. Perfiles de codificación por servicio y profesional\n4. Métricas: anomalías detectadas, importe recuperable, tendencia\n5. Análisis por pagador: SNS, mutuas, aseguradoras\n6. Evolución de peso medio de GRD por servicio. Usa snowflake.connector.connect() para ejecución local del dashboard."
       },
       {
         "title": "Pipeline de auditoría",
