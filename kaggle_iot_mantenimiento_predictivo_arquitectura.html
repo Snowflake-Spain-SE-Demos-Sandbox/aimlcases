@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detección de Anomalías IoT — Cortex Code en Snowflake</title>
+<style>
+  :root {
+    --sf-blue: #29B5E8;
+    --sf-dark: #11567F;
+    --sf-navy: #0D2B45;
+    --sf-light: #E8F7FC;
+    --accent-red: #E85D75;
+    --accent-green: #2ECC71;
+    --accent-orange: #F39C12;
+    --accent-purple: #9B59B6;
+    --bg: #FAFBFD;
+    --card-bg: #FFFFFF;
+    --text: #1E293B;
+    --text-secondary: #64748B;
+    --border: #E2E8F0;
+    --code-bg: #F1F5F9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  .hero { background: linear-gradient(135deg, var(--sf-navy) 0%, var(--sf-dark) 50%, #1a6b9c 100%); color: white; padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(41,181,232,0.15) 0%, transparent 50%); }
+  .hero h1 { font-size: 2.8em; font-weight: 700; margin-bottom: 12px; position: relative; }
+  .hero .subtitle { font-size: 1.3em; opacity: 0.85; position: relative; }
+  .hero .badge { display: inline-block; background: rgba(41,181,232,0.25); border: 1px solid rgba(41,181,232,0.5); padding: 6px 18px; border-radius: 20px; font-size: 0.85em; margin-top: 20px; position: relative; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  section { margin: 60px 0; }
+  h2 { font-size: 1.9em; color: var(--sf-dark); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 3px solid var(--sf-blue); display: inline-block; }
+  h3 { font-size: 1.3em; color: var(--sf-dark); margin: 28px 0 14px; }
+  p { margin-bottom: 16px; color: var(--text); }
+  .card { background: var(--card-bg); border-radius: 12px; padding: 32px; margin: 24px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04); border: 1px solid var(--border); }
+  .card-highlight { border-left: 4px solid var(--sf-blue); }
+  .card-warning { border-left: 4px solid var(--accent-orange); background: #FFFBF0; }
+  .card-success { border-left: 4px solid var(--accent-green); background: #F0FFF5; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 24px 0; }
+  .metric-card { background: var(--card-bg); border-radius: 10px; padding: 24px; text-align: center; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .metric-value { font-size: 2.2em; font-weight: 700; color: var(--sf-dark); }
+  .metric-label { font-size: 0.85em; color: var(--text-secondary); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th { background: var(--sf-dark); color: white; padding: 14px 18px; text-align: left; font-weight: 600; font-size: 0.9em; }
+  td { padding: 12px 18px; border-bottom: 1px solid var(--border); font-size: 0.92em; }
+  tr:nth-child(even) { background: #F8FAFC; }
+  tr:hover { background: var(--sf-light); }
+  code { background: var(--code-bg); padding: 2px 8px; border-radius: 4px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.88em; color: var(--sf-dark); }
+  pre { background: var(--sf-navy); color: #E2E8F0; padding: 24px; border-radius: 10px; overflow-x: auto; font-size: 0.88em; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  .sql-kw { color: var(--sf-blue); font-weight: 600; }
+  .py-kw { color: var(--accent-purple); }
+  .comment { color: #7C8BA1; font-style: italic; }
+  .svg-container { display: flex; justify-content: center; margin: 30px 0; overflow-x: auto; }
+  .svg-container svg { max-width: 100%; height: auto; }
+  .timeline { position: relative; padding: 20px 0; }
+  .timeline-item { display: flex; gap: 20px; margin-bottom: 32px; align-items: flex-start; }
+  .timeline-num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--sf-blue); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1em; }
+  .timeline-content { flex: 1; }
+  .timeline-content .prompt { background: var(--sf-light); padding: 10px 16px; border-radius: 8px; margin-top: 8px; font-style: italic; color: var(--sf-dark); border-left: 3px solid var(--sf-blue); }
+  .timeline-content .result { font-size: 0.9em; color: var(--text-secondary); margin-top: 6px; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; }
+  .comparison > div { padding: 24px; border-radius: 10px; }
+  .comparison .old { background: #FFF5F5; border: 1px solid #FED7D7; }
+  .comparison .new { background: #F0FFF4; border: 1px solid #C6F6D5; }
+  .comparison h4 { margin-bottom: 12px; font-size: 1.1em; }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78em; font-weight: 600; margin-right: 6px; }
+  .tag-sql { background: #DBEAFE; color: #1E40AF; }
+  .tag-python { background: #FEF3C7; color: #92400E; }
+  .tag-ml { background: #EDE9FE; color: #5B21B6; }
+  .tag-infra { background: #D1FAE5; color: #065F46; }
+  .feature-bar { display: flex; align-items: center; gap: 12px; margin: 6px 0; }
+  .feature-bar .label { width: 180px; text-align: right; font-size: 0.88em; font-weight: 500; }
+  .feature-bar .bar { height: 24px; border-radius: 4px; background: linear-gradient(90deg, var(--sf-blue), var(--sf-dark)); }
+  .feature-bar .pct { font-size: 0.85em; color: var(--text-secondary); width: 60px; }
+  .footer { background: var(--sf-navy); color: rgba(255,255,255,0.7); padding: 40px; text-align: center; margin-top: 60px; font-size: 0.9em; }
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.8em; }
+    .comparison { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Detección de Anomalías IoT</h1>
+  <div class="subtitle">Proyecto end-to-end de ML con Cortex Code en Snowflake</div>
+  <div class="badge">Smart Manufacturing &middot; 50 máquinas &middot; 100K lecturas &middot; 8 prompts</div>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<section>
+  <h2>1. El Problema</h2>
+  <p>Una fábrica inteligente opera <strong>50 máquinas</strong> equipadas con sensores IoT que registran temperatura, vibración, humedad, presión y consumo energético <strong>cada minuto</strong>. El dataset contiene <strong>100.000 lecturas</strong> con un <strong>8.9% de anomalías</strong> — fallos potenciales que, si no se detectan a tiempo, causan paradas no planificadas y pérdidas económicas.</p>
+
+  <div class="card card-highlight">
+    <strong>El reto:</strong> construir un sistema completo de detección de anomalías — desde la ingesta de datos hasta la inferencia en producción — <em>todo dentro de Snowflake</em>, usando únicamente prompts en lenguaje natural.
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-value">50</div><div class="metric-label">Máquinas IoT</div></div>
+    <div class="metric-card"><div class="metric-value">100K</div><div class="metric-label">Lecturas</div></div>
+    <div class="metric-card"><div class="metric-value">13</div><div class="metric-label">Variables</div></div>
+    <div class="metric-card"><div class="metric-value">8.9%</div><div class="metric-label">Anomalías</div></div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>2. Arquitectura General</h2>
+  <p>Todo el proyecto vive dentro de Snowflake. El Compute Pool ejecuta el notebook con Container Runtime, las Network Rules permiten acceso a Kaggle y PyPI, y el modelo queda registrado para inferencia batch vía Warehouse.</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 960 720" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, system-ui, sans-serif">
+      <!-- Background -->
+      <rect x="20" y="20" width="920" height="680" rx="16" fill="#0D2B45" opacity="0.03" stroke="#29B5E8" stroke-width="2" stroke-dasharray="8,4"/>
+      <text x="480" y="54" text-anchor="middle" fill="#0D2B45" font-size="18" font-weight="700">SNOWFLAKE ACCOUNT</text>
+
+      <!-- Internet sources -->
+      <rect x="40" y="80" width="170" height="80" rx="10" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="125" y="112" text-anchor="middle" fill="#92400E" font-size="13" font-weight="600">KAGGLE</text>
+      <text x="125" y="132" text-anchor="middle" fill="#92400E" font-size="10">api.kaggle.com</text>
+      <text x="125" y="148" text-anchor="middle" fill="#92400E" font-size="10">storage.googleapis.com</text>
+
+      <rect x="230" y="80" width="170" height="80" rx="10" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="315" y="112" text-anchor="middle" fill="#1E40AF" font-size="13" font-weight="600">PyPI</text>
+      <text x="315" y="132" text-anchor="middle" fill="#1E40AF" font-size="10">pypi.org</text>
+      <text x="315" y="148" text-anchor="middle" fill="#1E40AF" font-size="10">files.pythonhosted.org</text>
+
+      <!-- Cortex Code -->
+      <rect x="560" y="80" width="380" height="80" rx="10" fill="linear-gradient(135deg,#29B5E8,#11567F)" stroke="#29B5E8" stroke-width="2"/>
+      <rect x="560" y="80" width="380" height="80" rx="10" fill="#29B5E8" opacity="0.15"/>
+      <rect x="560" y="80" width="380" height="80" rx="10" fill="none" stroke="#29B5E8" stroke-width="2"/>
+      <text x="750" y="108" text-anchor="middle" fill="#0D2B45" font-size="15" font-weight="700">Cortex Code</text>
+      <text x="750" y="128" text-anchor="middle" fill="#11567F" font-size="11">Asistente IA en Snowsight</text>
+      <text x="750" y="146" text-anchor="middle" fill="#11567F" font-size="11">Prompts en español → Código + SQL + Visualizaciones</text>
+
+      <!-- EAI Box -->
+      <rect x="40" y="190" width="500" height="70" rx="10" fill="#F0FDF4" stroke="#22C55E" stroke-width="1.5"/>
+      <text x="290" y="215" text-anchor="middle" fill="#166534" font-size="13" font-weight="600">KAGGLE_PYPI_ACCESS_INTEGRATION</text>
+      <rect x="56" y="232" width="180" height="20" rx="4" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1"/>
+      <text x="146" y="246" text-anchor="middle" fill="#166534" font-size="9">KAGGLE_NETWORK_RULE (EGRESS)</text>
+      <rect x="248" y="232" width="180" height="20" rx="4" fill="#DCFCE7" stroke="#86EFAC" stroke-width="1"/>
+      <text x="338" y="246" text-anchor="middle" fill="#166534" font-size="9">PYPI_NETWORK_RULE (EGRESS)</text>
+
+      <!-- Arrows from internet to EAI -->
+      <line x1="125" y1="160" x2="125" y2="190" stroke="#F59E0B" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+      <line x1="315" y1="160" x2="315" y2="190" stroke="#3B82F6" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+
+      <!-- Arrow from Cortex Code down -->
+      <line x1="750" y1="160" x2="750" y2="300" stroke="#29B5E8" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-cyan)"/>
+      <text x="770" y="240" fill="#11567F" font-size="9" font-style="italic">genera código</text>
+
+      <!-- Compute Pool -->
+      <rect x="40" y="290" width="900" height="200" rx="12" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+      <text x="70" y="316" fill="#1E40AF" font-size="14" font-weight="700">COCO_COMPUTE_POOL</text>
+      <text x="280" y="316" fill="#64748B" font-size="11">(CPU_X64_XS, 1 nodo)</text>
+
+      <!-- Notebook -->
+      <rect x="60" y="330" width="860" height="140" rx="10" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="90" y="356" fill="#0D2B45" font-size="13" font-weight="700">📓 kaggle_setup.ipynb</text>
+      <text x="310" y="356" fill="#64748B" font-size="11">(Container Runtime)</text>
+
+      <!-- Notebook inner boxes -->
+      <rect x="80" y="370" width="130" height="84" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1"/>
+      <text x="145" y="392" text-anchor="middle" fill="#92400E" font-size="11" font-weight="600">Python</text>
+      <text x="145" y="410" text-anchor="middle" fill="#92400E" font-size="9">pandas, numpy</text>
+      <text x="145" y="424" text-anchor="middle" fill="#92400E" font-size="9">matplotlib, scipy</text>
+      <text x="145" y="438" text-anchor="middle" fill="#92400E" font-size="9">kagglehub</text>
+
+      <rect x="225" y="370" width="130" height="84" rx="6" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1"/>
+      <text x="290" y="392" text-anchor="middle" fill="#1E40AF" font-size="11" font-weight="600">SQL Cells</text>
+      <text x="290" y="410" text-anchor="middle" fill="#1E40AF" font-size="9">CREATE DATABASE</text>
+      <text x="290" y="424" text-anchor="middle" fill="#1E40AF" font-size="9">SELECT / COUNT</text>
+      <text x="290" y="438" text-anchor="middle" fill="#1E40AF" font-size="9">INFORMATION_SCHEMA</text>
+
+      <rect x="370" y="370" width="130" height="84" rx="6" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="1"/>
+      <text x="435" y="392" text-anchor="middle" fill="#5B21B6" font-size="11" font-weight="600">XGBoost</text>
+      <text x="435" y="410" text-anchor="middle" fill="#5B21B6" font-size="9">300 estimadores</text>
+      <text x="435" y="424" text-anchor="middle" fill="#5B21B6" font-size="9">max_depth=6</text>
+      <text x="435" y="438" text-anchor="middle" fill="#5B21B6" font-size="9">scale_pos_weight</text>
+
+      <rect x="515" y="370" width="170" height="84" rx="6" fill="#D1FAE5" stroke="#22C55E" stroke-width="1"/>
+      <text x="600" y="392" text-anchor="middle" fill="#065F46" font-size="11" font-weight="600">Model Registry</text>
+      <text x="600" y="410" text-anchor="middle" fill="#065F46" font-size="9">reg.log_model()</text>
+      <text x="600" y="424" text-anchor="middle" fill="#065F46" font-size="9">TargetPlatform.WAREHOUSE</text>
+      <text x="600" y="438" text-anchor="middle" fill="#065F46" font-size="9">TABULAR_BINARY_CLASS</text>
+
+      <rect x="700" y="370" width="200" height="84" rx="6" fill="#FCE7F3" stroke="#EC4899" stroke-width="1"/>
+      <text x="800" y="392" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="600">EDA + Visualizaciones</text>
+      <text x="800" y="410" text-anchor="middle" fill="#9D174D" font-size="9">Histogramas, Boxplots</text>
+      <text x="800" y="424" text-anchor="middle" fill="#9D174D" font-size="9">Heatmap correlación</text>
+      <text x="800" y="438" text-anchor="middle" fill="#9D174D" font-size="9">ROC, PR curves</text>
+
+      <!-- Arrow from EAI to Compute Pool -->
+      <line x1="290" y1="260" x2="290" y2="290" stroke="#22C55E" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- COCO_AD.PUBLIC -->
+      <rect x="40" y="520" width="530" height="110" rx="12" fill="white" stroke="#CBD5E1" stroke-width="1.5"/>
+      <text x="70" y="548" fill="#0D2B45" font-size="14" font-weight="700">COCO_AD.PUBLIC</text>
+
+      <rect x="60" y="560" width="180" height="56" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1"/>
+      <text x="150" y="582" text-anchor="middle" fill="#334155" font-size="12" font-weight="600">Tabla IOT</text>
+      <text x="150" y="600" text-anchor="middle" fill="#64748B" font-size="10">100,000 filas × 13 cols</text>
+
+      <rect x="270" y="560" width="280" height="56" rx="8" fill="#ECFDF5" stroke="#34D399" stroke-width="1.5"/>
+      <text x="410" y="578" text-anchor="middle" fill="#065F46" font-size="12" font-weight="700">IOT_ANOMALY_DETECTOR (V1)</text>
+      <text x="410" y="596" text-anchor="middle" fill="#065F46" font-size="10">ROC-AUC: 1.0 · PR-AUC: 0.9997 · Recall: 99.1%</text>
+
+      <!-- Arrow from notebook to COCO_AD -->
+      <path d="M 290 490 L 290 520" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow-gray)"/>
+      <path d="M 600 490 L 410 560" stroke="#34D399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+      <!-- Warehouse -->
+      <rect x="610" y="520" width="330" height="110" rx="12" fill="#FFF7ED" stroke="#FB923C" stroke-width="1.5"/>
+      <text x="775" y="548" text-anchor="middle" fill="#9A3412" font-size="14" font-weight="700">COMPUTE_WH (Warehouse)</text>
+      <text x="775" y="572" text-anchor="middle" fill="#9A3412" font-size="11">Ejecuta mv.run() para inferencia batch</text>
+      <text x="775" y="594" text-anchor="middle" fill="#C2410C" font-size="13" font-weight="700">60 pred/s · 16.7 ms/predicción</text>
+
+      <!-- Arrow from model to warehouse -->
+      <path d="M 510 588 L 610 575" stroke="#FB923C" stroke-width="1.5" marker-end="url(#arrow-orange)"/>
+
+      <!-- Arrow markers -->
+      <defs>
+        <marker id="arrow-cyan" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6Z" fill="#29B5E8"/></marker>
+        <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6Z" fill="#3B82F6"/></marker>
+        <marker id="arrow-orange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6Z" fill="#F59E0B"/></marker>
+        <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6Z" fill="#22C55E"/></marker>
+        <marker id="arrow-gray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6Z" fill="#94A3B8"/></marker>
+      </defs>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>3. Pipeline ML — Paso a Paso</h2>
+  <p>Cada etapa del pipeline fue generada por Cortex Code a partir de un único prompt en español.</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 960 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, system-ui, sans-serif">
+      <!-- Step boxes -->
+      <g>
+        <!-- 1 INFRA -->
+        <rect x="10" y="20" width="110" height="100" rx="8" fill="#D1FAE5" stroke="#22C55E" stroke-width="1.5"/>
+        <text x="65" y="44" text-anchor="middle" fill="#065F46" font-size="11" font-weight="700">INFRA</text>
+        <text x="65" y="62" text-anchor="middle" fill="#065F46" font-size="8.5">Compute Pool</text>
+        <text x="65" y="76" text-anchor="middle" fill="#065F46" font-size="8.5">Network Rules</text>
+        <text x="65" y="90" text-anchor="middle" fill="#065F46" font-size="8.5">Ext. Access</text>
+        <text x="65" y="108" text-anchor="middle" fill="#166534" font-size="8" font-weight="600">Prompt 1</text>
+
+        <!-- Arrow -->
+        <path d="M 120 70 L 140 70" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow-gray2)"/>
+
+        <!-- 2 INGEST -->
+        <rect x="145" y="20" width="110" height="100" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+        <text x="200" y="44" text-anchor="middle" fill="#92400E" font-size="11" font-weight="700">INGEST</text>
+        <text x="200" y="62" text-anchor="middle" fill="#92400E" font-size="8.5">Kaggle → SF</text>
+        <text x="200" y="76" text-anchor="middle" fill="#92400E" font-size="8.5">100K filas</text>
+        <text x="200" y="90" text-anchor="middle" fill="#92400E" font-size="8.5">write_pandas</text>
+        <text x="200" y="108" text-anchor="middle" fill="#78350F" font-size="8" font-weight="600">Prompt 2</text>
+
+        <path d="M 255 70 L 275 70" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow-gray2)"/>
+
+        <!-- 3 EDA -->
+        <rect x="280" y="20" width="110" height="100" rx="8" fill="#FCE7F3" stroke="#EC4899" stroke-width="1.5"/>
+        <text x="335" y="44" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="700">EDA</text>
+        <text x="335" y="62" text-anchor="middle" fill="#9D174D" font-size="8.5">5 visualizaciones</text>
+        <text x="335" y="76" text-anchor="middle" fill="#9D174D" font-size="8.5">T-tests</text>
+        <text x="335" y="90" text-anchor="middle" fill="#9D174D" font-size="8.5">Leak detection</text>
+        <text x="335" y="108" text-anchor="middle" fill="#831843" font-size="8" font-weight="600">Prompt 3</text>
+
+        <path d="M 390 70 L 410 70" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow-gray2)"/>
+
+        <!-- 4 FEATURES -->
+        <rect x="415" y="20" width="110" height="100" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+        <text x="470" y="44" text-anchor="middle" fill="#1E40AF" font-size="11" font-weight="700">FEATURES</text>
+        <text x="470" y="62" text-anchor="middle" fill="#1E40AF" font-size="8.5">24 features</text>
+        <text x="470" y="76" text-anchor="middle" fill="#1E40AF" font-size="8.5">Rolling, delta</text>
+        <text x="470" y="90" text-anchor="middle" fill="#1E40AF" font-size="8.5">Z-score, hora</text>
+        <text x="470" y="108" text-anchor="middle" fill="#1E3A8A" font-size="8" font-weight="600">Prompt 4</text>
+
+        <path d="M 525 70 L 545 70" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow-gray2)"/>
+
+        <!-- 5 TRAIN -->
+        <rect x="550" y="20" width="110" height="100" rx="8" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="1.5"/>
+        <text x="605" y="44" text-anchor="middle" fill="#5B21B6" font-size="11" font-weight="700">TRAIN</text>
+        <text x="605" y="62" text-anchor="middle" fill="#5B21B6" font-size="8.5">XGBoost 300 est</text>
+        <text x="605" y="76" text-anchor="middle" fill="#5B21B6" font-size="8.5">Class weighting</text>
+        <text x="605" y="90" text-anchor="middle" fill="#5B21B6" font-size="8.5">3.5s train</text>
+        <text x="605" y="108" text-anchor="middle" fill="#4C1D95" font-size="8" font-weight="600">Prompt 5</text>
+
+        <path d="M 660 70 L 680 70" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow-gray2)"/>
+
+        <!-- 6 EVALUATE -->
+        <rect x="685" y="20" width="110" height="100" rx="8" fill="#FFF1F2" stroke="#E85D75" stroke-width="1.5"/>
+        <text x="740" y="44" text-anchor="middle" fill="#9F1239" font-size="11" font-weight="700">EVALUATE</text>
+        <text x="740" y="62" text-anchor="middle" fill="#9F1239" font-size="8.5">ROC-AUC: 1.0</text>
+        <text x="740" y="76" text-anchor="middle" fill="#9F1239" font-size="8.5">PR-AUC: 0.9997</text>
+        <text x="740" y="90" text-anchor="middle" fill="#9F1239" font-size="8.5">4 gráficos</text>
+        <text x="740" y="108" text-anchor="middle" fill="#881337" font-size="8" font-weight="600">Prompt 6</text>
+
+        <path d="M 795 70 L 815 70" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arrow-gray2)"/>
+
+        <!-- 7 REGISTER -->
+        <rect x="820" y="20" width="120" height="100" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+        <text x="880" y="44" text-anchor="middle" fill="#065F46" font-size="11" font-weight="700">REGISTER</text>
+        <text x="880" y="62" text-anchor="middle" fill="#065F46" font-size="8.5">Model Registry</text>
+        <text x="880" y="76" text-anchor="middle" fill="#065F46" font-size="8.5">WAREHOUSE target</text>
+        <text x="880" y="90" text-anchor="middle" fill="#065F46" font-size="8.5">mv.run() ready</text>
+        <text x="880" y="108" text-anchor="middle" fill="#064E3B" font-size="8" font-weight="600">Prompt 7-8</text>
+      </g>
+
+      <!-- Bottom summary bar -->
+      <rect x="10" y="145" width="930" height="44" rx="8" fill="#29B5E8" opacity="0.08" stroke="#29B5E8" stroke-width="1"/>
+      <text x="480" y="172" text-anchor="middle" fill="#0D2B45" font-size="13" font-weight="600">8 prompts en español → Pipeline completo de ML en producción dentro de Snowflake</text>
+
+      <defs>
+        <marker id="arrow-gray2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5Z" fill="#94A3B8"/></marker>
+      </defs>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>4. Qué es Cortex Code</h2>
+  <p><strong>Cortex Code</strong> es un asistente de IA integrado en Snowsight que entiende el contexto de tu cuenta Snowflake — roles, warehouses, bases de datos, tablas — y genera código directamente en tu workspace.</p>
+
+  <div class="card">
+    <h3>Lo que generó en esta sesión</h3>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Prompt (resumen)</th><th>Tipo</th><th>Código generado</th><th>Artefacto</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>"Configura compute pool y external access"</td>
+          <td><span class="tag tag-infra">INFRA</span><span class="tag tag-sql">SQL</span></td>
+          <td><code>CREATE COMPUTE POOL</code>, <code>CREATE NETWORK RULE</code>, <code>CREATE EXTERNAL ACCESS INTEGRATION</code></td>
+          <td>COCO_COMPUTE_POOL, KAGGLE_PYPI_ACCESS_INTEGRATION</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>"Descarga dataset y cárgalo en IOT"</td>
+          <td><span class="tag tag-python">Python</span><span class="tag tag-sql">SQL</span></td>
+          <td><code>kagglehub.dataset_download()</code>, <code>write_pandas()</code>, <code>CREATE DATABASE</code></td>
+          <td>Tabla COCO_AD.PUBLIC.IOT (100K filas)</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>"EDA completo con visualizaciones"</td>
+          <td><span class="tag tag-python">Python</span><span class="tag tag-ml">ML</span></td>
+          <td>Histogramas, boxplots, heatmap, t-tests, tasa por máquina</td>
+          <td>5 visualizaciones + detección data leakage</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>"Construye features_df con rolling stats"</td>
+          <td><span class="tag tag-python">Python</span><span class="tag tag-ml">ML</span></td>
+          <td>Rolling mean/std, deltas, z-scores, interacciones, hora</td>
+          <td>DataFrame con 24 features</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>"Entrena XGBClassifier con class weighting"</td>
+          <td><span class="tag tag-ml">ML</span></td>
+          <td><code>XGBClassifier(scale_pos_weight=10.29, ...)</code></td>
+          <td>Modelo entrenado en 3.5s</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>"Evalúa rendimiento sobre test set"</td>
+          <td><span class="tag tag-python">Python</span><span class="tag tag-ml">ML</span></td>
+          <td>Classification report, curvas ROC/PR, feature importance</td>
+          <td>4 gráficos de evaluación</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>"Registra modelo en Model Registry"</td>
+          <td><span class="tag tag-ml">ML</span><span class="tag tag-infra">INFRA</span></td>
+          <td><code>reg.log_model(target_platforms=["WAREHOUSE"])</code></td>
+          <td>IOT_ANOMALY_DETECTOR V1</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>"Benchmark de inferencia batch"</td>
+          <td><span class="tag tag-python">Python</span><span class="tag tag-ml">ML</span></td>
+          <td>Dataset sintético 1000 filas, <code>mv.run()</code>, métricas latencia</td>
+          <td>60 pred/s, recall 100%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-warning">
+    <h3>Decisiones inteligentes que tomó Cortex Code</h3>
+    <ul style="margin-top:12px; padding-left:24px;">
+      <li><strong>Detectó data leakage:</strong> identificó que <code>DOWNTIME_RISK</code> (correlación 1.0) y <code>MAINTENANCE_REQUIRED</code> (correlación 0.63) no debían usarse como features</li>
+      <li style="margin-top:8px"><strong>Group-based split:</strong> separó train/test por máquinas completas (1-40 vs 41-50), evitando fuga temporal</li>
+      <li style="margin-top:8px"><strong>Class weighting:</strong> calculó <code>scale_pos_weight = 10.29</code> para compensar el desbalance 91%/9%</li>
+      <li style="margin-top:8px"><strong>Target WAREHOUSE:</strong> eligió la plataforma correcta para inferencia batch sin SPCS</li>
+      <li style="margin-top:8px"><strong>Auto-corrección:</strong> cuando los gráficos no se mostraban, diagnosticó el backend de matplotlib y lo corrigió</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>5. Flujo de Datos</h2>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 700 620" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, system-ui, sans-serif">
+      <!-- Internet column -->
+      <text x="110" y="24" text-anchor="middle" fill="#64748B" font-size="12" font-weight="600" text-transform="uppercase" letter-spacing="2">INTERNET</text>
+      <rect x="30" y="36" width="160" height="56" rx="8" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
+      <text x="110" y="60" text-anchor="middle" fill="#92400E" font-size="12" font-weight="600">Kaggle Dataset</text>
+      <text x="110" y="78" text-anchor="middle" fill="#92400E" font-size="9">100K lecturas IoT</text>
+
+      <rect x="30" y="108" width="160" height="44" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="110" y="134" text-anchor="middle" fill="#1E40AF" font-size="12" font-weight="600">PyPI Packages</text>
+
+      <!-- Snowflake column -->
+      <text x="470" y="24" text-anchor="middle" fill="#64748B" font-size="12" font-weight="600" letter-spacing="2">SNOWFLAKE</text>
+      <rect x="280" y="36" width="380" height="570" rx="12" fill="#0D2B45" opacity="0.03" stroke="#29B5E8" stroke-width="1.5"/>
+
+      <!-- Step boxes in Snowflake -->
+      <rect x="340" y="52" width="260" height="44" rx="8" fill="#D1FAE5" stroke="#22C55E" stroke-width="1.5"/>
+      <text x="470" y="72" text-anchor="middle" fill="#065F46" font-size="11" font-weight="600">Container Runtime (Notebook)</text>
+      <text x="470" y="86" text-anchor="middle" fill="#065F46" font-size="9">pip install + kagglehub download</text>
+
+      <!-- Arrows from internet -->
+      <path d="M 190 64 L 340 64" stroke="#F59E0B" stroke-width="1.5" marker-end="url(#arr-o)"/>
+      <text x="265" y="58" text-anchor="middle" fill="#92400E" font-size="8">download</text>
+      <path d="M 190 130 L 300 90 L 340 78" stroke="#3B82F6" stroke-width="1.5" marker-end="url(#arr-b)"/>
+      <text x="240" y="100" fill="#1E40AF" font-size="8">pip install</text>
+
+      <!-- write_pandas -->
+      <line x1="470" y1="96" x2="470" y2="120" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-g2)"/>
+      <text x="510" y="112" fill="#64748B" font-size="8">write_pandas</text>
+
+      <rect x="340" y="120" width="260" height="44" rx="8" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5"/>
+      <text x="470" y="140" text-anchor="middle" fill="#334155" font-size="11" font-weight="600">COCO_AD.PUBLIC.IOT</text>
+      <text x="470" y="154" text-anchor="middle" fill="#64748B" font-size="9">100,000 filas × 13 columnas</text>
+
+      <line x1="470" y1="164" x2="470" y2="188" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-g2)"/>
+
+      <rect x="340" y="188" width="260" height="52" rx="8" fill="#FCE7F3" stroke="#EC4899" stroke-width="1.5"/>
+      <text x="470" y="210" text-anchor="middle" fill="#9D174D" font-size="11" font-weight="600">EDA + Detección de Leakage</text>
+      <text x="470" y="226" text-anchor="middle" fill="#9D174D" font-size="9">Excluir: DOWNTIME_RISK, MAINTENANCE_REQUIRED</text>
+
+      <line x1="470" y1="240" x2="470" y2="264" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-g2)"/>
+
+      <rect x="340" y="264" width="260" height="44" rx="8" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1.5"/>
+      <text x="470" y="284" text-anchor="middle" fill="#1E40AF" font-size="11" font-weight="600">Feature Engineering</text>
+      <text x="470" y="298" text-anchor="middle" fill="#1E40AF" font-size="9">24 features: rolling, delta, zscore, hora</text>
+
+      <line x1="470" y1="308" x2="470" y2="332" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-g2)"/>
+
+      <rect x="340" y="332" width="260" height="52" rx="8" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="1.5"/>
+      <text x="470" y="352" text-anchor="middle" fill="#5B21B6" font-size="11" font-weight="600">XGBoost Train + Evaluate</text>
+      <text x="470" y="370" text-anchor="middle" fill="#5B21B6" font-size="9">Group split (máq 1-40 / 41-50) · 3.5s</text>
+
+      <line x1="470" y1="384" x2="470" y2="408" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-g2)"/>
+
+      <rect x="340" y="408" width="260" height="52" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+      <text x="470" y="428" text-anchor="middle" fill="#065F46" font-size="11" font-weight="700">Model Registry</text>
+      <text x="470" y="444" text-anchor="middle" fill="#065F46" font-size="9">IOT_ANOMALY_DETECTOR V1 · WAREHOUSE target</text>
+
+      <line x1="470" y1="460" x2="470" y2="484" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-g2)"/>
+
+      <rect x="340" y="484" width="260" height="52" rx="8" fill="#FFF7ED" stroke="#FB923C" stroke-width="1.5"/>
+      <text x="470" y="504" text-anchor="middle" fill="#9A3412" font-size="11" font-weight="700">Inferencia Batch (mv.run)</text>
+      <text x="470" y="520" text-anchor="middle" fill="#9A3412" font-size="9">60 pred/s · 16.7 ms/predicción</text>
+
+      <!-- Final output -->
+      <line x1="470" y1="536" x2="470" y2="558" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#arr-g2)"/>
+      <rect x="370" y="558" width="200" height="34" rx="17" fill="#29B5E8" stroke="none"/>
+      <text x="470" y="580" text-anchor="middle" fill="white" font-size="11" font-weight="600">ANOMALÍA / NORMAL</text>
+
+      <defs>
+        <marker id="arr-o" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5Z" fill="#F59E0B"/></marker>
+        <marker id="arr-b" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5Z" fill="#3B82F6"/></marker>
+        <marker id="arr-g2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5Z" fill="#94A3B8"/></marker>
+      </defs>
+    </svg>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>6. Resultados del Modelo</h2>
+
+  <div class="metrics-grid">
+    <div class="metric-card" style="border-top:4px solid var(--sf-blue)"><div class="metric-value">99.9%</div><div class="metric-label">Accuracy</div></div>
+    <div class="metric-card" style="border-top:4px solid var(--accent-green)"><div class="metric-value">1.0000</div><div class="metric-label">ROC-AUC</div></div>
+    <div class="metric-card" style="border-top:4px solid var(--accent-purple)"><div class="metric-value">0.9997</div><div class="metric-label">PR-AUC</div></div>
+    <div class="metric-card" style="border-top:4px solid var(--accent-red)"><div class="metric-value">99.1%</div><div class="metric-label">Recall Anomalía</div></div>
+  </div>
+
+  <div class="card">
+    <h3>Feature Importance (Top 5)</h3>
+    <div style="margin-top:16px">
+      <div class="feature-bar"><div class="label">TEMPERATURE</div><div class="bar" style="width:54%"></div><div class="pct">53.96%</div></div>
+      <div class="feature-bar"><div class="label">VIBRATION</div><div class="bar" style="width:26%"></div><div class="pct">26.12%</div></div>
+      <div class="feature-bar"><div class="label">VIBRATION_ZSCORE</div><div class="bar" style="width:10%"></div><div class="pct">9.86%</div></div>
+      <div class="feature-bar"><div class="label">TEMPERATURE_ZSCORE</div><div class="bar" style="width:6.5%"></div><div class="pct">6.48%</div></div>
+      <div class="feature-bar"><div class="label">TEMPERATURE_DELTA</div><div class="bar" style="width:1.7%"></div><div class="pct">1.66%</div></div>
+    </div>
+    <p style="margin-top:16px; font-size:0.9em; color:var(--text-secondary)">Consistente con el EDA: temperatura (Cohen's d = 1.63) y vibración (d = 0.54) son los sensores con mayor poder discriminativo.</p>
+  </div>
+
+  <div class="card">
+    <h3>Matriz de Confusión (Test Set — Máquinas 41-50)</h3>
+    <div class="svg-container">
+      <svg viewBox="0 0 380 280" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, system-ui, sans-serif">
+        <text x="230" y="24" text-anchor="middle" fill="#64748B" font-size="13" font-weight="600">Predicted</text>
+        <text x="160" y="48" text-anchor="middle" fill="#334155" font-size="11">NORMAL</text>
+        <text x="290" y="48" text-anchor="middle" fill="#334155" font-size="11">ANOMALÍA</text>
+
+        <text x="36" y="130" text-anchor="middle" fill="#64748B" font-size="13" font-weight="600" transform="rotate(-90, 36, 130)">Actual</text>
+        <text x="76" y="108" text-anchor="middle" fill="#334155" font-size="11">NORMAL</text>
+        <text x="76" y="208" text-anchor="middle" fill="#334155" font-size="11">ANOM.</text>
+
+        <!-- TN -->
+        <rect x="100" y="60" width="120" height="90" rx="6" fill="#29B5E8" opacity="0.85"/>
+        <text x="160" y="108" text-anchor="middle" fill="white" font-size="22" font-weight="700">18,067</text>
+        <text x="160" y="128" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Verdadero Neg.</text>
+
+        <!-- FP -->
+        <rect x="230" y="60" width="120" height="90" rx="6" fill="#29B5E8" opacity="0.2"/>
+        <text x="290" y="108" text-anchor="middle" fill="#0D2B45" font-size="22" font-weight="700">16</text>
+        <text x="290" y="128" text-anchor="middle" fill="#64748B" font-size="10">Falso Pos.</text>
+
+        <!-- FN -->
+        <rect x="100" y="160" width="120" height="90" rx="6" fill="#29B5E8" opacity="0.2"/>
+        <text x="160" y="208" text-anchor="middle" fill="#0D2B45" font-size="22" font-weight="700">16</text>
+        <text x="160" y="228" text-anchor="middle" fill="#64748B" font-size="10">Falso Neg.</text>
+
+        <!-- TP -->
+        <rect x="230" y="160" width="120" height="90" rx="6" fill="#29B5E8" opacity="0.85"/>
+        <text x="290" y="208" text-anchor="middle" fill="white" font-size="22" font-weight="700">1,806</text>
+        <text x="290" y="228" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Verdadero Pos.</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>7. Ventajas de Prompts en Lenguaje Natural</h2>
+
+  <div class="comparison">
+    <div class="old">
+      <h4 style="color:#DC2626">Método Tradicional — ~17 horas</h4>
+      <ul style="padding-left:20px; font-size:0.92em; line-height:2">
+        <li>Investigar docs de SPCS, Network Rules — <strong>2h</strong></li>
+        <li>Escribir SQL de infraestructura — <strong>1h</strong></li>
+        <li>Script de descarga + carga + debug — <strong>2h</strong></li>
+        <li>Código EDA + gráficos + análisis leakage — <strong>4h</strong></li>
+        <li>Feature engineering manual — <strong>3h</strong></li>
+        <li>Entrenar, evaluar, visualizar — <strong>3h</strong></li>
+        <li>Registrar en Model Registry + debug — <strong>2h</strong></li>
+      </ul>
+    </div>
+    <div class="new">
+      <h4 style="color:#16A34A">Con Cortex Code — ~5 minutos</h4>
+      <ul style="padding-left:20px; font-size:0.92em; line-height:2">
+        <li>"Configura compute pool y external access" — <strong>30s</strong></li>
+        <li>"Descarga dataset y cárgalo en IOT" — <strong>45s</strong></li>
+        <li>"EDA completo con visualizaciones" — <strong>1 min</strong></li>
+        <li>"Construye features_df con rolling stats" — <strong>30s</strong></li>
+        <li>"Entrena XGBClassifier con class weighting" — <strong>30s</strong></li>
+        <li>"Evalúa rendimiento sobre test set" — <strong>30s</strong></li>
+        <li>"Registra modelo en Model Registry" — <strong>30s</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-success">
+    <h3>¿Por qué funciona?</h3>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-top:16px">
+      <div>
+        <h4 style="color:var(--sf-dark)">1. Contexto persistente</h4>
+        <p style="font-size:0.9em">Cortex Code recuerda toda la conversación. El prompt 5 dice "entrena" y sabe que <code>features_df</code>, <code>train_df</code> y <code>X_train</code> ya existen.</p>
+      </div>
+      <div>
+        <h4 style="color:var(--sf-dark)">2. Conocimiento de Snowflake</h4>
+        <p style="font-size:0.9em">Sabe que Container Runtime necesita Compute Pool, que <code>write_pandas</code> requiere <code>session.connection</code>, que <code>WAREHOUSE</code> evita SPCS.</p>
+      </div>
+      <div>
+        <h4 style="color:var(--sf-dark)">3. Mejores prácticas de ML</h4>
+        <p style="font-size:0.9em">Implementa group-based split, calcula <code>scale_pos_weight</code>, excluye columnas con leakage, usa PR-AUC (no solo accuracy).</p>
+      </div>
+      <div>
+        <h4 style="color:var(--sf-dark)">4. Iteración rápida</h4>
+        <p style="font-size:0.9em">Si algo falla (ej: gráficos no visibles), basta con decirlo en lenguaje natural. Cortex Code diagnostica y corrige automáticamente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Beneficios clave</h3>
+    <table>
+      <thead>
+        <tr><th>Aspecto</th><th>Sin Cortex Code</th><th>Con Cortex Code</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Infraestructura</strong></td><td>Leer docs de SPCS, Network Rules, EAI. Escribir SQL manualmente.</td><td>"Configura compute pool y external access para Kaggle y PyPI"</td></tr>
+        <tr><td><strong>Data leakage</strong></td><td>Requiere experiencia en ML para detectarlo</td><td>Identifica automáticamente columnas con correlación &gt; 0.5</td></tr>
+        <tr><td><strong>Feature engineering</strong></td><td>Escribir rolling windows, z-scores, deltas línea a línea</td><td>"Rolling stats a 5, 10, 30 lecturas + z-scores por máquina"</td></tr>
+        <tr><td><strong>Model Registry</strong></td><td>Investigar API de <code>log_model</code>, target platforms, parámetros</td><td>"Registra con TargetPlatform.WAREHOUSE" → código completo</td></tr>
+        <tr><td><strong>Idioma</strong></td><td>Docs en inglés, código en inglés</td><td><strong>Prompts en español</strong>, código generado funcional</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>8. Uso en Producción</h2>
+  <p>El modelo registrado con <code>TargetPlatform.WAREHOUSE</code> se puede invocar desde SQL o Python sin configurar contenedores.</p>
+
+  <div class="card">
+    <h3>Desde SQL</h3>
+    <pre><code><span class="sql-kw">SELECT</span> *
+<span class="sql-kw">FROM</span> COCO_AD.PUBLIC.IOT_ANOMALY_DETECTOR!PREDICT(
+    <span class="sql-kw">SELECT</span> TEMPERATURE, VIBRATION, HUMIDITY, PRESSURE,
+           ENERGY_CONSUMPTION, MACHINE_STATUS,
+           <span class="comment">-- ... (las 24 features)</span>
+    <span class="sql-kw">FROM</span> nueva_tabla_de_lecturas
+);</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Desde Python (cualquier notebook)</h3>
+    <pre><code><span class="py-kw">from</span> snowflake.ml.registry <span class="py-kw">import</span> Registry
+
+reg = Registry(session, database_name=<span style="color:#2ECC71">"COCO_AD"</span>, schema_name=<span style="color:#2ECC71">"PUBLIC"</span>)
+mv = reg.get_model(<span style="color:#2ECC71">"IOT_ANOMALY_DETECTOR"</span>).version(<span style="color:#2ECC71">"V1"</span>)
+predictions = mv.run(nuevo_dataframe, function_name=<span style="color:#2ECC71">"predict"</span>)</code></pre>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2>9. Resumen Ejecutivo</h2>
+  <div class="card" style="background: linear-gradient(135deg, #F0F9FF, #ECFDF5)">
+    <table>
+      <tbody>
+        <tr><td style="width:220px"><strong>Problema</strong></td><td>Detectar anomalías en 50 máquinas IoT</td></tr>
+        <tr><td><strong>Datos</strong></td><td>100.000 lecturas, 13 variables, 8.9% anomalías</td></tr>
+        <tr><td><strong>Modelo</strong></td><td>XGBoost con 24 features engineered</td></tr>
+        <tr><td><strong>Rendimiento</strong></td><td>ROC-AUC 1.0, PR-AUC 0.9997, Recall 99.1%</td></tr>
+        <tr><td><strong>Infraestructura</strong></td><td>Todo dentro de Snowflake (Compute Pool + Warehouse)</td></tr>
+        <tr><td><strong>Registro</strong></td><td>Model Registry con target WAREHOUSE</td></tr>
+        <tr><td><strong>Inferencia</strong></td><td>60 predicciones/segundo vía mv.run()</td></tr>
+        <tr><td><strong>Desarrollo</strong></td><td>8 prompts en español → pipeline completo</td></tr>
+        <tr><td><strong>Herramienta</strong></td><td>Cortex Code en Snowsight</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div>
+
+<div class="footer">
+  <p>Generado con <strong>Cortex Code</strong> en Snowflake &middot; Mayo 2026</p>
+  <p style="margin-top:8px; font-size:0.85em;">Proyecto: Detección de Anomalías IoT en Smart Manufacturing</p>
+</div>
+
+</body>
+</html>
