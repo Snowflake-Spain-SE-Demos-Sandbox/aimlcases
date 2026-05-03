@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mantenimiento Predictivo Nativo — Snowflake ML</title>
+<style>
+:root {
+  --green-dark: #1a5c3a;
+  --green-mid: #29a364;
+  --green-light: #4dd88a;
+  --green-pale: #e8f8f0;
+  --gray-dark: #1e293b;
+  --gray-mid: #475569;
+  --gray-light: #f1f5f9;
+  --white: #ffffff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --radius: 12px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--gray-dark); line-height: 1.7; background: var(--gray-light); }
+.hero { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 50%, var(--green-light) 100%); color: white; padding: 80px 40px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%); animation: pulse 8s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.hero h1 { font-size: 2.8em; font-weight: 700; margin-bottom: 16px; position: relative; }
+.hero p { font-size: 1.3em; opacity: 0.9; max-width: 700px; margin: 0 auto; position: relative; }
+.container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+section { background: var(--white); border-radius: var(--radius); padding: 48px; margin-bottom: 32px; box-shadow: var(--shadow); }
+h2 { font-size: 1.8em; color: var(--green-dark); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+h3 { font-size: 1.2em; color: var(--green-mid); margin: 20px 0 12px; }
+p, li { font-size: 1.05em; color: var(--gray-mid); margin-bottom: 12px; }
+ul { padding-left: 24px; }
+.icon { width: 36px; height: 36px; flex-shrink: 0; }
+.badge { display: inline-block; background: linear-gradient(135deg, var(--green-mid), var(--green-light)); color: white; padding: 4px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; border-radius: var(--radius); overflow: hidden; }
+th { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); color: white; padding: 14px 18px; text-align: left; font-weight: 600; }
+td { padding: 12px 18px; border-bottom: 1px solid #e2e8f0; }
+tr:hover td { background: var(--green-pale); }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 24px 0; }
+.metric-card { background: var(--green-pale); border-radius: var(--radius); padding: 24px; text-align: center; border: 2px solid transparent; transition: border-color 0.3s; }
+.metric-card:hover { border-color: var(--green-mid); }
+.metric-card .value { font-size: 2.2em; font-weight: 700; color: var(--green-dark); }
+.metric-card .label { font-size: 0.9em; color: var(--gray-mid); margin-top: 4px; }
+.diagram { background: var(--gray-light); border-radius: var(--radius); padding: 40px 20px; margin: 24px 0; position: relative; }
+.diagram-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.diagram-box { background: white; border: 2px solid var(--green-mid); border-radius: 10px; padding: 16px 20px; text-align: center; min-width: 120px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.diagram-box.highlight { background: linear-gradient(135deg, var(--green-dark), var(--green-mid)); color: white; border-color: var(--green-dark); }
+.diagram-box .box-icon { font-size: 1.8em; margin-bottom: 6px; }
+.diagram-box .box-label { font-size: 0.85em; font-weight: 600; }
+.arrow { color: var(--green-mid); font-size: 1.5em; font-weight: bold; }
+.arrow-down { text-align: center; color: var(--green-mid); font-size: 1.8em; margin: 8px 0; }
+.advantage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin: 24px 0; }
+.advantage-card { background: white; border-radius: var(--radius); padding: 28px; border-left: 4px solid var(--green-mid); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.advantage-card h4 { color: var(--green-dark); margin-bottom: 8px; font-size: 1.1em; }
+.advantage-card p { font-size: 0.95em; margin: 0; }
+.decision-table td:first-child { font-weight: 600; color: var(--green-dark); }
+.footer { text-align: center; padding: 40px; color: var(--gray-mid); font-size: 0.9em; }
+.tag-native { background: var(--green-pale); color: var(--green-dark); padding: 2px 10px; border-radius: 6px; font-weight: 600; font-size: 0.9em; }
+.tag-spcs { background: #ede9fe; color: #5b21b6; padding: 2px 10px; border-radius: 6px; font-weight: 600; font-size: 0.9em; }
+code { background: var(--gray-light); padding: 2px 8px; border-radius: 4px; font-size: 0.9em; color: var(--green-dark); }
+.pipeline-step { display: flex; align-items: flex-start; gap: 16px; margin: 16px 0; padding: 16px; background: var(--green-pale); border-radius: 10px; }
+.pipeline-step .step-num { background: var(--green-mid); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.pipeline-step .step-content { flex: 1; }
+.pipeline-step .step-content strong { color: var(--green-dark); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>Mantenimiento Predictivo Nativo</h1>
+<p>Pipeline completo de detección de anomalías IoT con Snowflake ML — Sin código, sin contenedores, solo SQL</p>
+</div>
+
+<div class="container">
+
+<!-- SECTION 1 -->
+<section>
+<h2>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+Contexto del Problema
+</h2>
+<p>En la industria manufacturera, el <strong>mantenimiento reactivo</strong> (esperar a que una máquina falle) genera costes desproporcionados:</p>
+<ul>
+<li><strong>Paradas no planificadas</strong> que cuestan entre 10.000€ y 250.000€ por incidente</li>
+<li><strong>Efectos cascada</strong> que paralizan líneas de producción completas</li>
+<li><strong>Riesgo de seguridad</strong> para operarios cuando fallan componentes críticos</li>
+</ul>
+<h3>Limitaciones de los enfoques tradicionales</h3>
+<ul>
+<li><strong>Mantenimiento preventivo:</strong> Reemplaza piezas por calendario, no por estado real → sobrecoste en piezas aún funcionales</li>
+<li><strong>Umbrales fijos:</strong> Reglas manuales (ej: "alerta si temperatura > 90°C") no capturan patrones complejos ni interacciones entre sensores</li>
+<li><strong>ML tradicional:</strong> Requiere equipos de Data Science, infraestructura dedicada y meses de desarrollo</li>
+</ul>
+<h3>La oportunidad: predicción sobre sensores IoT</h3>
+<p>Los sensores industriales generan miles de lecturas por minuto. Un modelo de Machine Learning puede <strong>aprender los patrones que preceden a un fallo</strong> y alertar con antelación, permitiendo planificar la intervención sin interrumpir la producción.</p>
+</section>
+
+<!-- SECTION 2 -->
+<section>
+<h2>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+El Dataset: Smart Manufacturing IoT
+</h2>
+<p>Dataset público de Kaggle con <strong>100.000 lecturas</strong> de <strong>50 máquinas industriales</strong> equipadas con 5 tipos de sensores, simulando un entorno de fabricación inteligente.</p>
+
+<div class="metric-grid">
+<div class="metric-card"><div class="value">100K</div><div class="label">Lecturas totales</div></div>
+<div class="metric-card"><div class="value">50</div><div class="label">Máquinas monitorizadas</div></div>
+<div class="metric-card"><div class="value">5</div><div class="label">Sensores por máquina</div></div>
+<div class="metric-card"><div class="value">8.9%</div><div class="label">Tasa de anomalías</div></div>
+</div>
+
+<h3>Arquitectura de Ingesta</h3>
+<div class="diagram">
+<div class="diagram-row">
+<div class="diagram-box"><div class="box-icon">🌡️</div><div class="box-label">Temperatura</div></div>
+<div class="diagram-box"><div class="box-icon">📳</div><div class="box-label">Vibración</div></div>
+<div class="diagram-box"><div class="box-icon">💧</div><div class="box-label">Humedad</div></div>
+<div class="diagram-box"><div class="box-icon">⚡</div><div class="box-label">Presión</div></div>
+<div class="diagram-box"><div class="box-icon">🔋</div><div class="box-label">Energía</div></div>
+</div>
+<div class="arrow-down">▼</div>
+<div class="diagram-row">
+<div class="diagram-box" style="min-width:300px"><div class="box-icon">📡</div><div class="box-label">Gateway IoT — Transmisión en tiempo real</div></div>
+</div>
+<div class="arrow-down">▼</div>
+<div class="diagram-row">
+<div class="diagram-box" style="min-width:300px"><div class="box-icon">☁️</div><div class="box-label">Ingesta Cloud (GitHub → Stage → COPY INTO)</div></div>
+</div>
+<div class="arrow-down">▼</div>
+<div class="diagram-row">
+<div class="diagram-box highlight" style="min-width:300px"><div class="box-icon">❄️</div><div class="box-label">Snowflake — Tabla IOT (100K filas)</div></div>
+</div>
+</div>
+</section>
+
+<!-- SECTION 3 -->
+<section>
+<h2>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+Cómo Funciona: Cortex Code + SQL Nativo
+</h2>
+<p>El usuario describe lo que necesita <strong>en lenguaje natural</strong>. Cortex Code traduce automáticamente a SQL optimizado con funciones avanzadas de Snowflake, sin necesidad de programar en Python ni gestionar infraestructura.</p>
+
+<h3>Pipeline completo generado por Cortex Code</h3>
+
+<div class="pipeline-step">
+<div class="step-num">1</div>
+<div class="step-content"><strong>Ingesta desde GitHub</strong><br>External Access Integration + Stored Procedure → <code>COPY INTO</code> con <code>INFER_SCHEMA</code></div>
+</div>
+<div class="pipeline-step">
+<div class="step-num">2</div>
+<div class="step-content"><strong>Feature Engineering</strong><br>Window Functions: medias móviles, desviaciones, deltas, z-scores, interacciones — todo en una sentencia SQL</div>
+</div>
+<div class="pipeline-step">
+<div class="step-num">3</div>
+<div class="step-content"><strong>Split por máquina</strong><br>Group-based split (máquinas 1-40 train, 41-50 test) para evitar leakage temporal</div>
+</div>
+<div class="pipeline-step">
+<div class="step-num">4</div>
+<div class="step-content"><strong>Entrenamiento</strong><br><code>CREATE SNOWFLAKE.ML.CLASSIFICATION</code> — Snowflake selecciona y optimiza el algoritmo internamente</div>
+</div>
+<div class="pipeline-step">
+<div class="step-num">5</div>
+<div class="step-content"><strong>Evaluación</strong><br><code>SHOW_EVALUATION_METRICS()</code>, <code>SHOW_CONFUSION_MATRIX()</code>, <code>SHOW_FEATURE_IMPORTANCE()</code></div>
+</div>
+<div class="pipeline-step">
+<div class="step-num">6</div>
+<div class="step-content"><strong>Inferencia batch</strong><br><code>modelo!PREDICT()</code> sobre cualquier tabla nueva — resultado inmediato en SQL</div>
+</div>
+
+<h3>Diagrama de flujo del pipeline</h3>
+<div class="diagram">
+<div class="diagram-row">
+<div class="diagram-box"><div class="box-label">👤 Usuario</div></div>
+<span class="arrow">→</span>
+<div class="diagram-box" style="border-color: #6366f1;"><div class="box-label">💬 Lenguaje Natural</div></div>
+<span class="arrow">→</span>
+<div class="diagram-box" style="border-color: #6366f1;"><div class="box-label">🤖 Cortex Code</div></div>
+<span class="arrow">→</span>
+<div class="diagram-box highlight"><div class="box-label">⚡ SQL Nativo</div></div>
+</div>
+<div class="arrow-down">▼</div>
+<div class="diagram-row">
+<div class="diagram-box"><div class="box-label">📊 Features</div></div>
+<span class="arrow">→</span>
+<div class="diagram-box"><div class="box-label">🧠 ML.CLASSIFICATION</div></div>
+<span class="arrow">→</span>
+<div class="diagram-box"><div class="box-label">🎯 PREDICT</div></div>
+<span class="arrow">→</span>
+<div class="diagram-box highlight"><div class="box-label">✅ Predicciones</div></div>
+</div>
+</div>
+</section>
+
+<!-- SECTION 4 -->
+<section>
+<h2>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+Ventajas del Enfoque Nativo
+</h2>
+
+<div class="advantage-grid">
+<div class="advantage-card">
+<h4>⚡ Velocidad</h4>
+<p>Pipeline completo en <strong>20-30 minutos</strong> de conversación. Desde la carga del dataset hasta predicciones en producción, sin salir de Snowflake.</p>
+</div>
+<div class="advantage-card">
+<h4>🔒 Cero Dependencias</h4>
+<p>Sin Python, sin Docker, sin contenedores, sin librerías externas. Todo se ejecuta con <strong>SQL estándar</strong> dentro de Snowflake.</p>
+</div>
+<div class="advantage-card">
+<h4>👥 Accesible para Analistas</h4>
+<p>Cualquier profesional que conozca SQL puede entrenar, evaluar y desplegar modelos ML. <strong>No requiere Data Scientists</strong> dedicados.</p>
+</div>
+<div class="advantage-card">
+<h4>💰 Coste Mínimo</h4>
+<p>~20-40 créditos/mes vs ~200-400 con SPCS. <strong>Factor 10x de ahorro</strong> en costes operativos y mantenimiento zero-ops.</p>
+</div>
+</div>
+</section>
+
+<!-- SECTION 5 -->
+<section>
+<h2>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+Resultados y Comparativa
+</h2>
+
+<h3>Métricas del modelo nativo (sobre test — máquinas nunca vistas)</h3>
+<div class="metric-grid">
+<div class="metric-card"><div class="value">99.07%</div><div class="label">Precision (ANOMALÍA)</div></div>
+<div class="metric-card"><div class="value">99.34%</div><div class="label">Recall (ANOMALÍA)</div></div>
+<div class="metric-card"><div class="value">99.21%</div><div class="label">F1-Score</div></div>
+<div class="metric-card"><div class="value">99.99%</div><div class="label">AUC-ROC</div></div>
+</div>
+
+<h3>Matriz de confusión (19,905 registros de test)</h3>
+<table>
+<tr><th></th><th>Predicho: ANOMALÍA</th><th>Predicho: NORMAL</th></tr>
+<tr><td><strong>Real: ANOMALÍA</strong></td><td style="background:#d1fae5;font-weight:700;">1,810 ✓</td><td style="background:#fee2e2;">12 ✗</td></tr>
+<tr><td><strong>Real: NORMAL</strong></td><td style="background:#fee2e2;">17 ✗</td><td style="background:#d1fae5;font-weight:700;">18,066 ✓</td></tr>
+</table>
+
+<h3>Comparativa UC01 vs UC02</h3>
+<table>
+<tr><th>Dimensión</th><th><span class="tag-spcs">UC01 — XGBoost + SPCS</span></th><th><span class="tag-native">UC02 — Snowflake Nativo</span></th></tr>
+<tr><td>Precisión (Anomalía)</td><td>~95-97%</td><td><strong>99.07%</strong></td></tr>
+<tr><td>Recall (Anomalía)</td><td>~95-97%</td><td><strong>99.34%</strong></td></tr>
+<tr><td>Tiempo de desarrollo</td><td>2-4 semanas</td><td><strong>20-30 minutos</strong></td></tr>
+<tr><td>Líneas de código</td><td>~500+ (Python, Docker, YAML)</td><td><strong>~30 líneas SQL</strong></td></tr>
+<tr><td>Coste mensual</td><td>200-400 créditos</td><td><strong>20-40 créditos</strong></td></tr>
+<tr><td>Equipo necesario</td><td>ML Engineer + DevOps</td><td><strong>Data Analyst con SQL</strong></td></tr>
+<tr><td>Mantenimiento</td><td>Parches, versiones, CI/CD</td><td><strong>Zero-ops</strong></td></tr>
+</table>
+</section>
+
+<!-- SECTION 6 -->
+<section>
+<h2>
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+Cuándo Usar Cada Enfoque
+</h2>
+
+<table class="decision-table">
+<tr><th>Criterio</th><th><span class="tag-native">UC02 — Nativo (recomendado)</span></th><th><span class="tag-spcs">UC01 — XGBoost + SPCS</span></th></tr>
+<tr><td>Tipo de inferencia</td><td>Batch cada 1-15 minutos</td><td>Tiempo real (< 1 segundo)</td></tr>
+<tr><td>Problema ML</td><td>Clasificación / regresión tabular</td><td>Deep learning, NLP, visión, custom</td></tr>
+<tr><td>Equipo disponible</td><td>Analistas SQL</td><td>ML Engineers + DevOps</td></tr>
+<tr><td>Prioridad</td><td>Time-to-value, bajo coste</td><td>Máximo control, personalización</td></tr>
+<tr><td>Integración</td><td>Pipelines SQL, Tasks programadas</td><td>APIs REST, apps externas</td></tr>
+<tr><td>Presupuesto</td><td>€€ (20-40 créditos/mes)</td><td>€€€€ (200-400 créditos/mes)</td></tr>
+<tr><td>Caso ideal</td><td>Mantenimiento predictivo, calidad, anomalías batch</td><td>Trading, fraude real-time, modelos custom</td></tr>
+</table>
+
+<div style="background: linear-gradient(135deg, var(--green-pale), #d1fae5); border-radius: var(--radius); padding: 28px; margin-top: 28px; border-left: 5px solid var(--green-mid);">
+<h3 style="color: var(--green-dark); margin-top: 0;">💡 Recomendación</h3>
+<p style="margin:0;">Para <strong>detección de anomalías IoT en manufactura</strong>, donde las lecturas llegan cada minutos y el batch periódico es suficiente: <strong>el enfoque nativo (UC02) es la elección clara</strong>. Ofrece mejor rendimiento (99% vs 96%), 10x menos coste, y se implementa en minutos en lugar de semanas. Reserve SPCS para casos que requieran inferencia sub-segundo o arquitecturas de modelo no soportadas nativamente.</p>
+</div>
+</section>
+
+</div>
+
+<div class="footer">
+<p><strong>Snowflake ML · Mantenimiento Predictivo Nativo</strong></p>
+<p>Generado con Cortex Code — Mayo 2026</p>
+<p style="margin-top:8px;font-size:0.8em;">Pipeline completo: Ingesta → Feature Engineering → Entrenamiento → Evaluación → Inferencia — Todo en SQL, todo en Snowflake</p>
+</div>
+
+</body>
+</html>
