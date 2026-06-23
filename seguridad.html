@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <title>Snowflake — Soluciones IA/ML para Empresas de Seguridad</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+    }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #0D2137, #1A3A5C);
+      color: #fff;
+      padding: 32px 48px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .hero-left { flex: 1; }
+
+    .logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-snowflake {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .stats-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 28px;
+      text-align: center;
+      color: #1a1a1a;
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .stats-box .stat-number {
+      font-size: 40px;
+      font-weight: 700;
+      color: #E53935;
+      line-height: 1;
+    }
+
+    .stats-box .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .stats-box .stat-time {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+
+    .stats-box .stat-time-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .stats-divider {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 10px 0;
+    }
+
+    /* ── SECTION INTRO ───────────────────────────────────── */
+    .intro {
+      background: #fff;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .intro h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1A3A5C;
+      margin-bottom: 14px;
+    }
+
+    .intro p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ── FILTERS ─────────────────────────────────────────── */
+    .filters-bar {
+      background: #fff;
+      padding: 20px 48px 0;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filters-left {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 80px;
+      border: 1.5px solid #ccc;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { border-color: #29B5E8; color: #29B5E8; }
+
+    .filter-btn.active {
+      background: #29B5E8;
+      border-color: #29B5E8;
+      color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid #ccc;
+      border-radius: 80px;
+      padding: 7px 14px;
+      gap: 8px;
+      min-width: 200px;
+      background: #fff;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: #444;
+      width: 100%;
+      background: transparent;
+    }
+    .search-box input::placeholder { color: #aaa; }
+
+    /* ── RESULTS COUNT ────────────────────────────────────── */
+    .results-count {
+      padding: 14px 48px 8px;
+      font-size: 13px;
+      color: #666;
+      background: #f5f5f5;
+    }
+
+    /* ── CARDS GRID ──────────────────────────────────────── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+      padding: 16px 48px 48px;
+      background: #f5f5f5;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e2e2e2;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+
+    .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.1); }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-badges { display: flex; gap: 6px; align-items: center; }
+
+    .badge-id {
+      font-size: 11px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-cat {
+      background: #E0F4FD;
+      color: #11567F;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+    .badge-cat.retencion   { background: #FFF3E8; color: #D97B2A; }
+    .badge-cat.comercial   { background: #EAF0FF; color: #4A6EE0; }
+    .badge-cat.finanzas    { background: #F0FFF4; color: #2E7D4F; }
+    .badge-cat.iot         { background: #FFF0F5; color: #B03A6B; }
+    .badge-cat.cx          { background: #E8F5FE; color: #0F7CB5; }
+    .badge-cat.mlops       { background: #FEF9E7; color: #B7950B; }
+    .badge-cat.marketing   { background: #F5EEF8; color: #7D3C98; }
+    .badge-cat.operaciones { background: #EAFAF1; color: #1E8449; }
+
+    .card-time {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      padding: 0 18px 12px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1A3A5C;
+      line-height: 1.3;
+    }
+
+    .pain-point {
+      margin: 0 18px 14px;
+      background: #F0F4F8;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .pain-point-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #E53935;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .pain-point p {
+      font-size: 13px;
+      color: #2a2a2a;
+      line-height: 1.55;
+    }
+
+    .card-desc {
+      padding: 0 18px 14px;
+      font-size: 13px;
+      color: #555;
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    .card-features {
+      padding: 0 18px 16px;
+      list-style: none;
+    }
+
+    .card-features li {
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-features li::before {
+      content: '✓';
+      color: #29B5E8;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .card-actions {
+      padding: 14px 18px 18px;
+      display: flex;
+      gap: 10px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 10px;
+      background: #29B5E8;
+      color: #fff;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-secondary:hover { background: #1A3A5C; }
+
+    .btn-tertiary {
+      flex: 1;
+      padding: 10px;
+      background: #0D2137;
+      color: #29B5E8;
+      border: none;
+      border-radius: 80px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .btn-tertiary:hover { background: #1A3A5C; }
+
+    .card-actions { flex-wrap: wrap; }
+
+    .prompt-step { margin-bottom: 18px; }
+    .prompt-step-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .prompt-step-num { background: #0D2137; color: #29B5E8; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .prompt-step-title { font-size: 13px; font-weight: 600; color: #333; }
+    .prompt-step-desc { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+    .prompt-code { position: relative; background: #0D2137; color: #e0e0e0; border-radius: 8px; padding: 12px 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12.5px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .prompt-code .copy-btn { position: absolute; top: 6px; right: 8px; background: rgba(255,255,255,0.1); border: none; color: #aaa; font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; }
+    .prompt-code .copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .prompt-code .kw { color: #29B5E8; }
+    .modal-box .prompt-intro { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #eee; }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 92%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #E53935; }
+    .modal-box h2 { color: #1A3A5C; font-size: 20px; margin-bottom: 6px; }
+    .modal-box h3 { font-size: 15px; color: #333; margin: 18px 0 8px; }
+    .modal-box p, .modal-box li { font-size: 13px; line-height: 1.7; color: #444; }
+    .modal-box ul { padding-left: 20px; margin: 6px 0; }
+    .modal-box .guide-badge { display: inline-block; background: #E0F4FD; color: #1A3A5C; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px; margin-bottom: 10px; }
+    .modal-box .guide-footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid #eee; font-size: 12px; color: #888; }
+
+    /* Arquitectura flow */
+    .arch-flow { background: #F8FAFC; border: 1px solid #E0E8F0; border-radius: 8px; padding: 16px; margin: 12px 0; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 1.8; color: #2a2a2a; white-space: pre-wrap; }
+
+    @media (max-width: 700px) {
+      .hero { flex-direction: column; padding: 24px 20px; }
+      .cards-grid { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+      .filters-bar { padding: 16px 16px 0; }
+      .results-count { padding: 12px 16px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<header class="hero">
+  <div class="hero-left">
+    <div class="logos">
+    </div>
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.75);text-decoration:none;margin-bottom:8px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.75)'"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="12,4 6,10 12,16"/></svg>Volver al Índice de Industrias</a>
+    <p class="hero-eyebrow">Seguridad y Protección × Snowflake</p>
+    <h1 class="hero-title">Soluciones IA/ML para Empresas de Seguridad</h1>
+    <p class="hero-subtitle">Guías y Prompts de Cortex Code listos para desplegar en empresas de seguridad y alarmas</p>
+    <p class="hero-tagline">Desarrollado con Snowflake Cortex AI | Impacto inmediato</p>
+  </div>
+
+  <div class="stats-box">
+    <div class="stat-number">10</div>
+    <div class="stat-label">Casos de Uso</div>
+    <hr class="stats-divider"/>
+    <div class="stat-time">8-15 min</div>
+    <div class="stat-time-label">Tiempo de Configuración</div>
+  </div>
+</header>
+
+<!-- ── INTRO ──────────────────────────────────────────────── -->
+<section class="intro">
+  <h2>Acelera tu Analítica con Soluciones IA Preconfiguradas para Seguridad</h2>
+  <p>Cada solución incluye Cortex Code Prompts de Snowflake con datos sintéticos, guías paso a paso
+     e implementaciones SQL-first con Cortex AI/ML. Todo el procesamiento permanece dentro de Snowflake,
+     sin dependencias externas, listo para personalizar con tus propios datos de clientes, dispositivos e instalaciones.</p>
+</section>
+
+<!-- ── FILTERS ───────────────────────────────────────────── -->
+<div class="filters-bar">
+  <div class="filters-left" id="filterBtns">
+    <button class="filter-btn active" data-filter="all">Todos (10)</button>
+    <button class="filter-btn" data-filter="retencion">Retención y Churn (1)</button>
+    <button class="filter-btn" data-filter="comercial">Ventas y Pipeline (1)</button>
+    <button class="filter-btn" data-filter="finanzas">Finanzas y FP&amp;A (1)</button>
+    <button class="filter-btn" data-filter="iot">IoT y Dispositivos (1)</button>
+    <button class="filter-btn" data-filter="cx">Experiencia de Cliente (1)</button>
+    <button class="filter-btn" data-filter="mlops">ML Ops y Feature Store (2)</button>
+    <button class="filter-btn" data-filter="marketing">Marketing y Atribución (1)</button>
+    <button class="filter-btn" data-filter="operaciones">Operaciones de Campo (2)</button>
+  </div>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2" stroke-linecap="round">
+      <circle cx="9" cy="9" r="7"/><line x1="15" y1="15" x2="19" y2="19"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Buscar casos de uso…" />
+  </div>
+</div>
+
+<!-- ── RESULTS COUNT ─────────────────────────────────────── -->
+<div class="results-count" id="resultsCount">Mostrando 10 de 10 casos de uso</div>
+
+<!-- ── CARDS ─────────────────────────────────────────────── -->
+<main class="cards-grid" id="cardsGrid"></main>
+
+<!-- ── MODAL ─────────────────────────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const USE_CASES = [
+  {
+    id:"UC01", cat:"retencion", catLabel:"Retención y Churn", time:"12 min",
+    title:"Churn Prediction con Cortex ML Classification",
+    pain:"Los modelos de churn actuales son pipelines frágiles sin versionado ni lineage. El coste de infraestructura crece sin control y es difícil auditar qué features o versión del modelo está en producción.",
+    desc:"Construir un modelo de churn nativo con Cortex ML Classification + Model Registry + Dynamic Table de scoring diario + Streamlit de monitorización. Todo gobernado dentro de Snowflake, con reentrenamiento automático vía Tasks.",
+    features:["Datos sintéticos de clientes generados con TABLE(GENERATOR)","Cortex ML Classification sobre features de retención (tenure, incidents, NPS, payment, tier)","Model Registry: versionado + métricas AUC/precision/recall","Dynamic Table CHURN_SCORES con scoring diario por cliente","Streamlit: distribución de scores, top clientes en riesgo, evolución del modelo"]
+  },
+  {
+    id:"UC02", cat:"comercial", catLabel:"Ventas y Pipeline", time:"14 min",
+    title:"Lead Conversion Scoring: Modelo de Propensión Multi-país",
+    pain:"La priorización de leads es manual o basada en reglas estáticas. El equipo de ventas pierde tiempo en oportunidades de baja probabilidad mientras leads de alto valor quedan sin atender.",
+    desc:"Modelo Cortex ML de propensión a conversión entrenado con historial de leads ganados/perdidos. Scoring diario en Dynamic Table y Streamlit de priorización comercial con ranking por probabilidad y filtros por país y canal.",
+    features:["Datos sintéticos de leads y oportunidades con TABLE(GENERATOR)","Cortex ML Classification para predecir conversión","Model Registry con métricas por segmento de mercado","Dynamic Table LEAD_SCORES con score y ranking diario","Streamlit: tabla rankeada, filtros por país/producto/canal, KPIs de pipeline"]
+  },
+  {
+    id:"UC03", cat:"finanzas", catLabel:"Finanzas y FP&A", time:"10 min",
+    title:"Cortex ML Time Series: Forecasting de Ingresos Recurrentes por País",
+    pain:"El forecasting de ingresos recurrentes se hace manualmente en hojas de cálculo. No existe visibilidad proactiva de desvíos y los equipos de cada país operan con proyecciones desincronizadas.",
+    desc:"Cortex ML Time Series proyecta MRR a 6 meses con intervalos de confianza al 80% y 95%. Anomaly Detection detecta meses con comportamiento inusual. Streamlit de FP&A para los equipos financieros de cada mercado.",
+    features:["Datos sintéticos de MRR mensual por país con TABLE(GENERATOR)","Cortex ML Forecasting — predicción 6 meses con IC 80/95%","Cortex ML Anomaly Detection — alertas de desvío en ingresos","Dynamic Table REVENUE_FORECAST (actuals + forecast + anomaly_flag)","Streamlit: curva actuals vs forecast, alertas de meses anómalos, descarga CSV"]
+  },
+  {
+    id:"UC04", cat:"iot", catLabel:"IoT y Dispositivos", time:"14 min",
+    title:"Cortex ML Anomaly Detection sobre Telemetría IoT: Device Health Scoring",
+    pain:"Los fallos de dispositivos en campo no se detectan hasta que el cliente llama. La monitorización reactiva deteriora la calidad de servicio y dispara el coste de visitas técnicas correctivas.",
+    desc:"Cortex ML Anomaly Detection sobre telemetría de señal, batería y uptime genera un Device Health Score nativo. Streamlit de calidad de flota para los equipos de operaciones de campo con mapa de calor y dispositivos críticos.",
+    features:["Datos sintéticos de telemetría IoT con TABLE(GENERATOR)","Cortex ML Anomaly Detection sobre series de señal y batería por dispositivo","Snowpark Python UDF: Device Health Index (DHI) 0-100","Dynamic Table DEVICE_HEALTH con DHI diario por dispositivo","Streamlit: mapa de calor geográfico, histograma DHI, top 50 dispositivos críticos"]
+  },
+  {
+    id:"UC05", cat:"cx", catLabel:"Experiencia de Cliente", time:"13 min",
+    title:"NPS & Customer Sentiment Scoring con Snowpark ML",
+    pain:"Los datos de encuestas de satisfacción se procesan solo de forma descriptiva. Los mercados con tendencia negativa de NPS se detectan con retraso, cuando ya hay impacto en churn.",
+    desc:"Snowpark ML predice el NPS futuro a 90 días y segmenta clientes en PROMOTOR/PASIVO/DETRACTOR. Streamlit de CX Intelligence con evolución NPS real vs predicho y alertas de mercados en riesgo.",
+    features:["Datos sintéticos de encuestas de satisfacción con TABLE(GENERATOR)","Snowpark Python: feature engineering con ventanas temporales (3m, 6m, 12m)","Cortex ML Regression: predicción de NPS a 90 días","Cortex ML Classification: segmentación PROMOTOR/PASIVO/DETRACTOR","Streamlit: NPS real vs predicho, alertas de mercados en riesgo, correlación NPS-churn"]
+  },
+  {
+    id:"UC06", cat:"mlops", catLabel:"ML Ops y Feature Store", time:"15 min",
+    title:"Feature Store Centralizado para Equipos ML",
+    pain:"Múltiples equipos de Data Science calculan las mismas features de cliente de forma independiente, generando inconsistencias entre modelos y duplicando cómputo innecesariamente.",
+    desc:"El Snowflake Feature Store centraliza las features en un catálogo único con point-in-time correctness. Streamlit de Feature Catalog para que los Data Scientists naveguen, descubran y reutilicen features entre proyectos.",
+    features:["Tablas fuente generadas con TABLE(GENERATOR) para cada dominio","Snowflake Feature Store: Entity CUSTOMER con múltiples Feature Views","Feature Views: retención, dispositivos, comercial, experiencia de cliente","Dynamic Tables como backend de cada Feature View","Streamlit Feature Catalog: freshness, linaje, histogramas, búsqueda"]
+  },
+  {
+    id:"UC07", cat:"marketing", catLabel:"Marketing y Atribución", time:"13 min",
+    title:"Marketing Attribution ML: Modelo Multi-touch con Streamlit de ROI",
+    pain:"Los modelos de atribución actuales son last-click o reglas estáticas. El presupuesto de marketing se distribuye sin evidencia real del peso de cada canal en la conversión del cliente.",
+    desc:"Cortex ML construye journeys multi-touch y aprende el peso real de cada canal. Streamlit de ROI para los equipos de marketing con comparativa data-driven vs last-click y recomendación de redistribución de presupuesto.",
+    features:["Datos sintéticos de touchpoints y conversiones con TABLE(GENERATOR)","Snowpark Python: construcción de journeys multi-touch (ventana 90 días)","Cortex ML Regression: peso de atribución por canal","Dynamic Table ATTRIBUTION_SCORES actualizada semanalmente","Streamlit: atribución por canal, ROI por campaña, recomendación de presupuesto"]
+  },
+  {
+    id:"UC08", cat:"operaciones", catLabel:"Operaciones de Campo", time:"12 min",
+    title:"Segmentación Dinámica de Clientes con Cortex ML Clustering",
+    pain:"La empresa opera con segmentos estáticos definidos manualmente. Los microsegmentos accionables —clientes de alto valor con probabilidad de upgrade o clientes con riesgo silencioso— permanecen invisibles.",
+    desc:"KMeans de Snowpark ML identifica segmentos reales de comportamiento sin etiquetas previas. Streamlit de Segment Explorer da a los equipos de CRM acceso interactivo a los segmentos con scatter plot PCA y KPIs por segmento.",
+    features:["Datos sintéticos de features de clientes con TABLE(GENERATOR)","Snowpark Python: normalización StandardScaler + reducción PCA (2D)","KMeans con evaluación de silhouette score para k óptimo","Dynamic Table CUSTOMER_SEGMENTS con asignaciones diarias","Streamlit: scatter PCA interactivo, radar chart, KPIs por segmento (churn, NPS, LTV)"]
+  },
+  {
+    id:"UC09", cat:"operaciones", catLabel:"Operaciones de Campo", time:"10 min",
+    title:"Predicción de Demanda de Instalaciones con Cortex ML Time Series",
+    pain:"La planificación de la capacidad técnica para instalaciones se hace de forma reactiva. El sobre o infradimensionamiento de plantilla técnica impacta en el tiempo de respuesta al cliente y los costes operativos.",
+    desc:"Cortex ML Time Series predice la demanda de instalaciones por zona a 8 semanas. Anomaly Detection identifica semanas con demanda atípica. Streamlit de planificación de capacidad para coordinadores de field operations.",
+    features:["Datos sintéticos de historial de instalaciones por zona con TABLE(GENERATOR)","Cortex ML Forecasting por zona — predicción 8 semanas con IC 80/95%","Cortex ML Anomaly Detection — alertas de semanas con demanda inusual","Dynamic Table INSTALLATION_DEMAND (actuals + forecast + anomaly_score)","Streamlit: mapa de calor por zona, tabla de alertas, KPI técnicos necesarios vs disponibles, descarga CSV"]
+  },
+  {
+    id:"UC10", cat:"mlops", catLabel:"ML Ops y Feature Store", time:"15 min",
+    title:"ML Model Monitoring Platform: Observabilidad de Modelos con Streamlit",
+    pain:"Sin monitorización centralizada, la degradación silenciosa de modelos en producción se detecta tarde. Los cambios en la distribución de datos de entrada no se ven hasta que el negocio reporta resultados inesperados.",
+    desc:"Model Registry + Dynamic Tables de métricas + Streamlit centralizado dan visibilidad completa sobre drift, performance y calidad de datos de todos los modelos en producción, con semáforo de salud y alertas automáticas.",
+    features:["Datos sintéticos de métricas de modelos con TABLE(GENERATOR)","Snowflake Model Registry: catálogo de modelos con versiones y metadata","Snowpark Python Tasks: cálculo diario de PSI, prediction drift, data quality","Dynamic Table MODEL_HEALTH con semáforo GREEN/YELLOW/RED por modelo","Streamlit: grid de tarjetas por modelo, histogramas de drift, evolución AUC, panel de alertas"]
+  }
+];
+
+const TOTAL = 10;
+
+function renderCards(list) {
+  const grid = document.getElementById('cardsGrid');
+  const count = document.getElementById('resultsCount');
+  grid.innerHTML = '';
+  count.textContent = `Mostrando ${list.length} de ${TOTAL} casos de uso`;
+  list.forEach(uc => {
+    const catClassMap = {
+      'Retención y Churn':'retencion',
+      'Ventas y Pipeline':'comercial',
+      'Finanzas y FP&A':'finanzas',
+      'IoT y Dispositivos':'iot',
+      'Experiencia de Cliente':'cx',
+      'ML Ops y Feature Store':'mlops',
+      'Marketing y Atribución':'marketing',
+      'Operaciones de Campo':'operaciones'
+    };
+    const catClass = catClassMap[uc.catLabel] || '';
+    grid.innerHTML += `
+      <article class="card">
+        <div class="card-header">
+          <div class="card-badges">
+            <span class="badge-id">${uc.id}</span>
+            <span class="badge-cat ${catClass}">${uc.catLabel}</span>
+          </div>
+          <span class="card-time">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="#aaa" stroke-width="2">
+              <circle cx="10" cy="10" r="8"/><polyline points="10,5 10,10 13,13"/>
+            </svg>
+            ${uc.time}
+          </span>
+        </div>
+        <h3 class="card-title">${uc.title}</h3>
+        <div class="pain-point">
+          <div class="pain-point-label">Problema</div>
+          <p>${uc.pain}</p>
+        </div>
+        <p class="card-desc">${uc.desc}</p>
+        <ul class="card-features">
+          ${uc.features.map(f => `<li>${f}</li>`).join('')}
+        </ul>
+        <div class="card-actions">
+          <a href="#" class="btn-secondary" onclick="verGuia('${uc.id}');return false;">Ver Guía</a>
+          <a href="#" class="btn-tertiary" onclick="verPrompts('${uc.id}');return false;">Cortex Code Prompts</a>
+        </div>
+      </article>`;
+  });
+}
+
+let activeFilter = 'all';
+let searchTerm = '';
+
+function applyFilters() {
+  let result = USE_CASES;
+  if (activeFilter !== 'all') result = result.filter(u => u.cat === activeFilter);
+  if (searchTerm) result = result.filter(u =>
+    u.title.toLowerCase().includes(searchTerm) ||
+    u.desc.toLowerCase().includes(searchTerm) ||
+    u.pain.toLowerCase().includes(searchTerm)
+  );
+  renderCards(result);
+}
+
+document.getElementById('filterBtns').addEventListener('click', e => {
+  if (!e.target.matches('.filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeFilter = e.target.dataset.filter;
+  applyFilters();
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  applyFilters();
+});
+
+renderCards(USE_CASES);
+
+const GUIAS = {
+  UC01: {
+    title: 'Churn Prediction con Cortex ML Classification',
+    badge: 'Retención y Churn',
+    contexto: 'Migración del pipeline de churn de Snowpark custom a Cortex ML Classification nativo con Model Registry y monitorización Streamlit.',
+    foco: 'Clientes activos en múltiples países — predicción de baja o no-renovación del contrato de seguridad.',
+    reto: 'Reemplazar modelos Python frágiles sin versionado por una plataforma ML gobernada con reentrenamiento automático.',
+    objetivos: [
+      'Entrenar CUSTOMER_CHURN_MODEL v1 con Cortex ML Classification',
+      'Registrar el modelo en Model Registry con métricas AUC/precision/recall por país',
+      'Crear Dynamic Table CHURN_SCORES con score y decile por cliente activo',
+      'Configurar Task semanal de reentrenamiento automático',
+      'Construir Streamlit de monitorización: AUC histórico, feature importance, distribución de scores'
+    ],
+    funcionalidades: [
+      'Modelo ML: Clasificación binaria churn/no-churn con Cortex ML Classification',
+      'Features: tenure_months, monthly_fee, product_tier, num_incidents_90d, nps_score, payment_failures_12m, last_contact_days, contract_type',
+      'Model Registry: versionado + etiquetas de entorno (staging/production)',
+      'Scoring diario: Dynamic Table con score 0-1 + decile 1-10 para todos los clientes activos',
+      'Dashboard Streamlit: drift del modelo semana a semana, top 100 clientes en riesgo con filtro por país'
+    ],
+    datos: [
+      'SECURITY_CUSTOMERS: customer_id, country, tenure_months, monthly_fee, product_tier, num_incidents_90d, nps_score, payment_failures_12m, last_contact_days, contract_type, churned (0/1)',
+      'Churn scores diarios: probabilidad de baja por cliente activo',
+      'Métricas del modelo: AUC, precision, recall, F1 por versión y país'
+    ],
+    estratificacion: [
+      'Decile 1-2 (score > 0.8): Intervención inmediata — llamada proactiva + oferta de retención',
+      'Decile 3-5 (score 0.5-0.8): Seguimiento — email personalizado + oferta de renovación anticipada',
+      'Decile 6-10 (score < 0.5): Sin acción inmediata — proceso estándar de renovación'
+    ],
+    como_usar: [
+      'Preparar la tabla SECURITY_CUSTOMERS con el historial de clientes',
+      'Ejecutar el prompt de entrenamiento del modelo en Cortex Code',
+      'Registrar el modelo en el Model Registry con versión y métricas',
+      'Crear la Dynamic Table de scoring diario',
+      'Configurar el Task de reentrenamiento semanal',
+      'Desplegar el dashboard Streamlit de monitorización'
+    ]
+  },
+  UC02: {
+    title: 'Lead Conversion Scoring Multi-país',
+    badge: 'Ventas y Pipeline',
+    contexto: 'Modelo de propensión a conversión sobre datos de oportunidades comerciales en múltiples países para priorización del equipo de ventas.',
+    foco: 'Leads y oportunidades en pipeline comercial — predicción de conversión por país, producto y canal de adquisición.',
+    reto: 'Reemplazar la priorización manual de leads por un modelo ML gobernado que clasifique oportunidades por probabilidad de conversión.',
+    objetivos: [
+      'Entrenar Cortex ML Classification para predecir conversión de oportunidades',
+      'Segmentar por país o usar country como feature',
+      'Registrar en Model Registry con métricas por segmento de mercado',
+      'Generar Dynamic Table LEAD_SCORES',
+      'Construir Streamlit de priorización de ventas'
+    ],
+    funcionalidades: [
+      'Modelo ML: Clasificación binaria convertido/no-convertido',
+      'Features: country, lead_source, product_type, deal_value, num_touchpoints, days_in_funnel, age_bracket, household_type, acquisition_channel, campaign_id',
+      'Scoring diario: lead_id, country, score, ranking, segment',
+      'Dashboard: tabla de leads rankeados, gráfico de distribución de scores por país, KPIs de pipeline'
+    ],
+    datos: [
+      'SALES_LEADS: opp_id, country, lead_source, product_type, deal_value, num_touchpoints, days_in_funnel, close_probability, converted (0/1)',
+      'LEAD_PROFILES: lead_id, age_bracket, household_type, acquisition_channel, campaign_id, region',
+      'LEAD_SCORES: score + ranking diario para todos los leads activos'
+    ],
+    estratificacion: [
+      'Score > 0.7 (Alta propensión): Asignación a comercial senior — contacto en 24h',
+      'Score 0.4-0.7 (Media propensión): Nurturing activo — secuencia de contacto en 72h',
+      'Score < 0.4 (Baja propensión): Automatización — email drip campaign'
+    ],
+    como_usar: [
+      'Unir SALES_LEADS con LEAD_PROFILES',
+      'Ejecutar el prompt de entrenamiento del modelo de conversión',
+      'Registrar modelo en Model Registry por país o segmento',
+      'Crear Dynamic Table de scoring diario',
+      'Desplegar Streamlit de Sales Prioritization Dashboard'
+    ]
+  },
+  UC03: {
+    title: 'Forecasting de Ingresos Recurrentes con Cortex ML Time Series',
+    badge: 'Finanzas y FP&A',
+    contexto: 'Predicción de MRR e ingresos recurrentes por país usando Cortex ML Forecasting con intervalos de confianza y detección de anomalías.',
+    foco: 'Ingresos mensuales recurrentes (MRR) por país y tipo de producto — proyección a 6 meses para FP&A.',
+    reto: 'Eliminar el forecasting manual en hojas de cálculo y proporcionar proyecciones automáticas con alertas de desvío.',
+    objetivos: [
+      'Aplicar Cortex ML Forecasting sobre MRR por país con IC 80% y 95%',
+      'Detectar anomalías históricas con Cortex ML Anomaly Detection',
+      'Combinar actuals + forecast en Dynamic Table REVENUE_FORECAST',
+      'Construir Streamlit con gráfico actuals+forecast, tabla resumen y descarga CSV'
+    ],
+    funcionalidades: [
+      'Forecasting: Cortex ML Time Series sobre serie mensual de MRR por país',
+      'Intervalos de confianza: 80% y 95% para cada mes proyectado',
+      'Anomaly Detection: identificación de meses históricos anómalos',
+      'Dashboard: curva actuals vs forecast, alerta visual, escenarios base/optimista/pesimista'
+    ],
+    datos: [
+      'MONTHLY_REVENUE: country, product_type, month_date, mrr, new_customers, churned_customers, net_new_mrr, total_active_customers',
+      'REVENUE_FORECAST: actuals + forecast + anomaly_flag + confidence_bounds',
+      'Exportación CSV para board pack mensual'
+    ],
+    estratificacion: [
+      'MRR forecast con IC 95%: base para planning financiero conservador',
+      'Anomaly flag activado: requiere análisis de causa raíz por el equipo FP&A',
+      'Desvío > 5% vs forecast anterior: alerta automática al CFO del mercado'
+    ],
+    como_usar: [
+      'Preparar serie histórica MONTHLY_REVENUE con al menos 24 meses',
+      'Ejecutar Cortex ML Forecasting por country con parámetros de confianza',
+      'Ejecutar Cortex ML Anomaly Detection sobre la misma serie',
+      'Crear Dynamic Table REVENUE_FORECAST',
+      'Desplegar Streamlit de Revenue Intelligence Dashboard'
+    ]
+  },
+  UC04: {
+    title: 'Device Health Scoring con Cortex ML Anomaly Detection',
+    badge: 'IoT y Dispositivos',
+    contexto: 'Scoring de salud de dispositivos IoT en campo usando Cortex ML Anomaly Detection sobre telemetría de señal, batería y eventos.',
+    foco: 'Dispositivos de seguridad instalados — detección proactiva de dispositivos con riesgo de fallo.',
+    reto: 'Pasar de monitorización reactiva (el cliente llama cuando falla) a preventiva (detectar degradación antes del fallo).',
+    objetivos: [
+      'Aplicar Cortex ML Anomaly Detection sobre series de signal_dbm y battery_pct por device_id',
+      'Crear Snowpark Python UDF para Device Health Index (DHI) 0-100',
+      'Dynamic Table DEVICE_HEALTH con DHI diario',
+      'Registrar la UDF de DHI en Model Registry',
+      'Construir Streamlit de Fleet Health Dashboard'
+    ],
+    funcionalidades: [
+      'Anomaly Detection: detección de comportamiento anómalo en señal y batería por dispositivo',
+      'DHI = weighted_score(signal_pct, battery_pct, uptime_pct, false_alarm_rate, firmware_lag)',
+      'DHI rango 0-100: <40 crítico, 40-70 degradado, >70 saludable',
+      'Dashboard: mapa de calor geográfico, histograma DHI por modelo/país, top 50 dispositivos críticos'
+    ],
+    datos: [
+      'DEVICE_TELEMETRY: device_id, ts, signal_dbm, battery_pct, event_type, is_online, firmware_version, false_alarm (bool)',
+      'DEVICE_CATALOG: device_id, model, install_date, country, zone',
+      'DEVICE_HEALTH: device_id, date, dhi_score, anomaly_signal, anomaly_battery, firmware_age_days'
+    ],
+    estratificacion: [
+      'DHI < 40 (Crítico): Visita técnica preventiva en las próximas 48h',
+      'DHI 40-70 (Degradado): Monitorización intensiva — alerta si empeora en 7 días',
+      'DHI > 70 (Saludable): Sin acción — revisión en ciclo estándar'
+    ],
+    como_usar: [
+      'Cargar telemetría histórica en DEVICE_TELEMETRY',
+      'Ejecutar Cortex ML Anomaly Detection por device_id',
+      'Implementar la UDF de DHI en Snowpark Python',
+      'Crear Dynamic Table DEVICE_HEALTH',
+      'Registrar UDF en Model Registry y desplegar Streamlit'
+    ]
+  },
+  UC05: {
+    title: 'NPS Intelligence con Snowpark ML y Cortex',
+    badge: 'Experiencia de Cliente',
+    contexto: 'Predicción de NPS futuro y segmentación de perfiles de satisfacción usando Snowpark ML y Cortex ML sobre datos de encuestas.',
+    foco: 'Encuestas de satisfacción de clientes (NPS, post-instalación, post-incidencia) — predicción y segmentación predictiva.',
+    reto: 'Convertir el dato de encuesta en inteligencia predictiva: anticipar tendencias negativas de NPS e identificar los mercados en riesgo antes de que se materialicen en churn.',
+    objetivos: [
+      'Feature engineering con Snowpark Python y ventanas temporales (3m, 6m, 12m)',
+      'Cortex ML Regression para predecir NPS en 90 días',
+      'Cortex ML Classification para segmentar: PROMOTOR/PASIVO/DETRACTOR',
+      'Model Registry con métricas R² y accuracy por país',
+      'Streamlit: NPS real vs predicho, mapa de calor de segmentación, alertas de riesgo'
+    ],
+    funcionalidades: [
+      'Features: avg_nps_3m, trend_nps, response_rate, product_type, num_incidents, tenure_months, last_install_date',
+      'Regresión: predicción de score NPS continuo a 90 días',
+      'Clasificación: PROMOTOR (9-10), PASIVO (7-8), DETRACTOR (0-6)',
+      'Dashboard: evolución NPS real vs predicho, correlación NPS→churn risk por cohorte'
+    ],
+    datos: [
+      'CUSTOMER_SURVEYS: customer_id, survey_date, nps_score, channel, product_type, country, install_age_months, num_incidents_90d, last_technician_visit_days',
+      'CUSTOMER_PROFILES: customer_id, tenure_months, contract_type',
+      'NPS_INTELLIGENCE: predicciones y segmentaciones actualizadas semanalmente'
+    ],
+    estratificacion: [
+      'DETRACTOR con NPS predicho < 5: Contacto proactivo en 7 días — acción de recuperación',
+      'PASIVO con tendencia negativa: Seguimiento en 30 días — oferta de mejora de servicio',
+      'PROMOTOR: Programa de referidos y fidelización'
+    ],
+    como_usar: [
+      'Unir CUSTOMER_SURVEYS con CUSTOMER_PROFILES',
+      'Ejecutar feature engineering con Snowpark Python',
+      'Entrenar modelo de regresión NPS con Cortex ML',
+      'Entrenar clasificador PROMOTOR/PASIVO/DETRACTOR',
+      'Registrar ambos modelos y desplegar Streamlit de CX Intelligence'
+    ]
+  },
+  UC06: {
+    title: 'Feature Store Centralizado para Equipos ML',
+    badge: 'ML Ops y Feature Store',
+    contexto: 'Implementación del Snowflake Feature Store para centralizar features duplicadas de múltiples equipos de Data Science.',
+    foco: 'Ingeniería de features — eliminación de duplicación de cómputo entre equipos y garantía de consistencia entre modelos.',
+    reto: 'Múltiples equipos calculan features similares de forma independiente, generando inconsistencias y desperdiciando recursos computacionales.',
+    objetivos: [
+      'Identificar features duplicadas mediante análisis de linaje Snowpark',
+      'Definir Entity CUSTOMER en Snowflake Feature Store',
+      'Crear Feature Views: churn_features, device_features, commercial_features, cx_features',
+      'Registrar todos los modelos enlazados a sus Feature Views',
+      'Construir Streamlit de ML Feature Catalog'
+    ],
+    funcionalidades: [
+      'Entity CUSTOMER: customer_id, country como join keys',
+      'churn_features: tenure, incidents, NPS, payment (desde SECURITY_CUSTOMERS)',
+      'cx_features: NPS_trend, survey_response_rate (desde CUSTOMER_SURVEYS)',
+      'device_features: DHI, firmware, signal_avg (desde DEVICE_HEALTH)',
+      'commercial_features: LTV, conversion_prob, campaign_response',
+      'Feature Catalog Streamlit: descripción, freshness, uso por modelo, histogramas'
+    ],
+    datos: [
+      'Múltiples tablas fuente: SECURITY_CUSTOMERS, CUSTOMER_SURVEYS, DEVICE_HEALTH',
+      'Feature Store registrado con TTL de 24h y materialización via Dynamic Tables',
+      'Training datasets: point-in-time join con etiquetas para cada modelo'
+    ],
+    estratificacion: [
+      'Ahorro estimado: ~40% reducción tiempo feature engineering en nuevos proyectos',
+      'Reducción de cómputo duplicado: eliminar overlap entre equipos de Data Science',
+      'Point-in-time correctness: evitar data leakage en entrenamiento'
+    ],
+    como_usar: [
+      'Auditar features existentes en todos los warehouses de Data Science',
+      'Definir Entity CUSTOMER y Feature Views en Snowflake Feature Store',
+      'Materializar Feature Views via Dynamic Tables',
+      'Generar training datasets con point-in-time join',
+      'Desplegar Streamlit de Feature Catalog'
+    ]
+  },
+  UC07: {
+    title: 'Marketing Attribution ML Multi-touch',
+    badge: 'Marketing y Atribución',
+    contexto: 'Modelo de atribución data-driven basado en journeys multi-touch para optimizar la distribución del presupuesto de marketing.',
+    foco: 'Journeys de conversión de clientes — peso real de cada canal (digital, field, referidos, campañas) en la decisión de compra.',
+    reto: 'Reemplazar la atribución last-click con un modelo data-driven que refleje el peso real de cada canal en el journey de conversión.',
+    objetivos: [
+      'Construir journeys multi-touch con Snowpark (ventana 90 días previos a conversión)',
+      'Entrenar Cortex ML Regression para predecir conversion_value',
+      'Extraer feature importances como pesos de atribución por canal',
+      'Registrar modelo en Model Registry por mercado',
+      'Construir Streamlit de Marketing ROI Intelligence'
+    ],
+    funcionalidades: [
+      'Features: num_touchpoints_by_channel, days_first_touch, days_last_touch, channel_diversity_score, touchpoint_type',
+      'Atribución: importancia de cada canal como fracción del valor de conversión',
+      'ROI: coste del canal vs revenue atribuido por campaña',
+      'Dashboard: barras apiladas de atribución por canal/mercado, comparativa vs last-click baseline'
+    ],
+    datos: [
+      'MARKETING_TOUCHPOINTS: customer_id, channel, touchpoint_date, campaign_id, country, touchpoint_type (AWARENESS/CONSIDERATION/DECISION)',
+      'CONVERSIONS: customer_id, conversion_date, product_type, deal_value, lead_source',
+      'ATTRIBUTION_SCORES: pesos de atribución actualizados semanalmente'
+    ],
+    estratificacion: [
+      'Canal con peso de atribución > 30%: incrementar inversión + mantener',
+      'Canal con peso < 10% y coste alto: reducir inversión en próxima campaña',
+      'Recomendación de redistribución: máximo impacto con mismo presupuesto total'
+    ],
+    como_usar: [
+      'Preparar MARKETING_TOUCHPOINTS y CONVERSIONS',
+      'Construir journeys multi-touch con Snowpark Python',
+      'Calcular features de journey por cliente convertido',
+      'Entrenar modelo de regresión para predecir conversion_value',
+      'Extraer importancias como pesos de atribución y desplegar Streamlit'
+    ]
+  },
+  UC08: {
+    title: 'Segmentación Dinámica de Clientes con Clustering ML',
+    badge: 'Operaciones de Campo',
+    contexto: 'Modelo de clustering no supervisado para identificar microsegmentos reales de comportamiento de cliente.',
+    foco: 'Base de clientes multi-país — identificación de segmentos accionables para estrategias personalizadas de CRM y producto.',
+    reto: 'Los segmentos estáticos (residencial/empresa, básico/premium) no capturan la diversidad real del comportamiento del cliente. Se pierden oportunidades de upgrade, cross-sell y retención preventiva.',
+    objetivos: [
+      'Normalizar features con StandardScaler de Snowpark ML',
+      'Aplicar PCA (2 componentes) para visualización interactiva',
+      'Ejecutar KMeans con k=6 evaluando silhouette score para k óptimo',
+      'Asignar segmentos a todos los clientes activos',
+      'Construir Streamlit de Segment Explorer'
+    ],
+    funcionalidades: [
+      'Features: country, tenure_months, product_tier, nps_score, incidents_90d, payment_failures, alarm_events_30d, monthly_fee, contract_type',
+      'Clustering: KMeans con evaluación silhouette para k entre 4 y 10',
+      'Caracterización: estadísticas descriptivas automáticas por segmento',
+      'Dashboard: scatter plot PCA interactivo, radar chart, KPIs por segmento'
+    ],
+    datos: [
+      'CUSTOMER_FEATURES: customer_id, country, tenure_months, product_tier, nps_score, incidents_90d, payment_failures, alarm_events_30d, monthly_fee, contract_type',
+      'CUSTOMER_SEGMENTS: customer_id, segment_id, pca_x, pca_y, fecha',
+      'Métricas por segmento: churn rate, NPS medio, LTV medio, tamaño'
+    ],
+    estratificacion: [
+      'Segmento high-value con alta probabilidad upgrade: campaña de upgrade de producto',
+      'Segmento con riesgo silencioso de churn: intervención preventiva de retención',
+      'Segmento satisfecho estable: programa de referidos y fidelización'
+    ],
+    como_usar: [
+      'Preparar CUSTOMER_FEATURES con features de comportamiento normalizadas',
+      'Ejecutar normalización con StandardScaler y PCA con Snowpark ML',
+      'Entrenar KMeans evaluando silhouette score para k óptimo',
+      'Asignar segmentos y calcular estadísticas descriptivas',
+      'Desplegar Streamlit de Segment Explorer'
+    ]
+  },
+  UC09: {
+    title: 'Demand Forecasting de Instalaciones con Cortex ML Time Series',
+    badge: 'Operaciones de Campo',
+    contexto: 'Predicción de demanda de instalaciones por zona geográfica usando Cortex ML Time Series para planificación de capacidad técnica.',
+    foco: 'Demanda de instalaciones por zona y semana — planificación proactiva de la capacidad del equipo técnico de field service.',
+    reto: 'La planificación reactiva de la capacidad técnica genera sobre o infradimensionamiento. Los coordinadores de field operations necesitan visibilidad anticipada de la demanda por zona.',
+    objetivos: [
+      'Aplicar Cortex ML Forecasting sobre num_installations por zone_id — próximas 8 semanas',
+      'Incluir intervalos de confianza al 80% y 95%',
+      'Detectar semanas históricas con volumen anómalo',
+      'Crear Dynamic Table INSTALLATION_DEMAND',
+      'Construir Streamlit de Capacity Planning Dashboard'
+    ],
+    funcionalidades: [
+      'Forecasting: predicción de instalaciones por zona geográfica a 8 semanas',
+      'Anomaly Detection: identificación de semanas históricas atípicas (festivos, picos de campaña)',
+      'KPI: técnicos necesarios vs disponibles por zona y semana',
+      'Dashboard: mapa de calor de demanda predicha, alertas de semanas inusuales, descarga CSV'
+    ],
+    datos: [
+      'INSTALLATION_HISTORY: week_date, zone_id, country, installation_type, num_installations, num_technicians_used, avg_duration_minutes',
+      'INSTALLATION_DEMAND: actuals + forecast + anomaly_score + confidence_bounds por zona y semana',
+      'Plan semanal exportable en CSV para coordinadores de field'
+    ],
+    estratificacion: [
+      'Zonas con demanda predicha > capacidad actual: ampliar plantilla o redistribuir técnicos',
+      'Semanas con anomaly_flag activado: revisar causas (campaña, festivo, evento) y ajustar plan',
+      'Zonas con capacidad ociosa: reasignar técnicos a zonas con demanda alta'
+    ],
+    como_usar: [
+      'Preparar serie histórica INSTALLATION_HISTORY por zone_id con al menos 52 semanas',
+      'Ejecutar Cortex ML Forecasting por zone_id con IC 80% y 95%',
+      'Ejecutar Cortex ML Anomaly Detection sobre la misma serie',
+      'Crear Dynamic Table INSTALLATION_DEMAND',
+      'Desplegar Streamlit de Capacity Planning Dashboard'
+    ]
+  },
+  UC10: {
+    title: 'ML Model Monitoring Platform: Observabilidad Centralizada',
+    badge: 'ML Ops y Feature Store',
+    contexto: 'Plataforma centralizada de monitorización de modelos ML en producción usando Model Registry, Dynamic Tables y Streamlit.',
+    foco: 'Todos los modelos en producción — detección proactiva de data drift, prediction drift y degradación de performance.',
+    reto: 'Sin monitorización centralizada, la degradación silenciosa de modelos ML en producción se detecta tarde, cuando el negocio ya reporta resultados inesperados.',
+    objetivos: [
+      'Registrar todos los modelos en Snowflake Model Registry',
+      'Crear Tasks diarios para calcular PSI, prediction drift y data quality',
+      'Dynamic Table MODEL_HEALTH_SUMMARY con semáforo por modelo',
+      'Configurar alertas automáticas cuando drift_score supera umbral',
+      'Construir Streamlit de ML Model Monitor centralizado'
+    ],
+    funcionalidades: [
+      'PSI (Population Stability Index): comparación distribución de features hoy vs training baseline',
+      'Prediction drift: distribución de scores hoy vs semana anterior',
+      'Data quality: nulls, outliers en features de entrada',
+      'Semáforo: GREEN (drift < 0.1), YELLOW (0.1-0.2), RED (> 0.2)',
+      'Dashboard: grid de modelos por estado, histogramas de drift, evolución AUC, alertas activas'
+    ],
+    datos: [
+      'Model Registry: modelos registrados con versiones activas y metadata de entrenamiento',
+      'MODEL_METRICS_HISTORY: model_id, version, metric_name, metric_value, drift_score, alert_flag',
+      'MODEL_HEALTH_SUMMARY: status (GREEN/YELLOW/RED) por modelo y versión'
+    ],
+    estratificacion: [
+      'RED (drift > 0.2): Reentrenamiento inmediato del modelo',
+      'YELLOW (drift 0.1-0.2): Análisis de causa raíz — posible reentrenamiento en próxima ventana',
+      'GREEN (drift < 0.1): Sin acción — monitorización estándar'
+    ],
+    como_usar: [
+      'Listar todos los modelos registrados en el Model Registry',
+      'Crear Task diario de cálculo de métricas de monitorización por modelo',
+      'Insertar métricas en MODEL_METRICS_HISTORY',
+      'Crear Dynamic Table MODEL_HEALTH_SUMMARY',
+      'Desplegar Streamlit de ML Model Monitor y configurar alertas'
+    ]
+  }
+};
+
+const PROMPTS = {
+  UC01: {
+    title: 'Churn Prediction con Cortex ML Classification',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando datos sintéticos para tener una base de trabajo inmediata.',
+    steps: [
+      {
+        num: 1, title: 'Generar datos sintéticos de clientes',
+        desc: 'Crea la tabla base con 2.000 clientes de una empresa de seguridad usando TABLE(GENERATOR)',
+        code: `/best-practices
+
+Crea una tabla llamada SECURITY_CUSTOMERS con 2.000 registros sintéticos de clientes de una empresa de seguridad y alarmas. Usa TABLE(GENERATOR(rowcount => 2000)) para generarlos de forma eficiente — nunca INSERT fila a fila. La tabla debe incluir: customer_id (secuencial), country (España, Francia, Italia, Alemania, Portugal), tenure_months entre 1 y 120, monthly_fee entre 20 y 80, product_tier (BASIC, STANDARD o PREMIUM), num_incidents_90d entre 0 y 8, nps_score entre 0 y 10, payment_failures_12m entre 0 y 5, last_contact_days entre 0 y 180, contract_type (ANNUAL o MONTHLY), y churned (0 o 1 con aproximadamente un 20% de positivos). Escala el warehouse a MEDIUM antes de ejecutar y restáuralo a XSMALL al terminar.`
+      },
+      {
+        num: 2, title: 'Entrenar el modelo de churn',
+        desc: 'Entrena un clasificador Cortex ML sobre la tabla generada',
+        code: `/best-practices
+
+Usando la tabla SECURITY_CUSTOMERS, entrena un modelo Cortex ML Classification que prediga la columna churned. Llama al modelo CHURN_MODEL. Evalúa el modelo automáticamente y muéstrame las métricas AUC, precision y recall. Registra el modelo en el Model Registry con versión v1 y una etiqueta que indique el equipo de CRM.`
+      },
+      {
+        num: 3, title: 'Crear scoring diario con Dynamic Table',
+        desc: 'Aplica el modelo a todos los clientes activos con score y decile de riesgo',
+        code: `/best-practices
+
+Crea una Dynamic Table llamada CHURN_SCORES con TARGET_LAG de 1 día. Esta tabla debe aplicar CHURN_MODEL a todos los clientes de SECURITY_CUSTOMERS donde churned IS NULL (clientes activos), y generar una columna con la probabilidad de baja entre 0 y 1, y un decile de riesgo del 1 al 10 donde 1 es el de mayor riesgo. Incluye también customer_id, country y product_tier.`
+      },
+      {
+        num: 4, title: 'App Streamlit de monitorización',
+        desc: 'Dashboard para que el equipo de CRM vea el scoring en producción',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake usando la tabla CHURN_SCORES. La app debe mostrar: un histograma de distribución de scores separado por país, una tabla interactiva con los 100 clientes de mayor riesgo (decile 1 y 2) con filtros por country y product_tier, y tres KPIs en la parte superior: total de clientes activos, porcentaje con riesgo alto (score > 0.7) y monthly_fee total en riesgo. Usa la paleta de colores de Snowflake.`
+      }
+    ]
+  },
+  UC02: {
+    title: 'Lead Conversion Scoring Multi-país',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando datos sintéticos de leads y oportunidades.',
+    steps: [
+      {
+        num: 1, title: 'Generar datos sintéticos de leads y oportunidades',
+        desc: 'Crea tablas de pipeline comercial y perfiles de leads',
+        code: `/best-practices
+
+Crea dos tablas sintéticas usando TABLE(GENERATOR) — nunca INSERT fila a fila. La primera, SALES_LEADS, con 3.000 registros: lead_id (secuencial), country (España, Francia, Italia, Alemania, Portugal), lead_source (WEB, REFERRAL, FIELD, CALL_CENTER, CAMPAIGN), product_type (RESIDENTIAL_BASIC, RESIDENTIAL_PREMIUM, BUSINESS_SMALL, BUSINESS_LARGE), deal_value entre 200 y 2.000, num_touchpoints entre 1 y 15, days_in_funnel entre 1 y 90, y converted (0 o 1 con ~25% positivos). La segunda, LEAD_PROFILES, con los mismos lead_id y: age_bracket (18-30, 31-45, 46-60, 61+), household_type (OWNER, RENTER, FAMILY, SINGLE), acquisition_channel (ONLINE, OFFLINE, HYBRID) y region. Escala el warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Entrenar modelo de propensión a conversión',
+        desc: 'Une las dos tablas y entrena el clasificador de leads',
+        code: `/best-practices
+
+Une SALES_LEADS y LEAD_PROFILES por lead_id para crear una vista LEADS_FEATURES con todas las columnas. Después entrena un modelo Cortex ML Classification llamado LEAD_CONVERSION_MODEL que prediga la columna converted usando todas las features disponibles. Muéstrame las métricas de evaluación y registra el modelo en el Model Registry con versión v1.`
+      },
+      {
+        num: 3, title: 'Dynamic Table de scoring diario de leads',
+        desc: 'Aplica el modelo a todos los leads pendientes de conversión',
+        code: `/best-practices
+
+Crea una Dynamic Table llamada LEAD_SCORES con TARGET_LAG de 1 día que aplique LEAD_CONVERSION_MODEL a todos los registros de SALES_LEADS donde converted IS NULL. La tabla debe incluir: lead_id, country, product_type, deal_value, conversion_probability entre 0 y 1, y country_rank como posición del lead dentro de su país ordenado por probabilidad descendente.`
+      },
+      {
+        num: 4, title: 'App Streamlit de priorización comercial',
+        desc: 'Dashboard para que el equipo de ventas priorice su trabajo diario',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake con los datos de LEAD_SCORES. La app debe tener: selectores de country y product_type en el sidebar, una tabla de leads rankeados por conversion_probability, un gráfico de barras con distribución de scores por país, y tres KPIs: leads activos totales, conversion rate esperado (media de probabilidades) y revenue potencial (suma de deal_value × conversion_probability). Aplica tema visual Snowflake.`
+      }
+    ]
+  },
+  UC03: {
+    title: 'Forecasting de Ingresos Recurrentes con Cortex ML Time Series',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando una serie histórica de ingresos mensuales.',
+    steps: [
+      {
+        num: 1, title: 'Generar serie histórica de ingresos por país',
+        desc: 'Crea 36 meses de datos de MRR para entrenar el modelo de forecasting',
+        code: `/best-practices
+
+Crea una tabla llamada MONTHLY_REVENUE con 36 meses de ingresos históricos para 5 países. Usa TABLE(GENERATOR) para generar 180 filas (36 meses × 5 países: España, Francia, Italia, Alemania y Portugal). Cada fila debe tener: country, month_date (fechas mensuales desde hace 36 meses), mrr (entre 800.000 y 3.000.000 con tendencia creciente y algo de estacionalidad), new_customers entre 200 y 1.500, churned_customers entre 50 y 400, y total_active_customers acumulado. Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Forecasting de MRR a 6 meses',
+        desc: 'Predice los próximos 6 meses con intervalos de confianza al 80% y 95%',
+        code: `/best-practices
+
+Usando MONTHLY_REVENUE, crea un modelo Cortex ML Forecasting llamado MRR_FORECAST_MODEL. Usa country como columna de series, month_date como timestamp y mrr como target. Genera predicciones para los próximos 6 meses con intervalos de confianza al 80% y al 95%. Muéstrame los resultados de las predicciones por país junto a los valores reales para poder comparar.`
+      },
+      {
+        num: 3, title: 'Anomaly Detection y Dynamic Table',
+        desc: 'Detecta meses históricos anómalos y consolida todo en una tabla',
+        code: `/best-practices
+
+Sobre MONTHLY_REVENUE, crea también un modelo Cortex ML Anomaly Detection llamado MRR_ANOMALY_MODEL con la misma configuración. Ejecuta la detección y muéstrame qué meses presentan comportamiento anómalo por país. Después crea una Dynamic Table llamada REVENUE_FORECAST con TARGET_LAG de 1 día que combine los valores reales, las predicciones del modelo MRR_FORECAST_MODEL y los flags de anomalía.`
+      },
+      {
+        num: 4, title: 'App Streamlit de FP&A',
+        desc: 'Dashboard de revenue intelligence para los equipos financieros',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake con REVENUE_FORECAST. La app debe mostrar: una línea temporal de mrr real (azul sólido) vs forecast (naranja punteado) con banda de confianza al 95%, un selector de country en el sidebar, una tabla resumen con crecimiento MoM por país, alertas visuales para los meses con anomaly_flag activado, y un botón de descarga CSV del plan mensual. Aplica tema Snowflake.`
+      }
+    ]
+  },
+  UC04: {
+    title: 'Device Health Scoring con Cortex ML Anomaly Detection',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando datos sintéticos de telemetría IoT de dispositivos en campo.',
+    steps: [
+      {
+        num: 1, title: 'Generar datos sintéticos de dispositivos y telemetría',
+        desc: 'Crea el catálogo de dispositivos y sus lecturas de telemetría diarias',
+        code: `/best-practices
+
+Crea dos tablas con TABLE(GENERATOR). La primera, DEVICE_CATALOG, con 5.000 dispositivos: device_id (secuencial), model (SENSOR_V1, SENSOR_V2, CAMERA_HD, PANEL_CONTROL, DETECTOR_SMOKE), install_date (aleatoria en los últimos 5 años), country (España, Francia, Italia, Alemania, Portugal) y zone_id (1-100). La segunda, DEVICE_TELEMETRY, con 90.000 lecturas (5.000 dispositivos × 18 días): device_id, reading_date, signal_pct entre 0 y 100 (mayormente > 60, algunos bajos simulando degradación), battery_pct entre 0 y 100, is_online (0/1, 97% online), firmware_version (v1.0 a v3.2) y false_alarm (0/1, ~3% positivos). Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Anomaly Detection sobre señal y batería',
+        desc: 'Detecta dispositivos con comportamiento anómalo en sus lecturas recientes',
+        code: `/best-practices
+
+Crea dos modelos Cortex ML Anomaly Detection sobre DEVICE_TELEMETRY: el primero, SIGNAL_ANOMALY_MODEL, usando device_id como serie, reading_date como timestamp y signal_pct como target. El segundo, BATTERY_ANOMALY_MODEL, sobre battery_pct con la misma configuración. Ejecuta ambos modelos y muéstrame los 20 dispositivos con mayor anomaly_score en los últimos 7 días junto a su country y model del DEVICE_CATALOG.`
+      },
+      {
+        num: 3, title: 'UDF de Device Health Index y Dynamic Table',
+        desc: 'Calcula el índice de salud DHI 0-100 y materialízalo en una Dynamic Table diaria',
+        code: `/best-practices
+
+Crea una Snowpark Python UDF llamada CALCULATE_DHI que reciba signal_pct, battery_pct, uptime_pct, false_alarm_rate y firmware_age_days y devuelva un Device Health Index (DHI) entre 0 y 100. El DHI combina: señal (30%), batería (25%), uptime (25%), penalización por falsas alarmas (10%) y penalización por firmware antiguo (10%). Luego crea una Dynamic Table llamada DEVICE_HEALTH con TARGET_LAG de 1 día que calcule el DHI diario de cada dispositivo uniendo DEVICE_TELEMETRY y DEVICE_CATALOG.`
+      },
+      {
+        num: 4, title: 'App Streamlit de Fleet Health Dashboard',
+        desc: 'Dashboard de calidad de flota para los equipos de operaciones de campo',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake con DEVICE_HEALTH y DEVICE_CATALOG. La app debe mostrar: un mapa de calor por zone_id coloreado por DHI promedio, un histograma de distribución de DHI agrupado por model de dispositivo, una tabla con los 50 dispositivos más críticos (DHI < 40) con columnas device_id, country, zone_id, model y dhi_score, y cuatro KPIs: total dispositivos, % críticos (<40), % degradados (40-70) y % saludables (>70). Aplica tema Snowflake.`
+      }
+    ]
+  },
+  UC05: {
+    title: 'NPS & Customer Sentiment Scoring con Snowpark ML',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando datos sintéticos de encuestas de satisfacción.',
+    steps: [
+      {
+        num: 1, title: 'Generar datos sintéticos de encuestas de satisfacción',
+        desc: 'Crea tablas de respuestas NPS y perfiles de cliente',
+        code: `/best-practices
+
+Crea dos tablas con TABLE(GENERATOR). La primera, CUSTOMER_SURVEYS, con 10.000 respuestas de encuestas: survey_id (secuencial), customer_id (3.000 clientes únicos), survey_date (últimos 24 meses), nps_score entre 0 y 10 con distribución realista (más extremos que valores medios), channel (APP, EMAIL, PHONE, SMS), product_type (RESIDENTIAL, BUSINESS), country (España, Francia, Italia, Alemania, Portugal), install_age_months entre 1 y 84 y num_incidents_90d entre 0 y 8. La segunda, CUSTOMER_PROFILES, con 3.000 clientes: customer_id, tenure_months entre 1 y 120 y contract_type (ANNUAL, MONTHLY). Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Feature engineering con ventanas temporales',
+        desc: 'Agrega features a 3, 6 y 12 meses para capturar tendencias de satisfacción',
+        code: `/best-practices
+
+Une CUSTOMER_SURVEYS con CUSTOMER_PROFILES por customer_id y crea una tabla NPS_FEATURES. Para cada cliente y encuesta, calcula ventanas temporales: avg_nps_3m (NPS medio de los últimos 3 meses), avg_nps_6m (últimos 6 meses), nps_trend (diferencia avg_nps_3m - avg_nps_6m para detectar si mejora o empeora), y response_rate_6m (encuestas respondidas en 6 meses). Añade como etiqueta future_nps_90d, que es el nps_score de la siguiente encuesta del mismo cliente al menos 60 días después.`
+      },
+      {
+        num: 3, title: 'Modelos predictivos de NPS y segmentación',
+        desc: 'Entrena el regresor de NPS futuro y el clasificador PROMOTOR/PASIVO/DETRACTOR',
+        code: `/best-practices
+
+Sobre NPS_FEATURES, entrena primero un modelo Cortex ML Regression llamado NPS_REGRESSION_MODEL para predecir future_nps_90d. Muéstrame RMSE y R². Después añade una columna nps_segment a la tabla (PROMOTOR si nps_score >= 9, PASIVO si entre 7 y 8, DETRACTOR si <= 6) y entrena un modelo Cortex ML Classification llamado NPS_SEGMENT_MODEL para predecirla. Registra ambos modelos en el Model Registry con versión v1.`
+      },
+      {
+        num: 4, title: 'App Streamlit de CX Intelligence',
+        desc: 'Dashboard de experiencia de cliente con predicciones y alertas de mercados en riesgo',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake que use NPS_FEATURES y los resultados de los modelos. La app debe mostrar: una línea temporal de NPS real vs NPS predicho a 90 días por país (con selector en sidebar), una tabla de los 50 clientes con mayor riesgo de convertirse en DETRACTOR (NPS predicho < 5), una matriz de segmentos PROMOTOR/PASIVO/DETRACTOR por country y product_type, y KPIs: NPS actual, NPS predicho y % de detractores. Aplica tema Snowflake.`
+      }
+    ]
+  },
+  UC06: {
+    title: 'Feature Store Centralizado para Equipos ML',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando las tablas fuente que alimentarán el Feature Store.',
+    steps: [
+      {
+        num: 1, title: 'Generar tablas fuente para el Feature Store',
+        desc: 'Crea los datos base de clientes, interacciones y dispositivos',
+        code: `/best-practices
+
+Crea tres tablas sintéticas con TABLE(GENERATOR). Tabla CUSTOMERS_BASE: 5.000 clientes con customer_id, country (España/Francia/Italia/Alemania/Portugal), tenure_months (1-120), monthly_fee (20-80), product_tier (BASIC/STANDARD/PREMIUM) y contract_type (ANNUAL/MONTHLY). Tabla CUSTOMER_INTERACTIONS: 50.000 filas con customer_id, interaction_date (últimos 12 meses), interaction_type (CALL/INCIDENT/SURVEY/PAYMENT_FAILURE) y outcome (RESOLVED/PENDING/FAILED). Tabla CUSTOMER_DEVICES: 8.000 filas con customer_id, device_id, install_date y device_health_score entre 0 y 100. Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Definir Entity y Feature Views en el Feature Store',
+        desc: 'Configura el Snowflake Feature Store con la entidad CUSTOMER',
+        code: `/best-practices
+
+Usando Snowpark Python, inicializa el Snowflake Feature Store. Crea la Entity CUSTOMER con join key customer_id. Después crea tres Feature Views materializadas como Dynamic Tables con TTL de 24h: (1) CHURN_FEATURES desde CUSTOMERS_BASE con tenure_months, monthly_fee, product_tier y contract_type; (2) INTERACTION_FEATURES desde CUSTOMER_INTERACTIONS con total_incidents_90d, payment_failures_12m y avg_resolution_days como features agregadas; (3) DEVICE_FEATURES desde CUSTOMER_DEVICES con avg_device_health y num_devices. Muéstrame las Feature Views registradas.`
+      },
+      {
+        num: 3, title: 'Generar training dataset con point-in-time join',
+        desc: 'Crea el dataset para el modelo de churn con las features del Feature Store',
+        code: `/best-practices
+
+Usando el Feature Store configurado, genera un training dataset para predecir churn. Crea primero una spine table con customer_id, una fecha de observación aleatoria y la etiqueta churned (0/1 con ~20% positivos). Después haz el point-in-time join con las tres Feature Views para garantizar que no hay data leakage — solo se usan features disponibles antes de la fecha de observación de cada cliente. Muéstrame el esquema del dataset resultante y las primeras 10 filas.`
+      },
+      {
+        num: 4, title: 'App Streamlit de Feature Catalog',
+        desc: 'Catálogo navegable de features para los equipos de Data Science',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake que muestre el catálogo del Feature Store. La app debe incluir: una tabla con todas las Feature Views, sus features (nombre y tipo de dato), y cuántos modelos las usan. Un semáforo de freshness por Feature View (verde si actualizada en las últimas 24h, amarillo si entre 24h y 48h, rojo si más de 48h). Al hacer clic en una feature numérica, muestra su histograma de distribución. Incluye un buscador de features por nombre. Aplica tema Snowflake.`
+      }
+    ]
+  },
+  UC07: {
+    title: 'Marketing Attribution ML: Modelo Multi-touch',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando datos sintéticos de touchpoints de marketing y conversiones.',
+    steps: [
+      {
+        num: 1, title: 'Generar datos sintéticos de touchpoints y conversiones',
+        desc: 'Crea las tablas de journeys de marketing y resultados de conversión',
+        code: `/best-practices
+
+Crea dos tablas con TABLE(GENERATOR). La primera, MARKETING_TOUCHPOINTS, con 30.000 touchpoints: touchpoint_id (secuencial), customer_id (1.000 clientes únicos), channel (DIGITAL_ADS, FIELD_VISIT, CALL_CENTER, EMAIL, REFERRAL, TV_RADIO), touchpoint_date (últimos 6 meses), campaign_id (20 campañas únicas), country (España, Francia, Italia, Alemania, Portugal) y touchpoint_type (AWARENESS, CONSIDERATION, DECISION). La segunda, CONVERSIONS, con 800 conversiones: customer_id, conversion_date, product_type (RESIDENTIAL_BASIC, RESIDENTIAL_PREMIUM, BUSINESS) y deal_value entre 200 y 2.000. Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Construir journeys multi-touch',
+        desc: 'Agrega los touchpoints de 90 días anteriores a cada conversión',
+        code: `/best-practices
+
+Usando MARKETING_TOUCHPOINTS y CONVERSIONS, crea una tabla CUSTOMER_JOURNEYS. Para cada conversión, busca todos los touchpoints del mismo customer_id en los 90 días anteriores y agrega: total_touchpoints, conteo por canal (digital_ads_count, field_count, call_count, email_count, referral_count, tv_count), days_first_touch (días desde el primer touchpoint), days_last_touch (días hasta la conversión), channel_diversity_score (número de canales distintos) y el deal_value de la conversión. Muéstrame estadísticas básicas de los journeys.`
+      },
+      {
+        num: 3, title: 'Modelo de atribución y pesos por canal',
+        desc: 'Entrena el regresor de deal_value y extrae los pesos de atribución',
+        code: `/best-practices
+
+Sobre CUSTOMER_JOURNEYS, entrena un modelo Cortex ML Regression llamado ATTRIBUTION_MODEL que prediga deal_value usando los conteos de touchpoints por canal. Ejecuta SHOW_FEATURE_IMPORTANCES para obtener el peso de cada canal. Interpreta esos pesos como la contribución porcentual de cada canal a la generación de valor. Muéstrame los pesos de atribución ordenados de mayor a menor y regístralos en el Model Registry.`
+      },
+      {
+        num: 4, title: 'App Streamlit de Marketing ROI Intelligence',
+        desc: 'Dashboard de ROI para los equipos de marketing con comparativa data-driven vs last-click',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake con los pesos de atribución del modelo ATTRIBUTION_MODEL y los datos de CUSTOMER_JOURNEYS. La app debe mostrar: barras horizontales comparando atribución data-driven (azul) vs last-click (gris) por canal, una tabla de ROI por campaign_id con inversión estimada y revenue atribuido, un selector de country en el sidebar, y una sección de recomendaciones automáticas: qué canales aumentar y cuáles reducir según ROI. Aplica tema Snowflake.`
+      }
+    ]
+  },
+  UC08: {
+    title: 'Segmentación Dinámica de Clientes con Clustering ML',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando datos sintéticos de comportamiento de cliente para el clustering.',
+    steps: [
+      {
+        num: 1, title: 'Generar datos sintéticos de features de cliente',
+        desc: 'Crea la tabla de comportamiento con correlaciones realistas entre features',
+        code: `/best-practices
+
+Crea una tabla llamada CUSTOMER_FEATURES con 5.000 registros usando TABLE(GENERATOR). Incluye: customer_id (secuencial), country (España, Francia, Italia, Alemania, Portugal), tenure_months entre 1 y 120, product_tier (BASIC, STANDARD o PREMIUM), nps_score entre 0 y 10, incidents_90d entre 0 y 8, payment_failures entre 0 y 5, alarm_events_30d entre 0 y 20, monthly_fee entre 20 y 80 y contract_type_num (1 para ANNUAL, 0 para MONTHLY). Genera correlaciones realistas: clientes PREMIUM deben tener en promedio mayor tenure, menor incidents y mayor nps. Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Normalización, PCA y clustering KMeans',
+        desc: 'Preprocesa features, reduce a 2D para visualización y busca el k óptimo',
+        code: `/best-practices
+
+Usando Snowpark ML sobre CUSTOMER_FEATURES: (1) Normaliza las columnas numéricas con StandardScaler. (2) Aplica PCA con 2 componentes para visualización, almacenando pca_x y pca_y en la tabla. (3) Evalúa KMeans para k entre 4 y 8 calculando el silhouette score en cada caso. (4) Entrena el modelo KMeans con el k que tenga mejor silhouette score y asigna segment_id a cada cliente. Muéstrame el k elegido, el silhouette score y el tamaño de cada segmento.`
+      },
+      {
+        num: 3, title: 'Dynamic Table y estadísticas por segmento',
+        desc: 'Materializa asignaciones diarias y caracteriza cada segmento',
+        code: `/best-practices
+
+Crea una Dynamic Table llamada CUSTOMER_SEGMENTS con TARGET_LAG de 1 día que aplique el modelo de clustering a CUSTOMER_FEATURES y almacene customer_id, country, pca_x, pca_y y segment_id. Después calcula una tabla SEGMENT_STATS con las estadísticas descriptivas de cada segmento: tamaño, media y desviación estándar de las features numéricas más relevantes (nps_score, monthly_fee, tenure_months, incidents_90d). Muéstrame el perfil de cada segmento.`
+      },
+      {
+        num: 4, title: 'App Streamlit de Segment Explorer',
+        desc: 'Dashboard interactivo para que CRM y producto exploren los microsegmentos',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake con CUSTOMER_SEGMENTS y SEGMENT_STATS. La app debe incluir: un scatter plot interactivo de puntos PCA coloreados por segment_id con tooltip mostrando customer_id y country, un radar chart con las características promedio del segmento seleccionado, una tabla de clientes con filtros por country y segment_id, y KPIs del segmento seleccionado: tamaño, NPS medio, monthly_fee medio e incidents medio. Aplica tema Snowflake.`
+      }
+    ]
+  },
+  UC09: {
+    title: 'Demand Forecasting de Instalaciones con Cortex ML Time Series',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando un historial de instalaciones por zona geográfica.',
+    steps: [
+      {
+        num: 1, title: 'Generar historial de instalaciones por zona',
+        desc: 'Crea una serie temporal semanal de instalaciones para 20 zonas geográficas',
+        code: `/best-practices
+
+Crea una tabla llamada INSTALLATION_HISTORY con datos históricos de instalaciones semanales. Usa TABLE(GENERATOR) para generar 1.040 filas (52 semanas × 20 zonas). Campos: zone_id (Z01 a Z20), country (España, Francia, Italia, Alemania, Portugal distribuidos entre zonas), week_date (fechas semanales de los últimos 12 meses), num_installations entre 5 y 80 con estacionalidad realista (pico en primavera y otoño, caída en agosto y diciembre), num_technicians_available entre 3 y 15 según la zona, e installation_type (RESIDENTIAL u BUSINESS con proporción 80/20). Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Forecasting de demanda de instalaciones',
+        desc: 'Predice las próximas 8 semanas por zona con intervalos de confianza',
+        code: `/best-practices
+
+Usando INSTALLATION_HISTORY, crea un modelo Cortex ML Forecasting llamado INSTALLATION_DEMAND_MODEL. Usa zone_id como columna de series, week_date como timestamp y num_installations como target. Genera predicciones para las próximas 8 semanas con intervalos de confianza al 80% y 95%. Muéstrame las predicciones de las 5 zonas con mayor demanda esperada en la próxima semana.`
+      },
+      {
+        num: 3, title: 'Anomaly Detection y Dynamic Table de planificación',
+        desc: 'Detecta semanas históricas atípicas y consolida actuals + forecast en una tabla',
+        code: `/best-practices
+
+Crea también un modelo Cortex ML Anomaly Detection llamado DEMAND_ANOMALY_MODEL sobre INSTALLATION_HISTORY con la misma configuración de series. Ejecuta la detección y muéstrame qué semanas históricas fueron anómalas. Después crea una Dynamic Table llamada INSTALLATION_DEMAND con TARGET_LAG de 7 días que combine: valores reales, predicciones del modelo INSTALLATION_DEMAND_MODEL con intervalos, flags de anomalía, y una columna technicians_needed calculada como ceil(num_installations / 6).`
+      },
+      {
+        num: 4, title: 'App Streamlit de Capacity Planning',
+        desc: 'Dashboard de planificación de capacidad técnica para coordinadores de field',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake con INSTALLATION_DEMAND. La app debe mostrar: un mapa de calor de zonas vs semanas coloreado por intensidad de demanda predicha, un gráfico de líneas de actuals vs forecast con banda de confianza para la zona seleccionada en el sidebar, una tabla de alertas con las semanas donde la demanda predicha supera la capacidad técnica disponible, y un KPI de semanas con capacidad suficiente vs insuficiente. Incluye un botón de descarga del plan en CSV. Aplica tema Snowflake.`
+      }
+    ]
+  },
+  UC10: {
+    title: 'ML Model Monitoring Platform',
+    intro: 'Copia cada prompt en el chat de Cortex Code y ejecútalos en orden. Empezamos generando datos sintéticos de métricas históricas de modelos en producción.',
+    steps: [
+      {
+        num: 1, title: 'Generar datos sintéticos de métricas de modelos',
+        desc: 'Crea un histórico de 100 días de métricas de 5 modelos ML en producción',
+        code: `/best-practices
+
+Crea una tabla llamada MODEL_METRICS_HISTORY con 500 registros usando TABLE(GENERATOR) (100 días × 5 modelos). Los modelos son: CHURN_MODEL, LEAD_SCORE_MODEL, NPS_MODEL, DEMAND_MODEL y ATTRIBUTION_MODEL. Cada fila tiene: model_name, metric_date (últimos 100 días), auc_score entre 0.70 y 0.95 con ligera degradación gradual en algunos modelos, precision_score y recall_score similares, psi_score (Population Stability Index) entre 0.0 y 0.3 donde >0.2 es drift crítico, y prediction_drift_score entre 0.0 y 0.25. Simula que CHURN_MODEL tiene PSI creciente en los últimos 30 días. Escala warehouse a MEDIUM antes y XSMALL después.`
+      },
+      {
+        num: 2, title: 'Registrar modelos en el Model Registry',
+        desc: 'Crea las entradas de los 5 modelos en el Snowflake Model Registry',
+        code: `/best-practices
+
+Usando Snowpark Python y el Snowflake Model Registry, registra los 5 modelos: CHURN_MODEL v1, LEAD_SCORE_MODEL v1, NPS_MODEL v1, DEMAND_MODEL v1 y ATTRIBUTION_MODEL v1. Para cada modelo, añade como metadata las métricas de línea base del primer día en MODEL_METRICS_HISTORY (auc_score, precision_score, recall_score de entrenamiento). Muéstrame el listado completo de modelos registrados con sus versiones y estado.`
+      },
+      {
+        num: 3, title: 'Dynamic Table de semáforo de salud de modelos',
+        desc: 'Calcula el estado GREEN/YELLOW/RED de cada modelo según sus métricas recientes',
+        code: `/best-practices
+
+Crea una Dynamic Table llamada MODEL_HEALTH_SUMMARY con TARGET_LAG de 1 día. Para cada model_name, agrupa las métricas de los últimos 7 días de MODEL_METRICS_HISTORY y aplica estas reglas: RED si psi_score promedio > 0.2 o auc_score promedio < 0.75; YELLOW si psi_score entre 0.1 y 0.2 o auc_score entre 0.75 y 0.80; GREEN en cualquier otro caso. Incluye columnas: model_name, health_status, auc_current, psi_avg y last_updated. Muéstrame el estado actual de todos los modelos.`
+      },
+      {
+        num: 4, title: 'App Streamlit de ML Model Monitor',
+        desc: 'Dashboard centralizado de observabilidad para todos los modelos en producción',
+        code: `/best-practices
+
+Construye una app Streamlit en Snowflake usando MODEL_HEALTH_SUMMARY y MODEL_METRICS_HISTORY. La app debe mostrar: en la parte superior, una fila de tarjetas (una por modelo) con el color del semáforo según health_status, el AUC actual y el PSI actual. Al seleccionar un modelo en el sidebar, muestra en la parte inferior: una línea temporal de auc_score y psi_score de los últimos 30 días, un mensaje de alerta si el modelo está en estado RED o YELLOW, y el historial de versiones del modelo desde el Model Registry. Aplica tema Snowflake.`
+      }
+    ]
+  }
+};
+
+
+function verGuia(id) {
+  const g = GUIAS[id];
+  if (!g) return;
+  document.getElementById('modalContent').innerHTML = `
+    <span class="guide-badge">${g.badge}</span>
+    <h2>${g.title}</h2>
+    <p class="prompt-intro">${g.contexto}</p>
+    <h3>Foco</h3><p>${g.foco}</p>
+    <h3>Reto</h3><p>${g.reto}</p>
+    <h3>Objetivos</h3>
+    <ul>${g.objetivos.map(o=>`<li>${o}</li>`).join('')}</ul>
+    <h3>Funcionalidades</h3>
+    <ul>${g.funcionalidades.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <h3>Datos Necesarios</h3>
+    <ul>${g.datos.map(d=>`<li>${d}</li>`).join('')}</ul>
+    <h3>Estratificación y Acciones</h3>
+    <ul>${g.estratificacion.map(e=>`<li>${e}</li>`).join('')}</ul>
+    <h3>Cómo Usar</h3>
+    <ol>${g.como_usar.map(c=>`<li>${c}</li>`).join('')}</ol>
+    <div class="guide-footer">Desarrollado con Snowflake Cortex AI · Cortex Code · Streamlit</div>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function verPrompts(id) {
+  const p = PROMPTS[id];
+  if (!p) return;
+  const stepsHtml = p.steps.map(s => `
+    <div class="prompt-step">
+      <div class="prompt-step-header">
+        <div class="prompt-step-num">${s.num}</div>
+        <div class="prompt-step-title">${s.title}</div>
+      </div>
+      <div class="prompt-step-desc">${s.desc}</div>
+      <div class="prompt-code">
+        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>${s.code.trim()}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('modalContent').innerHTML = `
+    <h2>${p.title}</h2>
+    <p class="prompt-intro">${p.intro}</p>
+    ${stepsHtml}
+    <div class="guide-footer">Prompts para Cortex Code · Snowflake Cortex AI</div>
+  `;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+function copyCode(btn) {
+  const code = btn.parentElement.textContent.replace('Copiar','').trim();
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => btn.textContent = 'Copiar', 2000);
+  });
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
